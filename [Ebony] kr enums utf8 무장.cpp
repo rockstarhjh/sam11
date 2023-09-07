@@ -1,0 +1,16 @@
+﻿const int 무장_왕원희 = 670;
+const int 무장_곽씨 = 671;
+const int 무장_하후씨 = 672;
+const int 무장_관은병 = 673;
+const int 무장_감씨 = 674;
+const int 무장_손노육 = 675;
+const int 무장_장씨 = 676;
+const int 무장_보연사 = 677;
+const int 무장_엄씨 = 678;
+const int 무장_동백 = 679;
+const int 무장_양씨 = 680;
+const int 무장_왕열 = 681;
+const int 무장_왕도2 = 682;
+const int 무장_이씨 = 683;
+const int 무장_육울생 = 684;
+const int 무장_두씨 = 685;
