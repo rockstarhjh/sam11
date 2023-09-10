@@ -1,38 +1,5 @@
-/*
-@ ¼öÁ¤ÀÚ: ±â¸¶Ã¥»ç
-@ Update: '18.10.21  / º¯°æ³»¿ë: ¹«·ÂÅë¼Ö·Â¼ö½Äº¯°æ, ÀÌµ¿·Â_º´·Â¼³Á¤, ÀÌµ¿·Â_Àû¼º¼³Á¤, ÀÌµ¿·Â_Åë¼Ö¼³Á¤, ÀÌµ¿·Â_±â·Â¼³Á¤, ÀÌµ¿·Â_°èÀı¼³Á¤, ¼¼·ÂÈ¿°ú¼³Á¤ ±â´É ¹İ¿µ
-@ Update: '18.11.6   / º¯°æ³»¿ë: À¯Àú¿É¼Ç Ãß°¡ (±â´Éº¯°æ ¾øÀ½)
-@ Update: '18.12.1   / º¯°æ³»¿ë: ¼ö¼ÛºÎ´ë ÀÌµ¿·Â Á¶Á¤ (º´·ÂÈ¿°ú Á¶Á¤, Àû¼ºÈ¿°ú Á¦¿Ü)
-@ Update: '18.12.27  / º¯°æ³»¿ë: ÀÌµ¿·Â_¿µÅä¼³Á¤ ±â´É Ãß°¡
-@ Update: '20.8.29   / º¯°æ³»¿ë: ¹«·Â/Åë¼Ö/Áö·Â/Á¤Ä¡/¸Å·Â °è»ê½Ä¿¡ overflow ¹æÁö Ãß°¡, ºÎ´ë °ø°İ/¹æ¾î·Â °è»ê¹æ½Ä ¼±ÅÃ¿É¼Ç Ãß°¡, ÀÌµ¿·Â_ÃÖ´ëÁ¦ÇÑ Ãß°¡
-*/
-
-namespace ºÎ´ë_´É·ÂÄ¡
+ï»¿namespace ë¶€ëŒ€_ëŠ¥ë ¥ì¹˜
 {
-    
-    //---------------------------------------------------------------------------------------
-    // À¯Àú ¼³Á¤ (true = on, false = off)
-    const bool ¹«·ÂÅë¼Ö·Â_¼ö½Äº¯°æ = true;   // true: ºÎÀå´É·Â Æ÷ÇÔÇÏ´Â ½Å±Ô ¼ö½Ä Àû¿ë, false: ±âÁ¸ ¹æ½Ä Àû¿ë
-    
-    const bool  °ø°İ·Â_¼ö½Äº¯°æ = true;   // true: °ø°İ·Â (¹«·Â+Åë¼Ö ºñÀ²ÇÕ»ê), false: ±âÁ¸ ¹æ½Ä Àû¿ë (°ø°İ·Â = ¹«·Â¸¸ ¹İ¿µ)
-    const float °ø°İ·Â_Åë¼ÖºñÀ² = 0.20f;  // °ø°İ·Â¿¡ ÇÕ»êÇÒ Åë¼Ö·Â ºñÀ² (0.0f~1.0f)
-    
-    const bool  ¹æ¾î·Â_¼ö½Äº¯°æ = true;   // true: ¹æ¾î·Â (Åë¼Ö+¹«·Â ºñÀ²ÇÕ»ê), false: ±âÁ¸ ¹æ½Ä Àû¿ë (¹æ¾î·Â = Åë¼Ö¸¸ ¹İ¿µ)
-    const float ¹æ¾î·Â_¹«·ÂºñÀ² = 0.20f;  // ¹æ¾î·Â¿¡ ÇÕ»êÇÒ Åë¼Ö·Â ºñÀ² (0.0f~1.0f)
-    
-    const bool ÀÌµ¿·Â_º´·Â¼³Á¤ = true;   // º´·Â¼ö¿¡ µû¶ó ÀÌµ¿·Â Áõ°¨
-    const bool ÀÌµ¿·Â_Àû¼º¼³Á¤ = true;   // Àû¼º¿¡ µû¶ó ÀÌµ¿·Â Áõ°¨
-    const bool ÀÌµ¿·Â_Åë¼Ö¼³Á¤ = true;   // Åë¼Ö·Â¿¡ µû¶ó ÀÌµ¿·Â Áõ°¨
-    const bool ÀÌµ¿·Â_±â·Â¼³Á¤ = true;   // ±â·Â¿¡ µû¶ó ÀÌµ¿·Â Áõ°¨
-    const bool ÀÌµ¿·Â_°èÀı¼³Á¤ = true;   // °èÀı¿¡ µû¶ó ÀÌµ¿·Â Áõ°¨
-    const bool ÀÌµ¿·Â_¿µÅä¼³Á¤ = true;   // ÀÚ±¹/Å¸±¹ ¿©ºÎ¿¡ µû¶ó ÀÌµ¿·Â Áõ°¨
-    
-    const bool ÀÌµ¿·Â_ÃÖ´ëÁ¦ÇÑ = true;   // true: ÀÌµ¿·Â max=40, false: ÀÌµ¿·Â max Á¦ÇÑ¾øÀ½
-    
-    const bool ¼¼·ÂÈ¿°ú¼³Á¤ = true;   // ¼¼·Âº° ±º·É È¿°ú Àû¿ë
-    
-    //---------------------------------------------------------------------------------------
-    
 	class Main
 	{
 		Main()
@@ -43,101 +10,65 @@ namespace ºÎ´ë_´É·ÂÄ¡
 		void callback(pk::unit_attr& attr, const pk::detail::arrayptr<pk::person@> &in member, int weapon_id, uint troops, int type, int status, bool navy, bool shoubyou)
 		{
 			pk::person@ leader = member[0];
-            
 
 			if (!pk::is_alive(leader))
 				return;
 
 			pk::force@ force = pk::get_force(leader.get_force_id());
-            
-            // ÁÖÀåÀÌ ¼Ò¼ÓµÈ ºÎ´ë ¶Ç´Â °Ç¹° ¹İÈ¯ ('18.10.10)
-            int unit_energy = 0;
-            pk::building@ building = pk::hex_object_to_building(pk::get_hex_object(leader.location));
-            pk::unit@ unit;
-            if (!pk::is_alive(building))    // ÁÖÀåÀÌ °Ç¹°¿¡ ¼Ò¼ÓµÇ¾î ÀÖÁö ¾ÊÀ¸¸é ºÎ´ë ±â·Â°ª »ç¿ë
-            {
-                @unit = pk::get_unit(pk::get_unit_id(leader));
-                unit_energy = unit.energy;
-            }
-            else                            // ÁÖÀåÀÌ °Ç¹° ¼Ò¼ÓµÇ¾î ÃâÁø ºÎ´ë Æí¼º ÁßÀÌ¸é °ÅÁ¡ ±â·Â°ª »ç¿ë
-            {
-                unit_energy = pk::get_energy(building);
-            }
-            
-            
 
 			if (!pk::is_alive(force))
 				return;
 			if (!pk::is_valid_equipment_id(weapon_id) or !pk::is_valid_unit_type(type) or !pk::is_valid_unit_status(status))
 				return;
 
-			
-            
-			// ºÎÀåÀÌ ¾ø´Ù¸é	
-            if ((member[1] is null) and (member[2] is null))
+			// ë¶€ì¥ì´ ìˆë‹¤ë©´
+			if (member[1] !is null or member[2] !is null)
 			{
-				for (int i = 0; i < ¹«Àå´É·Â_³¡; i++)	// ÁÖÀå ´É·ÂÄ¡ ±×´ë·Î »ç¿ë
-					attr.stat[i] =  pk::min(255, (shoubyou ? leader.stat[i] : leader.max_stat[i]));
-			}
-            // ºÎÀåÀÌ ÀÖ´Ù¸é
-			else
-			{
-				// Çø¿À °ü°è°¡ ÀÖ´Ù¸é º¸Á¤ÇÏÁö ¾ÊÀ½
+				// í˜ì˜¤ ê´€ê³„ê°€ ìˆë‹¤ë©´ ë³´ì •í•˜ì§€ ì•ŠìŒ
 				if (func_4960d0(leader, member[1]) or func_4960d0(leader, member[2]) or func_4960d0(member[1], member[2]))
 				{
-					for (int i = 0; i < ¹«Àå´É·Â_³¡; i++)
-						attr.stat[i] =  pk::min(255, (shoubyou ? leader.stat[i] : leader.max_stat[i]));
+					for (int i = 0; i < ë¬´ì¥ëŠ¥ë ¥_ë; i++)
+						attr.stat[i] = shoubyou ? leader.stat[i] : leader.max_stat[i];
 				}
-				// Çø¿À °ü°è°¡ ¾ø´Ù¸é º¸Á¤
+				// í˜ì˜¤ ê´€ê³„ê°€ ì—†ë‹¤ë©´ ë³´ì •
 				else
 				{
-					for (int i = 0; i < ¹«Àå´É·Â_³¡; i++)
+					for (int i = 0; i < ë¬´ì¥ëŠ¥ë ¥_ë; i++)
 					{
 						int a = 0, b = 0;
-						int leader_stat =  pk::min(255, (shoubyou ? leader.stat[i] : leader.max_stat[i]));
+						int leader_stat = shoubyou ? leader.stat[i] : leader.max_stat[i];
 
-						// Åë¼Ö, ¹«·ÂÀº ¹«Àå °ü°è¿¡ µû¶ó º¸Á¤
-						if (i <= ¹«Àå´É·Â_¹«·Â)
+						// í†µì†”, ë¬´ë ¥ì€ ë¬´ì¥ ê´€ê³„ì— ë”°ë¼ ë³´ì •
+						if (i <= ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥)
 						{
-                            if (¹«·ÂÅë¼Ö·Â_¼ö½Äº¯°æ)
-                            {
-                                // ½Å±Ô º¸Á¤ ¼ö½Ä : ÁÖÀå + ºÎÀå1º¸Á¶ + ºÎÀå2º¸Á¶   ('18.10.9)
-                                if (member[1] !is null)     // ½Å±Ô ÇÔ¼ö : ºÎÀå1 º¸Á¶·®
-                                    a = func_sub_stat(leader, leader_stat, member[1], (shoubyou ? member[1].stat[i] : member[1].max_stat[i]) ); 
-                                if (member[2] !is null)     // ½Å±Ô ÇÔ¼ö : ºÎÀå2 º¸Á¶·®
-                                    b = func_sub_stat(leader, leader_stat, member[2], (shoubyou ? member[2].stat[i] : member[2].max_stat[i]) );
-                                
-                                attr.stat[i] = pk::min(255, (leader_stat + a + b));   // 255 ÀÌÇÏ·Î ÇÕ»ê
-                            }
-                            else
-                            {
-                                // ±âÁ¸ º¸Á¤ ¹æ¹ı : MAX[(ÁÖÀå&ºÎÀå1),(ÁÖÀå&ºÎÀå2)]
-                                if (member[1] !is null)
-                                    a = func_495ff0(leader, leader_stat, member[1], shoubyou ? member[1].stat[i] : member[1].max_stat[i]);
-                                if (member[2] !is null)
-                                    b = func_495ff0(leader, leader_stat, member[2], shoubyou ? member[2].stat[i] : member[2].max_stat[i]);
-                                attr.stat[i] = pk::min(255, pk::max(a, b));   // ÃÖ´ë°ª
-                            }
-                            
+							if (member[1] !is null)
+								a = func_495ff0(leader, leader_stat, member[1], shoubyou ? member[1].stat[i] : member[1].max_stat[i]);
+							if (member[2] !is null)
+								b = func_495ff0(leader, leader_stat, member[2], shoubyou ? member[2].stat[i] : member[2].max_stat[i]);
 						}
-						// Áö·Â, Á¤Ä¡, ¸Å·ÂÀº ÃÖ´ë°ª
+						// ì§€ë ¥, ì •ì¹˜, ë§¤ë ¥ì€ ìµœëŒ€ê°’
 						else
 						{
 							if (member[1] !is null)
 								a = pk::max(leader_stat, shoubyou ? member[1].stat[i] : member[1].max_stat[i]);
 							if (member[2] !is null)
 								b = pk::max(leader_stat, shoubyou ? member[2].stat[i] : member[2].max_stat[i]);
-                            
-                            attr.stat[i] = pk::min(255, pk::max(a, b));   // ÃÖ´ë°ª
 						}
 
+						attr.stat[i] = pk::max(a, b);
 					}
 				}
 			}
+			// ë¶€ì¥ì´ ì—†ë‹¤ë©´
+			else
+			{
+				// ì£¼ì¥ ëŠ¥ë ¥ì¹˜ ê·¸ëŒ€ë¡œ ì‚¬ìš©
+				for (int i = 0; i < ë¬´ì¥ëŠ¥ë ¥_ë; i++)
+					attr.stat[i] = shoubyou ? leader.stat[i] : leader.max_stat[i];
+			}
 
-            
-			// Àû¼ºÀº ÃÖ´ë°ª
-			for (int i = 0; i < º´Á¾_³¡; i++)
+			// ì ì„±ì€ ìµœëŒ€ê°’
+			for (int i = 0; i < ë³‘ì¢…_ë; i++)
 			{
 				int n = 0;
 				for (int j = 0; j < member.length; j++)
@@ -150,336 +81,111 @@ namespace ºÎ´ë_´É·ÂÄ¡
 
 			pk::equipment@ equipment = pk::get_equipment(weapon_id);
 
-			float apt = float(pk::core["Àû¼º"][attr.tekisei[pk::equipment_id_to_heishu(weapon_id)]]["ºÎ´ë´É·ÂÄ¡"]); // (attr.tekisei[pk::equipment_id_to_heishu(weapon_id)] + 7) * 0.1;
+			float apt = float(pk::core["ì ì„±"][attr.tekisei[pk::equipment_id_to_heishu(weapon_id)]]["ë¶€ëŒ€ëŠ¥ë ¥ì¹˜"]); // (attr.tekisei[pk::equipment_id_to_heishu(weapon_id)] + 7) * 0.1;
 			float sts = 1.f;
 			float str = 1.f;
 			float ldr = 1.f;
-			int atk = equipment.stat[º´±â´É·Â_°ø°İ];
-			int def = equipment.stat[º´±â´É·Â_¹æ¾î];
-			int mov = equipment.stat[º´±â´É·Â_ÀÌµ¿];
-            
-			
-			int defskill_ºÒ±¼ = Æ¯±â_ºÒ±¼;	
-			int defskill_±İ°­ = Æ¯±â_±İ°­;	
-			int defskill_Ã¶º® = Æ¯±â_Ã¶º®;
+			int atk = equipment.stat[ë³‘ê¸°ëŠ¥ë ¥_ê³µê²©];
+			int def = equipment.stat[ë³‘ê¸°ëŠ¥ë ¥_ë°©ì–´];
+			int mov = equipment.stat[ë³‘ê¸°ëŠ¥ë ¥_ì´ë™];
 
-			if (weapon_id == º´±â_°Ë or (weapon_id == º´±â_ÁÖ°¡ and type == ºÎ´ëÁ¾·ù_¼ö¼Û))	
+			if (weapon_id == ë³‘ê¸°_ê²€ or (weapon_id == ë³‘ê¸°_ì£¼ê°€ and type == ë¶€ëŒ€ì¢…ë¥˜_ìˆ˜ì†¡))
 				apt = 0.6f;
 
-			if (status == ºÎ´ë»óÅÂ_È¥¶õ)
+			if (status == ë¶€ëŒ€ìƒíƒœ_í˜¼ë€)
 				sts = 0.8f;
 
-			if (type == ºÎ´ëÁ¾·ù_¼ö¼Û)
+			if (type == ë¶€ëŒ€ì¢…ë¥˜_ìˆ˜ì†¡)
 			{
 				str = 0.4f;
 				ldr = 1.f / 3.f;
 			}
 
-			if (weapon_id <= º´±â_±º¸¶)
+			if (weapon_id <= ë³‘ê¸°_êµ°ë§ˆ)
 			{
-				int tech_id = -1;	
-				
-				if (weapon_id == º´±â_Ã¢)
-				{
-					tech_id = ±â±³_Á¤¿¹Ã¢º´;
-				}
-				if (weapon_id == º´±â_±Ø)
-				{
-					tech_id = ±â±³_Á¤¿¹±Øº´;
-				}
-				if (weapon_id == º´±â_³ë)
-				{
-					tech_id = ±â±³_Á¤¿¹³ëº´;
-				}
-				if (weapon_id == º´±â_±º¸¶)
-				{
-					tech_id = ±â±³_Á¤¿¹±âº´;
-				}
+				int tech_id = -1;
+
+				if (weapon_id == ë³‘ê¸°_ì°½)
+					tech_id = ê¸°êµ_ì •ì˜ˆì°½ë³‘;
+				else if (weapon_id == ë³‘ê¸°_ê·¹)
+					tech_id = ê¸°êµ_ì •ì˜ˆê·¹ë³‘;
+				else if (weapon_id == ë³‘ê¸°_ë…¸)
+					tech_id = ê¸°êµ_ì •ì˜ˆë…¸ë³‘;
+				else if (weapon_id == ë³‘ê¸°_êµ°ë§ˆ)
+					tech_id = ê¸°êµ_ì •ì˜ˆê¸°ë³‘;
 
 				if (pk::has_tech(force, tech_id))
 				{
 					atk = atk + 10;
 					def = def + 10;
 				}
-				
 			}
-            
-            // ------------------------------- //
-            // °ø°İ/¹æ¾î·Â Ãß°¡ È¿°ú Àû¿ë ½Ã ÀÛ¼ºÇÒ À§Ä¡ //
-            // ------------------------------- //
-            
-            
-            /* ¹öÇÁ Àû¿ë ¾ÈÇÔ
-            // ¹æ¾î Æ¯±âÀÚÀÇ ¹æ¾î·Â ¹öÇÁ : Á¾·ùº°·Î ÁßÃ¸ °¡´É
-            if (pk::has_skill(member, defskill_ºÒ±¼))
-                def = def + 10;
-            if (pk::has_skill(member, defskill_±İ°­))
-                def = def + 10;
-            if (pk::has_skill(member, defskill_Ã¶º®))
-                def = def + 15;
-            */
-            
-            
-			/* 
-				[¿øº»] ºÎ´ë ´É·ÂÀ» °áÁ¤ÇÏ´Â ¿ä¼Òµé < °ø°İ(¹«·Â), ¹æ¾î(Åë¼Ö), °Ç¼³(Á¤Ä¡) > 
-				attr.stat[ºÎ´ë´É·Â_°ø°İ] = pk::min(255.f, pk::max(1.f, (attr.stat[ºÎ´ë´É·Â_¹«·Â] * atk * apt * 0.01f) * str * sts));
-				attr.stat[ºÎ´ë´É·Â_¹æ¾î] = pk::min(255.f, pk::max(1.f, (attr.stat[ºÎ´ë´É·Â_Åë¼Ö] * def * apt * 0.01f) * ldr * sts));
-				attr.stat[ºÎ´ë´É·Â_°Ç¼³] = pk::min(255.f, pk::max(1.f, (attr.stat[ºÎ´ë´É·Â_Á¤Ä¡] * 2.f / 3 + 50) * ldr * sts));
-			*/
-            float atk_stat_ratio = 0.0f;
-            float def_stat_ratio = 0.0f;
-            
-			if  (°ø°İ·Â_¼ö½Äº¯°æ)
-                atk_stat_ratio = pk::min(1.0f, pk::max(0.0f, °ø°İ·Â_Åë¼ÖºñÀ²));
-            else
-                atk_stat_ratio = 0.0f;
-            
-            if  (¹æ¾î·Â_¼ö½Äº¯°æ)
-                def_stat_ratio = pk::min(1.0f, pk::max(0.0f, ¹æ¾î·Â_¹«·ÂºñÀ²));
-            else
-                def_stat_ratio = 0.0f;
-                        
-            
-			// ºÎ´ë °ø°İ·Â = (ÁÖ)¹«·Â, (ºÎ)Åë¼ÖÀÌ ÇÔ²² °ü¿© (ÇÕ»ê)
-			attr.stat[ºÎ´ë´É·Â_°ø°İ] = int(pk::min(255.f, pk::max(1.f, (((1.f-atk_stat_ratio)*attr.stat[ºÎ´ë´É·Â_¹«·Â]+atk_stat_ratio*attr.stat[ºÎ´ë´É·Â_Åë¼Ö])/ 1.0f * atk * apt * 0.01f ) * str * sts)));
-			// ºÎ´ë ¹æ¾î·Â = (ÁÖ)Åë¼Ö, (ºÎ)¹«·ÂÀÌ ÇÔ²² °ü¿© (ÇÕ»ê)
-			attr.stat[ºÎ´ë´É·Â_¹æ¾î] = int(pk::min(255.f, pk::max(1.f, (((1.f-def_stat_ratio)*attr.stat[ºÎ´ë´É·Â_Åë¼Ö]+def_stat_ratio*attr.stat[ºÎ´ë´É·Â_¹«·Â])/ 1.0f * def * apt * 0.01f ) * ldr * sts)));
-            
-			// ºÎ´ë Áö·Â = Áö·Â
-			attr.stat[ºÎ´ë´É·Â_Áö·Â] = int(pk::min(255.f,(attr.stat[ºÎ´ë´É·Â_Áö·Â] ) / 1.f));
-			// ºÎ´ë °Ç¼³ (¿øº»°ú µ¿ÀÏ)
-			attr.stat[ºÎ´ë´É·Â_°Ç¼³] = int(pk::min(255.f, pk::max(1.f, (attr.stat[ºÎ´ë´É·Â_Á¤Ä¡] * 2.f / 3.f + 50) * ldr * sts)));
-			
-            
-            //--------------------------------------------------------------------------------
-            // ºÎ´ë Á¶°Ç¿¡ µû¸¥ ÀÌµ¿·Â °¡º¯ È¿°ú
-            
-            // ºÎ´ëº° ±â·Â, Åë¼Ö·Â, Àû¼º, º´·Â¼ö È¿°ú ÀÌµ¿·Â °è»ê¿ë º¯¼ö Ãß°¡ ('18.10.7)
-            float mov_var = mov;  
-            
-            // º´·Â¼ö¿¡ µû¸¥ ÀÌµ¿·Â º¸Á¤ : ±âº» ÀÌµ¿·Â +1, 3000¸í Áõ°¡ ½Ã¸¶´Ù ÀÌµ¿·Â °¨¼Ò ('18.10.9)
-            if (ÀÌµ¿·Â_º´·Â¼³Á¤)
-            {
-                if (type == ºÎ´ëÁ¾·ù_¼ö¼Û)
-                    mov_var = mov_var + 1 - pk::min(5,(troops / 6000));    // ¼ö¼ÛºÎ´ë ÀÌµ¿·Â °¨¼Ò ¸®¹ÌÅÍ ('18.11.24)
-                else
-                    mov_var = mov_var + 1 - pk::min(10,(troops / 3000));    // ÀüÅõºÎ´ë ÀÌµ¿·Â °¨¼Ò ¸®¹ÌÅÍ
-            }
-            
-            // º´°ú Àû¼º¿¡ µû¸¥ ÀÌµ¿·Â º¸Á¤ S±Ş=+10%, C±Ş=-20%('18.10.8)
-            if (ÀÌµ¿·Â_Àû¼º¼³Á¤)
-            {
-                if (type == ºÎ´ëÁ¾·ù_ÀüÅõ)    // ÀüÅõºÎ´ë¿¡ ÇÑÇÏ¿© Àû¼º °í·Á Ãß°¡ ('18.11.26)
-                    mov_var = mov_var * (1.f + 0.1f * pk::min(2, (attr.tekisei[pk::equipment_id_to_heishu(weapon_id)] - Àû¼º_A))); 
-            }
-            
-            // ºÎ´ëº° Åë¼Ö·Â¿¡ µû¸¥ ÀÌµ¿·Â º¯µ¿ 85% ~ 105% º¯µ¿ : Åë¼Ö·Â 75ÀÏ ¶§ ¡¾0% ('18.10.7)
-            if (ÀÌµ¿·Â_Åë¼Ö¼³Á¤)
-                mov_var = mov_var * (0.85f + 0.20f * (attr.stat[ºÎ´ë´É·Â_Åë¼Ö] / 100.f));
-            
-            // ºÎ´ëº° ±â·Â¿¡ µû¸¥ ÀÌµ¿·Â 80% ~ 110% º¯µ¿ : ±â·Â 80ÀÏ ¶§ 100% ('18.10.10)
-            if (ÀÌµ¿·Â_±â·Â¼³Á¤)
-                mov_var = mov_var * (0.80f + 0.30f * (unit_energy / 120.f));
-            
-            // °èÀı¿¡ µû¸¥ ÀÌµ¿·Â Áõ°¨ È¿°ú ('18.10.9)
-            if (ÀÌµ¿·Â_°èÀı¼³Á¤)
-            {
-                switch(pk::get_season())            // pk::get_season()= 0:º½, 1:¿©¸§, 2:°¡À», 3:°Ü¿ï
-                {
-                    case °èÀı_¿©¸§: mov_var -= 2; break;    // ¿©¸§¿¡ ÀÌµ¿·Â -2
-                    case °èÀı_°Ü¿ï: mov_var -= 4; break;    // °ÜÀ²¿¡ ÀÌµ¿·Â -4
-                }
-            }
-            
-            // ºÎ´ëÀÇ ÁÂÇ¥ ¿µÅä¿¡ µû¸¥ ÀÌµ¿·Â È¿°ú : ¾Æ±º¿µÅä¿¡¼­ ÀÌµ¿·Â »ó½Â, Àû±º¿µÅä¿¡¼­ ÀÌµ¿·Â °¨¼Ò ('18.12.27)
-            if (ÀÌµ¿·Â_¿µÅä¼³Á¤ and pk::is_alive(unit))
-            {
-                pk::building@ area_building = pk::get_building(pk::get_building_id(unit.pos));
-                if (pk::is_alive(area_building))
-                {
-                    if (unit.get_force_id() == area_building.get_force_id())
-                        mov_var = mov_var * 1.1f;   // ¾Æ±º¿µÅä¿¡¼­ ÀÌµ¿·Â 10%Áõ°¡ 
-                    else if (pk::is_enemy(unit, area_building))
-                        mov_var = mov_var * 0.9f;   // Àû±º¿µÅä¿¡¼­ ÀÌµ¿·Â 10% °¨¼Ò 
-                }
-            }
-            
-            // ºÎ´ëº° ÃÖÁ¾ °¡º¯ ÀÌµ¿·Â
-            mov = int(mov_var);
-            
-            //--------------------------------------------------------------------------------
-            // ±âÁ¸ ½ºÅ©¸³Æ® ¼öÁ¤ : ±â±³ ¹× ¼¼·Â/Àå¼öº° Æ¯Â¡ ¹İ¿µ
-            
-			if (type == ºÎ´ëÁ¾·ù_ÀüÅõ)
+
+			attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ê³µê²©] = pk::min(255.f, pk::max(1.f, (attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ë¬´ë ¥] * atk * apt * 0.01f) * str * sts));
+
+			attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ë°©ì–´] = pk::min(255.f, pk::max(1.f, (attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_í†µì†”] * def * apt * 0.01f) * ldr * sts));
+
+			attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ê±´ì„¤] = pk::min(255.f, pk::max(1.f, (attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ì •ì¹˜] * 2.f / 3 + 50) * ldr * sts));
+
+			if (type == ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬)
 			{
 				switch (weapon_id)
 				{
-				case º´±â_Ã¢:
-                    if (pk::has_tech(force, ±â±³_Á¤¿¹Ã¢º´))
+				case ë³‘ê¸°_ì°½:
+					if (pk::has_tech(force, ê¸°êµ_ì •ì˜ˆì°½ë³‘))
 						mov = mov + 6;
 					break;
-                    
-				case º´±â_±Ø:
-                    if (pk::has_tech(force, ±â±³_Á¤¿¹±Øº´))
+				case ë³‘ê¸°_ê·¹:
+					if (pk::has_tech(force, ê¸°êµ_ì •ì˜ˆê·¹ë³‘))
 						mov = mov + 6;
 					break;
-                    
-				case º´±â_³ë:
-                    if (pk::has_tech(force, ±â±³_Á¤¿¹³ëº´))
+				case ë³‘ê¸°_ë…¸:
+					if (pk::has_tech(force, ê¸°êµ_ì •ì˜ˆë…¸ë³‘))
 						mov = mov + 6;
 					break;
-                    
-				case º´±â_±º¸¶:
-                    if (pk::has_tech(force, ±â±³_¾ç¸¶»êÃâ))
+				case ë³‘ê¸°_êµ°ë§ˆ:
+					if (pk::has_tech(force, ê¸°êµ_ì •ì˜ˆê¸°ë³‘))
 						mov = mov + 2;
-                    if (pk::has_tech(force, ±â±³_Á¤¿¹±âº´))   // Á¤¿¹±âº´ ÀÌµ¿·Â ÇÏÇâ ('18.10.5)
+					if (pk::has_tech(force, ê¸°êµ_ì–‘ë§ˆì‚°ì¶œ))
 						mov = mov + 4;
 					break;
-                    
-				case º´±â_ÃæÂ÷:
-                    if (pk::has_tech(force, ±â±³_Â÷Ãà°­È­))   // Â÷Ãà°­È­ ÀÌµ¿·Â »óÇâ ('18.10.5)
-						mov = mov + 4;
-					break;
-                    
-				case º´±â_Á¤¶õ:
-                    if (pk::has_tech(force, ±â±³_Â÷Ãà°­È­))    // Â÷Ãà°­È­ ÀÌµ¿·Â »óÇâ ('18.10.5)
-						mov = mov + 4;
-					break;
-                    
-				case º´±â_Åõ¼®:
-                    if (pk::has_tech(force, ±â±³_Â÷Ãà°­È­))    // Â÷Ãà°­È­ ÀÌµ¿·Â »óÇâ ('18.10.5)
-						mov = mov + 4;
-					break;
-                    
-				case º´±â_¸ñ¼ö:
-					if (pk::has_tech(force, ±â±³_Â÷Ãà°­È­))
+				case ë³‘ê¸°_ì¶©ì°¨:
+				case ë³‘ê¸°_ì •ë€:
+				case ë³‘ê¸°_íˆ¬ì„:
+				case ë³‘ê¸°_ëª©ìˆ˜:
+					if (pk::has_tech(force, ê¸°êµ_ì°¨ì¶•ê°•í™”))
 						mov = mov + 4;
 					break;
 				}
 
-                
-				if (weapon_id <= º´±â_³ë)
+				if (weapon_id <= ë³‘ê¸°_ë…¸)
 				{
-					mov = mov + int(pk::core::skill_constant(member, Æ¯±â_°­Çà)); // 5
+					mov = mov + int(pk::core::skill_constant(member, íŠ¹ê¸°_ê°•í–‰)); // 5
 				}
-				else if (weapon_id == º´±â_±º¸¶)
+				else if (weapon_id == ë³‘ê¸°_êµ°ë§ˆ)
 				{
-					if (pk::has_skill(member, Æ¯±â_°­Çà))
-						mov = mov + int(pk::core::skill_constant(member, Æ¯±â_°­Çà)); // 5
-					else if (pk::has_skill(member, Æ¯±â_Çà±º))
-						mov = mov + int(pk::core::skill_constant(member, Æ¯±â_Çà±º)); // 3
-                    
-                    // ¼¼·Âº° À°»ó ÀÌµ¿·Â º¸Á¤ ('18.10.1) - ±âº´ ¼¼·Â ¾ç¸¶»êÃâ È¿°ú +2
-                    if (¼¼·ÂÈ¿°ú¼³Á¤ and pk::has_tech(force, ±â±³_¾ç¸¶»êÃâ))
-                    {
-                        if (pk::get_kunshu_id(force) == ¹«Àå_°ø¼ÕÂù)
-                            mov = mov + 2;
-                        else if (pk::get_kunshu_id(force) == ¹«Àå_¸¶µî)
-                            mov = mov + 2;
-                        else if (pk::get_kunshu_id(force) == pk::get_kunshu_id(pk::get_person(¹«Àå_¸¶ÃÊ)))
-                            mov = mov + 2;
-                        else if (pk::get_kunshu_id(force) == ¹«Àå_µ¿Å¹)
-                            mov = mov + 2;
-                        else if (pk::get_kunshu_id(force) == ¹«Àå_¿©Æ÷)
-                            mov = mov + 2;
-                    }
+					if (pk::has_skill(member, íŠ¹ê¸°_ê°•í–‰))
+						mov = mov + int(pk::core::skill_constant(member, íŠ¹ê¸°_ê°•í–‰)); // 5
+					else if (pk::has_skill(member, íŠ¹ê¸°_í–‰êµ°))
+						mov = mov + int(pk::core::skill_constant(member, íŠ¹ê¸°_í–‰êµ°)); // 3
 				}
-                else if (weapon_id <= º´±â_¸ñ¼ö)
-                {
-                    // ¼¼·Âº° À°»ó ÀÌµ¿·Â º¸Á¤ ('18.10.1) - Á¶Á¶ ¶Ç´Â À¯¿±ÀÇ ¼¼·ÂÀÎ À°»ó Â÷Ãà°­È­ È¿°ú +4
-                    if (¼¼·ÂÈ¿°ú¼³Á¤ and pk::has_tech(force, ±â±³_Â÷Ãà°­È­))
-                    {
-                        if (pk::get_kunshu_id(force) == ¹«Àå_Á¶Á¶)
-                            mov = mov + 2;
-                        else if (pk::get_kunshu_id(force) == pk::get_kunshu_id(pk::get_person(¹«Àå_À¯¿±)))
-                            mov = mov + 2;
-                    }
-                }
-                
 			}
-			else if (type == ºÎ´ëÁ¾·ù_¼ö¼Û)   // ¼ö¼ÛºÎ´ë
+			else
 			{
-				if (pk::has_tech(force, ±â±³_¸ñ¿ìÀ¯¸¶))
-                    mov = mov + 3;
-                
-                mov = mov + 5;
-				mov = mov + int(pk::core::skill_constant(member, Æ¯±â_¿î¹İ)); // 5
-               
-               
-                if (¼¼·ÂÈ¿°ú¼³Á¤ and pk::has_tech(force, ±â±³_¸ñ¿ìÀ¯¸¶))
-				{
-                    if (weapon_id == º´±â_ÁÖ°¡) //¼ö»ó¿¡ ÀÖÀ» °æ¿ì
-                    {
-                        // ¼¼·Âº° ¿î¼Û·Â º¸Á¤ ('18.10.4) - µ¿¿À ±ºÁÖ ¶Ç´Â ÁÖÀ¯/³ë¼÷ÀÇ ¼¼·ÂÀÎ °æ¿ì ¸ñ¿ìÀ¯¸¶ ¼ö»ó È¿°ú +4
-                        if (pk::get_kunshu_id(force) == ¹«Àå_¼Õ°ß)
-                            mov = mov + 4;
-                        else if (pk::get_kunshu_id(force) == ¹«Àå_¼ÕÃ¥)
-                            mov = mov + 4;
-                        else if (pk::get_kunshu_id(force) == ¹«Àå_¼Õ±Ç)
-                            mov = mov + 4;
-                        else if (pk::get_kunshu_id(force) == pk::get_kunshu_id(pk::get_person(¹«Àå_ÁÖÀ¯)))
-                            mov = mov + 4;
-                        else if (pk::get_kunshu_id(force) == pk::get_kunshu_id(pk::get_person(¹«Àå_³ë¼÷)))
-                            mov = mov + 4;
-                    }
-                     
-                    else    //À°»ó¿¡ ÀÖÀ» °æ¿ì
-                    {
-                        // ¼¼·Âº° ¿î¼Û·Â º¸Á¤ ('18.10.4) - ÃËÇÑ ±ºÁÖ ¶Ç´Â Á¦°¥·®/È²¿ù¿µÀÇ ¼¼·ÂÀÎ °æ¿ì ¸ñ¿ìÀ¯¸¶ À°»ó È¿°ú +3
-                        if (pk::get_kunshu_id(force) == ¹«Àå_À¯ºñ)
-                            mov = mov + 3;
-                        else if (pk::get_kunshu_id(force) == ¹«Àå_À¯¼±)
-                            mov = mov + 3;
-                        else if (pk::get_kunshu_id(force) == pk::get_kunshu_id(pk::get_person(¹«Àå_Á¦°¥·®)))
-                            mov = mov + 3;
-                        else if (pk::get_kunshu_id(force) == pk::get_kunshu_id(pk::get_person(¹«Àå_È²¿ù¿µ)))
-                            mov = mov + 3;
-                    }
-                }
+				if (pk::has_tech(force, ê¸°êµ_ëª©ìš°ìœ ë§ˆ))
+					mov = mov + 3;
+				mov = mov + 5;
+				mov = mov + int(pk::core::skill_constant(member, íŠ¹ê¸°_ìš´ë°˜)); // 5
 			}
-            
-			if (navy)   //¼ö»ó ºÎ´ëÀÎ °æ¿ì
-            {
-				mov = mov + int(pk::core::skill_constant(member, Æ¯±â_Á¶Å¸)); // 4
-                
-                if (¼¼·ÂÈ¿°ú¼³Á¤)
-                {
-                    mov += 4; // ºÎ´ëÁ¶°ÇÀÇ ¼ö»óÀÌµ¿·Â ¹İ¿µ¿¡ µû¸¥ ÀúÇÏ·Î ±âº» ÀÌµ¿·Â º¸Á¤
-                    // ¼¼·Âº° ¼ö»ó ÀÌµ¿·Â º¸Á¤ ('18.10.1) - µ¿¿À/ÇüÁÖ ¼¼·Â ¼ö»óÀüÅõºÎ´ë ÀÌµ¿°­È­ - Â÷Ãà°­È­ ±â±³°³¹ß ½Ã Àû¿ëµÊ
-                    if (pk::has_tech(force, ±â±³_Â÷Ãà°­È­) and (type != ºÎ´ëÁ¾·ù_¼ö¼Û)) //¼ö¼Ûº´°ú°¡ ¾Æ´Ô
-                    {
-                        if (pk::get_kunshu_id(force) == ¹«Àå_¼Õ°ß)
-                            mov = mov + 4;
-                        else if (pk::get_kunshu_id(force) == ¹«Àå_¼ÕÃ¥)
-                            mov = mov + 4;
-                        else if (pk::get_kunshu_id(force) == ¹«Àå_¼Õ±Ç)
-                            mov = mov + 4;
-                        else if (pk::get_kunshu_id(force) == pk::get_kunshu_id(pk::get_person(¹«Àå_ÁÖÀ¯)))
-                            mov = mov + 4;
-                        else if (pk::get_kunshu_id(force) == pk::get_kunshu_id(pk::get_person(¹«Àå_¿©¸ù)))
-                            mov = mov + 4;
-                        else if (pk::get_kunshu_id(force) == pk::get_kunshu_id(pk::get_person(¹«Àå_À°¼Õ)))
-                            mov = mov + 4;
-                            
-                        else if (pk::get_kunshu_id(force) == ¹«Àå_À¯Ç¥)
-                            mov = mov + 4;
-                        else if (pk::get_kunshu_id(force) == pk::get_kunshu_id(pk::get_person(¹«Àå_Ã¤¸ğ)))
-                            mov = mov + 4;
-                    }
-                }
-            }
-            
-            // '20.8.29, ÀÌµ¿·Â ÃÖ´ë°ª Á¦ÇÑ ¼³Á¤ Ãß°¡
-            if (ÀÌµ¿·Â_ÃÖ´ëÁ¦ÇÑ)
-                mov = pk::min(40, mov);
-            
-			attr.stat[ºÎ´ë´É·Â_ÀÌµ¿] = pk::max(1, mov);   // '20.8.29, ÀÌµ¿·Â ÃÖ¼Ò°ª Á¦ÇÑ Ãß°¡ (0 ÀÌÇÏ·Î µÉ °æ¿ì °ÔÀÓ Æ¨±æ ¼ö ÀÖÀ½)
+
+			if (navy)
+				mov = mov + int(pk::core::skill_constant(member, íŠ¹ê¸°_ì¡°íƒ€)); // 4
+
+			attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ì´ë™] = mov;
 		}
 
-        
-        
 		/**
-			°ü°è¿¡ µû¸¥ ´É·Â º¸Á¤  -- ±âÁ¸ ¼ö½Ä : ÁÖÀå°ú ºÎÀå1, ÁÖÀå°ú ºÎÀå2 ÀÇ °¢ º¸Á¤ °á°ú Áß ÃÖ´ë°ª 
+			ê´€ê³„ì— ë”°ë¥¸ ëŠ¥ë ¥ ë³´ì •
 		*/
 		int func_495ff0(pk::person@ leader, int leader_stat, pk::person@ deputy, int deputy_stat)
 		{
@@ -489,23 +195,39 @@ namespace ºÎ´ë_´É·ÂÄ¡
 			int leader_id = leader.get_id();
 			int deputy_id = deputy.get_id();
 
+			// ì˜í˜•ì œ, ë¶€ë¶€ëŠ” 100% ì§€ì›
 			if (pk::is_gikyoudai(leader, deputy_id) or pk::is_fuufu(leader, deputy_id))
 				return deputy_stat;
 
-			if (pk::is_like(leader, deputy_id) or pk::is_like(deputy, leader_id))
-				return leader_stat + (deputy_stat - leader_stat) / 2;
-
-			if (pk::is_ketsuen(leader, deputy_id))
-				return leader_stat + (deputy_stat - leader_stat) / 3;
-
+			// í˜ì˜¤ë¬´ì¥ì€ ì§€ì› ì—†ìŒ
 			if (pk::is_dislike(leader, deputy_id) or pk::is_dislike(deputy, leader_id))
 				return leader_stat;
 
-			return leader_stat + (deputy_stat - leader_stat) / 4;
+			// ë¶€ì¥ì´ ë³´ì¢Œ íŠ¹ê¸°ê°€ ìˆë‹¤ë©´
+			if (pk::has_skill(deputy, íŠ¹ê¸°_ë³´ì¢Œ))
+			{
+				// ì¹œì• ë¬´ì¥ê³¼ ê°€ì¡±ì€ ì˜í˜•ì œì²˜ëŸ¼ 100%
+				if (pk::is_like(leader, deputy_id) or pk::is_like(deputy, leader_id) or pk::is_ketsuen(leader, deputy_id))
+					return deputy_stat;
+				// ì¼ë°˜ ë¬´ì¥ì€ ì¹œì•  ë¬´ì¥ì²˜ëŸ¼ 50%
+					return leader_stat + (deputy_stat - leader_stat) / 2;
+			}
+			// ë³´ì¢Œ íŠ¹ê¸°ê°€ ì—†ìœ¼ë©´
+			else
+			{
+				// ì¹œì•  ë¬´ì¥ì€ ì”ì—¬ ëŠ¥ë ¥ 50% ì§€ì›
+				if (pk::is_like(leader, deputy_id) or pk::is_like(deputy, leader_id))
+					return leader_stat + (deputy_stat - leader_stat) / 2;
+				// ê°€ì¡± ë¬´ì¥ì€ 33% ì§€ì›
+				if (pk::is_ketsuen(leader, deputy_id))
+					return leader_stat + (deputy_stat - leader_stat) / 3;
+			}
+				// ì¼ë°˜ ë¬´ì¥ì€ 25% ì§€ì›
+				return leader_stat + (deputy_stat - leader_stat) / 4;
 		}
 
 		/**
-			¼­·Î »ó´ë¹æÀ» Çø¿ÀÇÏ´Â °ü°è°¡ ÀÖ´ÂÁö È®ÀÎ
+			ì„œë¡œ ìƒëŒ€ë°©ì„ í˜ì˜¤í•˜ëŠ” ê´€ê³„ê°€ ìˆëŠ”ì§€ í™•ì¸
 		*/
 		bool func_4960d0(pk::person@ a, pk::person@ b)
 		{
@@ -513,39 +235,7 @@ namespace ºÎ´ë_´É·ÂÄ¡
 				return pk::is_dislike(a, b.get_id()) or pk::is_dislike(b, a.get_id());
 			return false;
 		}
-        
-        // --------------------------------------------------------------------------------------
-        //**  °ü°è¿¡ µû¸¥ ´É·Â º¸Á¤  -- ½Å±Ô ¼ö½Ä : °¢ ºÎÀåÀÇ ´É·Â º¸Á¶·®¸¸ °è»ê ÈÄ ÁÖÀå+ºÎÀå1+ºÎÀå2 ÃÖÁ¾ ÇÕ»ê **/
-        int func_sub_stat(pk::person@ leader, int leader_stat, pk::person@ deputy, int deputy_stat)
-		{
-            
-			int leader_id = leader.get_id();
-			int deputy_id = deputy.get_id();
-            
-            int stat_add = 0;
-            
-            // Çø¿À °ü°è ¹«ÀåÀÎ °æ¿ì : º¸Á¶ ¾øÀ½
-            if (pk::is_dislike(leader, deputy_id) or pk::is_dislike(deputy, leader_id))
-				stat_add = 0;
-            // ÀÇÇüÁ¦ ¶Ç´Â ºÎºÎ °ü°èÀÎ °æ¿ì : ºÎÀå ´É·ÂÀÇ 25% º¸Á¶
-            else if (pk::is_gikyoudai(leader, deputy_id) or pk::is_fuufu(leader, deputy_id))
-				stat_add = int(pk::max(0.25f*deputy_stat, 1.f*(deputy_stat-leader_stat)));
-            // Ç÷¿¬ °ü°èÀÎ °æ¿ì : ºÎÀå ´É·ÂÀÇ 20% º¸Á¶
-			else if (pk::is_ketsuen(leader, deputy_id))
-				stat_add = int(0.2f * deputy_stat);
-            // ÁÖÀå/ºÎÀåÀÌ Ä£¾Ö ¹«ÀåÀÎ °æ¿ì : ºÎÀå ´É·ÂÀÇ 15% º¸Á¶
-			else if (pk::is_like(leader, deputy_id) or pk::is_like(deputy, leader_id))
-				stat_add = int(0.15f * deputy_stat);
-            // ±âÅ¸ °ü°è : ºÎÀå ´É·ÂÀÇ 10% º¸Á¶
-			else
-				stat_add = int(0.1f * deputy_stat);
-            
-            return stat_add;
-        }
-        // --------------------------------------------------------------------------------------
-        
 	}
 
 	Main main;
 }
-

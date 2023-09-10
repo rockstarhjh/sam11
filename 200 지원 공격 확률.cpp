@@ -1,4 +1,4 @@
-namespace Áö¿ø_°ø°İ_È®·ü
+ï»¿namespace ì§€ì›_ê³µê²©_í™•ë¥ 
 {
 	class Main
 	{
@@ -10,44 +10,39 @@ namespace Áö¿ø_°ø°İ_È®·ü
 		int callback(pk::unit@ assister, pk::unit@ attacker, pk::unit@ target)
 		{
 			pk::person@ assister_leader = pk::get_person(assister.leader);
-			pk::person@ assister_deputy1 = pk::get_person(assister.member[1]);
-			pk::person@ assister_deputy2 = pk::get_person(assister.member[2]);
-			
 			int attacker_leader = attacker.leader;
-			
-			// ¹«Àå.xml ¼³Á¤°ª
+			// ë¬´ì¥.xml ì„¤ì •ê°’
 			int bonus = pk::core::assist_chance(assister.leader);
 
-			// ¹è¿ìÀÚ³ª ÀÇÇüÁ¦ÀÏ °æ¿ì 50%
+			// ë°°ìš°ìë‚˜ ì˜í˜•ì œì¼ ê²½ìš° 50%
 			if (pk::is_fuufu(assister_leader, attacker_leader) or pk::is_gikyoudai(assister_leader, attacker_leader))
 				return 50 + bonus;
 
-			
-			/* 
-				[¿øº»] º¸ÁÂ Æ¯±âÀÏ °æ¿ì Çø¿À¹«Àå¸¸ ¾Æ´Ï¸é 30% (ÁÖÀå)
-				if (pk::has_skill(assister_leader, Æ¯±â_º¸ÁÂ) and !pk::is_dislike(assister_leader, attacker_leader))
-				{
-					return 30 + bonus;
-				}
-			*/
-			
-			// º¸ÁÂ Æ¯±âÀÏ °æ¿ì Çø¿À¹«Àå¸¸ ¾Æ´Ï¸é 30% (ÁÖÀå or ºÎÀå) 
-			if (assister.has_skill(Æ¯±â_º¸ÁÂ))
+			// í˜ì˜¤ë¬´ì¥ì¼ ê²½ìš° 0%
+			if (pk::is_dislike(assister_leader, attacker_leader))
+				return 0;
+
+			// ë³´ì¢Œ íŠ¹ê¸°ì¼ ê²½ìš°
+			if (pk::has_skill(assister_leader, íŠ¹ê¸°_ë³´ì¢Œ))
 			{
-				if (!pk::is_dislike(pk::get_person(assister.who_has_skill(Æ¯±â_º¸ÁÂ)), attacker_leader))
-				{	
+				// ì¹œì• ë¬´ì¥ì´ê±°ë‚˜ í˜ˆì—°ì´ë©´ 50%
+				if (pk::is_like(assister_leader, attacker_leader) or pk::is_ketsuen(assister_leader, attacker_leader))
+					return 50 + bonus;
+
+				// íŠ¹ë³„í•œ ê´€ê³„ê°€ ì—†ìœ¼ë©´ 30%
 					return 30 + bonus;
-				}
 			}
+			// ë³´ì¢Œ íŠ¹ê¸°ê°€ ì•„ë‹Œ ê²½ìš°
+			else
+			{
+				// ì¹œì• ë¬´ì¥ì´ë©´ 30%
+				if (pk::is_like(assister_leader, attacker_leader))
+					return 30 + bonus;
 
-
-			// Ä£¾Ö¹«ÀåÀÏ °æ¿ì 30%
-			if (pk::is_like(assister_leader, attacker_leader))
-				return 30 + bonus;
-
-			// Ç÷¿¬ÀÌ°í Çø¿À¹«ÀåÀÌ ¾Æ´Ò°æ¿ì 20%
-			if (pk::is_ketsuen(assister_leader, attacker_leader) and !pk::is_dislike(assister_leader, attacker_leader))
-				return 20 + bonus;
+				// í˜ˆì—°ì´ë©´ 20%
+				if (pk::is_ketsuen(assister_leader, attacker_leader))
+					return 20 + bonus;
+			}
 
 			return 0 + bonus;
 		}

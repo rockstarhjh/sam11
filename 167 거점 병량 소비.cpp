@@ -1,4 +1,4 @@
-namespace °ÅÁ¡_º´·®_¼Òºñ
+ï»¿namespace ê±°ì _ë³‘ëŸ‰_ì†Œë¹„
 {
 	class Main
 	{
@@ -17,21 +17,19 @@ namespace °ÅÁ¡_º´·®_¼Òºñ
 			if (building.is_on_fire())
 			{
 				pk::person@ taishu = pk::get_person(pk::get_taishu_id(building));
-				int pol = taishu !is null ? taishu.stat[¹«Àå´É·Â_Á¤Ä¡] : 0;
+				int pol = taishu !is null ? taishu.stat[ë¬´ì¥ëŠ¥ë ¥_ì •ì¹˜] : 0;
 				n = n + (6.f - (pol / 20.f)) * pk::get_food(building) / 100.f;
 			}
-            
-            //ÁÖº¯¿¡ ÀûÀÌ ÀÖÀ» ½Ã º´·® ¼Òºñ·® 2¹è Áõ°¡ ('18.10.14)
-            if (pk::enemies_around(building))
-                n = n + pk::get_troops(building) / 20.f;    // ÀüÅõºÎ´ë ¼öÁØÀ¸·Î º´·® ¼Òºñ
-            else
-                n = n + pk::get_troops(building) / 40.f;
 
-            
-            
+			// íŠ¹ê¸° ë‘”ì „ì´ ë„ì‹œì—ì„œ ë³‘ì‚¬ 3ë§Œëª…ì˜ ë³‘ëŸ‰ ì†Œëª¨ ì ˆê° (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+			int m = 0;
+			if (pk::is_valid_person_id(building.who_has_skill(íŠ¹ê¸°_ë‘”ì „)))
+				m = 30000;
+			n = n + pk::max(0, (pk::get_troops(building) - m)) / 40;
+
 			if (n <= 0 and pk::get_troops(building) > 0)
-				return 1;
-			return int(n);
+				return 0;
+			return n;
 		}
 	}
 

@@ -14,6 +14,11 @@
 				return 0;
 			else if (facility_id == 시설_유적 and pk::has_member(unit, 무장_이적))
 				return 100;
+
+			// 안력 특기가 공적, 매력 조건 충족 상태에서 유적, 묘를 100% 발견 (특기종합패치)
+			else if (unit.has_skill(특기_안력))
+				return 100;
+
 			else
 				return unit.attr.stat[부대능력_매력] / 2;
 		}

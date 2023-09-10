@@ -29,9 +29,10 @@
 			pk::list<pk::person@> prisoner_list;
 
 			// 공격 오브젝트의 포박 특기 보유 확인
-			if (pk::is_alive(attacker_unit))
+			if (pk::is_alive(attacker_unit) and in_border)
 			{
-				has_hobaku_skill = in_border and attacker_unit.has_skill(특기_포박);
+				// 포박 무장의 통솔, 무력이 적보다 더 높으면 반드시 포박하도록 변경 (특기종합패치)
+				has_hobaku_skill = ((pk::get_best_member_stat(attacker_unit, 특기_포박, 무장능력_통솔) > target_unit.attr.stat[부대능력_통솔]) and (pk::get_best_member_stat(attacker_unit, 특기_포박, 무장능력_무력) > target_unit.attr.stat[부대능력_무력]));
 				hobaku_chance = int(pk::core::skill_constant(attacker_unit, 특기_포박));
 			}
 			else if (pk::is_alive(attacker_building))
@@ -48,7 +49,8 @@
 				{
 					for (int i = 0; i < list.size; i++)
 					{
-						if (pk::has_skill(list[i], 특기_포박))
+						// 포박조건 추가 (특기종합패치)
+						if (pk::has_skill(list[i], 특기_포박) and (list[i].stat[무장능력_통솔] > target_unit.attr.stat[부대능력_통솔]) and (list[i].stat[무장능력_무력] > target_unit.attr.stat[부대능력_무력]))
 						{
 							has_hobaku_skill = true;
 							hobaku_chance = pk::max(hobaku_chance, int(pk::core::skill_constant(list[i].get_id(), 특기_포박)));
@@ -113,17 +115,42 @@
 				}
 
 				int n = 0;
-				n += int(pk::core["무장.최대능력치"]) + 20 - pk::max(person.stat[무장능력_무력], person.stat[무장능력_지력]);
+				n += pk::max(20, 120 - pk::max(person.stat[무장능력_무력], person.stat[무장능력_지력]));
 				n /= 3;
 				if (bordered_unit_count > 0)
-					n *= 100 * (pk::has_skill(person, 특기_철벽) ? 1 : bordered_unit_count);
+					n *= 100 + 40 * (pk::has_skill(person, 특기_철벽) ? 0 : bordered_unit_count - 1);
 				if (terrain_id == 지형_습지 or terrain_id == 지형_독천)
 					n *= 1.5f;
 				n /= 100;
-				n /= penalty ? 2 : 1;
-				n += has_hobaku_skill ? hobaku_chance : 0;
+
 				if (tactics_bonus)
-					n += 30;
+					n += 20;
+				n /= penalty ? 2 : 1;
+
+				if (person.mibun == 신분_군주 or person.rank <= 관직_사도)
+				n *= 0.40f;
+				else if (person.rank <= 관직_거기장군)
+				n *= 0.45f;
+				else if (person.rank <= 관직_정북장군)
+				n *= 0.50f;
+				else if (person.rank <= 관직_진북장군)
+				n *= 0.55f;
+				else if (person.rank <= 관직_안북장군)
+				n *= 0.60f;
+				else if (person.rank <= 관직_후장군)
+				n *= 0.65f;
+				else if (person.rank <= 관직_토역장군)
+				n *= 0.70f;
+				else if (person.rank <= 관직_평북장군)
+				n *= 0.75f;
+				else if (person.rank <= 관직_비장군)
+				n *= 0.80f;
+				else if (person.rank <= 관직_건의교위)
+				n *= 0.85f;
+				else if (person.rank <= 관직_무위교위)
+				n *= 0.90f;
+
+				n += has_hobaku_skill ? hobaku_chance : 0;
 
 				if (pk::rand_bool(n))
 					captured.push_back(person);

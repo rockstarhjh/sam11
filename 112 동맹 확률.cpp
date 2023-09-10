@@ -1,4 +1,4 @@
-namespace µ¿¸Í_È®·ü
+ï»¿namespace ë™ë§¹_í™•ë¥ 
 {
 	class Main
 	{
@@ -11,30 +11,31 @@ namespace µ¿¸Í_È®·ü
 		{
 			bool accurate = true;
 			pk::person@ target_kunshu = pk::get_person(info.target.kunshu);
+			pk::person@ target_gunshi = pk::get_person(info.target.gunshi);	// ë…¼ê° ì¡°ê±´ë¬¸ ì¶”ê°€ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
 
 			if (!pk::is_alive(target_kunshu)) return pk::int_bool(2, accurate);
 
 			int actor_force_id = info.actor.get_force_id();
 			int target_force_id = info.target.get_id();
 
-			// Æ÷·Î°¡ ÀÖ´Ù¸é Ç×»ó ½ÇÆĞ
+			// í¬ë¡œê°€ ìˆë‹¤ë©´ í•­ìƒ ì‹¤íŒ¨
 			if (func_5be0e0(actor_force_id, target_force_id) or func_5be0e0(target_force_id, actor_force_id)) return pk::int_bool(2, accurate);
 
-			// ½ÇÇà ¹«ÀåÀÌ ³í°´ Æ¯±â¸¦ º¸À¯ÇÏ°í ÀÖÁö ¾Ê°í ¸ñÇ¥ ¼¼·Â ±ºÁÖ°¡ ½ÇÇà ¼¼·Â ±ºÁÖ¸¦ Çø¿ÀÇÑ´Ù¸é Ç×»ó ½ÇÆĞ
-			if (!pk::has_skill(info.actor, Æ¯±â_³í°´) and pk::is_dislike(target_kunshu, pk::get_kunshu_id(info.actor))) return pk::int_bool(2, accurate);
+			// ì‹¤í–‰ ë¬´ì¥ì´ ë…¼ê° íŠ¹ê¸°ë¥¼ ë³´ìœ í•˜ê³  ìˆì§€ ì•Šê³  ëª©í‘œ ì„¸ë ¥ êµ°ì£¼ê°€ ì‹¤í–‰ ì„¸ë ¥ êµ°ì£¼ë¥¼ í˜ì˜¤í•œë‹¤ë©´ í•­ìƒ ì‹¤íŒ¨
+			if (!pk::has_skill(info.actor, íŠ¹ê¸°_ë…¼ê°) and pk::is_dislike(target_kunshu, pk::get_kunshu_id(info.actor))) return pk::int_bool(2, accurate);
 
 			int n = 0;
 			int g = 0;
 			int difficulty = pk::get_scenario().difficulty;
 
-			n += int(func_5b3130(info.actor, target_kunshu, -1, 1, 1.5) * 10);
-			n += int(info.gold / 150);
-			n -= int(pk::get_aishou_distance(target_kunshu, info.actor.get_id()) / 5);
-			n += int(info.actor.stat[¹«Àå´É·Â_Á¤Ä¡]);
-			if (difficulty == ³­ÀÌµµ_»ó±Ş)
-				n = int(n * 0.8f);
-			else if (difficulty == ³­ÀÌµµ_Æ¯±Ş)
-				n = int(n * 0.7f);
+			n += func_5b3130(info.actor, target_kunshu, -1, 1, 1.5) * 10;
+			n += info.gold / 150;
+			n -= pk::get_aishou_distance(target_kunshu, info.actor.get_id()) / 5;
+			n += info.actor.stat[ë¬´ì¥ëŠ¥ë ¥_ì •ì¹˜];
+			if (difficulty == ë‚œì´ë„_ìƒê¸‰)
+				n = n * 0.8f;
+			else if (difficulty == ë‚œì´ë„_íŠ¹ê¸‰)
+				n = n * 0.7f;
 
 			g = (110 - info.target.relations[actor_force_id]) * 2;
 
@@ -42,12 +43,16 @@ namespace µ¿¸Í_È®·ü
 
 			if (n > g) return pk::int_bool(0, accurate);
 
-			// ½ÇÇà ¹«ÀåÀÌ ³í°´ Æ¯±â¸¦ º¸À¯ÇÏ°í ÀÖÀ½
-			if (pk::has_skill(info.actor, Æ¯±â_³í°´))
+			// ì‹¤í–‰ ë¬´ì¥ì´ ë…¼ê° íŠ¹ê¸°ë¥¼ ë³´ìœ í•˜ê³  ìˆìŒ
+			if (pk::has_skill(info.actor, íŠ¹ê¸°_ë…¼ê°) and pk::is_alive(target_gunshi))
 			{
-				// Æ¯±Ş ¸ğµå ÇÃ·¹ÀÌ¾îÀÏ °æ¿ì¿¡¸¸ 20%, ³ª¸ÓÁö 100% ¼³Àü
-				// if (difficulty != ³­ÀÌµµ_Æ¯±Ş or !info.actor.is_player() or pk::randbool(20)) return pk::int_bool(1, accurate);
-				if (!info.actor.is_player() or pk::rand_bool(int(pk::core::skill_constant(info.actor.get_id(), Æ¯±â_³í°´, difficulty)))) return pk::int_bool(1, accurate);
+				// íŠ¹ê¸‰ ëª¨ë“œ í”Œë ˆì´ì–´ì¼ ê²½ìš°ì—ë§Œ 20%, ë‚˜ë¨¸ì§€ 100% ì„¤ì „
+				// if (difficulty != ë‚œì´ë„_íŠ¹ê¸‰ or !info.actor.is_player() or pk::randbool(20)) return pk::int_bool(1, accurate);
+				if (!info.actor.is_player() or pk::rand_bool(int(pk::core::skill_constant(info.actor.get_id(), íŠ¹ê¸°_ë…¼ê°, difficulty)))) return pk::int_bool(1, accurate);
+
+				// ì„¤ì „ í™•ë¥ ì´ ë…¼ê° ë¬´ì¥ì˜ ëŠ¥ë ¥ ì¡°ê±´(ì§€ë ¥, ì •ì¹˜ ì¤‘ ë†’ì€ ê°’ì´ ìƒëŒ€ êµ°ì‚¬ì˜ ì§€ë ¥, ì •ì¹˜ë³´ë‹¤ ë†’ìŒ) ì¶©ì¡±ì‹œ 100%ë¡œ ìƒìŠ¹ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+				else if (pk::max(info.actor.stat[ë¬´ì¥ëŠ¥ë ¥_ì§€ë ¥], info.actor.stat[ë¬´ì¥ëŠ¥ë ¥_ì •ì¹˜]) > pk::max(target_gunshi.stat[ë¬´ì¥ëŠ¥ë ¥_ì§€ë ¥], target_gunshi.stat[ë¬´ì¥ëŠ¥ë ¥_ì •ì¹˜]))
+				return pk::int_bool(1, accurate);
 			}
 
 			g = (100 - info.target.relations[actor_force_id]) * 2;
@@ -58,7 +63,7 @@ namespace µ¿¸Í_È®·ü
 		}
 
 		/**
-			½ÇÇà¹«Àå°ú ¸ñÇ¥¼¼·Â ±ºÁÖÀÇ °ü°è¿¡ µû¸¥ º¸³Ê½º
+			ì‹¤í–‰ë¬´ì¥ê³¼ ëª©í‘œì„¸ë ¥ êµ°ì£¼ì˜ ê´€ê³„ì— ë”°ë¥¸ ë³´ë„ˆìŠ¤
 		*/
 		float func_5b3130(pk::person@ actor, pk::person@ target_kunshu, float bad, float good, float best)
 		{
@@ -70,12 +75,12 @@ namespace µ¿¸Í_È®·ü
 		}
 
 		/**
-			src ¼¼·ÂÀÌ dst ¼¼·Â ¹«ÀåÀ» Æ÷·Î·Î Àâ°í ÀÖ´ÂÁö È®ÀÎ
+			src ì„¸ë ¥ì´ dst ì„¸ë ¥ ë¬´ì¥ì„ í¬ë¡œë¡œ ì¡ê³  ìˆëŠ”ì§€ í™•ì¸
 		*/
 		bool func_5be0e0(int src, int dst)
 		{
-			pk::list<pk::person@> list = pk::get_person_list(pk::mibun_flags(½ÅºĞ_Æ÷·Î));
-			for (int i = 0; i < list.count; i++)
+			pk::list<pk::person@> list = pk::get_person_list(pk::mibun_flags(ì‹ ë¶„_í¬ë¡œ));
+			for (int i = 0; i < list.size; i++)
 			{
 				pk::person@ person = list[i];
 				if (person.former_force == dst)

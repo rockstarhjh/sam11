@@ -1,4 +1,4 @@
-namespace Àü¹ı_¼º°ø_È®·ü
+ï»¿namespace ì „ë²•_ì„±ê³µ_í™•ë¥ 
 {
 	class Main
 	{
@@ -9,104 +9,95 @@ namespace Àü¹ı_¼º°ø_È®·ü
 
 		int callback(pk::unit@ attacker, const pk::point &in pos, pk::hex_object@ target, int tactics_id)
 		{
-            pk::unit @ target_unit = pk::hex_object_to_unit(target);
-            
-			if (target.is_instance(pk::unit::type_id) and target_unit.status != ºÎ´ë»óÅÂ_Åë»ó)
+			if (target.is_instance(pk::unit::type_id) and pk::hex_object_to_unit(target).status != ë¶€ëŒ€ìƒíƒœ_í†µìƒ)
 				return 100;
-            
+
 			int n = 0;
 			pk::point temp;
 
-			// if (pk::get_tekisei(attacker) == Àû¼º_A) n = 5; else if (pk::get_tekisei(attacker) == Àû¼º_S) n = 10;
-			n = int(pk::core["Àû¼º"][pk::get_tekisei(attacker)]["Àü¹ı¼º°øÈ®·ü"]) + pk::core::tactics_chance(attacker.leader);
-            
-            
-            
+			// if (pk::get_tekisei(attacker) == ì ì„±_A) n = 5; else if (pk::get_tekisei(attacker) == ì ì„±_S) n = 10;
+			n = int(pk::core["ì ì„±"][pk::get_tekisei(attacker)]["ì „ë²•ì„±ê³µí™•ë¥ "]) + pk::core::tactics_chance(attacker.leader);
+
+			// ì •ë¬˜ íŠ¹ê¸°ê°€ ì„±ê³µë¥  10%ë¥¼ ì˜¬ë ¤ì¤Œ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+			if (attacker.has_skill(íŠ¹ê¸°_ì •ë¬˜))
+			n = n + 10;
+
 			switch (tactics_id)
 			{
-			case Àü¹ı_µ¹Ãâ:
-                n = n + push_bonus(get_height_diff(attacker.get_pos(), target.get_pos())) + 70;
+			case ì „ë²•_ëŒì¶œ:
+			case ì „ë²•_ëŒê²©:
+				n = n + push_bonus(get_height_diff(attacker.get_pos(), target.get_pos())) + 70;
 				break;
-            case Àü¹ı_ÀÌ´ÜÃ·:
-                n = n + push_bonus(get_height_diff(attacker.get_pos(), target.get_pos())) + 65;
+
+			case ì „ë²•_ì´ë‹¨ì²¨:
+				n = n + push_bonus(get_height_diff(attacker.get_pos(), target.get_pos())) + 60;
 				temp = pk::get_neighbor_pos(target.get_pos(), pk::get_direction(attacker.get_pos(), target.get_pos()));
 				n = n + cutoff_diff(get_height_diff(target.get_pos(), temp));
 				break;
-			case Àü¹ı_³ª¼±Ã·:
-				n = n + push_bonus(get_height_diff(attacker.get_pos(), target.get_pos())) + 60;
-				break;
 
-                
-			case Àü¹ı_°¥Äû:
+			case ì „ë²•_ê°ˆí€´:
 				n = n + pull_bonus(get_height_diff(attacker.get_pos(), target.get_pos())) + 70;
 				temp = pk::get_neighbor_pos(attacker.get_pos(), pk::get_direction(target.get_pos(), attacker.get_pos()));
 				n = n + cutoff_diff(get_height_diff(attacker.get_pos(), temp));
 				break;
-			case Àü¹ı_È¾Ä¡:
-            case Àü¹ı_¼±Ç³:
-            
-            
-			case Àü¹ı_È­½Ã:
-				n = n + hiya_terrain_bonus(pk::get_hex(target.get_pos()).terrain) + 75;
-				break;
-			case Àü¹ı_°ü½Ã:
+
+			case ì „ë²•_ë‚˜ì„ ì²¨:
+			case ì „ë²•_íš¡ì¹˜:
+			case ì „ë²•_ê´€ì‹œ:
 				n = n + 70;
 				break;
-            case Àü¹ı_³­»ç:
-                
-                
-            case Àü¹ı_µ¹°İ:
-				n = n + push_bonus(get_height_diff(attacker.get_pos(), target.get_pos())) + 70;
+
+			case ì „ë²•_í™”ì‹œ:
+				n = n + hiya_terrain_bonus(pk::get_hex(target.get_pos()).terrain) + 75;
 				break;
-			case Àü¹ı_µ¹Áø:
+
+			case ì „ë²•_ëŒíŒŒ:
 				n = n + push_bonus(get_height_diff(attacker.get_pos(), target.get_pos())) + 65;
+				break;
+
+			case ì „ë²•_ëŒì§„:
+				n = n + push_bonus(get_height_diff(attacker.get_pos(), target.get_pos())) + 60;
 				temp = pk::get_neighbor_pos(target.get_pos(), pk::get_direction(attacker.get_pos(), target.get_pos()));
 				n = n + cutoff_diff(get_height_diff(target.get_pos(), temp));
 				break;
-			case Àü¹ı_µ¹ÆÄ:
-				n = n + push_bonus(get_height_diff(attacker.get_pos(), target.get_pos())) + 60;
-				break;
-			
-			
-			case Àü¹ı_ÇÔ¼±°İµ¹:
+
+			case ì „ë²•_ì„ í’:
+			case ì „ë²•_ë‚œì‚¬:
+			case ì „ë²•_í•¨ì„ ê²©ëŒ:
 				n = n + 65;
 				break;
 
-			default:        // º´±â °£Á¢ °ø°İ ¼º°øÀ² = 100%
+			default:
 				return 100;
 			}
-            
-            // °ø°İºÎ´ë º´·Â¼ö¿¡ µû¶ó Àü¹ı ¼º°ø·ü º¸Á¤ ('18.10.13)
-            if (attacker.troops <= 1000)
-                n = int(n * pk::max(0.1f, attacker.troops/1000.f));         // ¼ÒºÎ´ë ½Ã Àü¹ı¼º°ø·ü 1/10¹è ±îÁö °¨¼Ò
-            
-            
-            // °ø°İ/ÇÇ°İ ºÎ´ëÀÇ Æ¯±â º¸À¯¿¡ µû¸¥ Àü¹ı ¼º°øÀ² º¸Á¤ ('18.10.18)
-            if (target.is_instance(pk::unit::type_id) and target_unit.status == ºÎ´ë»óÅÂ_Åë»ó and pk::is_valid_tactics_id(tactics_id))
-            {
-                // °ø°İºÎ´ë°¡ °­¿î Æ¯±â º¸À¯ ½Ã Àü¹ı ¼º°øÀ² ÃÖ¼Ò 80% 
-                if (attacker.has_skill(Æ¯±â_°­¿î) )
-                    return pk::max(80, n);  
-                // ÇÇ°İºÎ´ë°¡ ÅëÂû Æ¯±â º¸À¯ ½Ã Àü¹ı ¼º°øÀ² ÃÖ´ë 50% : °ø°İÀü¹ı ½ÇÆĞ ½Ã Åë»ó°ø°İÀÌ µÇ±â ?¹®¿¡ ºÒ±¼/±İ°­Ã³·³ ÀÏÁ¤ È®·ü·Î È¸ÇÇÇÏ´Â °Í°ú´Â ´Ù¸§ 
-                if (target_unit.has_skill(Æ¯±â_ÅëÂû) )
-                    return pk::min(50, n);
-                // °ø°İºÎ´ë°¡ Á¤¹¦ Æ¯±â º¸À¯ ½Ã Àü¹ı ¼º°øÀ² 10% Ãß°¡
-                if (attacker.has_skill(Æ¯±â_Á¤¹¦) )
-                    return pk::min(100, n + 10); 
-            }
-            
-                
+
 			return n;
 		}
 
-        
-        
-        
-        
 		// 5af5b0
 		int get_height_diff(const pk::point &in src, const pk::point &in dst)
 		{
 			return pk::get_height_map(pk::hex_pos_to_height_map_pos(src) + 2).height - pk::get_height_map(pk::hex_pos_to_height_map_pos(dst) + 2).height;
+		}
+
+		// 5af680
+		int cutoff_diff(int n)
+		{
+			// ìƒëŒ€ë³´ë‹¤ ë†’ìŒ
+			if (n >= 10)
+				return 10;
+			// ìƒëŒ€ë³´ë‹¤ ë†’ìŒ
+			else if (n >= 5)
+				return 5;
+			// í‰ì§€
+			else if (n >= -5)
+				return 0;
+			// ìƒëŒ€ë³´ë‹¤ ë‚®ìŒ
+			else if (n >= -10)
+				return -5;
+			// ìƒëŒ€ë³´ë‹¤ ë‚®ìŒ
+			else
+				return -10;
 		}
 
 		// 5af6b0
@@ -120,49 +111,25 @@ namespace Àü¹ı_¼º°ø_È®·ü
 		{
 			return 5 - cutoff_diff(n);
 		}
-        
 
-		// 5af680
-		int cutoff_diff(int n)
-		{
-			// »ó´ëº¸´Ù ³ôÀ½
-			if (n >= 10)
-				return 10;
-			// »ó´ëº¸´Ù ³ôÀ½
-			else if (n >= 5)
-				return 5;
-			// ÆòÁö
-			else if (n >= -5)
-				return 0;
-			// »ó´ëº¸´Ù ³·À½
-			else if (n >= -10)
-				return -5;
-			// »ó´ëº¸´Ù ³·À½
-			else
-				return -10;
-		}
-        
-
-		// 849ae0 ÁöÇü¿¡ µû¸¥ È­½Ã È®·ü º¸³Ê½º
+		// 849ae0 ì§€í˜•ì— ë”°ë¥¸ í™”ì‹œ í™•ë¥  ë³´ë„ˆìŠ¤
 		int hiya_terrain_bonus(int terrain)
 		{
 			switch (terrain)
 			{
-			case ÁöÇü_¶¥: return -5;
-			case ÁöÇü_¸ğ·¡: return -5;
-			case ÁöÇü_½ÀÁö: return -15;
-			case ÁöÇü_µ¶Ãµ: return -15;
-			case ÁöÇü_½£: return 10;
-			case ÁöÇü_³»: return -10;
-			case ÁöÇü_°­: return -10;
-			case ÁöÇü_¹Ù´Ù: return -10;
-			case ÁöÇü_¿©¿ï: return -10;
-			case ÁöÇü_»û±æ: return -5;
+			case ì§€í˜•_ë•…: return -5;
+			case ì§€í˜•_ëª¨ë˜: return -5;
+			case ì§€í˜•_ìŠµì§€: return -15;
+			case ì§€í˜•_ë…ì²œ: return -15;
+			case ì§€í˜•_ìˆ²: return 10;
+			case ì§€í˜•_ë‚´: return -10;
+			case ì§€í˜•_ê°•: return -10;
+			case ì§€í˜•_ë°”ë‹¤: return -10;
+			case ì§€í˜•_ì—¬ìš¸: return -10;
+			case ì§€í˜•_ìƒ›ê¸¸: return -5;
 			}
 			return 0;
 		}
-        
-        
 	}
 
 	Main main;

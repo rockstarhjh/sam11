@@ -71,8 +71,8 @@
 			// 공격, 일제
 			else
 			{
+				if (attacker.has_skill(특기_구축)) return true;	// 구축 무력조건 없음 (특기종합패치)
 				if (pk::get_best_member_stat(attacker, 특기_신장, 무장능력_무력) > target_strength) return true;
-				if (pk::get_best_member_stat(attacker, 특기_구축, 무장능력_무력) > target_strength) return true;
 
 				if (pk::get_weapon_id(attacker) == 병기_군마)
 				{

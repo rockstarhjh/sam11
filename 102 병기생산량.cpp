@@ -1,20 +1,7 @@
-/*
-@¼öÁ¤ÀÚ : ±â¸¶Ã¥»ç
-@Update: '19.5.4   // ¼öÁ¤³»¿ë: À¯Àú_µµ½Ã¼ö_ÆĞ³ÎÆ¼ Ãß°¡
-@Update: '20.8.29  // ¼öÁ¤³»¿ë: Ä·ÆäÀÎ¿¡¼­´Â Ä¿½ºÅÒ ¼¼ÆÃ »ç¿ë ºÒ°¡ÇÏµµ·Ï ¼öÁ¤
-*/
-
-namespace º´±â»ı»ê·®
+ï»¿namespace ë³‘ê¸°ìƒì‚°ëŸ‰
 {
-    //---------------------------------------------------------------------------
-        
-    const bool À¯Àú_µµ½Ã¼ö_ÆĞ³ÎÆ¼ = true;   // À¯Àú¼¼·Â¿¡ ´ëÇØ¼­ µµ½Ã¼ö¿¡ ºñ·ÊÇÏ¿© »ı»ê·® µğ¹öÇÁ (µµ½Ã´ç 1% °¨¼Ò)
-    
-    //---------------------------------------------------------------------------
-        
 	class Main
 	{
-    
 		Main()
 		{
 			pk::set_func(102, pk::func102_t(callback));
@@ -22,25 +9,26 @@ namespace º´±â»ı»ê·®
 
 		int callback(pk::city@ city, const pk::detail::arrayptr<pk::person@> &in actors, int weapon_id)
 		{
+
 			if (!pk::is_valid_equipment_id(weapon_id))
 				return 0;
-			if (weapon_id >= º´±â_ÃæÂ÷)
+			if (weapon_id >= ë³‘ê¸°_ì¶©ì°¨)
 				return 1;
 
 			int n = 0, sum = 0, max = 0, skill_id = -1;
 			bool has_skill = false;
 
-			if (weapon_id <= º´±â_³ë)
-				skill_id = int(pk::core["º´±â»ı»ê.´ëÀå°£Æ¯±â"]);
-			else if (weapon_id == º´±â_±º¸¶)
-				skill_id = int(pk::core["º´±â»ı»ê.¸¶±¸°£Æ¯±â"]);
+			if (weapon_id <= ë³‘ê¸°_ë…¸)
+				skill_id = int(pk::core["ë³‘ê¸°ìƒì‚°.ëŒ€ì¥ê°„íŠ¹ê¸°"]);
+			else if (weapon_id == ë³‘ê¸°_êµ°ë§ˆ)
+				skill_id = int(pk::core["ë³‘ê¸°ìƒì‚°.ë§ˆêµ¬ê°„íŠ¹ê¸°"]);
 
-			for (int i = 0; i < int(actors.length); i++)
+			for (int i = 0; i < actors.length; i++)
 			{
 				pk::person@ actor = actors[i];
 				if (pk::is_alive(actor))
 				{
-					int s = actor.stat[int(pk::core["º´±â»ı»ê.´É·Â"])];
+					int s = actor.stat[int(pk::core["ë³‘ê¸°ìƒì‚°.ëŠ¥ë ¥"])];
 					sum = sum + s;
 					max = pk::max(max, s);
 					if (pk::has_skill(actor, skill_id))
@@ -50,25 +38,21 @@ namespace º´±â»ı»ê·®
 
 			n = (sum + max + 200) * 5;
 
-			// °ü·Ã Æ¯±â¸¦ °¡Áö°í ÀÖ´Ù¸é 2¹è
+			// ê´€ë ¨ íŠ¹ê¸°ë¥¼ ê°€ì§€ê³  ìˆë‹¤ë©´ 2ë°°
 			if (has_skill)
 				n = n * 2;
 
-			n = int(n * func_5c7040(city, weapon_id));
+			// ê´€ë ¨ ê¸°êµê°€ ì—°êµ¬ë˜ì–´ ìˆë‹¤ë©´ 1.25ë°° (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+			if ((weapon_id <= ë³‘ê¸°_ë…¸) and (pk::has_tech(city, ê¸°êµ_êµ°ì œê°œí˜)))
+				n = n * 1.25f;
+			if ((weapon_id == ë³‘ê¸°_êµ°ë§ˆ) and (pk::has_tech(city, ê¸°êµ_ì–‘ë§ˆì‚°ì¶œ)))
+				n = n * 1.25f;
 
-			// ÄÄÇ»ÅÍÀÏ °æ¿ì Æ¯±Ş ³­ÀÌµµ¿¡¼­ 2¹è
-			if (pk::get_scenario().difficulty == ³­ÀÌµµ_Æ¯±Ş and !city.is_player())
+			n = n * func_5c7040(city, weapon_id);
+
+			// ì»´í“¨í„°ì¼ ê²½ìš° íŠ¹ê¸‰ ë‚œì´ë„ì—ì„œ 2ë°°
+			if (pk::get_scenario().difficulty == ë‚œì´ë„_íŠ¹ê¸‰ and !city.is_player())
 				n = n * 2;
-            
-            
-            // À¯Àú_µµ½Ã¼ö_ÆĞ³ÎÆ¼ ('19.5.4)
-            if (À¯Àú_µµ½Ã¼ö_ÆĞ³ÎÆ¼ and city.is_player() and !pk::is_campaign())
-            {
-                pk::force@ force = pk::get_force(city.get_force_id());
-                float force_city_count = float(pk::get_city_list(force).count);
-                n = int(n * (1.f - (force_city_count * 0.01f)));
-            }
-            
 
 			return n;
 		}
@@ -76,7 +60,7 @@ namespace º´±â»ı»ê·®
 		float func_5c7040(pk::city@ city, int weapon_id)
 		{
 			int level1 = 0, level2 = 0;
-			if (weapon_id == º´±â_Ã¢ or weapon_id == º´±â_±Ø or weapon_id == º´±â_³ë)
+			if (weapon_id == ë³‘ê¸°_ì°½ or weapon_id == ë³‘ê¸°_ê·¹ or weapon_id == ë³‘ê¸°_ë…¸)
 			{
 				for (int i = 0; i < city.max_devs; i++)
 				{
@@ -85,35 +69,35 @@ namespace º´±â»ı»ê·®
 					{
 						switch (building.facility)
 						{
-						case ½Ã¼³_´ëÀå°£: building.completed ? level1++ : 0; break;
-						case ½Ã¼³_´ëÀå°£2´Ü: building.completed ? level2++ : level1++; break;
-						case ½Ã¼³_´ëÀå°£3´Ü: building.completed ? 0 : level2++; break;
+						case ì‹œì„¤_ëŒ€ì¥ê°„: building.completed ? level1++ : 0; break;
+						case ì‹œì„¤_ëŒ€ì¥ê°„2ë‹¨: building.completed ? level2++ : level1++; break;
+						case ì‹œì„¤_ëŒ€ì¥ê°„3ë‹¨: building.completed ? 0 : level2++; break;
 						}
 					}
 				}
-				if (int(city.blacksmith_counter) > level1 + level2)
+				if (city.blacksmith_counter > level1 + level2)
 					return 1.5f;
-				if (int(city.blacksmith_counter) > level1)
+				if (city.blacksmith_counter > level1)
 					return 1.2f;
 			}
-			else if (weapon_id == º´±â_±º¸¶)
+			else if (weapon_id == ë³‘ê¸°_êµ°ë§ˆ)
 			{
-				for (int i = 0; i < int(city.max_devs); i++)
+				for (int i = 0; i < city.max_devs; i++)
 				{
 					pk::building@ building = city.dev[i].building;
 					if (pk::is_alive(building))
 					{
 						switch (building.facility)
 						{
-						case ½Ã¼³_¸¶±¸°£: building.completed ? level1++ : 0; break;
-						case ½Ã¼³_¸¶±¸°£2´Ü: building.completed ? level2++ : level1++; break;
-						case ½Ã¼³_¸¶±¸°£3´Ü: building.completed ? 0 : level2++; break;
+						case ì‹œì„¤_ë§ˆêµ¬ê°„: building.completed ? level1++ : 0; break;
+						case ì‹œì„¤_ë§ˆêµ¬ê°„2ë‹¨: building.completed ? level2++ : level1++; break;
+						case ì‹œì„¤_ë§ˆêµ¬ê°„3ë‹¨: building.completed ? 0 : level2++; break;
 						}
 					}
 				}
-				if (int(city.stable_counter) > level1 + level2)
+				if (city.stable_counter > level1 + level2)
 					return 1.5f;
-				if (int(city.stable_counter) > level1)
+				if (city.stable_counter > level1)
 					return 1.2f;
 			}
 			return 1.f;

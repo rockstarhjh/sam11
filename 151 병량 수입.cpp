@@ -1,19 +1,5 @@
-/*
-@¼öÁ¤ÀÚ: ±â¸¶Ã¥»ç
-@Update: '20.8.29   / º¯°æ³»¿ë: À¯Àú µµ½Ã¼ö ÆÐ³ÎÆ¼ Ãß°¡, Ä·ÆäÀÎ¿¡¼­´Â Ä¿½ºÅÒ ¼³Á¤ »ç¿ë ºÒ°¡
-*/
-
-
-namespace º´·®_¼öÀÔ
+ï»¿namespace ë³‘ëŸ‰_ìˆ˜ìž…
 {
-    
-    //---------------------------------------------------------------------------------------
-    // À¯Àú ¼³Á¤ (true = on, false = off)
-    const bool  À¯Àú_µµ½Ã¼ö_ÆÐ³ÎÆ¼ = true;     // À¯Àú¼¼·Â¿¡ ´ëÇØ¼­ µµ½Ã¼ö¿¡ ºñ·ÊÇÏ¿© ¼öÀÔ µð¹öÇÁ (µµ½Ã´ç 5% °¨¼Ò)
-    
-    //---------------------------------------------------------------------------------------
-    
-    
 	class Main
 	{
 		Main()
@@ -23,10 +9,11 @@ namespace º´·®_¼öÀÔ
 
 		int callback(pk::city@ city)
 		{
+
 			if (city is null or !pk::is_valid_force_id(city.get_force_id()))
 				return 0;
 
-			// ±âº» º´·® ¼öÀÔ
+			// ê¸°ë³¸ ë³‘ëŸ‰ ìˆ˜ìž…
 			int n = city.harvest;
 
 			for (auto i = 0; i < city.max_devs; i++)
@@ -39,39 +26,43 @@ namespace º´·®_¼öÀÔ
 					facility_id = building.facility;
 					switch (facility_id)
 					{
-					case ½Ã¼³_³óÀå:
-					case ½Ã¼³_±ºµÐ³ó:
+					case ì‹œì„¤_ë†ìž¥:
+					case ì‹œì„¤_êµ°ë‘”ë†:
 						if (!building.completed)
 							continue;
 						break;
-					case ½Ã¼³_³óÀå2´Ü:
+					case ì‹œì„¤_ë†ìž¥2ë‹¨:
 						if (!building.completed)
-							facility_id = ½Ã¼³_³óÀå;
+							facility_id = ì‹œì„¤_ë†ìž¥;
 						break;
-					case ½Ã¼³_³óÀå3´Ü:
+					case ì‹œì„¤_ë†ìž¥3ë‹¨:
 						if (!building.completed)
-							facility_id = ½Ã¼³_³óÀå2´Ü;
+							facility_id = ì‹œì„¤_ë†ìž¥2ë‹¨;
 						break;
 					default:
 						continue;
 					}
 				}
 
-				// ³»Á¤½Ã¼³ º° »ý»ê·ÂÀ» ´õÇÔ.
+				// ë‚´ì •ì‹œì„¤ ë³„ ìƒì‚°ë ¥ì„ ë”í•¨.
 				pk::facility@ facility = pk::get_facility(facility_id);
 				if (pk::is_alive(facility))
 				{
 					int y = facility.yield;
-					// ³óÀåÀº °îÃ¢°ú ÀÎÁ¢ÇÑ °æ¿ì 1.5¹è.
-					if (facility_id == ½Ã¼³_³óÀå or facility_id == ½Ã¼³_³óÀå2´Ü or facility_id == ½Ã¼³_³óÀå3´Ü)
+					// ë†ìž¥ì€ ê³¡ì°½ê³¼ ì¸ì ‘í•œ ê²½ìš° 1.5ë°°.
+					if (facility_id == ì‹œì„¤_ë†ìž¥ or facility_id == ì‹œì„¤_ë†ìž¥2ë‹¨ or facility_id == ì‹œì„¤_ë†ìž¥3ë‹¨)
 					{
-						if (func_49ed70(building.get_pos(), ½Ã¼³_°îÃ¢))
-							y = int(y * 1.5f);
+						if (func_49ed70(building.get_pos(), ì‹œì„¤_ê³¡ì°½))
+							y = y * 1.5f;
+
+						// ë²•ë ¹ì •ë¹„ ê¸°êµê°€ ë†ìž¥ ìˆ˜ìž…ì„ 25% ì¦ê°€ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+						if (pk::has_tech(city, ê¸°êµ_ë²•ë ¹ì •ë¹„))
+							y = y * 1.25f;
 					}
-					// ±ºµÐ³óÀÏ °æ¿ì º´·Â¼ö¿¡ ºñ·ÊÇÏ¿© »ý»ê·Â Á¶Á¤.
-					else if (facility_id == ½Ã¼³_±ºµÐ³ó)
+					// êµ°ë‘”ë†ì¼ ê²½ìš° ë³‘ë ¥ìˆ˜ì— ë¹„ë¡€í•˜ì—¬ ìƒì‚°ë ¥ ì¡°ì •.
+					else if (facility_id == ì‹œì„¤_êµ°ë‘”ë†)
 					{
-						y = int(pk::max(city.troops, 15000) * y / 15000);
+						y = pk::max(city.troops, 15000) * y / 15000;
 					}
 					n = n + y;
 				}
@@ -79,51 +70,32 @@ namespace º´·®_¼öÀÔ
 
 			switch (pk::get_scenario().difficulty)
 			{
-			case ³­ÀÌµµ_Æ¯±Þ:
-				// Æ¯±ÞÀÏ °æ¿ì ÇÃ·¹ÀÌ¾î 0.75¹è, ÄÄÇ»ÅÍ 1.25¹è.
+			case ë‚œì´ë„_íŠ¹ê¸‰:
+				// íŠ¹ê¸‰ì¼ ê²½ìš° í”Œë ˆì´ì–´ 0.75ë°°, ì»´í“¨í„° 1.25ë°°.
 				if (city.is_player())
-					n = int(n * 0.75f);
+					n = n * 0.75f;
 				else
-					n = int(n * 1.25f);
+					n = n * 1.25f;
 				break;
 
-			case ³­ÀÌµµ_ÃÊ±Þ:
-				// ÃÊ±ÞÀÏ °æ¿ì ÇÃ·¹ÀÌ¾î, ÄÄÇ»ÅÍ ¸ðµÎ 1.25¹è.
-				n = int(n * 1.25f);
+			case ë‚œì´ë„_ì´ˆê¸‰:
+				// ì´ˆê¸‰ì¼ ê²½ìš° í”Œë ˆì´ì–´, ì»´í“¨í„° ëª¨ë‘ 1.25ë°°.
+				n = n * 1.25f;
 				break;
 			}
 
-			// µµ½Ã Ä¡¾È°ªÀ» ¹éºÐÀ²·Î °ö.
-			n = int(n * pk::max(city.public_order, 50) / 100);
-			
-            /* ¹öÇÁ »èÁ¦
-			// ±ºÁÖ°¡ [Á¶Á¶]ÀÎ °æ¿ì¿¡ 1.25¹è
-			if (pk::get_kunshu_id(city) == ¹«Àå_Á¶Á¶)
-				n *= 1.25f;
-			
-			// ±ºÁÖ°¡ [Àå·Î]ÀÎ °æ¿ì¿¡ 1.45¹è
-			if (pk::get_kunshu_id(city) == ¹«Àå_Àå³ë)
-				n *= 1.45f;
-            */
-            
+			// ë„ì‹œ ì¹˜ì•ˆê°’ì„ ë°±ë¶„ìœ¨ë¡œ ê³±.
+			n = n * pk::max(city.public_order, 50) / 100;
 
-            // À¯Àú_µµ½Ã¼ö_ÆÐ³ÎÆ¼ ('20.8.29)
-            if (À¯Àú_µµ½Ã¼ö_ÆÐ³ÎÆ¼ and city.is_player() and !pk::is_campaign())
-            {
-                pk::force@ force = pk::get_force(city.get_force_id());
-                float force_city_count = float(pk::get_city_list(force).count);
-                n = int(n * (1.f - (force_city_count * 0.05f)));
-            }
-            
 			return n;
 		}
 
 		/**
-			ÀÎÁ¢ ½Ã¼³ °Ë»ö.
+			ì¸ì ‘ ì‹œì„¤ ê²€ìƒ‰.
 		*/
 		bool func_49ed70(pk::point pos, int facility_id)
 		{
-			for (int i = 0; i < ¹æÇâ_³¡; i++)
+			for (int i = 0; i < ë°©í–¥_ë; i++)
 			{
 				pk::point neighbor_pos = pk::get_neighbor_pos(pos, i);
 				if (pk::is_valid_pos(neighbor_pos))

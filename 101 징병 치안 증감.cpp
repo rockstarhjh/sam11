@@ -1,18 +1,6 @@
-/*
-@¼öÁ¤ÀÚ : ±â¸¶Ã¥»ç
-@Update: '19.5.4   // ¼öÁ¤³»¿ë: À¯Àú_µµ½Ã¼ö_ÆĞ³ÎÆ¼ Ãß°¡
-@Update: '20.8.29  // ¼öÁ¤³»¿ë: Ä·ÆäÀÎ¿¡¼­´Â Ä¿½ºÅÒ ¼¼ÆÃ »ç¿ë ºÒ°¡ÇÏµµ·Ï ¼öÁ¤
-*/
-
-namespace Â¡º´_Ä¡¾È_Áõ°¨
+ï»¿namespace ì§•ë³‘_ì¹˜ì•ˆ_ì¦ê°
 {
-    //---------------------------------------------------------------------------
-    
-    const bool À¯Àú_µµ½Ã¼ö_ÆĞ³ÎÆ¼ = true;   // À¯Àú¼¼·Â¿¡ ´ëÇØ¼­ µµ½Ã¼ö¿¡ ºñ·ÊÇÏ¿© Ä¡¾È°¨¼Ò ÆĞ³ÎÆ¼ (µµ½Ã´ç 1% Áõ°¡)
-
-    //---------------------------------------------------------------------------
-
-    class Main
+	class Main
 	{
 		Main()
 		{
@@ -20,37 +8,25 @@ namespace Â¡º´_Ä¡¾È_Áõ°¨
 		}
 
 		int callback(pk::city@ city, const pk::detail::arrayptr<pk::person@> &in actors, int troops)
-		{		
+		{
 			int n = 100;
 			for (int i = 0; i < actors.length; i++)
 			{
 				pk::person@ actor = actors[i];
-				
 				if (pk::is_alive(actor))
-					n = n + actor.stat[int(pk::core["Â¡º´.´É·Â"])];
+					n = n + actor.stat[int(pk::core["ì§•ë³‘.ëŠ¥ë ¥"])];
 			}
-			n = -troops / n;
-			
-			/*
-			// ±ºÁÖ°¡ [À¯ºñ]ÀÎ °æ¿ì¿¡ 1/2 °¨¼Ò
-				if (pk::get_kunshu_id(actors[0]) == ¹«Àå_À¯ºñ)
-					n /= 2;
-				
-			// ±ºÁÖ°¡ [À¯¿ì]ÀÎ °æ¿ì¿¡ 1/2 °¨¼Ò
-				if (pk::get_kunshu_id(actors[0]) == ¹«Àå_À¯¿ì)
-					n /= 2;
-            */
-            
-            
-            // À¯Àú_µµ½Ã¼ö_ÆĞ³ÎÆ¼ ('19.5.4)
-            if (À¯Àú_µµ½Ã¼ö_ÆĞ³ÎÆ¼ and city.is_player() and !pk::is_campaign())
-            {
-                pk::force@ force = pk::get_force(city.get_force_id());
-                float force_city_count = float(pk::get_city_list(force).count);
-                n = int(n / (1.f - (force_city_count * 0.01f)));
-            }
-				
-			return n; 
+
+			// ì¸ì‹¬ì¥ì•… ê¸°êµê°€ ì¹˜ì•ˆ ì €í•˜ë¥¼ ì¤„ì„
+			if (pk::has_tech(city, ê¸°êµ_ì¸ì‹¬ì¥ì•…))
+				n *= 1.25f;
+
+			// íŠ¹ê¸° ìœ„ì••ì´ ì¹˜ì•ˆ 70 ì´í•˜ë¥¼ ë§‰ìŒ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+			pk::building@ building = pk::city_to_building(city);
+			if (building.has_skill(íŠ¹ê¸°_ìœ„ì••))
+				return pk::max(-troops / n, -pk::max(0, city.public_order - 70));
+
+			return -troops / n;
 		}
 	}
 

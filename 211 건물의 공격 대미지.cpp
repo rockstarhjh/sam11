@@ -1,112 +1,133 @@
-namespace °Ç¹°ÀÇ_°ø°İ_´ë¹ÌÁö
+ï»¿namespace ê±´ë¬¼ì˜_ê³µê²©_ëŒ€ë¯¸ì§€
 {
-    
-    //---------------------------------------------------------------------------------------
-    // À¯Àú ¼³Á¤ (true = on, false = off)
-    const bool »ç±âÈ¿°ú¼³Á¤ = true;   // ±â·Â¿¡ ºñ·ÊÇÏ¿© µ¥¹ÌÁö Áõ°¨ º¸Á¤ È¿°ú
-    const bool ±â·ÂÁõ°¨¼³Á¤ = true;   // ±³Àü ½Ã µ¥¹ÌÁö¿¡ µû¶ó °ø°İºÎ´ë ±â·ÂÁõ°¡, ÇÇ°İºÎ´ë ±â·Â°¨¼Ò
-    const bool °ÅÁ¡´É·ÂÇÕ»ê = true;   // true: °ÅÁ¡ ³» ¹«ÀåµéÀÇ ´É·ÂÄ¡ ÇÕ»ê ±â´É Àû¿ë, false: ±âÁ¸Ã³·³ ÅÂ¼ö ´É·Â¸¸ Àû¿ë
-    
-    const float ´ë¹ÌÁöÁ¶Àı = 0.8f;   // ÀüÃ¼ÀûÀÎ ´ë¹ÌÁö·®À» ºñÀ²·Î Á¶Àı
-    
-    //---------------------------------------------------------------------------------------
-    
-    
 	class Main
 	{
-        
 		Main()
 		{
 			pk::set_func(211, pk::func211_t(callback));
-            
 		}
-        /*----------------------------------------
-            °Ç¹°ÀÇ °ø°İ(¹İ°İ) ½Ã º´·Â ´ë¹ÌÁö¸¦ °è»êÇÕ´Ï´Ù.
-            @param[out] damage	´ë¹ÌÁö Á¤º¸
-            @param building		°Ç¹°
-            @param target		¸ñÇ¥
-        ----------------------------------------*/
+
 		void callback(pk::damage_info& info, pk::building@ attacker, pk::hex_object@ target)
 		{
-			// »ç¿ëÇÏÁö ¾ÊÀ½
+			// ì‚¬ìš©í•˜ì§€ ì•ŠìŒ
 			if (target.is_instance(pk::building::type_id))
 				pk::assert(false);
 
 			int facility_id = attacker.facility;
 			pk::unit@ target_unit = pk::hex_object_to_unit(target);
 			int troops_atk = 0, atk = 0, def = 0, troops = 0;
+			info.src_pos = attacker.get_pos();
+			info.dst_pos = target.get_pos();
 
 			switch (facility_id)
 			{
-			case ½Ã¼³_µµ½Ã:
-			case ½Ã¼³_°ü¹®:
-			case ½Ã¼³_Ç×±¸:
+			case ì‹œì„¤_ë„ì‹œ:
+			case ì‹œì„¤_ê´€ë¬¸:
+			case ì‹œì„¤_í•­êµ¬:
 				func_5af0e0(troops_atk, atk, def, troops, attacker);
-				info.troops_damage = int(func_5aee60(atk, troops, troops_atk, 0, target_unit.attr.stat[ºÎ´ë´É·Â_¹æ¾î], func_5aee10(target_unit)) * 0.8f);
-				if (pk::equipment_id_to_heishu(target_unit.weapon) == º´Á¾_º´±â)
-					info.troops_damage = int(info.troops_damage * 0.8f);
+				info.troops_damage = func_5aee60(atk, troops, troops_atk, 0, target_unit.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ë°©ì–´], func_5aee10(target_unit)) * 0.8f;
+				if (pk::equipment_id_to_heishu(target_unit.weapon) == ë³‘ì¢…_ë³‘ê¸°)
+					info.troops_damage *= 0.8f;
 				break;
 
-			case ½Ã¼³_Áø:
-			case ½Ã¼³_¿ä»õ:
-			case ½Ã¼³_¼ºÃ¤:
-			case ½Ã¼³_±Ã³ë:
-			case ½Ã¼³_¿¬³ë·Î:
-			case ½Ã¼³_Åõ¼®´ë:
+			case ì‹œì„¤_ì§„:
+			case ì‹œì„¤_ìš”ìƒˆ:
+			case ì‹œì„¤_ì„±ì±„:
+			case ì‹œì„¤_ê¶ë…¸:
+			case ì‹œì„¤_ì—°ë…¸ë¡œ:
+			case ì‹œì„¤_íˆ¬ì„ëŒ€:
 				info.troops_damage = func_5af370(attacker, target_unit);
-				if (pk::equipment_id_to_heishu(target_unit.weapon) == º´Á¾_º´±â and attacker.facility != ½Ã¼³_Åõ¼®´ë)
-					info.troops_damage = int(info.troops_damage * 0.8f);
+				if (pk::equipment_id_to_heishu(target_unit.weapon) == ë³‘ì¢…_ë³‘ê¸° and attacker.facility != ì‹œì„¤_íˆ¬ì„ëŒ€)
+					info.troops_damage *= 0.8f;
 				break;
 
 			default:
-				// ½Ã¼³.ÀÚµ¿°ø°İ ´ë¹ÌÁö
+				// ì‹œì„¤.ìë™ê³µê²© ëŒ€ë¯¸ì§€
 				info.troops_damage = func_5af370(attacker, target_unit);
-				if (pk::equipment_id_to_heishu(target_unit.weapon) == º´Á¾_º´±â)
-					info.troops_damage = int(info.troops_damage * 0.8f);
+				if (pk::equipment_id_to_heishu(target_unit.weapon) == ë³‘ì¢…_ë³‘ê¸°)
+					info.troops_damage *= 0.8f;
 				break;
 			}
 
 			if (attacker.is_player())
-				info.troops_damage = int(info.troops_damage * float(pk::core["´ë¹ÌÁöÆĞ³ÎÆ¼"][pk::get_scenario().difficulty]));
+				info.troops_damage *= float(pk::core["ëŒ€ë¯¸ì§€íŒ¨ë„í‹°"][pk::get_scenario().difficulty]);
 
-			// ¹æ¾î°­È­ ±â±³ ¿¬±¸ ½Ã ¼º, °ü¹®, Ç×±¸, Áø, ¿ä»õ, ¼ºÃ¤ÀÇ °ø°İ·Â 2¹è
-			if (attacker.has_tech(±â±³_¹æ¾î°­È­) and attacker.facility >= ½Ã¼³_µµ½Ã and attacker.facility <= ½Ã¼³_¼ºÃ¤)
-				info.troops_damage *= 2;
-            
-            
-            if (!pk::is_campaign())
-            {
-                // °Ç¹°¡æºÎ´ë ½Ã »óÈ£ ±â·Â Á¶°Ç ¹İ¿µµÊ ('18.10.7)
-                if (»ç±âÈ¿°ú¼³Á¤)
-                {
-                    // °ø°İºÎ´ë ±â·Â¿¡ µû¶ó ÇÇ°İ´ë»ó ÇÇÇØ 85% ~ 115% Àû¿ë : ºÎ´ë »ç±â È¿°ú ('18.10.7)
-                    info.troops_damage = int(info.troops_damage * (0.85f + 0.30f * (attacker.energy/120.f))) ;
-                    // ÇÇ°İ´ë»ó ±â·Â¿¡ µû¶ó ÇÇ°İ´ë»ó ÇÇÇØ 85% ~ 115% Àû¿ë : ºÎ´ë »ç±â È¿°ú ('18.10.7)
-                    info.troops_damage = int(info.troops_damage * (0.85f + 0.30f * ((120 - target_unit.energy)/120.f))) ;
-                }
-                
-                // ÀüÃ¼ÀûÀÎ ±âº» ´ë¹ÌÁö·® ¿À·ù ¼öÁ¤ ('18.12.15)
-                info.troops_damage = int(info.troops_damage * ´ë¹ÌÁöÁ¶Àı);
-                
-                // º´·Â ÇÇÇØ·®¿¡ µû¶ó ÇÇ°İ´ë»ó ±â·Â°¨¼Ò, °ø°İÃø ±â·Â»ó½Â È¿°ú ¹ß»ı ('18.10.7) 
-                if (±â·ÂÁõ°¨¼³Á¤)
-                {
-                    int energy_heal = int(info.troops_damage / 200);
-                    //pk::add_energy(attacker, +energy_heal, true );   // ¹ë·±½º Å×½ºÆ® ÇÊ¿ä
-                
-                    if (info.troops_damage >= 300)
-                        info.energy_damage = int((info.troops_damage - 300) / 100);
-                }
-            }
-            
-			info.src_pos = attacker.get_pos();
-			info.dst_pos = target.get_pos();
-            
-            
+			// ë“±ê°‘ì´ ê±´ë¬¼ í”¼í•´ë„ ë°˜ìœ¼ë¡œ ì¤„ì„ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+			if (target.has_skill(íŠ¹ê¸°_ë“±ê°‘))
+				info.troops_damage *= 0.5f;
+
+			// ê±´ë¬¼ ê³µê²©ì´ ë°˜ê²© ìœ í˜•ì¼ ë•Œ
+			if (attacker.facility >= ì‹œì„¤_ë„ì‹œ and attacker.facility <= ì‹œì„¤_ì„±ì±„)
+			{
+				if (attacker.has_tech(ê¸°êµ_ë°©ì–´ê°•í™”))
+					info.troops_damage *= 2;
+
+				// ìš´ì œê°€ í”¼í•´ë¥¼ 40% ê°ì†Œì‹œí‚´ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+				if (target.has_tech(ê¸°êµ_ìš´ì œ) and target_unit.weapon >= ë³‘ê¸°_ê²€ and target_unit.weapon <= ë³‘ê¸°_ë…¸)
+					info.troops_damage *= 0.6f;
+
+				// ê°•ìŠµ, ê¸‰ìŠµì´ í™•ë¥ ë¡œ í”¼í•´ë¥¼ ë°›ì§€ ì•ŠìŒ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+				if (pk::is_in_water(target_unit))
+				{
+					if (target_unit.has_skill(íŠ¹ê¸°_ê°•ìŠµ) and pk::rand_bool(int(pk::core::skill_constant(target_unit, íŠ¹ê¸°_ê°•ìŠµ))))
+					{
+						info.troops_damage = 0;
+						info.def_skill = íŠ¹ê¸°_ê°•ìŠµ;
+					}
+				}
+				else
+				{
+					if (target_unit.has_skill(íŠ¹ê¸°_ê¸‰ìŠµ) and pk::rand_bool(int(pk::core::skill_constant(target_unit, íŠ¹ê¸°_ê¸‰ìŠµ))))
+					{
+						info.troops_damage = 0;
+						info.def_skill = íŠ¹ê¸°_ê¸‰ìŠµ;
+					}
+				}
+			}
+
+			// ê±´ë¬¼ ê³µê²©ì´ ì‚¬ê²© ìœ í˜•ì¼ ë•Œ
+			if (attacker.facility >= ì‹œì„¤_ê¶ë…¸ and attacker.facility <= ì‹œì„¤_ì—°ë…¸ë¡œ)
+			{
+				// ë¶ˆêµ´, ê¸ˆê°•, í™”ì‚´ë°©íŒ¨ê°€ ë§‰ìŒ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+				if ((target_unit.weapon == ë³‘ê¸°_ê·¹) and (target.has_tech(ê¸°êµ_í™”ì‚´ë°©íŒ¨)) and (pk::rand_bool(30)))
+				{
+					info.def_tech = ê¸°êµ_í™”ì‚´ë°©íŒ¨;
+					info.troops_damage = 0;
+					pk::create_effect(83, info.dst_pos);
+					pk::play_se(94, info.dst_pos);
+				}
+				else if (target.has_skill(íŠ¹ê¸°_ë¶ˆêµ´) and (target.troops < int(pk::core::skill_constant(target, íŠ¹ê¸°_ë¶ˆêµ´)) and pk::rand_bool(int(pk::core::skill_constant(target, íŠ¹ê¸°_ë¶ˆêµ´, 1)))))
+				{
+					info.def_skill = íŠ¹ê¸°_ë¶ˆêµ´;
+					info.troops_damage = 0;
+					pk::create_effect(83, info.dst_pos);
+					pk::play_se(94, info.dst_pos);
+				}
+				else if (target.has_skill(íŠ¹ê¸°_ê¸ˆê°•) and (info.troops_damage < int(pk::core::skill_constant(target, íŠ¹ê¸°_ê¸ˆê°•)) and pk::rand_bool(int(pk::core::skill_constant(target, íŠ¹ê¸°_ê¸ˆê°•, 1)))))
+				{
+					info.def_skill = íŠ¹ê¸°_ê¸ˆê°•;
+					info.troops_damage = 0;
+					pk::create_effect(83, info.dst_pos);
+					pk::play_se(94, info.dst_pos);
+				}
+			}
+
+			// ê±´ë¬¼ ê³µê²©ì´ íˆ¬ì„ ê³µê²©ì¼ ë•Œ
+			if (attacker.facility == ì‹œì„¤_íˆ¬ì„ëŒ€)
+			{
+				// ë‹µíŒŒê°€ í”¼í•´ë¥¼ ë°˜ìœ¼ë¡œ ì¤„ì„ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+				if (target.has_skill(íŠ¹ê¸°_ë‹µíŒŒ))
+				{
+					info.def_skill = íŠ¹ê¸°_ë‹µíŒŒ;
+					info.troops_damage *= 0.5f;
+					pk::create_effect(82, info.dst_pos);
+					pk::play_se(93, info.dst_pos);
+				}
+			}
 		}
 
 		/**
-			ÁöÈÖ °¡´ÉÇÑ º´·Â ¼ö
+			ì§€íœ˜ ê°€ëŠ¥í•œ ë³‘ë ¥ ìˆ˜
 		*/
 		int func_5aee10(pk::unit@ unit)
 		{
@@ -116,7 +137,7 @@ namespace °Ç¹°ÀÇ_°ø°İ_´ë¹ÌÁö
 			return unit.troops;
 		}
 
-		/** ºÎ´ë/°ÅÁ¡ º´·Â ÇÇÇØ °è»ê **/
+		/***/
 		float func_5aee60(int src_atk, int src_troops, int tactics_atk, int buffed, int dst_def, int dst_troops)
 		{
 			float n = 0;
@@ -130,7 +151,6 @@ namespace °Ç¹°ÀÇ_°ø°İ_´ë¹ÌÁö
 			b = pk::max(dst_def, 40);
 			b = b * b;
 
-			//n = pk::sqrt(tactics_atk * 64);
 			n = sqrt(tactics_atk * 64);
 			n = n + pk::max((src_troops - dst_troops) / 2000, 0);
 			n = n + pk::max((a - b) / 300, 0);
@@ -155,52 +175,30 @@ namespace °Ç¹°ÀÇ_°ø°İ_´ë¹ÌÁö
 			return n;
 		}
 
-		/** ÅÂ¼ö¿Í ¹«Àåµé¿¡ ÀÇÇÑ ¹æ¾î°ÅÁ¡ ÀüÅõ´É·Â **/
+		/***/
 		void func_5af0e0(int &out src_atk, int &out dst_atk, int &out dst_def, int &out dst_troops, pk::building@ building)
 		{
 			src_atk = 10;
 			pk::person@ taishu = pk::get_person(pk::get_taishu_id(building));
 			if (pk::is_alive(taishu))
 			{
-                //ÅÂ¼ö ´É·Â ¹İ¿µ (±âº»)
-				dst_atk = pk::max(taishu.stat[¹«Àå´É·Â_¹«·Â] - 25, 40);
-				dst_def = pk::max(taishu.stat[¹«Àå´É·Â_Åë¼Ö] - 25, 40);
+				dst_atk = pk::max(taishu.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] - 25, 40);
+				dst_def = pk::max(taishu.stat[ë¬´ì¥ëŠ¥ë ¥_í†µì†”] - 25, 40);
 				dst_troops = pk::min(pk::get_troops(building), pk::get_command(taishu));
-                
-                //µµ½Ã ³» "½ÅºĞ_ÀÏ¹İ" ÀÎ ¹«Àå ´É·Â ¹İ¿µ (°¢ ¹«ÀåÀÇ ¹«·Â, Åë¼Ö, ÁöÈÖ ºÎºĞ ÇÕ»ê) ('18.10.7)
-                if (°ÅÁ¡´É·ÂÇÕ»ê)
-                {
-                    float ilban_help = 5;    // ÅÂ¼ö ¿Ü ¹«Àå ´É·Â Ä¡ ÇÕ»ê º¸Á¶À² : ¹«Àåº° 5%
-                    auto ilban_list = pk::list_to_array(pk::get_person_list(building, pk::mibun_flags(½ÅºĞ_ÀÏ¹İ) ) );
-                    if (0 < int(ilban_list.length))
-                    {
-                        for (int i = 0; i < int(ilban_list.length); i++)
-                        {
-                            pk::person@ ilban = ilban_list[i];
-                            //ÃâÁø ¶Ç´Â ºÎÀçÁß »óÅÂ°¡ ¾Æ´Ñ Àå¼öÀÌ¸ç, ÅÂ¼ö¿Í Çø¿À °ü°è°¡ ¾Æ´Ñ Àå¼ö¸¸ ´É·Â Ä¡ ÇÕ»ê
-                            if (!pk::is_unitize(ilban) and !pk::is_absent(ilban) and !pk::is_dislike(taishu, ilban.get_id()) and !pk::is_dislike(ilban, taishu.get_id()) )
-                            {
-                                dst_atk += int((pk::max(ilban.stat[¹«Àå´É·Â_¹«·Â] - 25, 20)) * (ilban_help / 100.f));
-                                dst_def += int((pk::max(ilban.stat[¹«Àå´É·Â_Åë¼Ö] - 25, 20)) * (ilban_help / 100.f));
-                                dst_troops += int((pk::min(pk::get_troops(building), pk::get_command(ilban))) * (ilban_help / 100.f));
-                            }
-                        }
-                    }
-                }
 			}
 			else
 			{
 				dst_atk = 30;
 				dst_def = 30;
-				//dst_troops = pk::min(pk::get_troops(building), 7000);
-				dst_troops = pk::min(pk::get_troops(building), 5000);  // ÁöÈÖº´·Â »óÇÑÄ¡ ÇÏÇâ
+				dst_troops = pk::min(pk::get_troops(building), 7000);
 				if (dst_troops != 0)
 					dst_troops = pk::max(dst_troops, 500);
 			}
 		}
 
+
 		/**
-			±º»ç½Ã¼³ÀÇ °ø°İ·Â °è»ê
+			êµ°ì‚¬ì‹œì„¤ì˜ ê³µê²©ë ¥ ê³„ì‚°
 		*/
 		int func_5af370(pk::building@ attacker, pk::unit@ target)
 		{
@@ -209,44 +207,32 @@ namespace °Ç¹°ÀÇ_°ø°İ_´ë¹ÌÁö
 
 			switch (attacker.facility)
 			{
-			case ½Ã¼³_µµ½Ã:     // °³¹æÇü °ÅÁ¡ : ¾àÇÑ ¼öÁØÀ¸·Î Àû¿ë ('18.10.14)
-                atk = 200;
-				bonus = 200;
-				break;
-			case ½Ã¼³_°ü¹®:     // Æó¼âÇü °ÅÁ¡ : °­ÇÑ ¼öÁØÀ¸·Î Àû¿ë ('18.10.14)
-                atk = 400;
-				bonus = 400;
-				break;
-			case ½Ã¼³_Ç×±¸:     // °³¹æÇü °ÅÁ¡ : ¾àÇÑ ¼öÁØÀ¸·Î Àû¿ë ('18.10.14)
-                atk = 200;
-				bonus = 200;
-				break;
-            case ½Ã¼³_Áø:
+			case ì‹œì„¤_ì§„:
 				atk = 400;
 				bonus = 300;
 				break;
-			case ½Ã¼³_¿ä»õ:
+			case ì‹œì„¤_ìš”ìƒˆ:
 				atk = 600;
 				bonus = 300;
 				break;
-			case ½Ã¼³_¼ºÃ¤:
+			case ì‹œì„¤_ì„±ì±„:
 				atk = 800;
 				bonus = 300;
 				break;
-			case ½Ã¼³_±Ã³ë:
+			case ì‹œì„¤_ê¶ë…¸:
 				atk = 300;
 				bonus = 300;
 				break;
-			case ½Ã¼³_¿¬³ë·Î:
+			case ì‹œì„¤_ì—°ë…¸ë¡œ:
 				atk = 500;
 				bonus = 400;
 				break;
-			case ½Ã¼³_Åõ¼®´ë:
+			case ì‹œì„¤_íˆ¬ì„ëŒ€:
 				atk = 900;
 				bonus = 600;
 				break;
 			default:
-				// ±âÅ¸½Ã¼³.ÀÚµ¿°ø°İ ´ë¹ÌÁö
+				// ì‹œì„¤.ìë™ê³µê²© ëŒ€ë¯¸ì§€
 				atk = 300;
 				bonus = 300;
 				break;
@@ -255,10 +241,8 @@ namespace °Ç¹°ÀÇ_°ø°İ_´ë¹ÌÁö
 			float max_hp = pk::max(pk::get_max_hp(attacker), 1);
 			float hp = pk::max(attacker.hp, max_hp / 2);
 
-			return int(hp / max_hp * (152 - int(target.attr.stat[ºÎ´ë´É·Â_¹æ¾î])) * atk / 132 + pk::rand(bonus));
+			return hp / max_hp * (152 - int(target.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ë°©ì–´])) * atk / 132 + pk::rand(bonus);
 		}
-        
-        
 	}
 
 	Main main;

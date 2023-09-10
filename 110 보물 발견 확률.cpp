@@ -9,7 +9,7 @@
 
 		int callback(pk::building@ building, pk::person@ actor, pk::item@ item)
 		{
-			return pk::max(((61 - item.value) / 20)*4, 1);
+			return pk::max(((61 - item.value) / 20)*2, 1);
 		}
 	}
 

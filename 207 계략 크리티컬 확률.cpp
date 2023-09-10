@@ -21,13 +21,25 @@
 
 			if (strategy_id >= 0 and strategy_id <= 계략_동토 and strategy_id != 계략_소화)
 			{
+				if (dst is null)	// 반계 효과 추가로 비 부대 계략 조건 분리
+				{
 				if (src.has_skill(특기_신산)) return 100;
 				if (src.has_skill(특기_심모)) return 100;
-				// 모계 특기 보유자 지력이 목표 부대 지력보다 높음
-				if (pk::get_best_member_stat(src, 특기_묘계, 무장능력_지력) > dst_int) return 100;
+				}
+				// 반계 특기무시 효과 (특기종합패치)
+				else if (!dst.has_skill(특기_반계) or (src.has_skill(특기_반계) and dst.has_skill(특기_반계)))
+				{
+				if (src.has_skill(특기_신산)) return 100;
+				if (src.has_skill(특기_심모)) return 100;
+				if (src.has_skill(특기_묘계) and !pk::is_neighbor_pos(src_pos, dst_pos)) return 100;	// 묘계 특기 변경 (특기종합패치)
+				if (src.has_skill(특기_비책) and pk::is_neighbor_pos(src_pos, dst_pos)) return 100;	// 비책 특기 변경 (특기종합패치)
+
+				/* 비책 원래 효과 제거 (특기종합패치)
 				// 비책 특기 보유자 지력이 목표 부대 지력보다 낮음
 				int n = pk::get_best_member_stat(src, 특기_비책, 무장능력_지력);
 				if (n > -1 and n < dst_int) return 100;
+				*/
+				}
 			}
 
 			switch (strategy_id)
@@ -43,7 +55,6 @@
 			case 계략_진정:
 				return pk::max(3, (src_int) / 10);
 			case 계략_복병:
-				if (src.has_skill(특기_매복)) return 100;
 				return pk::max(3, (src_int - dst_int / 2 + fukuhei_crit_weapon_factor(pk::get_weapon_id(src, src_pos))) / 10);
 			case 계략_동토:
 				return pk::max(3, (src_int - dst_int / 2 + data_849b34(pk::get_person(src.leader).giri)) / 10);

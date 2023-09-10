@@ -85,9 +85,11 @@
 			{
 				if (pk::is_alive(attacker) and attacker.has_tech(기교_폭약연성))
 					n = n + bakuyaku;
-				if (pk::is_alive(attacker) and attacker.has_skill(특기_화신))
+				if (attacker.has_skill(특기_화신))
 					n = n * 2;
-
+				// 화공 특기가 1.5배 피해를 줌 (특기종합패치)
+				else if (attacker.has_skill(특기_화공))
+					n = n * 1.5f;
 				if (target.has_skill(특기_등갑))
 				{
 					n = n * 2;

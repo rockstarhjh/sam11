@@ -1,31 +1,5 @@
-/*
-@¼öÁ¤ÀÚ : ±â¸¶Ã¥»ç
-@Update: '18.10.14  // ¼öÁ¤³»¿ë: ¼¼·ÂÀÇ º¸À¯ Æ¯±â ¶Ç´Â È²±ºÀÎ °æ¿ì Â¡º´·® ¹öÇÁ
-@Update: '19.4.26   // ¼öÁ¤³»¿ë: ´ëµµ½Ã Â¡º´·® ¹öÇÁ Ãß°¡
-@Update: '19.5.4    // ¼öÁ¤³»¿ë: À¯Àú_µµ½Ã¼ö_ÆĞ³ÎÆ¼ Ãß°¡
-@Update: '20.8.25   // ¼öÁ¤³»¿ë: null point error ¿À·ù ¼öÁ¤
-@Update: '20.8.29  // ¼öÁ¤³»¿ë: Ä·ÆäÀÎ¿¡¼­´Â Ä¿½ºÅÒ ¼¼ÆÃ »ç¿ë ºÒ°¡ÇÏµµ·Ï ¼öÁ¤
-*/
-
-namespace Â¡º´_º´·Â_Áõ°¨
+ï»¿namespace ì§•ë³‘_ë³‘ë ¥_ì¦ê°
 {
-    //---------------------------------------------------------------------------
-    
-    const bool  ¼¼·ÂÆ¯±â_¸í¼ºÀû¿ë = true;   // ±ºÁÖ,µµµ¶,ÅÂ¼ö°¡ ¸í¼º Æ¯±â º¸À¯ ½Ã ¹öÇÁ
-    const float ¼¼·ÂÆ¯±â_±ºÁÖ¸í¼º = 1.10f;   // ±ºÁÖ ¹öÇÁ °è¼ö
-    const float ¼¼·ÂÆ¯±â_µµµ¶¸í¼º = 1.15f;  // µµµ¶ ¹öÇÁ °è¼ö
-    const float ¼¼·ÂÆ¯±â_ÅÂ¼ö¸í¼º = 1.20f;  // ÅÂ¼ö ¹öÇÁ °è¼ö
-    
-    const bool  È²Á¦¼¼·Â_È¿°úÀû¿ë = true;   // ÈÄÇÑ È²Á¦ ¿Ë¸³ ¼¼·Â ¶Ç´Â ±ºÁÖ°¡ È²Á¦ÀÎ °æ¿ì ¹öÇÁ
-    const float È²Á¦¼¼·Â_¸í¼ºÈ¿°ú = 1.10f;  // È²Á¦ ¹öÇÁ °è¼ö
-    
-    const bool  ´ëµµ½Ã_Â¡º´Àû¿ë = true;   // ´ëµµ½Ã Â¡º´·® ¹öÇÁ ¼³Á¤
-    const float ´ëµµ½Ã_Â¡º´°è¼ö = 1.2f;   // ´ëµµ½Ã Â¡º´·® ¹öÇÁ ¹è¼ö
-    
-    const bool À¯Àú_µµ½Ã¼ö_ÆĞ³ÎÆ¼ = true;   // À¯Àú¼¼·Â¿¡ ´ëÇØ¼­ µµ½Ã¼ö¿¡ ºñ·ÊÇÏ¿© Â¡º´·® µğ¹öÇÁ (µµ½Ã´ç 1% °¨¼Ò)
-    
-    //---------------------------------------------------------------------------
-    
 	class Main
 	{
 		Main()
@@ -38,6 +12,7 @@ namespace Â¡º´_º´·Â_Áõ°¨
 			if (pk::is_alive(building) and actors[0] !is null)
 			{
 				pk::city@ city = pk::building_to_city(building);
+
 				if (pk::is_alive(city))
 				{
 					int n = 0;
@@ -48,75 +23,25 @@ namespace Â¡º´_º´·Â_Áõ°¨
 						pk::person@ actor = actors[i];
 						if (pk::is_alive(actor))
 						{
-							sum += actor.stat[int(pk::core["Â¡º´.´É·Â"])];
-							// ¸í¼º Æ¯±â¸¦ º¸À¯ÇÏ°í ÀÖÀ» °æ¿ì 50% »ó½Â
-							if (pk::has_skill(actor, int(pk::core["Â¡º´.Æ¯±â"])))
+							sum += actor.stat[int(pk::core["ì§•ë³‘.ëŠ¥ë ¥"])];
+							if (pk::has_skill(actor, int(pk::core["ì§•ë³‘.íŠ¹ê¸°"])))
 								mul = 150;
 						}
 					}
-					n = int((1000 + (city.public_order + 20) * sum * 5 / 100) * mul / 100 * func_5c4600(city));
-					// Æ¯±Ş ³­ÀÌµµ ÄÄÇ»ÅÍÀÏ °æ¿ì 2¹è
-					if (pk::get_scenario().difficulty == ³­ÀÌµµ_Æ¯±Ş and !city.is_player())
+					n = (1000 + (city.public_order + 20) * sum * 5 / 100) * mul / 100 * func_5c4600(city);
+
+					// íŠ¹ê¸‰ ë‚œì´ë„ ì»´í“¨í„°ì¼ ê²½ìš° 2ë°°
+					if (pk::get_scenario().difficulty == ë‚œì´ë„_íŠ¹ê¸‰ and !city.is_player())
 						n *= 2;
-					// ÁÖº¯¿¡ Àû ºÎ´ë°¡ Á¸ÀçÇÒ °æ¿ì ¹İ°¨
+
+					// ê¸°êµ ì¸ì‹¬ì¥ì•…ì´ ìˆìœ¼ë©´ 25% ì¦ê°€ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+					if (pk::has_tech(city, ê¸°êµ_ì¸ì‹¬ì¥ì•…))
+						n *= 1.25f;
+
+					// ì£¼ë³€ì— ì  ë¶€ëŒ€ê°€ ì¡´ì¬í•  ê²½ìš° ë°˜ê°
 					if (pk::enemies_around(building))
 						n /= 2;
-					
-                    
-                    // -----------------------------------------------------------------------------
-                    
-                    // ¼¼·Â
-                    pk::force@ force = pk::get_force(building.get_force_id());
-                    
-                    // ¼¼·ÂÀÇ º¸À¯ Æ¯±â ('18.10.14)
-                    if (¼¼·ÂÆ¯±â_¸í¼ºÀû¿ë and !pk::is_campaign())
-                    {
-                        // ±ºÁÖ°¡ Æ¯±â_¸í¼º º¸À¯ ½Ã Â¡º´·® Áõ°¡
-                        pk::person@ p1 = pk::get_person(pk::get_kunshu_id(building));
-                        if (pk::is_alive(p1))
-                        {
-                            if (pk::has_skill(p1, Æ¯±â_¸í¼º))
-                                n = int(n * ¼¼·ÂÆ¯±â_±ºÁÖ¸í¼º);
-                        }
-                        // µµµ¶ÀÌ Æ¯±â_¸í¼º º¸À¯ ½Ã Â¡º´·® Áõ°¡
-                        pk::person@ p2 = pk::get_person(pk::get_totoku_id(building));
-                        if (pk::is_alive(p2))
-                        {
-                            if (pk::has_skill(p2, Æ¯±â_¸í¼º))
-                                n = int(n * ¼¼·ÂÆ¯±â_µµµ¶¸í¼º);
-                        }
-                        // ÅÂ¼ö°¡ Æ¯±â_¸í¼º º¸À¯ ½Ã Â¡º´·® Áõ°¡
-                        pk::person@ p3 = pk::get_person(pk::get_taishu_id(building));
-                        if (pk::is_alive(p3))
-                        {
-                            if (pk::has_skill(p3, Æ¯±â_¸í¼º))
-                                n = int(n * ¼¼·ÂÆ¯±â_ÅÂ¼ö¸í¼º);
-                        }
-                    }
-                    
-                    // ÈÄÇÑÈ²Á¦ º¸È£¼¼·Â ¶Ç´Â ±ºÁÖ°¡ È²Á¦ÀÎ ¼¼·Â Â¡º´·® Áõ°¡ ('18.10.14)
-                    if (È²Á¦¼¼·Â_È¿°úÀû¿ë and !pk::is_campaign())
-                    {
-                        if ( pk::is_protecting_the_emperor(force) )
-                            n = int(n * È²Á¦¼¼·Â_¸í¼ºÈ¿°ú);
-                        else if (force.title == ÀÛÀ§_È²Á¦ ) 
-                            n = int(n * È²Á¦¼¼·Â_¸í¼ºÈ¿°ú);
-                    }
-                    
-                    // ´ëµµ½Ã Â¡º´·® ¹öÇÁ ('19.4.26)
-                    if (´ëµµ½Ã_Â¡º´Àû¿ë and pk::is_large_city(city) and !pk::is_campaign())
-                        n = int(n * ´ëµµ½Ã_Â¡º´°è¼ö);
-                    
-                    // À¯Àú_µµ½Ã¼ö_ÆĞ³ÎÆ¼ ('19.5.4)
-                    if (À¯Àú_µµ½Ã¼ö_ÆĞ³ÎÆ¼ and building.is_player() and !pk::is_campaign())
-                    {
-                        float force_city_count = float(pk::get_city_list(force).count);
-                        n = int(n * (1.f - (force_city_count * 0.01f)));
-                    }
-                    
-                    
-                    // -----------------------------------------------------------------------------
-                    
+
 					return n;
 				}
 			}
@@ -126,22 +51,22 @@ namespace Â¡º´_º´·Â_Áõ°¨
 		float func_5c4600(pk::city@ city)
 		{
 			int level1 = 0, level2 = 0;
-			for (int i = 0; i < int(city.max_devs); i++)
+			for (int i = 0; i < city.max_devs; i++)
 			{
 				pk::building@ building = city.dev[i].building;
 				if (pk::is_alive(building))
 				{
 					switch (building.facility)
 					{
-					case ½Ã¼³_º´¿µ: building.completed ? level1++ : 0; break;
-					case ½Ã¼³_º´¿µ2´Ü: building.completed ? level2++ : level1++; break;
-					case ½Ã¼³_º´¿µ3´Ü: building.completed ? 0 : level2++; break;
+					case ì‹œì„¤_ë³‘ì˜: building.completed ? level1++ : 0; break;
+					case ì‹œì„¤_ë³‘ì˜2ë‹¨: building.completed ? level2++ : level1++; break;
+					case ì‹œì„¤_ë³‘ì˜3ë‹¨: building.completed ? 0 : level2++; break;
 					}
 				}
 			}
-			if (int(city.barracks_counter) > level1 + level2)
+			if (city.barracks_counter > level1 + level2)
 				return 1.5f;
-			if (int(city.barracks_counter) > level1)
+			if (city.barracks_counter > level1)
 				return 1.2f;
 			return 1.f;
 		}

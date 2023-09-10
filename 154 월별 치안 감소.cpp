@@ -1,4 +1,4 @@
-namespace ¿ùº°_Ä¡¾È_°¨¼Ò
+ï»¿namespace ì›”ë³„_ì¹˜ì•ˆ_ê°ì†Œ
 {
 	class Main
 	{
@@ -12,22 +12,37 @@ namespace ¿ùº°_Ä¡¾È_°¨¼Ò
 			if (!pk::is_first_month_of_quarter(pk::get_month()))
 				return 0;
 			pk::force@ force = pk::get_force(city.get_force_id());
+
+			// ìœ„ì••, ì¹œì´ë¯¼ì¡± íŠ¹ê¸° ì¡°ê±´ ì¶”ê°€
+			pk::building@ building = pk::city_to_building(city);
+
 			if (force is null)
 				return 0;
-			// ¹ı·ÉÁ¤ºñ ¿¬±¸ ½Ã 50% È®·ü·Î °¨¼ÒÇÏÁö ¾ÊÀ½
-			if (pk::has_tech(force, ±â±³_¹ı·ÉÁ¤ºñ) and pk::rand_bool(50))
+			// ë²•ë ¹ì •ë¹„ ì—°êµ¬ ì‹œ 50% í™•ë¥ ë¡œ ê°ì†Œí•˜ì§€ ì•ŠìŒ
+			if (pk::has_tech(force, ê¸°êµ_ë²•ë ¹ì •ë¹„) and pk::rand_bool(50))
 				return 0;
+
+			// ì¹œì´ë¯¼ì¡± íŠ¹ê¸°ê°€ ì§€ì—­ì— ìˆìœ¼ë©´ ê°ì†Œí•˜ì§€ ì•ŠìŒ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+			if ((city.get_id() == ë„ì‹œ_ì–‘í‰ or city.get_id() == ë„ì‹œ_ë¶í‰ or city.get_id() == ë„ì‹œ_ê³„) and building.has_skill(íŠ¹ê¸°_ì¹œì˜¤))
+				return 0;
+			if ((city.get_id() == ë„ì‹œ_ë¬´ìœ„ or city.get_id() == ë„ì‹œ_ì•ˆì • or city.get_id() == ë„ì‹œ_ì²œìˆ˜) and building.has_skill(íŠ¹ê¸°_ì¹œê°•))
+				return 0;
+			if ((city.get_id() == ë„ì‹œ_íšŒê³„ or city.get_id() == ë„ì‹œ_ì˜¤ or city.get_id() == ë„ì‹œ_ì‹œìƒ) and building.has_skill(íŠ¹ê¸°_ì¹œì›”))
+				return 0;
+			if ((city.get_id() == ë„ì‹œ_ìš´ë‚¨ or city.get_id() == ë„ì‹œ_ê±´ë…• or city.get_id() == ë„ì‹œ_ê°•ì£¼) and building.has_skill(íŠ¹ê¸°_ì¹œë§Œ))
+				return 0;
+
 			int n = 90;
 			pk::person@ taishu = pk::get_person(city.get_taishu_id());
 			if (pk::is_alive(taishu))
-				n = n - taishu.stat[¹«Àå´É·Â_¸Å·Â];
+				n = n - taishu.stat[ë¬´ì¥ëŠ¥ë ¥_ë§¤ë ¥];
 			n = pk::max(n, 1) / 10 + pk::rand(3);
 			n = pk::min(n, 5);
-            
-            // µ¿Å¹ÀÌ ±ºÁÖÀÌ¸é ÆøÁ¤ È¿°ú Àû¿ë ('18.10.4)
-            if (pk::get_kunshu_id(force) == ¹«Àå_µ¿Å¹)
-                n = int(n * 2.f);
-            
+
+			// ìœ„ì••ì´ ìˆìœ¼ë©´ 70 ì´í•˜ë¡œ ë‚´ë ¤ê°€ì§€ ì•ŠìŒ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+			if (building.has_skill(íŠ¹ê¸°_ìœ„ì••))
+				return pk::max(-n, -pk::max(0, city.public_order - 70));
+
 			return -n;
 		}
 	}

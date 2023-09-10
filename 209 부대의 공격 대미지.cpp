@@ -1,82 +1,12 @@
-/*
-@ ¼öÁ¤ÀÌ : ±â¸¶Ã¥»ç
-@ UPDATE : '18.10.21  / º¯°æ³»¿ë: µ¥¹ÌÁö º¸Á¤È¿°ú Àû¿ë
-@ UPDATE : '18.11.8   / º¯°æ³»¿ë: À¯Àú¼³Á¤ ¿É¼Ç Ãß°¡, Àü·«°ÅÁ¡ Å©¸®Æ¼ÄÃº¸Á¤Ãß°¡, °ÅÁ¡¹æ¾î¹öÇÁÃß°¡
-@ UPDATE : '18.11.27  / º¯°æ³»¿ë: ±³Àü¸éÇâ¿¡ ´ë¹ÌÁöº¸Á¤ Ãß°¡
-@ UPDATE : '19.2.16   / º¯°æ³»¿ë: Àü¹ı¿¡ ´ëÇÑ ºÒ±¼/±İ°­ ¹ßµ¿ ½Ã Àü¹ı½ÇÆĞ Ã³¸® + ¹æ¾î¸· ÀÌÆÑÆ® Ç¥½Ã + ¹İ°İ´ë¹ÌÁö Àû¿ëµÇ°Ô ¼öÁ¤
-@ UPDATE : '19.2.21   / º¯°æ³»¿ë: Ä¿½ºÅÒ ´ëÈ­Ç¥½Ã°¡ ±³Àü ÀÌÈÄ¿¡ Ç¥½ÃµÇµµ·Ï °æÇèÄ¡È¹µæÆ®¸®°Å ¹æ½ÄÀ¸·Î º¯°æ, ³ª¼±Ã·È¥¶õÈ®·ü °­Á¦Àû¿ë ¿É¼Ç Ãß°¡
-@ UPDATE : '19.3.3    / º¯°æ³»¿ë: ÈÄ¹æÇÇ°İ½Ã È¥¶õÈ¿°ú ±â´É Ãß°¡
-@ UPDATE : '19.6.17   / º¯°æ³»¿ë: ÈÄ¹æÇÇ°İ½Ã È¥¶õÈ¿°ú ¹İ°İÀû¿ë ¹ö±× ¼öÁ¤
-@ UPDATE : '19.11.21  / º¯°æ³»¿ë: ÃÊÆ¯±â¿¬Àü È°¼ºÈ­ ½Ã ±ÙÁ¢Àü¹ıÀÇ ¿ø°Å¸®¹ßµ¿ ¹ö±× ¼öÁ¤, AIºÎ´ë Àü¹ıÃÖÀûÈ­ ¿É¼Ç Ãß°¡
-@ UPDATE : '20.4.11   / º¯°æ³»¿ë: ÀüÅõº´°úÀÇ °ø¼ºÆÄ¼â µ¥¹ÌÁö °¨¼Ò
-@ UPDATE : '20.8.25   / º¯°æ³»¿ë: ³ª¼±Ã·È¥¶õÈ®·ü ¿É¼ÇOFF Ã³¸® (pk2.1 ½Å¹öÁ¯¿¡¼­ ¹ö±× ¼öÁ¤µÊ)
-@ UPDATE : '20.8.29   / º¯°æ³»¿ë: Ä·ÆäÀÎ¿¡¼­´Â Ä¿½ºÅÒ ¼¼ÆÃ »ç¿ë ºÒ°¡ÇÏµµ·Ï ¼öÁ¤
-@ UPDATE : '20.10.6   / º¯°æ³»¿ë: ÃÊÆ¯±â¿¬Àü »ç°Å¸® È®ÀÎÁ¶°Ç ¼öÁ¤, Àü¹ıÃÖÀûÈ­ È®ÀÎÁ¶°Ç ¼öÁ¤ (³ëº´¸¸Á¦¿Ü)
-@ UPDATE : '20.10.17  / º¯°æ³»¿ë: ÃÊÆ¯±â¿¬Àü ¹ßµ¿ÇÔ¼ö ¿À·ù ¼öÁ¤ (Æ¯±â_»ç¼ö, ½£¿¡¼­ Àü¹ıÃë¼Ò Çö»ó), AIºÎ´ë_³ëº´È­½ÃÀü¹ı Ãß°¡ (Åë»óÈ°°ø°İÀ» È­½Ã·Î º¯°æ)
-@ UPDATE : '20.11.9   / º¯°æ³»¿ë: À§Ç³/¼ÒÅÁ ±â·Âµ¥¹ÌÁö ¼ö½Ä ¿À·ù ¼öÁ¤
-*/
-
-namespace ºÎ´ëÀÇ_°ø°İ_´ë¹ÌÁö
+ï»¿namespace ë¶€ëŒ€ì˜_ê³µê²©_ëŒ€ë¯¸ì§€
 {
-    //---------------------------------------------------------------------------------------
-    // À¯Àú ¼³Á¤ (true = on, false = off)
-    const bool ´ëÈ­Ç¥½Ã¼³Á¤ = true;   // Ä¿½ºÅÒ È¿°ú ¹ßµ¿ ½Ã ´ëÈ­Ç¥½Ã ¿©ºÎ (false ±ÇÀå)
-    
-	const bool »ç±âÈ¿°ú¼³Á¤ = true;   // ±â·Â¿¡ ºñ·ÊÇÏ¿© µ¥¹ÌÁö Áõ°¨ º¸Á¤ È¿°ú
-    const bool ±â·ÂÁõ°¨¼³Á¤ = true;   // ±³Àü ½Ã µ¥¹ÌÁö¿¡ µû¶ó °ø°İºÎ´ë ±â·ÂÁõ°¡, ÇÇ°İºÎ´ë ±â·Â°¨¼Ò
-    const bool ÁöÇüÈ¿°ú¼³Á¤ = true;   // ±³Àü ½Ã ÁöÇüÁ¾·ù ¹× ÁöÇü°íÀú ¿µÇâ ¹İ¿µ¿©ºÎ
-    const bool ÁÖº¯ºÎ´ë¼³Á¤ = true;   // ÁÖº¯ ¾Æ±ººÎ´ë°¡ ±ºÁÖ ¶Ç´Â µµµ¶ÀÌ°Å³ª, Æ¯±â_½Å»ê, Æ¯±â_Çã½Ç º¸À¯ ½Ã º¸Á¤È¿°ú
-    const bool ±³Àü¹æÇâ¼³Á¤ = true;   // ±³Àü ½Ã ºÎ´ë °ø°İ ¹æÇâ¿¡ µû¸¥ µ¥¹ÌÁö º¸Á¤È¿°ú Àû¿ë
-    const bool °ÅÁ¡¹æ¾îÆ¯±â = true;   // °ÅÁ¡ ³» Àå¼öÀÇ ¹æ¾îÆ¯±â(Ã¶º®,ºÒ±¼,±İ°­) È¿°ú Àû¿ë
-    const bool Àü·«°ÅÁ¡¼³Á¤ = true;   // º´°úº° Æ¯Á¤ÇÑ Àü·«°ÅÁ¡ Á¡À¯ÇÑ ¼¼·ÂÀÇ ºÎ´ë´Â Å©¸®Æ¼ÄÃ °ø°İ·Â Áõ°¡ 
-    
-    const bool ¼¼·ÂÈ¿°ú¼³Á¤ = true;   // ¼¼·Âº° ±º·É È¿°ú Àû¿ë
-    const bool º´°úÆ¯±â¼³Á¤ = true;   // º´°úº° Æ¯±â¿¡ µû¸¥ µ¥¹ÌÁö º¸Á¤ È¿°ú Àû¿ë
-    const bool °ÅÁ¡´É·ÂÇÕ»ê = true;   // true: °ÅÁ¡ ³» ¹«ÀåµéÀÇ ´É·ÂÄ¡ ÇÕ»ê ±â´É Àû¿ë, false: ±âÁ¸Ã³·³ ÅÂ¼ö ´É·Â¸¸ Àû¿ë
-    const bool °ÅÁ¡¹æ¾î¹öÇÁ = true;   // °ÅÁ¡(µµ½Ã,°ü¹®,Ç×±¸)¿¡ ÀÎÁ¢ÇÑ ºÎ´ëÀÇ µ¥¹ÌÁö ¹æ¾î ¹öÇÁ ¼³Á¤
-    
-    const float ´ë¹ÌÁöÁ¶Àı = 0.8f;   // ÀüÃ¼ÀûÀÎ ´ë¹ÌÁö·®À» ºñÀ²·Î Á¶Àı
-    
-    //---------------------------------------------------------------------------------------
-    // ³ª¼±Ã·È¥¶õÈ®·ü °­Á¦Àû¿ë (204 ³ª¼±Ã· È¥¶õ È®·ü.cpp ¹Ìµ¿ÀÛ º¸¿Ï) --- pk2.1 ½Å¹öÁ¯¿¡¼­ ¹ö±× ¼öÁ¤µÇ¾î OFF Ã³¸®ÇÔ
-    const bool ³ª¼±Ã·È¥¶õÈ®·ü_°­Á¦Àû¿ë = false;   // Àû¿ë ½Ã Âü°í»çÇ× : È¥¶õ¡æÅë»óÀ¸·Î »óÅÂ °­Á¦Ã³¸® ½Ã ¾Ö´Ï¸ŞÀÌ¼Ç ¾î»öÇÒ ¼ö ÀÖÀ½
-    const int  ³ª¼±Ã·_Å©¸®Æ¼ÄÃÈ¥¶õÈ®·ü = 100;    // ±âº»°ª=100, Å©¸®Æ¼ÄÃÀÏ ¶§ È¥¶õÈ®·ü°ª
-    const int  ³ª¼±Ã·_Àü¹ı¼º°øÈ¥¶õÈ®·ü = 30;     // ±âº»°ª=30, Å©¸®Æ¼ÄÃ ¾Æ´Ò ¶§ È¥¶õÈ®·ü°ª 
-    
-    // ºÎ´ë ÈÄ¹æÇÇ°İ½Ã È¥¶õÈ¿°ú : ±³Àü¹æÇâ¼³Á¤=true ½Ã È°¼ºÈ­µÇ´Â Ãß°¡ ¿É¼Ç
-    const bool ÈÄ¹æÇÇ°İ½Ã_È¥¶õÀû¿ë = true;   // ºÎ´ë ÈÄ¹æÇÇ°İ½Ã ÀÏÁ¤È®·ü·Î È¥¶õÈ¿°ú (true=Àû¿ë, false=¹ÌÀû¿ë)
-    const int  ÈÄ¹æÇÇ°İ½Ã_È¥¶õÈ®·ü = 10;     // ÈÄ¹æÇÇ°İ½Ã_È¥¶õÀû¿ë=true ½Ã È¥¶õ È®·ü°ª (0~100)
-    
-    // ÃÊÆ¯±â¿¬Àü È°¼ºÈ­ ½Ã ±ÙÁ¢Àü¹ıÀÌ ¿ø°Å¸®¿¡¼­ ¹ßµ¿µÇ´Â ¹ö±× ¼öÁ¤ (true ±ÇÀå)
-    const bool ÃÊÆ¯±â¿¬Àü_¹ßµ¿¼³Á¤ = true;     // ÃÊÆ¯±â¿¬Àü È°¼ºÈ­ ½Ã ±ÙÁ¢Àü¹ıÀÇ ¿ø°Å¸®¹ßµ¿ ¹ö±× ¼öÁ¤
-    
-    // AIºÎ´ë Àü¹ı ¿É¼Ç
-    const bool AIºÎ´ë_Àü¹ıÃÖÀûÈ­ = false;    // AIºÎ´ë ±³Àü ½Ã È¿°úÀûÀÎ Àü¹ıÀ» ¼±ÅÃ
-    const bool AIºÎ´ë_³ëº´È­½ÃÀü¹ı = true;   // AIºÎ´ë ±³Àü ½Ã ³ëº´ Åë»ó°£Á¢ °ø°İÀ» È­½Ã·Î º¯°æ
-    
-    //---------------------------------------------------------------------------------------
-    
-    
-    class Main
+	class Main
 	{
-        
 		Main()
 		{
 			pk::set_func(209, pk::func209_t(callback));
-            
-            pk::bind(173, pk::trigger173_t(onUnitExpAdd));
 		}
-        
-        /*----------------------------------------
-            °ø°İ ÇÇÇØ·®À» °è»êÇÕ´Ï´Ù.
-            @param[out] damage	´ë¹ÌÁö Á¤º¸
-            @param unit			ºÎ´ë
-            @param tactics_id	#Àü¹ıId
-            @param target_pos	¸ñÇ¥ ÁÂÇ¥
-            @param type			0 °ø°İ, 1 ¹İ°İ, 2 ¹İ°İ
-            @param critical		0 Ä¡¸íÅ¸ È®·ü °è»ê, 1 Ä¡¸íÅ¸ ¼º°ø °­Á¦, 2 Ä¡¸íÅ¸ ½ÇÆĞ °­Á¦
-            @param ambush		0 Åë»ó, 1 º¹º´
-        ----------------------------------------*/
+
 		void callback(pk::damage_info& info, pk::unit@ attacker, int tactics_id, const pk::point &in target_pos, int type, int critical, bool ambush)
 		{
 			int force_id = attacker.get_force_id();
@@ -85,74 +15,48 @@ namespace ºÎ´ëÀÇ_°ø°İ_´ë¹ÌÁö
 			int command = func_5aee10(attacker);
 			pk::unit@ target_unit = pk::get_unit(target_pos);
 			pk::building@ target_building = pk::get_building(target_pos);
-            pk::hex_object@ target_obj = pk::get_hex_object(target_pos);
 			int atk = 0;
 			int troops_atk = 0;
 			int buffed = 0;
-            
-            //---------------------------------------------------------------------------------------
-            // °æÇèÄ¡È¹µæ Ã³¸®¿ë º¯¼ö ÃÊ±âÈ­ ('19.2.21)
-            @msg_unit = null;
-            @msg_person = null;
-            msg_string = "";
-            
-            @nasun_unit = null;
-            ³ª¼±Ã·_Å©¸®Æ¼ÄÃ = false;
-            
-            @back_unit = null;
-            //---------------------------------------------------------------------------------------
 
-			// °ø°İ ´É·ÂÄ¡
+			// ê³µê²© ëŠ¥ë ¥ì¹˜
 			if (ambush)
-				atk = pk::max(attacker.attr.stat[ºÎ´ë´É·Â_Áö·Â] - 5, 1);
+				atk = pk::max(attacker.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ì§€ë ¥] - 5, 1);
 			else
-				atk = attacker.attr.stat[ºÎ´ë´É·Â_°ø°İ];
+				atk = attacker.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ê³µê²©];
 
-            
-            // AIºÎ´ë Àü¹ıÃÖÀûÈ­ ('20.10.13)
-            if (!pk::is_campaign() and !pk::is_player_controlled(attacker) and !ambush and type == 0)
-            {
-                if (AIºÎ´ë_³ëº´È­½ÃÀü¹ı and attacker.weapon == º´±â_³ë )    // ³ëº´ °£Á¢Åë»ó ¡æ Àü¹ıÈ­½Ã·Î ÃÖÀûÈ­
-                    tactics_id = func_fire_on_arrow(attacker, target_obj, tactics_id);
-                
-                if (AIºÎ´ë_Àü¹ıÃÖÀûÈ­ and target_unit !is null)     // ±ÙÁ¢ Àü¹ı ÃÖÀûÈ­
-                    tactics_id = func_dir_tactics_opt(attacker, target_unit, tactics_id);
-            }
-            
-            
-			// º´·Â °ø°İ·Â, Àü¹ı °á°ú
+			// ë³‘ë ¥ ê³µê²©ë ¥, ì „ë²• ê²°ê³¼
 			if (pk::is_valid_tactics_id(tactics_id))
 			{
 				troops_atk = pk::get_tactics(tactics_id).troops_atk;
 				info.tactics_hit = pk::rand_bool(cast<pk::func202_t>(pk::get_func(202))(attacker, attacker.get_pos(), pk::get_hex_object(target_pos), tactics_id));
-            }
-			else if (pk::is_neighbor_pos(attacker.get_pos(), target_pos))
+			}
+			else if (pk::is_neighbor_pos(attacker.get_pos(), target_pos) or ambush)
 			{
 				troops_atk = 10;
 			}
 
-			// °ø°İ·Â »ó½Â ¹öÇÁ
+			// ê³µê²©ë ¥ ìƒìŠ¹ ë²„í”„
 			if (func_5aed80(attacker.get_pos(), force_id))
 			{
 				buffed = 1;
 				info.buffed = true;
-					
 			}
 
-			// µğ¹öÇÁ
+			// ë””ë²„í”„
 			if (target_unit !is null)
 			{
 				pk::force@ target_force = pk::get_force(target_unit.get_force_id());
-				int facility_id = ½Ã¼³_Áø;
-				if (pk::has_tech(target_force, ±â±³_½Ã¼³°­È­))
-					facility_id = ½Ã¼³_¿ä»õ;
-				if (pk::has_tech(target_force, ±â±³_¼ºº®°­È­))
-					facility_id = ½Ã¼³_¼ºÃ¤;
+				int facility_id = ì‹œì„¤_ì§„;
+				if (pk::has_tech(target_force, ê¸°êµ_ì‹œì„¤ê°•í™”))
+					facility_id = ì‹œì„¤_ìš”ìƒˆ;
+				if (pk::has_tech(target_force, ê¸°êµ_ì„±ë²½ê°•í™”))
+					facility_id = ì‹œì„¤_ì„±ì±„;
 				if (func_5aedc0(target_unit.get_pos(), 1, pk::get_facility(facility_id).max_range, target_unit.get_force_id()))
 					info.debuffer = facility_id;
 			}
 
-			// Å©¸®Æ¼ÄÃ
+			// í¬ë¦¬í‹°ì»¬
 			info.critical = false;
 			if (critical == 0)
 			{
@@ -165,435 +69,126 @@ namespace ºÎ´ëÀÇ_°ø°İ_´ë¹ÌÁö
 			{
 				info.critical = true;
 			}
-			
-			float º´±â»ó¼º_°­ = float(pk::core["º´±â»ó¼º.°­"]); // 1.15f
-			float º´±â»ó¼º_¾à = float(pk::core["º´±â»ó¼º.¾à"]); // 0.85f
-			float Á¤¿¹±â±³_°ø°İ·Â = 1.15f;
-			float ´Ü·Ã±â±³_°ø°İ·Â = 1.10f;
-			float Å©¸®Æ¼ÄÃ_°ø°İ·Â = 1.15f;
 
-			// ºÎ´ë°£ ÀüÅõ (º´·Â)
-            if (target_unit !is null)
+			float ë³‘ê¸°ìƒì„±_ê°• = float(pk::core["ë³‘ê¸°ìƒì„±.ê°•"]); // 1.15f
+			float ë³‘ê¸°ìƒì„±_ì•½ = float(pk::core["ë³‘ê¸°ìƒì„±.ì•½"]); // 0.85f
+			float ì •ì˜ˆê¸°êµ_ê³µê²©ë ¥ = 1.15f;
+			float ë‹¨ë ¨ê¸°êµ_ê³µê²©ë ¥ = 1.10f;
+			float í¬ë¦¬í‹°ì»¬_ê³µê²©ë ¥ = 1.15f;
+
+			if (target_unit !is null)
 			{
 				info.dst_troops = target_unit.troops;
 
-				float troops_damage = func_5aee60(atk, command, troops_atk, buffed, target_unit.attr.stat[ºÎ´ë´É·Â_¹æ¾î], func_5aee10(target_unit));
-				
-                /* ¾Ó¾ç Æ¯±â ¹öÇÁ »èÁ¦ : ´Ù¼ö ºÎ´ë¿¡ ¹İ°İ ½Ã Áö³ªÄ£ ±â·Â È¸º¹ ¹®Á¦
-				int ºÎ´ë_±â·ÂÈ¸º¹ = 5;
-				if (attacker.has_skill(Æ¯±â_¾Ó¾ç))
-					info.energy_heal = ºÎ´ë_±â·ÂÈ¸º¹;
-                */
-                
-                
+				float troops_damage = func_5aee60(atk, command, troops_atk, buffed, target_unit.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ë°©ì–´], func_5aee10(target_unit));
+
 				switch (weapon_id)
 				{
-				case º´±â_Ã¢:
+				case ë³‘ê¸°_ì°½:
 					if (pk::is_valid_tactics_id(tactics_id))
 					{
-						if (target_unit.weapon == º´±â_±Ø)
-                        {
-							troops_damage *= º´±â»ó¼º_¾à;
-                            
-                            if (target_unit.has_tech(±â±³_Å«¹æÆĞ))  // ±Øº´ ´ë»ó ±â±³È¿°ú Ãß°¡Àû¿ë ('18.10.5)
-                                troops_damage *= º´±â»ó¼º_¾à;
-                        }
-						else if (target_unit.weapon == º´±â_±º¸¶)
-							troops_damage *= º´±â»ó¼º_°­;
-                        else if (target_unit.weapon == º´±â_³ë)
-							troops_damage *= º´±â»ó¼º_°­;
+						if (target_unit.weapon == ë³‘ê¸°_ê·¹)
+							troops_damage *= ë³‘ê¸°ìƒì„±_ì•½;
+						else if (target_unit.weapon == ë³‘ê¸°_êµ°ë§ˆ)
+							troops_damage *= ë³‘ê¸°ìƒì„±_ê°•;
 					}
-                    
-					if (pk::has_tech(force, ±â±³_Á¤¿¹Ã¢º´))
-                        troops_damage *= Á¤¿¹±â±³_°ø°İ·Â; // 1.15f
-					else if (pk::has_tech(force, ±â±³_Ã¢º´´Ü·Ã))
-                        troops_damage *= ´Ü·Ã±â±³_°ø°İ·Â; // 1.10f;
-                    
-                    // À§¾Ğ Æ¯±â (À§¾Ğ)
-					if (º´°úÆ¯±â¼³Á¤ and attacker.has_skill(Æ¯±â_À§¾Ğ) and !pk::is_campaign())
-                    {
-						troops_damage *= 1.15f;
-                        
-                        if (´ëÈ­Ç¥½Ã¼³Á¤ and pk::is_player_controlled(attacker))
-                        {
-                            //pk::say(pk::encode("³¯Ä«·Î¿î Ã¢³¡À» ¹Ş¾Æ¶ó"), pk::get_person(attacker.leader));
-                            @msg_unit = @attacker;
-                            @msg_person = pk::get_person(attacker.leader);
-                            msg_string = "³¯Ä«·Î¿î Ã¢³¡À» ¹Ş¾Æ¶ó";
-                        }
-                    }
-                    
-                    // ¼¼·Âº° ´Ü·Ã±â±³ ¾îµå¹êÆ¼Áö [¿ø¼Ò, Á¶Á¶, Á¶ºñ, Á¶¿¹, ¼Õ°ß, ¼ÕÃ¥]ÀÌ ±ºÁÖÀÎ °æ¿ì ('18.9.30)
-                    if (¼¼·ÂÈ¿°ú¼³Á¤ and pk::has_tech(force, ±â±³_Ã¢º´´Ü·Ã) and !pk::is_campaign())
-                    {
-                        
-                        if (pk::get_kunshu_id(attacker) == ¹«Àå_¿ø¼Ò)
-                            troops_damage *= 1.1f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_Á¶Á¶)
-                            troops_damage *= 1.1f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_Á¶ºñ)
-                            troops_damage *= 1.1f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_Á¶¿¹)
-                            troops_damage *= 1.1f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_¼Õ°ß)
-                            troops_damage *= 1.1f;
-                        
-                        else 	
-                            troops_damage *= 1.0f; 
-                    }
-					
+
+					if (pk::has_tech(force, ê¸°êµ_ì •ì˜ˆì°½ë³‘))
+						troops_damage *= ì •ì˜ˆê¸°êµ_ê³µê²©ë ¥;
+					else if (pk::has_tech(force, ê¸°êµ_ì°½ë³‘ë‹¨ë ¨))
+						troops_damage *= ë‹¨ë ¨ê¸°êµ_ê³µê²©ë ¥;
 					break;
 
-				case º´±â_±Ø:
+				case ë³‘ê¸°_ê·¹:
 					if (pk::is_valid_tactics_id(tactics_id))
 					{
-						if (target_unit.weapon == º´±â_±º¸¶)
-							troops_damage *= º´±â»ó¼º_¾à;
-						else if (target_unit.weapon == º´±â_Ã¢)
-							troops_damage *= º´±â»ó¼º_°­;
-                        else if (target_unit.weapon == º´±â_³ë)    //³ëº´ »ó¼º Ãß°¡ ('18.10.1)
-							troops_damage *= º´±â»ó¼º_°­;
+						if (target_unit.weapon == ë³‘ê¸°_ì°½)
+							troops_damage *= ë³‘ê¸°ìƒì„±_ê°•;
+						else if (target_unit.weapon == ë³‘ê¸°_êµ°ë§ˆ)
+							troops_damage *= ë³‘ê¸°ìƒì„±_ì•½;
 					}
-                    
-                    if (pk::has_tech(force, ±â±³_Á¤¿¹±Øº´))
-                        troops_damage *= Á¤¿¹±â±³_°ø°İ·Â; // 1.15f
-                    else if (pk::has_tech(force, ±â±³_±Øº´´Ü·Ã))
-                        troops_damage *= ´Ü·Ã±â±³_°ø°İ·Â; // 1.10f;
-                    
-					// ÀÌ¹ÎÁ· Æ¯±â (Ä£¸¸, Ä£¿ù)
-					if (º´°úÆ¯±â¼³Á¤ and (attacker.has_skill(Æ¯±â_Ä£¸¸) or attacker.has_skill(Æ¯±â_Ä£¿ù)) and !pk::is_campaign())
-                    {
-						troops_damage *= 1.15f;
-                        
-                        if (´ëÈ­Ç¥½Ã¼³Á¤ and pk::is_player_controlled(attacker))
-                        {
-                            if (attacker.has_skill(Æ¯±â_Ä£¸¸))
-                            {
-                                //pk::say(pk::encode("ÀÌ°ÍÀÌ ³²¸¸º´ÀÇ À§·ÂÀÌ´Ù"), pk::get_person(attacker.leader));
-                                @msg_unit = @attacker;
-                                @msg_person = pk::get_person(attacker.leader);
-                                msg_string = "ÀÌ°ÍÀÌ ³²¸¸º´ÀÇ À§·ÂÀÌ´Ù";
-                            }
-                            else if (attacker.has_skill(Æ¯±â_Ä£¿ù))
-                            {
-                                //pk::say(pk::encode("ÀÌ°ÍÀÌ »ê¿ùº´ÀÇ À§·ÂÀÌ´Ù"), pk::get_person(attacker.leader));
-                                @msg_unit = @attacker;
-                                @msg_person = pk::get_person(attacker.leader);
-                                msg_string = "ÀÌ°ÍÀÌ »ê¿ùº´ÀÇ À§·ÂÀÌ´Ù";
-                            }
-                        }
-                    }
-                    
-                    // ¼¼·Âº° ´Ü·Ã±â±³ ¾îµå¹êÆ¼Áö [À¯ºñ, À¯¼±, À¯¾ğ, À¯Àå, ¸ÍÈ¹]ÀÌ ±ºÁÖÀÎ °æ¿ì ('18.9.30)
-                    if (¼¼·ÂÈ¿°ú¼³Á¤ and pk::has_tech(force, ±â±³_±Øº´´Ü·Ã) and !pk::is_campaign())
-                    {
-                        
-                        if (pk::get_kunshu_id(attacker) == ¹«Àå_À¯ºñ)
-                            troops_damage *= 1.1f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_À¯¼±)
-                            troops_damage *= 1.1f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_À¯¾ğ)
-                            troops_damage *= 1.1f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_À¯Àå)
-                            troops_damage *= 1.1f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_¸ÍÈ¹)
-                            troops_damage *= 1.2f;
-                        
-                        else 	
-                            troops_damage *= 1.0f;
-                    }
-                    
+
+					if (pk::has_tech(force, ê¸°êµ_ì •ì˜ˆê·¹ë³‘))
+						troops_damage *= ì •ì˜ˆê¸°êµ_ê³µê²©ë ¥;
+					else if (pk::has_tech(force, ê¸°êµ_ê·¹ë³‘ë‹¨ë ¨))
+						troops_damage *= ë‹¨ë ¨ê¸°êµ_ê³µê²©ë ¥;
 					break;
 
-				case º´±â_³ë:
-					if (pk::is_valid_tactics_id(tactics_id) and pk::equipment_id_to_heishu(target_unit.weapon) == º´Á¾_º´±â)
-						troops_damage *= º´±â»ó¼º_¾à;
-                    
-                    if (pk::is_valid_tactics_id(tactics_id) and !pk::is_campaign())    
-					{
-                        // ±âº´ ´ë»ó »ó¼º °­È­ ('18.10.1), ¿ø°Å¸® °ø°İ ÇÑÁ¤ Ãß°¡ ('18.11.13)
-						if (target_unit.weapon == º´±â_±º¸¶ and pk::get_distance(attacker.pos, target_unit.pos) >= 2)
-                        {
-							troops_damage *= º´±â»ó¼º_°­;
-                            
-                            if (pk::has_tech(force, ±â±³_°­³ë)) // °­³ë ±â±³ ½Ã ±âº´ ´ë»ó »ó¼º Ãß°¡ ('18.10.5)
-                                troops_damage *= º´±â»ó¼º_°­;
-                        }
-                        else if ((target_unit.weapon == º´±â_±Ø) and (target_unit.has_tech(±â±³_È­»ì¹æÆĞ)))  // ±Øº´ »ó¼º ±â±³È¿°ú Àû¿ë ('18.10.5)
-							troops_damage *= º´±â»ó¼º_¾à;
-					}
-                    
-                    if (pk::has_tech(force, ±â±³_Á¤¿¹³ëº´))
-                        troops_damage *= Á¤¿¹±â±³_°ø°İ·Â; // 1.15f
-                    else if (pk::has_tech(force, ±â±³_³ëº´´Ü·Ã))
-                        troops_damage *= ´Ü·Ã±â±³_°ø°İ·Â; // 1.10f;
-                    
-                    
-                    // ÇØµ¶ Æ¯±âÀÚ µ¶È­»ì È¿°ú ( ('18.10.14)
-					if (º´°úÆ¯±â¼³Á¤ and attacker.has_skill(Æ¯±â_ÇØµ¶) and !pk::is_campaign())
-                    {   
-                        if (!target_unit.has_skill(Æ¯±â_ÇØµ¶))
-                        {
-                            troops_damage *= 1.15f;
-                            
-                            if (´ëÈ­Ç¥½Ã¼³Á¤ and pk::is_player_controlled(attacker))
-                            {
-                                //pk::say(pk::encode("ÀÌ°ÍÀÌ µ¶È­»ìÀÇ À§·ÂÀÌ´Ù"), pk::get_person(attacker.leader));
-                                @msg_unit = @attacker;
-                                @msg_person = pk::get_person(attacker.leader);
-                                msg_string = "ÀÌ°ÍÀÌ µ¶È­»ìÀÇ À§·ÂÀÌ´Ù";
-                            }
-                        }
-                    }
-                    
-                    // ¼¼·Âº° ´Ü·Ã±â±³ ¾îµå¹êÆ¼Áö[¼Õ±Ç, ¼ÕÃ¥, À¯Ç¥, ¿ø¼ú]ÀÌ ±ºÁÖÀÎ °æ¿ì ('18.9.30)
-                    if (¼¼·ÂÈ¿°ú¼³Á¤ and pk::has_tech(force, ±â±³_³ëº´´Ü·Ã) and !pk::is_campaign())
-                    {
-                        
-                        if (pk::get_kunshu_id(attacker) == ¹«Àå_¼Õ±Ç)
-                            troops_damage *= 1.2f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_¼ÕÃ¥)
-                            troops_damage *= 1.2f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_À¯Ç¥)
-                            troops_damage *= 1.1f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_¿ø¼ú)
-                            troops_damage *= 1.1f;
-                        
-                        else 	
-                            troops_damage *= 1.0f;
-                    }
-                    
+				case ë³‘ê¸°_ë…¸:
+					if (pk::is_valid_tactics_id(tactics_id) and pk::equipment_id_to_heishu(target_unit.weapon) == ë³‘ì¢…_ë³‘ê¸°)
+						troops_damage *= ë³‘ê¸°ìƒì„±_ì•½;
+
+					if (pk::has_tech(force, ê¸°êµ_ì •ì˜ˆë…¸ë³‘))
+						troops_damage *= ì •ì˜ˆê¸°êµ_ê³µê²©ë ¥;
+					else if (pk::has_tech(force, ê¸°êµ_ë…¸ë³‘ë‹¨ë ¨))
+						troops_damage *= ë‹¨ë ¨ê¸°êµ_ê³µê²©ë ¥;
 					break;
 
-				case º´±â_±º¸¶:
+				case ë³‘ê¸°_êµ°ë§ˆ:
 					if (pk::is_valid_tactics_id(tactics_id))
 					{
-						if (target_unit.weapon == º´±â_Ã¢)
-							troops_damage *= º´±â»ó¼º_¾à;
-						else if (target_unit.weapon == º´±â_±Ø)
-							troops_damage *= º´±â»ó¼º_°­;
-                        //³ëº´ ´ë»ó »ó¼º °­È­('18.10), ±ÙÁ¢ °ø°İ ÇÑÁ¤ ('18.11.13)
-                        else if (target_unit.weapon == º´±â_³ë and (pk::get_distance(attacker.pos, target_unit.pos) <= 1)  and !pk::is_campaign())    
-							troops_damage *= º´±â»ó¼º_°­;
+						if (target_unit.weapon == ë³‘ê¸°_ì°½)
+							troops_damage *= ë³‘ê¸°ìƒì„±_ì•½;
+						else if (target_unit.weapon == ë³‘ê¸°_ê·¹)
+							troops_damage *= ë³‘ê¸°ìƒì„±_ê°•;
 					}
-					
-                    if (pk::has_tech(force, ±â±³_Á¤¿¹±âº´))
-                        troops_damage *= Á¤¿¹±â±³_°ø°İ·Â; // 1.15f
-                    else if (pk::has_tech(force, ±â±³_±âº´´Ü·Ã))
-                        troops_damage *= ´Ü·Ã±â±³_°ø°İ·Â; // 1.10f;
-                    
-					// ÀÌ¹ÎÁ· Æ¯±â (Ä£°­, Ä£¿À) : ±ÙÁ¢ ±âº´°ø°İ¸¸ Àû¿ë ('18.10.28)
-                    if (!pk::is_campaign())
-                    {
-                        if (º´°úÆ¯±â¼³Á¤ and (attacker.has_skill(Æ¯±â_Ä£°­) or attacker.has_skill(Æ¯±â_Ä£¿À)) and (pk::get_distance(attacker.pos, target_unit.pos) <= 1) )
-                        {
-                            troops_damage *= 1.15f;
-                            
-                            if (´ëÈ­Ç¥½Ã¼³Á¤ and pk::is_player_controlled(attacker))
-                            {
-                                if (attacker.has_skill(Æ¯±â_Ä£°­))
-                                {
-                                    //pk::say(pk::encode("ÀÌ°ÍÀÌ °­Á·±âº´ÀÇ À§·ÂÀÌ´Ù"), pk::get_person(attacker.leader));
-                                    @msg_unit = @attacker;
-                                    @msg_person = pk::get_person(attacker.leader);
-                                    msg_string = "ÀÌ°ÍÀÌ °­Á·±âº´ÀÇ À§·ÂÀÌ´Ù";
-                                }
-                                else if (attacker.has_skill(Æ¯±â_Ä£¿À))
-                                {
-                                    //pk::say(pk::encode("ÀÌ°ÍÀÌ ¿ÀÈ¯±âº´ÀÇ À§·ÂÀÌ´Ù"), pk::get_person(attacker.leader));
-                                    @msg_unit = @attacker;
-                                    @msg_person = pk::get_person(attacker.leader);
-                                    msg_string = "ÀÌ°ÍÀÌ ¿ÀÈ¯±âº´ÀÇ À§·ÂÀÌ´Ù";
-                                }
-                            }
-                        }
-                    }
-                    // ¹é¸¶_Æ¯±â : È­»ì°ø°İ·Â »óÇâ ('18.10.28), ¹İ°İ¿¡ ¹ÌÀû¿ë ('18.11.18)
-                    if (!pk::is_campaign())
-                    {
-                        if (º´°úÆ¯±â¼³Á¤ and attacker.has_skill(Æ¯±â_¹é¸¶) and !target_unit.has_skill(Æ¯±â_¹é¸¶) and (pk::get_distance(attacker.pos, target_unit.pos) > 1) and type == 0)
-                        {
-                            if (pk::has_tech(force, ±â±³_±â»ç))  // ±â±³_±â»ç °³¹ß ½Ã µ¥¹ÌÁö Áõ°¡
-                                troops_damage *= 1.4f;
-                            else 
-                                troops_damage *= 1.2f;
-                            
-                            if (´ëÈ­Ç¥½Ã¼³Á¤ and pk::is_player_controlled(attacker))
-                            {
-                                //pk::say(pk::encode("ÀÌ°ÍÀÌ ¹é¸¶±âº´ÁøÀÇ À§·ÂÀÌ´Ù"), pk::get_person(attacker.leader));
-                                @msg_unit = @attacker;
-                                @msg_person = pk::get_person(attacker.leader);
-                                msg_string = "ÀÌ°ÍÀÌ ¹é¸¶±âº´ÁøÀÇ À§·ÂÀÌ´Ù";
-                                
-                            }
-                        }
-                    }
-                    // ¼¼·Âº° ´Ü·Ã±â±³ ¾îµå¹êÆ¼Áö [Àå¼ö, °ø¼ÕÂù, ¸¶µî, ¸¶ÃÊ, µ¿Å¹, ¿©Æ÷]°¡ ±ºÁÖÀÎ °æ¿ì ('18.9.30)
-                    if (¼¼·ÂÈ¿°ú¼³Á¤ and pk::has_tech(force, ±â±³_±âº´´Ü·Ã) and !pk::is_campaign())
-                    {
-                        
-                        if (pk::get_kunshu_id(attacker) == ¹«Àå_°ø¼ÕÂù)
-                            troops_damage *= 1.2f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_¸¶µî)
-                            troops_damage *= 1.2f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_¸¶ÃÊ)
-                            troops_damage *= 1.2f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_¿©Æ÷)
-                            troops_damage *= 1.2f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_µ¿Å¹)
-                            troops_damage *= 1.1f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_Àå¼ö)
-                            troops_damage *= 1.1f;
-                        
-                        else 	
-                            troops_damage *= 1.0f;
-                    }
-                    
-						
+
+					if (pk::has_tech(force, ê¸°êµ_ì •ì˜ˆê¸°ë³‘))
+						troops_damage *= ì •ì˜ˆê¸°êµ_ê³µê²©ë ¥;
+					else if (pk::has_tech(force, ê¸°êµ_ê¸°ë³‘ë‹¨ë ¨))
+						troops_damage *= ë‹¨ë ¨ê¸°êµ_ê³µê²©ë ¥;
 					break;
 
-				case º´±â_Á¤¶õ:
-                    if (pk::is_valid_tactics_id(tactics_id) and !pk::is_campaign())    
-					{
-						if (target_unit.weapon == º´±â_±º¸¶)    // ±âº´ ´ë»ó »ó¼º °­È­ ('18.10.1)
-                        {
-							troops_damage *= º´±â»ó¼º_°­;
-                            
-                            if (pk::has_tech(force, ±â±³_°­³ë)) // °­³ë ±â±³ ½Ã ±âº´ ´ë»ó »ó¼º Ãß°¡ ('18.10.5)
-                                troops_damage *= º´±â»ó¼º_°­;
-                        }
-                        else if ((target_unit.weapon == º´±â_±Ø) and (target_unit.has_tech(±â±³_È­»ì¹æÆĞ)))  // ±Øº´ ´ë»ó ±â±³È¿°ú Àû¿ë ('18.10.5)
-							troops_damage *= º´±â»ó¼º_¾à;
-					}
-                    
-                    // ÇØµ¶ Æ¯±âÀÚ µ¶È­»ì È¿°ú ('18.10.14)
-					if (º´°úÆ¯±â¼³Á¤ and attacker.has_skill(Æ¯±â_ÇØµ¶) and !pk::is_campaign())
-                    {   
-                        if (!target_unit.has_skill(Æ¯±â_ÇØµ¶))
-                        {
-                            troops_damage *= 1.15f;
-                            
-                            if (´ëÈ­Ç¥½Ã¼³Á¤ and pk::is_player_controlled(attacker))
-                            {
-                                //pk::say(pk::encode("ÀÌ°ÍÀÌ µ¶È­»ìÀÇ À§·ÂÀÌ´Ù"), pk::get_person(attacker.leader));
-                                @msg_unit = @attacker;
-                                @msg_person = pk::get_person(attacker.leader);
-                                msg_string = "ÀÌ°ÍÀÌ µ¶È­»ìÀÇ À§·ÂÀÌ´Ù";
-                            }
-                        }
-                    }
-                    
-                    break;
-				
-				case º´±â_ÁÖ°¡:
-				
-					// ¼ö±º °ü·Ã Æ¯±â (Á¶Å¸, ÃßÁø)
-                    if(!pk::is_campaign())
-                    {
-                        if (attacker.has_skill(Æ¯±â_Á¶Å¸) or attacker.has_skill(Æ¯±â_ÃßÁø))
-                            troops_damage *= 1.05f;
-                    }
-                    break;
-                    
-				case º´±â_´©¼±:
-				
-					// ¼ö±º °ü·Ã Æ¯±â (Á¶Å¸, ÃßÁø)
-                    if(!pk::is_campaign())
-                    {
-                        if (attacker.has_skill(Æ¯±â_Á¶Å¸) or attacker.has_skill(Æ¯±â_ÃßÁø))
-                            troops_damage *= 1.10f;
-                    }                    
-					break;
-                    
-				case º´±â_ÅõÇÔ:
-					if (pk::is_valid_tactics_id(tactics_id) and pk::equipment_id_to_heishu(target_unit.weapon) == º´Á¾_º´±â)
+				case ë³‘ê¸°_ì •ë€:
+				case ë³‘ê¸°_ì£¼ê°€:
+				case ë³‘ê¸°_ëˆ„ì„ :
+				case ë³‘ê¸°_íˆ¬í•¨:
+					if (pk::is_valid_tactics_id(tactics_id) and pk::equipment_id_to_heishu(target_unit.weapon) == ë³‘ì¢…_ë³‘ê¸°)
 						troops_damage *= 0.8f;
-					
-					// ¼ö±º °ü·Ã Æ¯±â (Á¶Å¸, ÃßÁø)
-                    if(!pk::is_campaign())
-                    {
-                        if (attacker.has_skill(Æ¯±â_Á¶Å¸) or attacker.has_skill(Æ¯±â_ÃßÁø))
-                            troops_damage *= 1.15;
-                    }
-					
 					break;
 				}
-                
-                // ¼ö±ºÀÇ À°»óºÎ´ë¿¡ ´ëÇÑ È­½Ã Àü¹ı»ó¼º Ãß°¡ ('18.10.21)
-                // ¼ö±º : ¼Õ¿À, À¯Ç¥ ¼¼·Â °ü·Ã ÀÎ¹°µéÀÌ ±ºÁÖÀÏ °æ¿ì - ¼÷·Ãº´ ±â±³ ¾îµå¹êÆ¼Áö ('18.10.21)
-                if (pk::is_in_water(attacker) and (attacker.type == ºÎ´ëÁ¾·ù_ÀüÅõ) and !pk::is_campaign())
-                {
-                    if (pk::is_valid_tactics_id(tactics_id) and (tactics_id == Àü¹ı_È­½Ã or tactics_id == Àü¹ı_°ø¼ºÈ­½Ã or tactics_id == Àü¹ı_ÇÔ¼±È­½Ã) )    
-					{
-						if (!pk::is_in_water(target_unit) and target_unit.weapon == º´±â_±º¸¶)    // ±âº´ ´ë»ó »ó¼º °­È­ ('18.10.1)
-                        {
-							troops_damage *= º´±â»ó¼º_°­;
-                            
-                            if (pk::has_tech(force, ±â±³_°­³ë)) // °­³ë ±â±³ ½Ã ±âº´ ´ë»ó »ó¼º Ãß°¡ ('18.10.5)
-                                troops_damage *= º´±â»ó¼º_°­;
-                        }
-                        else if (!pk::is_in_water(target_unit) and (target_unit.weapon == º´±â_±Ø) and (target_unit.has_tech(±â±³_È­»ì¹æÆĞ)))  // ±Øº´ ´ë»ó ±â±³È¿°ú Àû¿ë ('18.10.5)
-							troops_damage *= º´±â»ó¼º_¾à;
-                        
-					}
-                    
-                    if (¼¼·ÂÈ¿°ú¼³Á¤ and pk::has_tech(force, ±â±³_¼÷·Ãº´))
-                    {
-                        
-                        if (pk::get_kunshu_id(attacker) == ¹«Àå_¼Õ°ß)
-                            troops_damage *= 1.2f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_¼ÕÃ¥)
-                            troops_damage *= 1.2f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_¼Õ±Ç)
-                            troops_damage *= 1.15f;
-                        else if (pk::get_kunshu_id(attacker) == pk::get_kunshu_id(pk::get_person(¹«Àå_ÁÖÀ¯)))
-                            troops_damage *= 1.15f;
-                        else if (pk::get_kunshu_id(attacker) == pk::get_kunshu_id(pk::get_person(¹«Àå_À°¼Õ)))
-                            troops_damage *= 1.15f;
-                        else if (pk::get_kunshu_id(attacker) == ¹«Àå_À¯Ç¥)
-                            troops_damage *= 1.1f;
-                        else if (pk::get_kunshu_id(attacker) == pk::get_kunshu_id(pk::get_person(¹«Àå_Ã¤¸ğ)))
-                            troops_damage *= 1.1f;
-                        
-                        else
-                            troops_damage *= 1.1f;
-                        
-                    }
-                }
-                
-                
 
 				if (attacker.is_player())
-					troops_damage *= float(pk::core["´ë¹ÌÁöÆĞ³ÎÆ¼"][pk::get_scenario().difficulty]);
+					troops_damage *= float(pk::core["ëŒ€ë¯¸ì§€íŒ¨ë„í‹°"][pk::get_scenario().difficulty]);
 
-                // Àü·«°ÅÁ¡ Á¡À¯ ¼¼·ÂÀº Å©¸®Æ¼ÄÃ °ø°İ·Â ¹öÇÁ Àû¿ë ('18.11.5)
-                if (Àü·«°ÅÁ¡¼³Á¤ and !pk::is_campaign())
-                {
-                    if (func_tactics_city(attacker, weapon_id))
-                        Å©¸®Æ¼ÄÃ_°ø°İ·Â += 0.05f;
-                }
-                        
 				if (type == 0)
 				{
 					if (info.critical)
-						troops_damage *= Å©¸®Æ¼ÄÃ_°ø°İ·Â; // 1.15f;
+						troops_damage *= í¬ë¦¬í‹°ì»¬_ê³µê²©ë ¥;
 
-					info.troops_damage = int(troops_damage);
+					// ìœ„í’, ì†Œíƒ• íŠ¹ê¸°ê°€ ê¸°ë ¥ ë–¨ì–´ì§„ ë¶€ëŒ€ì— 10% ì¶”ê°€ í”¼í•´ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+					if (target_unit.energy == 0)
+					{
+						if (attacker.has_skill(íŠ¹ê¸°_ìœ„í’) or attacker.has_skill(íŠ¹ê¸°_ì†Œíƒ•))
+							troops_damage *= 1.10f;
+					}
+
+					// ê¸‰ìŠµ, ê°•ìŠµ íŠ¹ê¸°ê°€ ìƒíƒœì´ìƒ ë¶€ëŒ€ì— í™•ë¥ ì— ë”°ë¼ 10% ì¶”ê°€ í”¼í•´ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+					if (target_unit.status != ë¶€ëŒ€ìƒíƒœ_í†µìƒ)
+					{
+						if (pk::is_in_water(attacker))
+						{
+							if (attacker.has_skill(íŠ¹ê¸°_ê°•ìŠµ) and pk::rand_bool(int(pk::core::skill_constant(attacker, íŠ¹ê¸°_ê°•ìŠµ))))
+								troops_damage *= 1.10f;
+						}
+						else
+						{
+							if (attacker.has_skill(íŠ¹ê¸°_ê¸‰ìŠµ) and pk::rand_bool(int(pk::core::skill_constant(attacker, íŠ¹ê¸°_ê¸‰ìŠµ))))
+								troops_damage *= 1.10f;
+						}
+					}
+
+					info.troops_damage = troops_damage;
 					if (func_5af230(info, attacker, target_unit, tactics_id))
 						troops_damage = 0;
-					
-                    info.energy_damage = 0;
-					if (attacker.has_skill(Æ¯±â_¼ÒÅÁ))
-						info.energy_damage += pk::max(0, int(pk::core::skill_constant(attacker, Æ¯±â_¼ÒÅÁ))); // 5
 
-                    if (attacker.has_skill(Æ¯±â_À§Ç³))      // ¼ÒÅÁ+À§Ç³ ÁßÃ¸ È¿°ú·Î Á¶Á¤ ('18.10.9)
-						info.energy_damage += pk::max(0, int(pk::core::skill_constant(attacker, Æ¯±â_À§Ç³))); // 20
+					if (attacker.has_skill(íŠ¹ê¸°_ì†Œíƒ•))
+						info.energy_damage = pk::max(info.energy_damage, int(pk::core::skill_constant(attacker, íŠ¹ê¸°_ì†Œíƒ•))); // 5
 
-                    if (attacker.has_skill(Æ¯±â_¾Ó¾ç))      // Æ¯±â ¾Ó¾ç È¿°ú ¹İ¿µ, ¹İ°İ¿¡´Â Àû¿ë ¾ÈµÊ ('18.10.21)
-                        info.energy_heal = 5;
-                    
-                    // Ã¢º´ º´·® ½À°İ
-                    info.food_damage = func_5aecc0(attacker, target_unit);  
+					if (attacker.has_skill(íŠ¹ê¸°_ìœ„í’))
+						info.energy_damage = pk::max(info.energy_damage, int(pk::core::skill_constant(attacker, íŠ¹ê¸°_ìœ„í’))); // 20
+
+					info.food_damage = func_5aecc0(attacker, target_unit);
 					info.food_heal = info.food_damage;
 				}
 				else
@@ -603,193 +198,96 @@ namespace ºÎ´ëÀÇ_°ø°İ_´ë¹ÌÁö
 					else if (type == 2)
 						troops_damage *= 0.4f;
 
-					// ¹İ°İÀÌ±â ¶§¹®¿¡ target_unitÀº °ø°İÀ» ½ÇÇàÇÑ ºÎ´ë¸¦ ¶æÇÔ.
+					// ë°˜ê²©ì´ê¸° ë•Œë¬¸ì— target_unitì€ ê³µê²©ì„ ì‹¤í–‰í•œ ë¶€ëŒ€ë¥¼ ëœ»í•¨.
 					if (pk::is_in_water(target_unit))
 					{
-						if (target_unit.has_skill(Æ¯±â_°­½À) and pk::rand_bool(int(pk::core::skill_constant(target_unit, Æ¯±â_°­½À))))
+						if (target_unit.has_skill(íŠ¹ê¸°_ê°•ìŠµ) and pk::rand_bool(int(pk::core::skill_constant(target_unit, íŠ¹ê¸°_ê°•ìŠµ))))
 						{
 							troops_damage = 0;
-							info.def_skill = Æ¯±â_°­½À;
+							info.def_skill = íŠ¹ê¸°_ê°•ìŠµ;
 						}
 					}
 					else
 					{
-						if (target_unit.has_skill(Æ¯±â_±Ş½À) and 
-                            (pk::get_hex(target_unit.pos).terrain == ÁöÇü_½£ or pk::rand_bool(int(pk::core::skill_constant(target_unit, Æ¯±â_±Ş½À))) ) )
+						if (target_unit.has_skill(íŠ¹ê¸°_ê¸‰ìŠµ) and pk::rand_bool(int(pk::core::skill_constant(target_unit, íŠ¹ê¸°_ê¸‰ìŠµ))))
 						{
 							troops_damage = 0;
-							info.def_skill = Æ¯±â_±Ş½À;
+							info.def_skill = íŠ¹ê¸°_ê¸‰ìŠµ;
 						}
+						// ê¸°ìŠµ ê¸°êµ íš¨ê³¼ ì¶”ê°€ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+						else if (target_unit.has_tech(ê¸°êµ_ê¸°ìŠµ) and (target_unit.weapon == ë³‘ê¸°_ì°½) and (pk::get_hex(target_unit.get_pos()).terrain == ì§€í˜•_ìˆ²))
+							troops_damage = 0;
 					}
 				}
 
-				if (target_unit.has_skill(Æ¯±â_µî°©))
-                {
+				// ë“±ê°‘ì´ ë°©ì‚¬ ê³µê²©ì€ ë°˜ìœ¼ë¡œ ì¤„ì´ì§€ ì•Šë„ë¡ ë³€ê²½ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+				if (target_unit.has_skill(íŠ¹ê¸°_ë“±ê°‘) and tactics_id != ì „ë²•_ê³µì„±ë°©ì‚¬)
 					troops_damage = troops_damage / 2;
-                    if (´ëÈ­Ç¥½Ã¼³Á¤ and pk::is_player_controlled(attacker))
-                    {
-                        @msg_unit = @attacker;
-                        @msg_person = pk::get_person(target_unit.leader);
-                        msg_string = "¿ì¸® µî°©ºÎ´ë¿¡ ¸Â¼­´Ù´Ï. ÈÊ.";
-                    }
-                }
 
-				if (info.debuffer == ½Ã¼³_Áø)
-					troops_damage *= 0.85f;
-				else if (info.debuffer == ½Ã¼³_¿ä»õ)
-					troops_damage *= 0.75f;
-				if (info.debuffer == ½Ã¼³_¼ºÃ¤)
+				// ë‹µíŒŒ íŠ¹ê¸°ê°€ íˆ¬ì„ ì „ë²•ì— ì ˆë°˜ë§Œ í”¼í•´ë¥¼ ë°›ìŒ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+				if (target_unit.has_skill(íŠ¹ê¸°_ë‹µíŒŒ) and (tactics_id == ì „ë²•_ê³µì„±íˆ¬ì„ or tactics_id == ì „ë²•_í•¨ì„ íˆ¬ì„))
+					troops_damage = troops_damage / 2;
+
+				// ì² ë²½ íŠ¹ê¸°ê°€ ì§„, ìš”ìƒˆ, ì„±ì±„ ë²”ìœ„ì—ì„œ ì¶”ê°€ ë°©ì–´ (íŠ¹ê¸°ì¢…í•©íŒ¨ì¹˜)
+				if (info.debuffer == ì‹œì„¤_ì„±ì±„)
+				{
+					if (target_unit.has_skill(íŠ¹ê¸°_ì² ë²½))
+					troops_damage *= 0.50f;
+					else
 					troops_damage *= 0.65f;
-                
-                if (!pk::is_campaign())
-                {
-                    // ºÎ´ë °£ ÀüÅõ ½Ã ºÎ´ë¹æÇâ¿¡ µû¸¥ µ¥¹ÌÁö º¸Á¤ ('18.11.27)
-                    if (±³Àü¹æÇâ¼³Á¤)
-                    {
-                        int damage_dir = func_unit_direction(attacker, target_unit);
-                        troops_damage = troops_damage * func_dir_weight(damage_dir);
-                        
-                        // ÈÄ¹æÇÇ°İ½Ã È¥¶õÈ¿°ú Àû¿ë
-                        if (ÈÄ¹æÇÇ°İ½Ã_È¥¶õÀû¿ë and type == 0 and damage_dir == 3 and int(troops_damage) > 0)
-                            @back_unit = target_unit;
-                    }
-                    
-                    // ºÎ´ë °£ ÀüÅõ ½Ã ÁÖº¯ºÎ´ë ¿µÇâ·Â Ãß°¡ ('18.10.28)
-                    if (ÁÖº¯ºÎ´ë¼³Á¤)
-                    {
-                        troops_damage = troops_damage * (1.f + func_neighbor_buf(attacker, true)) * (1.f - func_neighbor_buf(target_unit, false));
-                    }
+				}
+				else if (info.debuffer == ì‹œì„¤_ìš”ìƒˆ)
+				{
+					if (target_unit.has_skill(íŠ¹ê¸°_ì² ë²½))
+					troops_damage *= 0.60f;
+					else
+					troops_damage *= 0.75f;
+				}
+				else if (info.debuffer == ì‹œì„¤_ì§„)
+				{
+					if (target_unit.has_skill(íŠ¹ê¸°_ì² ë²½))
+					troops_damage *= 0.70f;
+					else
+					troops_damage *= 0.85f;
+				}
 
-                    // ºÎ´ë °£ ÀüÅõ ½Ã º´Á¾º° ÁöÇü È¿°ú Ãß°¡ ('18.10.11)
-                    if (ÁöÇüÈ¿°ú¼³Á¤)
-                    {
-                        troops_damage = troops_damage * (1.f + func_terrain_buf(attacker)) * (1.f - func_terrain_buf(target_unit)); //ÁöÇü À¯Çü
-                        troops_damage = troops_damage * (1.f + 0.01f * get_height_diff(attacker.get_pos(), target_unit.get_pos())); //ÁöÇü ³ôÀÌÂ÷
-                    }
-                    
-                    
-                    // ºÎ´ë°£ ±³Àü ½Ã »óÈ£ ±â·Â Á¶°Ç ¹İ¿µµÊ ('18.10.6)
-                    if (»ç±âÈ¿°ú¼³Á¤)
-                    {
-                        // ¤¤°ø°İºÎ´ë ±â·Â¿¡ µû¶ó ÇÇ°İºÎ´ë ÇÇÇØ 85% ~ 115% Àû¿ë : ºÎ´ë »ç±â È¿°ú ('18.10.6)
-                        troops_damage = troops_damage * (0.85f + 0.30f * (attacker.energy/120.f)) ;
-                        // ¤¤ÇÇ°İºÎ´ë ±â·Â¿¡ µû¶ó ÇÇ°İºÎ´ë ÇÇÇØ 85% ~ 115% Àû¿ë : ºÎ´ë »ç±â È¿°ú ('18.10.6)
-                        troops_damage = troops_damage * (0.85f + 0.30f * ((120 - target_unit.energy)/120.f)) ;
-                    }
-                    
-                    // ÀüÃ¼ÀûÀÎ ±âº» ´ë¹ÌÁö·® Á¶Àı ('18.11.08)
-                    troops_damage *= ´ë¹ÌÁöÁ¶Àı;
-                }
-                
-                // º´·Â ÇÇÇØ·®¿¡ µû¶ó ÇÇ°İ´ë»ó ±â·Â°¨¼Ò, °ø°İºÎ´ë ±â·Â»ó½Â È¿°ú ¹ß»ı, ¹İ°İµµ Àû¿ëµÊ ('18.10.6)
-                if (±â·ÂÁõ°¨¼³Á¤ and !pk::is_campaign())
-                {
-                    if (pk::is_enemy(attacker, target_unit))  // ¼­·Î ´Ù¸¥ ¼¼·ÂÀÎ ºÎ´ë°£ ±³Àü ½Ã¿¡¸¸ ±â·ÂÈ¸º¹ : µ¿Åä °è·« ½Ã ±â·ÂÈ¸º¹ ¹æÁö ('18.10.22)
-                    {
-                        info.energy_heal = info.energy_heal + int(pk::min(5.f, (troops_damage / 200.f)));   //±¤¿ª Àü¹ıµ¥¹ÌÁö¿¡ ÀÇÇÑ ±â·Â °úµµ»ó½Â ¸®¹ÌÅÍ Àû¿ë
-                    
-                        if (troops_damage >= 500)
-                        {
-                            info.energy_damage = info.energy_damage + int((troops_damage - 500) / 100.f);
-                        
-                            if (target_unit.has_skill(Æ¯±â_È£À§))  // Æ¯±â_È£À§ º¸À¯ ºÎ´ë´Â º´·ÂÇÇÇØ ÀÖ¾îµµ ±â·Â °¨¼Ò ¾øÀ½ ('18.10.14)
-                                info.energy_damage = 0;
-                        }
-                    }
-                    else    // µ¿Åä(¾Æ±º³¢¸® ±³Àü) ½Ã ±â·ÂÈ¸º¹ ¾ø°í, µ¥¹ÌÁö·®¿¡ ºñ·ÊÇÏ¿© ±â·Â µ¥¹ÌÁö ¹ß»ı ('18.10.25)
-                    {
-                        info.energy_damage = info.energy_damage + int(troops_damage / 100.f);
-                    }
-                }
-                
-				info.troops_damage = int(troops_damage);
-                
-                // ºÎ´ë°ø°İ ½ÇÆĞ ½Ã ¸Ş½ÃÁö Ãß°¡ ('19.2.17)
-                if (type == 0 and info.troops_damage == 0 and !pk::is_campaign())
-                {
-                    @msg_unit = @attacker;
-                    @msg_person = pk::get_person(attacker.leader);
-                    msg_string = "°ø°İÀÌ ÅëÇÏÁö ¾Ê´Â°¡";
-                }
-                
-                // Æ¯±â ¹ßµ¿ ½Ã Àü¹ı À¯È¿ »ç°Å¸® ¹× ÁöÇüÁ¶°Ç È®ÀÎ, ÃÊÆ¯±â¿¬Àü Àü¹ı»ç¿ë ÆĞÄ¡¿ë ('19.11.10)
-                if (ÃÊÆ¯±â¿¬Àü_¹ßµ¿¼³Á¤ and attacker.has_skill(Æ¯±â_¿¬Àü) and pk::is_valid_tactics_id(tactics_id) and !pk::is_campaign())
-                {
-                    if (pk::is_alive(target_unit) and !func_tactics_valid_target(attacker, target_unit, tactics_id))
-                    {
-                        info.critical = false;      // Åë»ó°ø°İ
-                        info.tactics_hit = false;   // Àü¹ı½ÇÆĞ
-                        info.troops_damage = 0;     // µ¥¹ÌÁö¹«È¿
-                        info.energy_damage = 0;     // µ¥¹ÌÁö¹«È¿
-                        info.food_damage = 0;       // µ¥¹ÌÁö¹«È¿
-                        info.energy_heal = 0;       // µ¥¹ÌÁö¹«È¿
-                        info.food_heal = 0;         // µ¥¹ÌÁö¹«È¿
-                    }
-                }
-                
-                //---------------------------------------------------------------------------------------
-                
+				info.troops_damage = troops_damage;
 			}
-            // °ø¼º °ø°İ (º´·Â)
 			else if (target_building !is null and pk::is_general_type(target_building))
 			{
 				info.dst_troops = pk::get_troops(target_building);
 
 				int facility_id = target_building.facility;
 				int troops_atk, dst_atk, dst_def, dst_troops;
-                
-                // ³ó¼º ÅÂ¼ö ´É·ÂÄ¡                
 				func_5af0e0(troops_atk, dst_atk, dst_def, dst_troops, target_building);
-				// º´·Â ÇÇÇØ·® ±âº»
-                float troops_damage = func_5aee60(atk, command, troops_atk, buffed, dst_def, dst_troops);
+				float troops_damage = func_5aee60(atk, command, troops_atk, buffed, dst_def, dst_troops);
 
-				if (attacker.weapon == º´±â_Á¤¶õ)
+				if (attacker.weapon == ë³‘ê¸°_ì •ë€)
 				{
 					troops_damage *= 1.8f;
 				}
-				else if (attacker.weapon == º´±â_Åõ¼®)
+				else if (attacker.weapon == ë³‘ê¸°_íˆ¬ì„)
 				{
 					troops_damage *= 1.2f;
 				}
 				else
 				{
-                    // °ÅÁ¡ º´·Â ÇÇÇØ·® Àç¼³Á¤
-					troops_damage = func_5aee60(atk, int(pk::max(command * 0.75f, 1.f)), troops_atk, buffed, dst_def, dst_troops);
-					if (facility_id == ½Ã¼³_µµ½Ã)
+					troops_damage = func_5aee60(atk, pk::max(command * 0.75f, 1.f), troops_atk, buffed, dst_def, dst_troops);
+					if (facility_id == ì‹œì„¤_ë„ì‹œ)
 						troops_damage *= 0.55f;
-					else if (facility_id == ½Ã¼³_°ü¹®)
+					else if (facility_id == ì‹œì„¤_ê´€ë¬¸)
 						troops_damage *= 0.45f;
-					else if (facility_id == ½Ã¼³_Ç×±¸)
+					else if (facility_id == ì‹œì„¤_í•­êµ¬)
 						troops_damage *= 0.60f;
 				}
 
 				if (attacker.is_player())
-					troops_damage *= float(pk::core["´ë¹ÌÁöÆĞ³ÎÆ¼"][pk::get_scenario().difficulty]);
+					troops_damage *= float(pk::core["ëŒ€ë¯¸ì§€íŒ¨ë„í‹°"][pk::get_scenario().difficulty]);
 
 				if (type == 0)
 				{
 					if (info.critical)
-						troops_damage *= Å©¸®Æ¼ÄÃ_°ø°İ·Â;
-                    
-                    // ºÒ±¼/±İ°­ Æ¯±â Àå¼ö°¡ ¼º³»¿¡ ÀÖÀ» ½Ã Æ¯±â ¹ßµ¿ÇÏ¿© ¼ö¼ºº´·Â ÇÇÇØ °æ°¨ ('18.10.9)
-                    if (°ÅÁ¡¹æ¾îÆ¯±â and !pk::is_campaign())
-                    {
-                        int siege_type = 1;     // 1:°ø¼º º´·Â, 2:°ø¼º ³»±¸µµ
-                        int defskill_rate = 30;    // È®·ü 30%·Î ¼³Á¤
-                        if (func_citydef_skill(info, target_building, siege_type, defskill_rate) == 1)       // 0: ¹æ¾îÆ¯±â ¾øÀ½, 1:ºÒ±¼/±İ°­, 2:Ã¶º®
-                        {
-                            troops_damage *= (defskill_rate/100.f);   // ÇÇÇØ 0 À¸·Î ¼³Á¤ ½Ã ¹®Á¦µÉ ¼ö ÀÖÀ½
-                            
-                            if (´ëÈ­Ç¥½Ã¼³Á¤ and pk::is_player_controlled(attacker))
-                            {
-                                //pk::say(pk::encode("³­°øºÒ¶ôÀÇ ¿ä»õ±º"), pk::get_person(attacker.leader));
-                                @msg_unit = @attacker;
-                                @msg_person = pk::get_person(attacker.leader);
-                                msg_string = "³­°øºÒ¶ôÀÇ ¿ä»õ±º";
-                            }
-                        }
-                    }
-                    
+						troops_damage *= í¬ë¦¬í‹°ì»¬_ê³µê²©ë ¥;
 				}
 				else
 				{
@@ -798,53 +296,28 @@ namespace ºÎ´ëÀÇ_°ø°İ_´ë¹ÌÁö
 					else if (type == 2)
 						troops_damage *= 0.4f;
 
-					// ¹İ°İÀÌ±â ¶§¹®¿¡ target_unitÀº °ø°İÀ» ½ÇÇàÇÑ ºÎ´ë¸¦ ¶æÇÔ.
+					// ë°˜ê²©ì´ê¸° ë•Œë¬¸ì— target_unitì€ ê³µê²©ì„ ì‹¤í–‰í•œ ë¶€ëŒ€ë¥¼ ëœ»í•¨.
 					if (pk::is_in_water(target_unit))
 					{
-						if (target_unit.has_skill(Æ¯±â_°­½À) and pk::rand_bool(int(pk::core::skill_constant(target_unit, Æ¯±â_°­½À))))
+						if (target_unit.has_skill(íŠ¹ê¸°_ê°•ìŠµ) and pk::rand_bool(int(pk::core::skill_constant(target_unit, íŠ¹ê¸°_ê°•ìŠµ))))
 						{
 							troops_damage = 0;
-							info.def_skill = Æ¯±â_°­½À;
+							info.def_skill = íŠ¹ê¸°_ê°•ìŠµ;
 						}
 					}
 					else
 					{
-						if (target_unit.has_skill(Æ¯±â_±Ş½À) and 
-                            (pk::get_hex(target_unit.pos).terrain == ÁöÇü_½£ or pk::rand_bool(int(pk::core::skill_constant(target_unit, Æ¯±â_±Ş½À))) ) )
+						if (target_unit.has_skill(íŠ¹ê¸°_ê¸‰ìŠµ) and pk::rand_bool(int(pk::core::skill_constant(target_unit, íŠ¹ê¸°_ê¸‰ìŠµ))))
 						{
 							troops_damage = 0;
-							info.def_skill = Æ¯±â_±Ş½À;
+							info.def_skill = íŠ¹ê¸°_ê¸‰ìŠµ;
 						}
 					}
 				}
-                
-                if(!pk::is_campaign())
-                {
-                    // ºÎ´ë¡æ°Ç¹° °ø°İ ½Ã¿¡¸¸ ¹İ¿µµÊ, °Ç¹° ¹İ°İÀº "°Ç¹°ÀÇ °ø°İ ´ë¹ÌÁö.cpp" ¼öÁ¤ÇØ¾ß µÊ ('18.10.7)
-                    if (»ç±âÈ¿°ú¼³Á¤)
-                    {
-                        // ¤¤°ø°İºÎ´ë ±â·Â¿¡ µû¶ó ÇÇ°İ´ë»ó ÇÇÇØ 85% ~ 115% Àû¿ë : ºÎ´ë »ç±â È¿°ú ('18.10.6)
-                        troops_damage = troops_damage * (0.85f + 0.30f * (attacker.energy/120.f)) ;
-                        // ¤¤ÇÇ°İ´ë»ó ±â·Â¿¡ µû¶ó ÇÇ°İ´ë»ó ÇÇÇØ 85% ~ 115% Àû¿ë : ºÎ´ë »ç±â È¿°ú ('18.10.6)
-                        troops_damage = troops_damage * (0.85f + 0.30f * ((120 - target_building.energy)/120.f)) ;
-                    }
-                    
-                    // ÀüÃ¼ÀûÀÎ ´ë¹ÌÁö·® Á¶Àı ('18.11.08)
-                    troops_damage *= ´ë¹ÌÁöÁ¶Àı;
-                    
-                    // º´·Â ÇÇÇØ·®¿¡ µû¶ó ÇÇ°İ´ë»ó ±â·Â°¨¼Ò, °ø°İºÎ´ë ±â·Â»ó½Â È¿°ú ¹ß»ı, °Ç¹°¹İ°İ Àû¿ë¾ÈµÊ ('18.10.6)
-                    if (±â·ÂÁõ°¨¼³Á¤)
-                    {
-                        info.energy_heal = int(pk::min(5.f, (troops_damage / 200.f)));      //±¤¿ª Àü¹ıµ¥¹ÌÁö¿¡ ÀÇÇÑ ±â·Â °úµµ»ó½Â ¸®¹ÌÅÍ Àû¿ë
-                        if (troops_damage >= 200)
-                            info.energy_damage = int((troops_damage - 200) / 100.f);
-                    }
-                }
-                
-				info.troops_damage = int(troops_damage);
-                
+
+				info.troops_damage = troops_damage;
 			}
-            // °ø¼º °ø°İ (³»±¸µµ & º´·Â)
+
 			if (target_building !is null)
 			{
 				int facility_id = target_building.facility;
@@ -856,167 +329,97 @@ namespace ºÎ´ëÀÇ_°ø°İ_´ë¹ÌÁö
 					hp_atk = pk::get_tactics(tactics_id).hp_atk;
 				else if (pk::is_neighbor_pos(attacker.get_pos(), target_pos))
 					hp_atk = 15;
-                
-                // º´±âº° ³»±¸µµ µ¥¹ÌÁö
-				if (attacker.weapon == º´±â_ÃæÂ÷ or attacker.weapon == º´±â_¸ñ¼ö)
+
+				if (attacker.weapon == ë³‘ê¸°_ì¶©ì°¨ or attacker.weapon == ë³‘ê¸°_ëª©ìˆ˜)
 					hp_damage = func_5af050(atk, command, hp_atk, buffed);
 				else
 					hp_damage = func_5aeff0(atk, command, hp_atk, buffed);
 
-                // Å©¸®Æ¼ÄÃ
 				if (info.critical)
-					hp_damage *= Å©¸®Æ¼ÄÃ_°ø°İ·Â;
+					hp_damage *= í¬ë¦¬í‹°ì»¬_ê³µê²©ë ¥;
 
-                // Á¶°Çº° º¸Á¤
-				if (facility_id >= ½Ã¼³_ºÒ¾¾ and facility_id <= ½Ã¼³_¾÷È­Á¾)
+				if (facility_id >= ì‹œì„¤_ë¶ˆì”¨ and facility_id <= ì‹œì„¤_ì—…í™”ì¢…)
 				{
 					hp_damage *= 1.6f;
 				}
-				else if (facility_id >= ½Ã¼³_½ÃÀå and facility_id <= ½Ã¼³_Á¶¼±3´Ü)
+				else if (facility_id >= ì‹œì„¤_ì‹œì¥ and facility_id <= ì‹œì„¤_ì¡°ì„ 3ë‹¨)
 				{
 					hp_damage *= 1.1f;
 				}
-				else if (facility_id == ½Ã¼³_Á¦¹æ)
+				else if (facility_id == ì‹œì„¤_ì œë°©)
 				{
 					hp_damage *= 0.7f;
 				}
-				else if (attacker.weapon != º´±â_ÃæÂ÷ and attacker.weapon != º´±â_¸ñ¼ö)
+				else if (attacker.weapon != ë³‘ê¸°_ì¶©ì°¨ and attacker.weapon != ë³‘ê¸°_ëª©ìˆ˜)
 				{
 					switch (facility_id)
 					{
-					case ½Ã¼³_µµ½Ã:
-                    case ½Ã¼³_°ü¹®:
-                    case ½Ã¼³_Ç×±¸:
-					case ½Ã¼³_¿¬³ë·Î:
-					case ½Ã¼³_Åä·ç:
-						hp_damage *= 0.9f;
-						break;
-					case ½Ã¼³_¼®º®:
+					case ì‹œì„¤_ë„ì‹œ:
+					case ì‹œì„¤_ìš”ìƒˆ:
+					case ì‹œì„¤_ì—°ë…¸ë¡œ:
+					case ì‹œì„¤_ì„ë²½:
 						hp_damage *= 0.7f;
 						break;
-					case ½Ã¼³_Áø:
+					case ì‹œì„¤_í•­êµ¬:
+					case ì‹œì„¤_ì§„:
 						hp_damage *= 0.8f;
 						break;
-					case ½Ã¼³_¿ä»õ:
-                        hp_damage *= 0.7f;
+					case ì‹œì„¤_í† ë£¨:
+						hp_damage *= 0.9f;
 						break;
-					case ½Ã¼³_¼ºÃ¤:
+					case ì‹œì„¤_ê´€ë¬¸:
+					case ì‹œì„¤_ì„±ì±„:
 						hp_damage *= 0.6f;
 						break;
 					}
 				}
-                
-                // ÀüÅõº´°úÀÇ °ø¼ºÆÄ¼â µ¥¹ÌÁö º¸Á¤ ('20.4.11)
-                if (attacker.weapon <= º´±â_±º¸¶ and tactics_id == Àü¹ı_°ø¼ºÆÄ¼â)
-                    hp_damage *= 0.3f;
-                
-                
-                // °ÅÁ¡ ¹æ¾î¼¼·Â ±â±³¿¡ µû¶ó °ÅÁ¡ÀÇ º´±â°ø°İ¿¡ ´ëÇÑ ³»±¸ µ¥¹ÌÁö º¸Á¤ ('18.10.28)
-                if (facility_id <= ½Ã¼³_Ç×±¸ and (attacker.weapon >= º´±â_ÃæÂ÷ and attacker.weapon <= º´±â_¸ñ¼ö) )
-                {
-                    if (target_building.has_tech(±â±³_¼ºº®°­È­))
-                        hp_damage *= 0.70f;
-                    else if (target_building.has_tech(±â±³_½Ã¼³°­È­))
-                        hp_damage *= 0.85f;
-                    else
-                        hp_damage *= 1.00f;
-                }
-                    
-                
 
-				if (facility_id == ½Ã¼³_Á¦¹æ and not target_building.completed)
+				if (facility_id == ì‹œì„¤_ì œë°© and not target_building.completed)
 					hp_damage = 0;
 
-				if (attacker.has_tech(±â±³_¿îÁ¦))
+				if (attacker.has_tech(ê¸°êµ_ìš´ì œ))
 				{
-					if (attacker.weapon >= º´±â_°Ë and attacker.weapon <= º´±â_±º¸¶)
+					if (attacker.weapon >= ë³‘ê¸°_ê²€ and attacker.weapon <= ë³‘ê¸°_êµ°ë§ˆ)
 					{
-						info.troops_damage = int(info.troops_damage * 1.4f);
+						info.troops_damage *= 1.4f;
 						hp_damage *= 1.4f;
 					}
 					else
 					{
-						info.troops_damage = int(info.troops_damage * 1.2f);
+						info.troops_damage *= 1.2f;
 						hp_damage *= 1.2f;
 					}
 				}
 
 				if (attacker.is_player())
-					hp_damage *= float(pk::core["´ë¹ÌÁöÆĞ³ÎÆ¼"][pk::get_scenario().difficulty]);
-                
-                if (!pk::is_campaign())
-                {                    
-                    // Ã¶º® Æ¯±â Àå¼ö°¡ ¼º³»¿¡ ÀÖÀ» ½Ã Æ¯±â ¹ßµ¿ÇÏ¿© ³»±¸µµ ÇÇÇØ °æ°¨ ('18.10.11)
-                    if (°ÅÁ¡¹æ¾îÆ¯±â)
-                    {
-                        int siege_type = 2;     // 1:°ø¼º º´·Â, 2:°ø¼º ³»±¸µµ
-                        int defskill_rate = 30;    // È®·ü 30%·Î ¼³Á¤
-                        if (func_citydef_skill(info, target_building, siege_type, defskill_rate) == 2)       // 0: ¹æ¾îÆ¯±â ¾øÀ½, 1:ºÒ±¼/±İ°­, 2:Ã¶º®
-                        {
-                            hp_damage *= (defskill_rate/100.f);   // ÇÇÇØ 0 À¸·Î ¼³Á¤ ½Ã ¹ë·±½º ¹®Á¦µÉ ¼ö ÀÖÀ½
-                            
-                            if (´ëÈ­Ç¥½Ã¼³Á¤ and pk::is_player_controlled(attacker))
-                            {
-                                //pk::say(pk::encode("¼ºº®ÀÌ Æ°Æ°ÇÑ°¡"), pk::get_person(attacker.leader));
-                                @msg_unit = @attacker;
-                                @msg_person = pk::get_person(attacker.leader);
-                                msg_string = "¼ºº®ÀÌ Æ°Æ°ÇÑ°¡";
-                            }
-                        }
-                    }
-                    
-                    // ºÎ´ë¡æ°Ç¹° °ø°İ ½Ã ³»±¸µµ ÇÇÇØ·® °¡º¯ ('18.10.7)
-                    if (»ç±âÈ¿°ú¼³Á¤)
-                    {
-                        // °ø°İºÎ´ë ±â·Â¿¡ µû¶ó ÇÇ°İ´ë»ó ÇÇÇØ 85% ~ 115% Àû¿ë : ºÎ´ë »ç±â È¿°ú ('18.10.6)
-                        hp_damage = hp_damage * (0.85f + 0.30f * (attacker.energy/120.f)) ;
-                        // ÇÇ°İ´ë»ó ±â·Â¿¡ µû¶ó ÇÇ°İ´ë»ó ÇÇÇØ 85% ~ 115% Àû¿ë : ºÎ´ë »ç±â È¿°ú ('18.10.6)
-                        hp_damage = hp_damage * (0.85f + 0.30f * ((120 - target_building.energy)/120.f)) ;
-                    }
-                    
-                    // ÀüÃ¼ÀûÀÎ ´ë¹ÌÁö·® Á¶Àı ('18.11.08)
-                    hp_damage *= ´ë¹ÌÁöÁ¶Àı;
-                }
-                
-				info.hp_damage = int(hp_damage);
-			}		
+					hp_damage *= float(pk::core["ëŒ€ë¯¸ì§€íŒ¨ë„í‹°"][pk::get_scenario().difficulty]);
+
+				info.hp_damage = hp_damage;
+			}
 
 			info.tactics = tactics_id;
 			info.src_pos = attacker.get_pos();
 			info.dst_pos = target_pos;
-            
-            
-            // ³ª¼±Ã·È¥¶õÈ®·ü_°­Á¦Àû¿ë('19.2.21)
-            if (³ª¼±Ã·È¥¶õÈ®·ü_°­Á¦Àû¿ë and (tactics_id == Àü¹ı_³ª¼±Ã·) and info.tactics_hit and !pk::is_campaign())
-            {
-                @nasun_unit = @target_unit;
-                ³ª¼±Ã·_Å©¸®Æ¼ÄÃ = info.critical;
-                ³ª¼±Ã·_ÇÇ°İÇàµ¿ = target_unit.action_done;
-                ³ª¼±Ã·_ÇÇ°İ»óÅÂ = target_unit.status;
-                ³ª¼±Ã·_ÇÇ°İÅ¸ÀÌ¸Ó = target_unit.status_timer;
-            }
-            
-            
 		}
 
 		/**
-			Ã¢º´ º´·®½À°İ È¹µæ º´·® °è»ê
+			íšë“ ë³‘ëŸ‰ ê³„ì‚°
 		*/
 		int func_5aecc0(pk::unit@ attacker, pk::unit@ target)
 		{
-			if (pk::is_alive(attacker) and pk::is_alive(target) and attacker.weapon == º´±â_Ã¢ and attacker.has_tech(±â±³_º´·®½À°İ))
+			if (pk::is_alive(attacker) and pk::is_alive(target) and attacker.weapon == ë³‘ê¸°_ì°½ and attacker.has_tech(ê¸°êµ_ë³‘ëŸ‰ìŠµê²©))
 			{
-				int a = pk::rand(attacker.attr.stat[ºÎ´ë´É·Â_°ø°İ]) + attacker.attr.stat[ºÎ´ë´É·Â_°ø°İ];
-				int b = pk::max(attacker.troops / 2, 1);
+		//		int a = pk::rand(attacker.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ê³µê²©]) + attacker.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ê³µê²©];
+				int b = pk::max(attacker.troops / 40, 1);
 				int c = target.food;
 				int d = pk::get_max_food(attacker) - attacker.food;
-				return pk::min(a, b, c, d);
+				return pk::min(b, c, d);
 			}
 			return 0;
 		}
 
 		/**
-			°ø°İ·Â »ó½Â È¿°ú¸¦ °¡Áø ½Ã¼³ °Ë»ö
+			ê³µê²©ë ¥ ìƒìŠ¹ íš¨ê³¼ë¥¼ ê°€ì§„ ì‹œì„¤ ê²€ìƒ‰
 		*/
 		bool func_5aed80(const pk::point &in pos, int force_id)
 		{
@@ -1025,19 +428,19 @@ namespace ºÎ´ëÀÇ_°ø°İ_´ë¹ÌÁö
 			for (int i = 0; i < range.length; i++)
 			{
 				pk::building@ building = pk::get_building(range[i]);
-				if (pk::is_alive(building) and building.facility == ½Ã¼³_ÅÂ°í´ë and building.completed and building.get_force_id() == force_id)
+				if (pk::is_alive(building) and building.facility == ì‹œì„¤_íƒœê³ ëŒ€ and building.completed and building.get_force_id() == force_id)
 					return true;
 			}
 			return false;
 			*/
 
-			array<pk::point> range = pk::range(pos, 1, int(pk::core["½Ã¼³.ÃÖ´ë¹üÀ§"]));
-			for (int i = 0; i < int(range.length); i++)
+			array<pk::point> range = pk::range(pos, 1, int(pk::core["ì‹œì„¤.ìµœëŒ€ë²”ìœ„"]));
+			for (int i = 0; i < range.length; i++)
 			{
 				pk::building@ building = pk::get_building(range[i]);
 				if (pk::is_alive(building) and building.completed and building.get_force_id() == force_id)
 				{
-					if (bool(pk::core["½Ã¼³"][building.facility]["°ø°İ·Â»ó½Â"]) and pk::get_distance(pos, range[i]) <= int(pk::get_facility(building.facility).max_range))
+					if (bool(pk::core["ì‹œì„¤"][building.facility]["ê³µê²©ë ¥ìƒìŠ¹"]) and pk::get_distance(pos, range[i]) <= pk::get_facility(building.facility).max_range)
 						return true;
 				}
 			}
@@ -1045,30 +448,22 @@ namespace ºÎ´ëÀÇ_°ø°İ_´ë¹ÌÁö
 		}
 
 		/**
-			Áø, ¿ä»õ, ¼ºÃ¤ °Ë»ö
-            µµ½Ã, °ü¹®, Ç×±¸ °Ë»ö Ãß°¡ ('18.10.28)
+			ì§„, ìš”ìƒˆ, ì„±ì±„ ê²€ìƒ‰
 		*/
 		bool func_5aedc0(const pk::point &in pos, int min, int max, int force_id)
 		{
 			array<pk::point> range = pk::range(pos, min, max);
-			for (int i = 0; i < int(range.length); i++)
+			for (int i = 0; i < range.length; i++)
 			{
 				pk::building@ building = pk::get_building(range[i]);
-				if (pk::is_alive(building) and (building.facility == ½Ã¼³_Áø or building.facility == ½Ã¼³_¿ä»õ or building.facility == ½Ã¼³_¼ºÃ¤) and building.completed and building.get_force_id() == force_id)
+				if (pk::is_alive(building) and (building.facility == ì‹œì„¤_ì§„ or building.facility == ì‹œì„¤_ìš”ìƒˆ or building.facility == ì‹œì„¤_ì„±ì±„) and building.completed and building.get_force_id() == force_id)
 					return true;
-                
-                if (°ÅÁ¡¹æ¾î¹öÇÁ)
-                {
-                    if (pk::is_alive(building) and (building.facility == ½Ã¼³_µµ½Ã or building.facility == ½Ã¼³_°ü¹® or building.facility == ½Ã¼³_Ç×±¸) and building.get_force_id() == force_id)
-                        return true;
-                }
-                
 			}
 			return false;
 		}
 
 		/**
-			ÁöÈÖ °¡´ÉÇÑ º´·Â ¼ö
+			ì§€íœ˜ ê°€ëŠ¥í•œ ë³‘ë ¥ ìˆ˜
 		*/
 		int func_5aee10(pk::unit@ unit)
 		{
@@ -1078,7 +473,7 @@ namespace ºÎ´ëÀÇ_°ø°İ_´ë¹ÌÁö
 			return unit.troops;
 		}
 
-		/** ºÎ´ë/°ÅÁ¡ º´·Â ÇÇÇØ °è»ê **/
+		/***/
 		float func_5aee60(int src_atk, int src_troops, int tactics_atk, int buffed, int dst_def, int dst_troops)
 		{
 			float n = 0;
@@ -1092,7 +487,6 @@ namespace ºÎ´ëÀÇ_°ø°İ_´ë¹ÌÁö
 			b = pk::max(dst_def, 40);
 			b = b * b;
 
-			//n = pk::sqrt(tactics_atk * 64);
 			n = sqrt(tactics_atk * 64);
 			n = n + pk::max((src_troops - dst_troops) / 2000, 0);
 			n = n + pk::max((a - b) / 300, 0);
@@ -1117,53 +511,7 @@ namespace ºÎ´ëÀÇ_°ø°İ_´ë¹ÌÁö
 			return n;
 		}
 
-		/** ÅÂ¼ö¿Í ¹«Àåµé¿¡ ÀÇÇÑ ¹æ¾î°ÅÁ¡ ÀüÅõ´É·Â **/
-        //µµ½Ã ³» "½ÅºĞ_ÀÏ¹İ" ÀÎ ¹«Àå ´É·Â ¹İ¿µ (°¢ ¹«ÀåÀÇ ¹«·Â, Åë¼Ö, ÁöÈÖ ºÎºĞ ÇÕ»ê) ('18.10.7)
-		void func_5af0e0(int &out src_atk, int &out dst_atk, int &out dst_def, int &out dst_troops, pk::building@ building)
-		{
-			src_atk = 10;
-            
-			pk::person@ taishu = pk::get_person(pk::get_taishu_id(building));
-			if (pk::is_alive(taishu))
-			{
-                //ÅÂ¼ö ´É·Â ¹İ¿µ (±âº»)
-				dst_atk = pk::max(taishu.stat[¹«Àå´É·Â_¹«·Â] - 25, 40);
-				dst_def = pk::max(taishu.stat[¹«Àå´É·Â_Åë¼Ö] - 25, 40);
-				dst_troops = pk::min(pk::get_troops(building), pk::get_command(taishu));
-                
-                //µµ½Ã ³» "½ÅºĞ_ÀÏ¹İ" ÀÎ ¹«Àå ´É·Â ¹İ¿µ (°¢ ¹«ÀåÀÇ ¹«·Â, Åë¼Ö, ÁöÈÖ ºÎºĞ ÇÕ»ê) ('18.10.7)
-                if (°ÅÁ¡´É·ÂÇÕ»ê)
-                {
-                    float ilban_support = 5;    // ÅÂ¼ö ¿Ü ¹«Àå ´É·Â Ä¡ ÇÕ»ê º¸Á¶À² : ¹«Àåº° 5%
-                    auto ilban_list = pk::list_to_array(pk::get_person_list(building, pk::mibun_flags(½ÅºĞ_ÀÏ¹İ) ) );
-                    if (0 < ilban_list.length)
-                    {
-                        for (int i = 0; i < int(ilban_list.length); i++)
-                        {
-                            pk::person@ ilban = ilban_list[i];
-                            //ÃâÁø ¶Ç´Â ºÎÀçÁß »óÅÂ°¡ ¾Æ´Ñ Àå¼öÀÌ¸ç, ÅÂ¼ö¿Í Çø¿À °ü°è°¡ ¾Æ´Ñ Àå¼ö¸¸ ´É·Â Ä¡ ÇÕ»ê
-                            if (!pk::is_unitize(ilban) and !pk::is_absent(ilban) and !pk::is_dislike(taishu, ilban.get_id()) and !pk::is_dislike(ilban, taishu.get_id()) )
-                            {
-                                dst_atk += int((pk::max(ilban.stat[¹«Àå´É·Â_¹«·Â] - 25, 20)) * (ilban_support / 100.f));
-                                dst_def += int((pk::max(ilban.stat[¹«Àå´É·Â_Åë¼Ö] - 25, 20)) * (ilban_support / 100.f));
-                                dst_troops += int((pk::min(pk::get_troops(building), pk::get_command(ilban))) * (ilban_support / 100.f));
-                            }
-                        }
-                    }
-                }
-            }
-			else
-			{
-				dst_atk = 30;
-				dst_def = 30;
-				//dst_troops = pk::min(pk::get_troops(building), 7000);
-				dst_troops = pk::min(pk::get_troops(building), 5000); //ÁöÈÖº´·Â »óÇÑÄ¡ ÇÏÇâ
-				if (dst_troops != 0)
-					dst_troops = pk::max(dst_troops, 500);
-			}
-		}
-
-		/** µµ½Ã ³»±¸µµ ÇÇÇØ °è»ê (±âÅ¸) **/
+		/***/
 		float func_5aeff0(int src_atk, int src_troops, int tactics_atk, int buffed)
 		{
 			src_troops = pk::max(src_troops, 1);
@@ -1174,7 +522,7 @@ namespace ºÎ´ëÀÇ_°ø°İ_´ë¹ÌÁö
 			return a * b * c * d / 10000;
 		}
 
-		/** µµ½Ã ³»±¸µµ ÇÇÇØ °è»ê (ÃæÂ÷/¸ñ¼ö) **/
+		/***/
 		float func_5af050(int src_atk, int src_troops, int tactics_atk, int buffed)
 		{
 			src_troops = pk::max(src_troops, 1);
@@ -1185,707 +533,77 @@ namespace ºÎ´ëÀÇ_°ø°İ_´ë¹ÌÁö
 			return a * pk::min(b, 40.f) * c * d / 10000 + (src_troops / 25) + b;
 		}
 
-		/** ºÎ´ë ¹æ¾î±â±³ ¹× ¹æ¾îÆ¯±â È¿°ú ¹İ¿µ **/
-        // ¹æ¾îÆ¯±â È¿°ú ±âÁ¸¿¡´Â Åë»ó°ø°İ¿¡¸¸ Àû¿ë, Àü¹ı°ø°İ¿¡µµ ÀÛ¿ëÇÏµµ·Ï ½ºÅ©¸³Æ® ¼öÁ¤
+		/***/
+		void func_5af0e0(int &out src_atk, int &out dst_atk, int &out dst_def, int &out dst_troops, pk::building@ building)
+		{
+			src_atk = 10;
+			pk::person@ taishu = pk::get_person(pk::get_taishu_id(building));
+			if (pk::is_alive(taishu))
+			{
+				dst_atk = pk::max(taishu.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] - 25, 40);
+				dst_def = pk::max(taishu.stat[ë¬´ì¥ëŠ¥ë ¥_í†µì†”] - 25, 40);
+				dst_troops = pk::min(pk::get_troops(building), pk::get_command(taishu));
+			}
+			else
+			{
+				dst_atk = 30;
+				dst_def = 30;
+				dst_troops = pk::min(pk::get_troops(building), 7000);
+				if (dst_troops != 0)
+					dst_troops = pk::max(dst_troops, 500);
+			}
+		}
+
+		/***/
 		bool func_5af230(pk::damage_info& info, pk::unit@ attacker, pk::unit@ target, int tactics_id)
 		{
-            // Àü¹ı¿©ºÎ ÆÇÁ¤ ºÎºĞ À§·Î ½ºÅ©¸³Æ® ÀÌµ¿ : Åë»ó°ø°İ/Àü¹ı°ø°İ ±¸ºĞ ¾øÀÌ ¹æ¾î Æ¯±â ¹ßµ¿ ('18.10.9)
-            if (target.status == ºÎ´ë»óÅÂ_Åë»ó)
-            {
-                if (target.has_skill(Æ¯±â_ºÒ±¼))
-                {
-                    if (int(target.troops) < int(pk::core::skill_constant(target, Æ¯±â_ºÒ±¼)) and pk::rand_bool(int(pk::core::skill_constant(target, Æ¯±â_ºÒ±¼, 1))))
-                    {
-                        info.def_skill = Æ¯±â_ºÒ±¼;
-                        
-                        if (pk::is_valid_tactics_id(tactics_id))
-                            info.tactics_hit = false;
-                        
-                        return true;
-                    }
-                }
-                float buf_rate = 1.f;
-                if (target.has_skill(Æ¯±â_±İ°­))
-                {
-                    if (pk::is_valid_tactics_id(tactics_id))    // °ø°İÀÚ Àü¹ıÀÎ °æ¿ì Æ¯±â_¹ßµ¿ ÇÇÇØ·® ±âÁØ x1.5¹è Àû¿ë
-                        buf_rate = 1.5f;
-                    
-                    if (info.troops_damage < (int(pk::core::skill_constant(target, Æ¯±â_±İ°­))*buf_rate) and pk::rand_bool(int(pk::core::skill_constant(target, Æ¯±â_±İ°­, 1))))
-                    {
-                        info.def_skill = Æ¯±â_±İ°­;
-                        
-                        if (pk::is_valid_tactics_id(tactics_id))
-                            info.tactics_hit = false;
+			if (pk::is_valid_tactics_id(tactics_id))
+				return false;
 
-                        return true;
-                    }
-                }
-                
-                if (target.has_skill(Æ¯±â_Ã¶º®))    // Ã¶º® Æ¯±â Àü¹ı 30% È®·ü·Î ¹«È¿È­ ('19.6.19)
-                {
-                    if (pk::is_valid_tactics_id(tactics_id) and pk::rand_bool(30))
-                    {
-                        info.def_skill = Æ¯±â_Ã¶º®;
-                        info.tactics_hit = false;
-                        
-                        return true;
-                    }
-                }
-            }
-            
-            // ¹æ¾îÆ¯±â ¾øÀ» °æ¿ì °ø°İÀÚ Àü¹ı¿©ºÎ È®ÀÎ : Àü¹ıÀÎ °æ¿ì false ¹İÈ¯ ÈÄ ÇÔ¼ö Á¾·á, ÆòÅ¸ÀÎ °æ¿ì ¹æ¾îÀÚ ±Øº´ ±â±³È¿°ú Àû¿ë
-            else if (!pk::is_valid_tactics_id(tactics_id))
-            {
-                pk::point attacker_pos = attacker.get_pos();
-                pk::point target_pos = target.get_pos();
+			pk::point attacker_pos = attacker.get_pos();
+			pk::point target_pos = target.get_pos();
 
-                if (target.weapon == º´±â_±Ø)
-                {
-                    if (target.has_tech(±â±³_È­»ì¹æÆĞ))
-                    {
-                        if (!pk::is_neighbor_pos(attacker_pos, target_pos) and pk::rand_bool(30))
-                        {
-                            info.def_tech = ±â±³_È­»ì¹æÆĞ;
-                            return true;
-                        }
-                    }
-                    if (target.has_tech(±â±³_Å«¹æÆĞ))
-                    {
-                        if (pk::is_neighbor_pos(attacker_pos, target_pos) and pk::rand_bool(30))
-                        {
-                            info.def_tech = ±â±³_Å«¹æÆĞ;
-                            return true;
-                        }
-                    }
-                }
-            }
+			if (target.weapon == ë³‘ê¸°_ê·¹)
+			{
+				if (target.has_tech(ê¸°êµ_í™”ì‚´ë°©íŒ¨))
+				{
+					if (!pk::is_neighbor_pos(attacker_pos, target_pos) and pk::rand_bool(30))
+					{
+						info.def_tech = ê¸°êµ_í™”ì‚´ë°©íŒ¨;
+						return true;
+					}
+				}
+				if (target.has_tech(ê¸°êµ_í°ë°©íŒ¨))
+				{
+					if (pk::is_neighbor_pos(attacker_pos, target_pos) and pk::rand_bool(30))
+					{
+						info.def_tech = ê¸°êµ_í°ë°©íŒ¨;
+						return true;
+					}
+				}
+			}
+
+			if (target.has_skill(íŠ¹ê¸°_ë¶ˆêµ´))
+			{
+				if (target.troops < int(pk::core::skill_constant(target, íŠ¹ê¸°_ë¶ˆêµ´)) and pk::rand_bool(int(pk::core::skill_constant(target, íŠ¹ê¸°_ë¶ˆêµ´, 1))))
+				{
+					info.def_skill = íŠ¹ê¸°_ë¶ˆêµ´;
+					return true;
+				}
+			}
+
+			if (target.has_skill(íŠ¹ê¸°_ê¸ˆê°•))
+			{
+				if (info.troops_damage < int(pk::core::skill_constant(target, íŠ¹ê¸°_ê¸ˆê°•)) and pk::rand_bool(int(pk::core::skill_constant(target, íŠ¹ê¸°_ê¸ˆê°•, 1))))
+				{
+					info.def_skill = íŠ¹ê¸°_ê¸ˆê°•;
+					return true;
+				}
+			}
 
 			return false;
 		}
-        // --------------------------------------------------------
-        
-        // --------------------------------------------------------
-        // ºÒ±¼/±İ°­ Æ¯±â Àå¼ö°¡ ¼º³»¿¡ ÀÖÀ» ½Ã Æ¯±â ¹ßµ¿ ('18.10.9)
-        int func_citydef_skill(pk::damage_info& info, pk::building@ building, int siege_type, int defskill_rate)
-		{
-            auto defender_list = pk::list_to_array(pk::get_person_list(building, pk::mibun_flags(½ÅºĞ_±ºÁÖ,½ÅºĞ_µµµ¶,½ÅºĞ_ÅÂ¼ö,½ÅºĞ_ÀÏ¹İ) ) );
-            if (0 < defender_list.length)
-            {
-                for (int i = 0; i < int(defender_list.length); i++)
-                {
-                    pk::person@ defender = defender_list[i];
-                    
-                    //ÃâÁø ¶Ç´Â ºÎÀçÁß »óÅÂ°¡ ¾Æ´Ñ Àå¼ö¸¸ !!!!
-                    if (!pk::is_unitize(defender) and !pk::is_absent(defender))
-                    {
-                        // °ÅÁ¡¿¡ Æ¯±â_ºÒ±¼ Àå¼ö ÀÖÀ» °æ¿ì ¹ßµ¿ ('18.10.9)
-                        if ((siege_type == 1) and pk::has_skill(defender, Æ¯±â_ºÒ±¼) and (building.troops < 3000) and pk::rand_bool(defskill_rate))
-                            return 1;       // º´·Â ¹æ¾î È¿°ú
-
-                        // °ÅÁ¡¿¡ Æ¯±â_±İ°­ Àå¼ö ÀÖÀ» °æ¿ì ¹ßµ¿ ('18.10.9)
-                        if ((siege_type == 1) and pk::has_skill(defender, Æ¯±â_±İ°­) and (info.troops_damage < 500) and pk::rand_bool(defskill_rate))
-                            return 1;       // º´·Â ¹æ¾î È¿°ú
-                        
-                        // °ÅÁ¡¿¡ Æ¯±â_Ã¶º® Àå¼ö ÀÖÀ» °æ¿ì ¹ßµ¿ ('18.10.11)
-                        if ((siege_type == 2) and pk::has_skill(defender, Æ¯±â_Ã¶º®) and pk::rand_bool(defskill_rate))
-                            return 2;       // ³»±¸µµ ¹æ¾î È¿°ú
-                    }
-                }
-            }
-            return 0;
-        }
-        
-        // --------------------------------------------------------
-        
-        
-        // --------------------------------------------------------
-        // ºÎ´ë °£ ÀüÅõ ½Ã ÁöÇü¿¡ µû¸¥ º´Á¾º° ¾îµå¹êÆ¼Áö Ãß°¡ ('18.10.11)
-        float func_terrain_buf(pk::unit @ unit)
-        {
-            int weapon_id = unit.weapon;
-            float terrain_buf = 0.f;
-            pk::hex@ unit_hex = pk::get_hex(unit.get_pos());    // ºÎ´ëÀÇ ÁÂÇ¥
-            switch (unit_hex.terrain)                           // ÁÂÇ¥ÀÇ ÁöÇü
-            {
-                case ÁöÇü_ÃÊ¿ø  : 
-                                if      (weapon_id == º´±â_Ã¢)   terrain_buf = 0.05f;
-                                else if (weapon_id == º´±â_±º¸¶)  terrain_buf = 0.10f;
-                                break;
-                case ÁöÇü_¶¥  :    
-                                if      (weapon_id == º´±â_Ã¢)   terrain_buf = 0.05f;
-                                else if (weapon_id == º´±â_³ë)   terrain_buf = 0.05f;
-                                else if (weapon_id == º´±â_±º¸¶)  terrain_buf = 0.05f;
-                                break;
-                case ÁöÇü_¸ğ·¡  : 
-                                if      (weapon_id == º´±â_Ã¢)   terrain_buf = 0.05f;
-                                else if (weapon_id == º´±â_±º¸¶)  terrain_buf = 0.05f;
-                                break;
-                case ÁöÇü_½ÀÁö  : 
-                                if      (weapon_id == º´±â_Ã¢)   terrain_buf = -0.05f;
-                                else if (weapon_id == º´±â_±Ø)   terrain_buf = 0.10f;
-                                else if (weapon_id == º´±â_³ë)   terrain_buf = -0.05f;
-                                else if (weapon_id == º´±â_±º¸¶)  terrain_buf = -0.10f;
-                                break;
-                case ÁöÇü_µ¶Ãµ  : 
-                                if      (weapon_id == º´±â_Ã¢)   terrain_buf = -0.10f;
-                                else if (weapon_id == º´±â_±Ø)   terrain_buf = 0.05f;
-                                else if (weapon_id == º´±â_³ë)   terrain_buf = -0.10f;
-                                else if (weapon_id == º´±â_±º¸¶)  terrain_buf = -0.15f;
-                                break;
-                case ÁöÇü_½£   : 
-                                if      (weapon_id == º´±â_Ã¢)   terrain_buf = 0.10f;
-                                else if (weapon_id == º´±â_±Ø)   terrain_buf = 0.05f;
-                                else if (weapon_id == º´±â_³ë)   terrain_buf = 0.15f;
-                                else if (weapon_id == º´±â_±º¸¶)  terrain_buf = -0.10f;
-                                break;
-                case ÁöÇü_È²¹«Áö:  
-                                if      (weapon_id == º´±â_Ã¢)   terrain_buf = -0.05f;
-                                else if (weapon_id == º´±â_±º¸¶)  terrain_buf = 0.05f;
-                                break;
-                case ÁöÇü_´ë·Î  : 
-                                if      (weapon_id == º´±â_Ã¢)   terrain_buf = 0.05f;
-                                else if (weapon_id == º´±â_±Ø)   terrain_buf = 0.05f;
-                                else if (weapon_id == º´±â_³ë)   terrain_buf = 0.05f;
-                                else if (weapon_id == º´±â_±º¸¶)  terrain_buf = 0.05f;
-                                break;
-                case ÁöÇü_»ê  : 
-                                if      (weapon_id == º´±â_Ã¢)   terrain_buf = 0.15f;
-                                else if (weapon_id == º´±â_±Ø)   terrain_buf = 0.15f;
-                                else if (weapon_id == º´±â_³ë)   terrain_buf = 0.15f;
-                                else if (weapon_id == º´±â_±º¸¶)  terrain_buf = 0.10f;
-                                break;
-            }
-            
-            // Æ¯±â_¸Åº¹ º¸À¯ºÎ´ë´Â º´Á¾ °ü°è¾øÀÌ ½£/»ê/»û±æ¿¡¼­ 15% Ãß°¡ ¾îµå¹êÆ¼Áö ('18.10.14)
-            if (unit.has_skill(Æ¯±â_¸Åº¹) and (unit_hex.terrain == ÁöÇü_½£ or unit_hex.terrain == ÁöÇü_»ê or unit_hex.terrain == ÁöÇü_»û±æ ) )
-                terrain_buf += 0.15f;
-            // Æ¯±â_ÇØµ¶ º¸À¯ºÎ´ë´Â º´Á¾ °ü°è¾øÀÌ µ¶Ãµ¿¡¼­ 15% Ãß°¡ ¾îµå¹êÆ¼Áö ('18.10.17)
-            else if (unit.has_skill(Æ¯±â_ÇØµ¶) and (unit_hex.terrain == ÁöÇü_µ¶Ãµ) )
-                terrain_buf += 0.15f;
-            // Æ¯±â_´äÆÄ º¸À¯ºÎ´ë´Â º´Á¾ °ü°è¾øÀÌ º­¶û±æ/»ê/»û±æ¿¡¼­ 15% Ãß°¡ ¾îµå¹êÆ¼Áö ('18.10.17)
-            else if (unit.has_skill(Æ¯±â_´äÆÄ) and (unit_hex.terrain == ÁöÇü_º­¶û±æ or unit_hex.terrain == ÁöÇü_»ê or unit_hex.terrain == ÁöÇü_»û±æ) )
-                terrain_buf += 0.15f;
-            
-            return terrain_buf;
-        }
-        
-        
-        // ºÎ´ë°£ ÁöÇü ³ôÀÌÂ÷ ('18.10.14)
-        int get_height_diff(const pk::point &in src, const pk::point &in dst)
-		{
-			return pk::get_height_map(pk::hex_pos_to_height_map_pos(src) + 2).height - pk::get_height_map(pk::hex_pos_to_height_map_pos(dst) + 2).height;
-		}
-        
-        
-        // --------------------------------------------------------
-        // ºÎ´ë °£ ÀüÅõ ½Ã ÁÖº¯ ºÎ´ë¿¡ ÀÇÇÑ µ¥¹ÌÁö º¸Á¤ °è¼ö ('18.10.28)
-        float func_neighbor_buf(pk::unit @ unit, bool °³º°´ëÈ­)
-        {
-            float neighbor_buf = 0.f;
-            int neighbor_range = 1;
-            
-            pk::point pos = unit.get_pos();
-            
-            array<pk::point> arr = pk::range(pos, 1, neighbor_range);
-            for (int j = 0; j < int(arr.length); j++)
-            {
-                pk::unit@ search_unit = pk::get_unit(arr[j]);
-                if (search_unit !is null and !pk::is_enemy(unit, search_unit))  // ÁÖº¯ºÎ´ë°¡ ¾Æ±ºÀÎ °æ¿ì
-                {
-                    // ¾Æ±ººÎ´ëÀåÀÇ ½ÅºĞ¿¡ µû¸¥ ¹öÇÁ 
-                    if (search_unit.leader == pk::get_kunshu_id(unit))  // ¾Æ±ººÎ´ë°¡ ±ºÁÖÀÌ¸é : ÀÛÀ§¿¡ µû¶ó ¹öÇÁ·® ¹× ´ëÈ­ ´Ù¸£°Ô ('18.10.28)
-                    {
-                        switch (pk::get_force(unit.get_force_id()).title)
-                        {
-                        case ÀÛÀ§_È²Á¦:
-                            neighbor_buf += 0.15f;   // 15% ¹öÇÁ
-                            
-                            if (´ëÈ­Ç¥½Ã¼³Á¤ and °³º°´ëÈ­ and pk::is_player_controlled(unit))
-                            {
-                                //pk::say(pk::encode("ÆóÇÏ¿Í ÇÔ²² ÇÏ°Ú½À´Ï´Ù"), pk::get_person(unit.leader));
-                                @msg_unit = @unit;
-                                @msg_person = pk::get_person(unit.leader);
-                                msg_string = "ÆóÇÏ¿Í ÇÔ²² ÇÏ°Ú½À´Ï´Ù";
-                            }
-                            break;
-                            
-                        case ÀÛÀ§_¿Õ:
-                            neighbor_buf += 0.10f;   // 10% ¹öÇÁ
-                            
-                            if (´ëÈ­Ç¥½Ã¼³Á¤ and °³º°´ëÈ­ and pk::is_player_controlled(unit))
-                            {
-                                //pk::say(pk::encode("ÀüÇÏ¿Í ÇÔ²² ÇÏ°Ú½À´Ï´Ù"), pk::get_person(unit.leader));
-                                @msg_unit = @unit;
-                                @msg_person = pk::get_person(unit.leader);
-                                msg_string = "ÀüÇÏ¿Í ÇÔ²² ÇÏ°Ú½À´Ï´Ù";
-                            }
-                            break;
-                            
-                        case ÀÛÀ§_°ø:
-                            neighbor_buf += 0.05f;   // 5% ¹öÇÁ
-                            
-                            if (´ëÈ­Ç¥½Ã¼³Á¤ and °³º°´ëÈ­ and pk::is_player_controlled(unit))
-                            {
-                                //pk::say(pk::encode("°ø°ú ÇÔ²² ÇÏ°Ú¼Ò"), pk::get_person(unit.leader));
-                                @msg_unit = @unit;
-                                @msg_person = pk::get_person(unit.leader);
-                                msg_string = "°ø°ú ÇÔ²² ÇÏ°Ú½À´Ï´Ù";
-                            }
-                            break;
-                            
-                        default:
-                            neighbor_buf += 0.05f;   // 5% ¹öÇÁ
-                            
-                            if (´ëÈ­Ç¥½Ã¼³Á¤ and °³º°´ëÈ­ and pk::is_player_controlled(unit))
-                            {
-                                //pk::say(pk::encode("ÁÖ±º°ú ÇÔ²² ÇÏ°Ú¼Ò"), pk::get_person(unit.leader));
-                                @msg_unit = @unit;
-                                @msg_person = pk::get_person(unit.leader);
-                                msg_string = "ÁÖ±º°ú ÇÔ²² ÇÏ°Ú½À´Ï´Ù";
-                            }
-                            break;
-                        }
-                    }
-                    else if (search_unit.leader == pk::get_totoku_id(unit))  // ¾Æ±ººÎ´ë°¡ °°Àº ±º´Ü µµµ¶ÀÌ¸é ('18.10.28)
-                    {
-                        neighbor_buf += 0.05f;   // 5% ¹öÇÁ
-                        
-                        if (´ëÈ­Ç¥½Ã¼³Á¤ and °³º°´ëÈ­ and pk::is_player_controlled(unit))
-                        {
-                            //pk::say(pk::encode("µµµ¶°ú ÇÔ²² ÇÑ´Ù"), pk::get_person(unit.leader));
-                            @msg_unit = @unit;
-                            @msg_person = pk::get_person(unit.leader);
-                            msg_string = "µµµ¶°ú ÇÔ²² ÇÑ´Ù";
-                        }
-                    }                        
-                    
-                    
-                    // ¾Æ±ººÎ´ëÀåÀÇ Æ¯±â¿¡ µû¸¥ ¹öÇÁ
-                    if (search_unit.has_skill(Æ¯±â_½Å»ê))  // ¾Æ±ººÎ´ë°¡ Æ¯±â_½Å»ê º¸À¯ ½Ã ¹öÇÁ ('18.10.28)
-                    {
-                        neighbor_buf += 0.10f;   // 10% ¹öÇÁ
-                        
-                        if (´ëÈ­Ç¥½Ã¼³Á¤ and °³º°´ëÈ­ and pk::is_player_controlled(unit))
-                        {
-                            //pk::say(pk::encode("½Å»êÁø¹ıÀ» ¹ßµ¿ÇÏ¶ó"), pk::get_person(search_unit.leader));
-                            @msg_unit = @unit;
-                            @msg_person = pk::get_person(search_unit.leader);
-                            msg_string = "½Å»êÁø¹ıÀ» ¹ßµ¿ÇÏ¶ó";
-                        }
-                        
-                    }
-                    if (search_unit.has_skill(Æ¯±â_Çã½Ç))  // ¾Æ±ººÎ´ë°¡ Æ¯±â_Çã½Ç º¸À¯ ½Ã ¹öÇÁ ('18.10.28)
-                    {
-                        neighbor_buf += 0.05f;   // 5% ¹öÇÁ
-                        
-                        if (´ëÈ­Ç¥½Ã¼³Á¤ and °³º°´ëÈ­ and pk::is_player_controlled(unit))
-                        {
-                            //pk::say(pk::encode("ÇãÇã½Ç½Ç Àü·«À» ÆîÃÄ¶ó"), pk::get_person(search_unit.leader));
-                            @msg_unit = @unit;
-                            @msg_person = pk::get_person(search_unit.leader);
-                            msg_string = "ÇãÇã½Ç½Ç Àü·«À» ÆîÃÄ¶ó";
-                        }
-                    }
-                    
-                }
-            }
-                
-            return neighbor_buf;
-        }
-        
-        // --------------------------------------------------------
-        // Àü·« µµ½Ã º¸À¯ ¼¼·Â ¿©ºÎ ('18.11.5)
-        bool func_tactics_city(pk::unit@ attacker, int weapon_id)
-        {
-            int kunshu_id = pk::get_kunshu_id(attacker);
-            switch (weapon_id)
-            {
-                case º´±â_Ã¢:
-                    if (kunshu_id == pk::get_kunshu_id(pk::get_building(µµ½Ã_º¹¾ç)))
-                        return true;
-                    else if (kunshu_id == pk::get_kunshu_id(pk::get_building(µµ½Ã_¿Ï)))
-                        return true;
-                    break;
-                    
-                case º´±â_±Ø:
-                    if (kunshu_id == pk::get_kunshu_id(pk::get_building(µµ½Ã_¿î³²)))
-                        return true;
-                    else if (kunshu_id == pk::get_kunshu_id(pk::get_building(µµ½Ã_Àå»ç)))
-                        return true;
-                    break;
-                    
-                case º´±â_³ë:
-                    if (kunshu_id == pk::get_kunshu_id(pk::get_building(µµ½Ã_°­¸ª)))
-                        return true;
-                    else if (kunshu_id == pk::get_kunshu_id(pk::get_building(µµ½Ã_È¸°è)))
-                        return true;
-                    break;
-                    
-                case º´±â_±º¸¶:
-                    if (kunshu_id == pk::get_kunshu_id(pk::get_building(µµ½Ã_¾çÆò)))
-                        return true;
-                    else if (kunshu_id == pk::get_kunshu_id(pk::get_building(µµ½Ã_¹«À§)))
-                        return true;
-                    break;
-            }
-            return false;
-        }
-        
-        
-        // --------------------------------------------------------
-        // ºÎ´ë °£ ÀüÅõ ½Ã ÇÇ°İºÎ´ë ¹æÇâ¿¡ µû¸¥ ´ë¹ÌÁö º¸Á¤ ('18.11.27)
-        int func_unit_direction(pk::unit@ attacker, pk::unit@ target_unit)
-        {
-            int dir_unit = target_unit.direction;    // ÇÇ°İºÎ´ëÀÇ ÇöÀç¹æÇâ
-            int dir_atk = pk::get_direction(target_unit.pos, attacker.pos);  // ±³Àü½Ã ÇÇ°İ¹æÇâ
-            
-            int damage_dir = -1;
-            
-            switch (dir_unit)
-            {
-                case ¹æÇâ_ºÏ¼­:  
-                    if      (dir_atk == ¹æÇâ_ºÏ¼­)                      damage_dir = 0;   // Àü¸é
-                    else if (dir_atk == ¹æÇâ_ºÏ or dir_atk == ¹æÇâ_³²¼­)  damage_dir = 1;   // ÀüÃø
-                    else if (dir_atk == ¹æÇâ_ºÏµ¿ or dir_atk == ¹æÇâ_³²)  damage_dir = 2;   // ÈÄÃø
-                    else if (dir_atk == ¹æÇâ_³²µ¿)                      damage_dir = 3;   // ÈÄ¸é
-                    break;
-                    
-                case ¹æÇâ_ºÏ :  
-                    if      (dir_atk == ¹æÇâ_ºÏ)                        damage_dir = 0;   // Àü¸é
-                    else if (dir_atk == ¹æÇâ_ºÏ¼­ or dir_atk == ¹æÇâ_ºÏµ¿) damage_dir = 1;   // ÀüÃø 
-                    else if (dir_atk == ¹æÇâ_³²¼­ or dir_atk == ¹æÇâ_³²µ¿) damage_dir = 2;   // ÈÄÃø 
-                    else if (dir_atk == ¹æÇâ_³²)                        damage_dir = 3;   // ÈÄ¸é
-                    break;
-                    
-                case ¹æÇâ_ºÏµ¿: 
-                    if      (dir_atk == ¹æÇâ_ºÏµ¿)                      damage_dir = 0;   // Àü¸é
-                    else if (dir_atk == ¹æÇâ_ºÏ or dir_atk == ¹æÇâ_³²µ¿)  damage_dir = 1;   // ÀüÃø
-                    else if (dir_atk == ¹æÇâ_ºÏ¼­ or dir_atk == ¹æÇâ_³²)  damage_dir = 2;   // ÈÄÃø
-                    else if (dir_atk == ¹æÇâ_³²¼­)                      damage_dir = 3;   // ÈÄ¸é
-                    break;
-                    
-                case ¹æÇâ_³²¼­:  
-                    if      (dir_atk == ¹æÇâ_³²¼­)                      damage_dir = 0;   // Àü¸é   
-                    else if (dir_atk == ¹æÇâ_ºÏ¼­ or dir_atk == ¹æÇâ_³²)  damage_dir = 1;   // ÀüÃø
-                    else if (dir_atk == ¹æÇâ_ºÏ or dir_atk == ¹æÇâ_³²µ¿)  damage_dir = 2;   // ÈÄÃø
-                    else if (dir_atk == ¹æÇâ_ºÏµ¿)                      damage_dir = 3;   // ÈÄ¸é
-                    break;
-                    
-                case ¹æÇâ_³² :
-                    if      (dir_atk == ¹æÇâ_³²)                        damage_dir = 0;   // Àü¸é
-                    else if (dir_atk == ¹æÇâ_³²¼­ or dir_atk == ¹æÇâ_³²µ¿) damage_dir = 1;   // ÀüÃø
-                    else if (dir_atk == ¹æÇâ_ºÏ¼­ or dir_atk == ¹æÇâ_ºÏµ¿) damage_dir = 2;   // ÈÄÃø
-                    else if (dir_atk == ¹æÇâ_ºÏ)                        damage_dir = 3;   // ÈÄ¸é
-                    break;
-                    
-                case ¹æÇâ_³²µ¿:  
-                    if      (dir_atk == ¹æÇâ_³²µ¿)                      damage_dir = 0;   // Àü¸é
-                    else if (dir_atk == ¹æÇâ_³² or dir_atk == ¹æÇâ_ºÏµ¿)  damage_dir = 1;   // ÀüÃø
-                    else if (dir_atk == ¹æÇâ_³²¼­ or dir_atk == ¹æÇâ_ºÏ)  damage_dir = 2;   // ÈÄÃø
-                    else if (dir_atk == ¹æÇâ_ºÏ¼­)                      damage_dir = 3;   // ÈÄ¸é
-                    break;
-                    
-            }
-            
-            return damage_dir;
-            
-        }
-        
-        // °¡ÁßÄ¡ ¹İÈ¯ÇÔ¼ö¿Í ¹æÇâ¹İÈ¯ ÇÔ¼ö·Î ºĞ¸® ('19.2.26)
-        float func_dir_weight(int damage_dir)
-        {
-            float ¹æÇâ°¡ÁßÄ¡_Àü¸é = 0.95f;
-            float ¹æÇâ°¡ÁßÄ¡_ÀüÃø = 1.00f;
-            float ¹æÇâ°¡ÁßÄ¡_ÈÄÃø = 1.05f;
-            float ¹æÇâ°¡ÁßÄ¡_ÈÄ¸é = 1.10f;
-            
-            float damage_buf = 1.f;
-            
-            switch (damage_dir)
-            {
-                case 0: damage_buf = ¹æÇâ°¡ÁßÄ¡_Àü¸é; break;  // Àü¸é ´ë¹ÌÁö °¡ÁßÄ¡
-                case 1: damage_buf = ¹æÇâ°¡ÁßÄ¡_ÀüÃø; break;  // ÀüÃø ´ë¹ÌÁö °¡ÁßÄ¡
-                case 2: damage_buf = ¹æÇâ°¡ÁßÄ¡_ÈÄÃø; break;  // ÈÄÃø ´ë¹ÌÁö °¡ÁßÄ¡
-                case 3: damage_buf = ¹æÇâ°¡ÁßÄ¡_ÈÄ¸é; break;  // ÈÄ¸é ´ë¹ÌÁö °¡ÁßÄ¡
-            }
-            
-            return damage_buf;
-        }
-        
-        //------------------------------------------------------------------------------------------
-        // Àü¹ı ¹ßµ¿ ½Ã »ç°Å¸®/ÁöÇü À¯È¿ Á¶°ÇÀÎÁö È®ÀÎ ('19.11.10)
-        bool func_tactics_valid_target(pk::unit@ attacker, pk::unit@ target_unit, int tactics_id)
-        {
-            int combat_range = pk::get_distance(attacker.pos, target_unit.pos);
-            int terrain_id = pk::get_hex(target_unit.pos).terrain;
-            
-            pk::tactics@ tactics_t = pk::get_tactics(tactics_id);
-            int  max_range = tactics_t.max_range;
-            int  min_range = tactics_t.min_range;
-            if (max_range == 1 and combat_range > max_range) return false;
-            /*
-            bool terrain_valid;
-            if (terrain_id == ÁöÇü_½£ and attacker.has_skill(Æ¯±â_»ç¼ö) 
-                and ((Àü¹ı_È­½Ã <= tactics_id and tactics_id <= Àü¹ı_³­»ç) or tactics_id == Àü¹ı_°ø¼ºÈ­½Ã or tactics_id == Àü¹ı_ÇÔ¼±È­½Ã))
-                terrain_valid = true;
-            else
-                terrain_valid = tactics_t.terrain[terrain_id];
-            if (!terrain_valid) return false;
-            */
-            return true;
-        }
-        
-        //------------------------------------------------------------------------------------------
-        // AIºÎ´ë Àü¹ı º¯°æ ÇÔ¼ö ('19.11.21)
-        int func_dir_tactics_opt(pk::unit@ attacker, pk::unit@ target_unit, int tactics_id)
-        {
-            int tactics_opt = tactics_id;   // ±âº»°ªÀº ÀÔ·Â°ª
-            if (!pk::is_alive(target_unit)) return tactics_id;
-            if (attacker.weapon > º´±â_±º¸¶ or attacker.weapon == º´±â_³ë) return tactics_id;
-            if (pk::get_current_turn_force_id() != attacker.get_force_id()) return tactics_id;
-            
-            int atk_dist = pk::get_distance(attacker.pos, target_unit.pos); // ±³Àü°Å¸®
-            int atk_dir = pk::get_direction(attacker.pos, target_unit.pos); // °ø°İ¹æÇâ
-            int def_dir = pk::get_direction(target_unit.pos, attacker.pos); // ÇÇ°İ¹æÇâ
-            
-            pk::point pos_b1 = pk::get_neighbor_pos(attacker.pos, def_dir, 1);
-            pk::point pos_n1 = pk::get_neighbor_pos(target_unit.pos, atk_dir, 1);
-            pk::point pos_n2 = pk::get_neighbor_pos(target_unit.pos, atk_dir, 2);
-            
-            pk::unit@ unit_n1 = (pk::is_valid_pos(pos_n1))? pk::get_unit(pos_n1) : null;
-            pk::unit@ unit_n2 = (pk::is_valid_pos(pos_n2))? pk::get_unit(pos_n2) : null;
-            bool enemy_n1 = (pk::is_alive(unit_n1))? pk::is_enemy(attacker, unit_n1) : false;
-            bool enemy_n2 = (pk::is_alive(unit_n2))? pk::is_enemy(attacker, unit_n2) : false;
-            
-            pk::hex@ hex_n1 = (pk::is_valid_pos(pos_n1))? pk::get_hex(pos_n1) : null;
-            pk::hex@ hex_n2 = (pk::is_valid_pos(pos_n2))? pk::get_hex(pos_n2) : null;
-            bool empty_n1 = (hex_n1 !is null)? (!hex_n1.has_unit and !hex_n1.has_building) : false;
-            bool empty_n2 = (hex_n2 !is null)? (!hex_n2.has_unit and !hex_n2.has_building) : false;
-            
-            bool fire_n0 = pk::is_on_fire(target_unit.pos);
-            bool fire_n1 = (pk::is_valid_pos(pos_n1))? pk::is_on_fire(pos_n1) : false;
-            bool fire_n2 = (pk::is_valid_pos(pos_n2))? pk::is_on_fire(pos_n2) : false;
-            bool fire_b1 = (pk::is_valid_pos(pos_b1))? pk::is_on_fire(pos_b1) : false;
-            
-            if (pk::is_valid_tactics_id(tactics_id) and (atk_dist == 1))    // ±ÙÁ¢°ø°İ, Åë»ó/ÀÏÁ¦°ø°İ Á¦¿Ü
-            {
-                //----- Ã¢º´ Àü¹ı (³ª¼±Ã·, ÀÌ´ÜÃ·, µ¹Ãâ)
-                // Àü¹ı_³ª¼±Ã· Á¶°Ç È®ÀÎ (Àü¹ı»ç¿ë°¡´É, ±â·ÂÃæÁ·, ±ÙÁ¢, ´ë»óºÎ´ë°¡ Åë»ó»óÅÂ)
-                if (check_tactics_enable(attacker, target_unit, Àü¹ı_³ª¼±Ã·) and target_unit.status == ºÎ´ë»óÅÂ_Åë»ó)
-                    tactics_opt = Àü¹ı_³ª¼±Ã·;
-                
-                // Àü¹ı_ÀÌ´ÜÃ· Á¶°Ç È®ÀÎ (Àü¹ı»ç¿ë°¡´É, ±â·ÂÃæÁ·, ±ÙÁ¢, Ãæµ¹´ë»óºÎ´ë À¯È¿)
-                else if (check_tactics_enable(attacker, target_unit, Àü¹ı_ÀÌ´ÜÃ·) and empty_n1 and (enemy_n2 or fire_n2))
-                    tactics_opt = Àü¹ı_ÀÌ´ÜÃ·;
-                
-                // Àü¹ı_µ¹Ãâ Á¶°Ç È®ÀÎ (Àü¹ı»ç¿ë°¡´É, ±â·ÂÃæÁ·, ±ÙÁ¢, Ãæµ¹´ë»óºÎ´ë À¯È¿)
-                else if (check_tactics_enable(attacker, target_unit, Àü¹ı_µ¹Ãâ) and (empty_n1 or enemy_n1 or fire_n1))
-                    tactics_opt = Àü¹ı_µ¹Ãâ;
-                
-                //----- ±âº´ Àü¹ı (µ¹ÆÄ, µ¹Áø, µ¹°İ)
-                // Àü¹ı_µ¹ÆÄ Á¶°Ç È®ÀÎ (Àü¹ı»ç¿ë°¡´É, ±â·ÂÃæÁ·, ±ÙÁ¢, µ¹ÆÄÈÄ À§Ä¡ ºóÄ­)
-                else if (check_tactics_enable(attacker, target_unit, Àü¹ı_µ¹ÆÄ) and empty_n1 and !enemy_n2 and !fire_n1)
-                    tactics_opt = Àü¹ı_µ¹ÆÄ;
-                
-                // Àü¹ı_µ¹Áø Á¶°Ç È®ÀÎ (Àü¹ı»ç¿ë°¡´É, ±â·ÂÃæÁ·, ±ÙÁ¢, µ¹ÁøÈÄ À§Ä¡ ºóÄ­)
-                else if (check_tactics_enable(attacker, target_unit, Àü¹ı_µ¹Áø) and empty_n1 and !fire_n1 and (empty_n2 or fire_n2))
-                    tactics_opt = Àü¹ı_µ¹Áø;
-                
-                // Àü¹ı_µ¹°İ Á¶°Ç È®ÀÎ (Àü¹ı»ç¿ë°¡´É, ±â·ÂÃæÁ·, ±ÙÁ¢)
-                else if (check_tactics_enable(attacker, target_unit, Àü¹ı_µ¹°İ) and !fire_n0)
-                    tactics_opt = Àü¹ı_µ¹°İ;
-                
-                //----- ±Øº´ Àü¹ı (È¾Ä¡, ¼±Ç³, °¥Äû)
-                // Àü¹ı_È¾Ä¡ Á¶°Ç È®ÀÎ (Àü¹ı»ç¿ë°¡´É, ±â·ÂÃæÁ·, ±ÙÁ¢, ÀÎÁ¢ÇÑ ÀûºÎ´ë È®ÀÎ)
-                else if (check_tactics_enable(attacker, target_unit, Àü¹ı_È¾Ä¡) and (count_neighbor_enemies(attacker, target_unit, Àü¹ı_È¾Ä¡) >= 1))
-                    tactics_opt = Àü¹ı_È¾Ä¡;
-
-                // Àü¹ı_¼±Ç³ Á¶°Ç È®ÀÎ (Àü¹ı»ç¿ë°¡´É, ±â·ÂÃæÁ·, ±ÙÁ¢, ÀÎÁ¢ÇÑ ÀûºÎ´ë È®ÀÎ)
-                else if (check_tactics_enable(attacker, target_unit, Àü¹ı_¼±Ç³) and (count_neighbor_enemies(attacker, target_unit, Àü¹ı_¼±Ç³) >= 3))
-                    tactics_opt = Àü¹ı_¼±Ç³;
-                
-                // Àü¹ı_°¥Äû Á¶°Ç È®ÀÎ (Àü¹ı»ç¿ë°¡´É, ±â·ÂÃæÁ·, ±ÙÁ¢)
-                else if (check_tactics_enable(attacker, target_unit, Àü¹ı_°¥Äû) and !fire_b1)
-                    tactics_opt = Àü¹ı_°¥Äû;
-                
-            }
-            
-            // ·Î±×Ã¢¿¡ Ç¥½Ã
-            if (µğ¹ö±×¸ğµå and (tactics_id != tactics_opt))
-            {
-                string leader_name = pk::decode(pk::get_name(pk::get_person(attacker.leader)));
-                pk::info(pk::format("{}ºÎ´ëÀü¹ı: {} ¡æ {}", leader_name, get_tactics_name(tactics_id), get_tactics_name(tactics_opt)));
-            }
-            
-            return tactics_opt;
-        }
-        
-        // ³ëº´ Åë»óÈ°°ø°İ ¡æ È­½Ã ÃÖÀûÈ­
-        int func_fire_on_arrow(pk::unit@ attacker, pk::hex_object@ target_obj, int tactics_id)
-        {
-            int tactics_opt = tactics_id;   // ±âº»°ªÀº ÀÔ·Â°ª
-            if (!pk::is_alive(target_obj)) return tactics_id;
-            if (attacker.weapon != º´±â_³ë) return tactics_id;
-            if (pk::get_current_turn_force_id() != attacker.get_force_id()) return tactics_id;
-            int atk_dist = pk::get_distance(attacker.pos, target_obj.pos); // ±³Àü°Å¸®
-            
-            if (atk_dist > 1 and !pk::is_valid_tactics_id(tactics_id))
-            {
-                int tekisei = pk::get_tekisei(attacker, attacker.weapon);
-                pk::equipment@ atk_eqp  = pk::get_equipment(attacker.weapon);
-                pk::tactics@ fire_arrow = pk::get_tactics(Àü¹ı_È­½Ã);
-                pk::hex@ hex_dst = pk::get_hex(target_obj.pos);
-                
-                // È­½ÃÀü¹ı»ç¿ë°¡´É¿©ºÎ : º´°ú, ±â·Â, Àû¼º, ÁöÇü Ã¼Å©
-                bool chk_eqp = atk_eqp.tactics[Àü¹ı_È­½Ã];
-                bool chk_tekisei = tekisei >= fire_arrow.tekisei;
-                bool chk_energy = (attacker.energy >= fire_arrow.energy_cost);
-                bool chk_range = (fire_arrow.min_range <= atk_dist and atk_dist <= fire_arrow.max_range);
-                bool chk_terrain = fire_arrow.terrain[hex_dst.terrain];
-                if (chk_eqp and chk_tekisei and chk_energy and chk_range and chk_terrain)
-                    tactics_opt = Àü¹ı_È­½Ã;
-            }            
-            return tactics_opt;
-        }
-        
-        
-        bool check_tactics_enable(pk::unit@ src, pk::unit@ dst, int tactics_id)
-        {
-            bool tactics_en = false;
-            int tekisei = pk::get_tekisei(src, src.weapon);
-            pk::equipment@ atk_eqp  = pk::get_equipment(src.weapon);
-            pk::tactics@ tactics = pk::get_tactics(tactics_id);
-            pk::hex@ hex_dst = pk::get_hex(dst.pos);
-            
-            // Àü¹ı»ç¿ë°¡´É¿©ºÎ : º´°ú, ±â·Â, Àû¼º, ÁöÇü Ã¼Å©
-            tactics_en = (atk_eqp.tactics[tactics_id] and (src.energy >= tactics.energy_cost) and (tekisei >= tactics.tekisei) and tactics.terrain[hex_dst.terrain]);
-                
-            return tactics_en;
-        }
-        
-        int count_neighbor_enemies(pk::unit@ src, pk::unit@ dst, int tactics_id)
-        {
-            int count = 0;
-            for (int i = 0; i < ¹æÇâ_³¡; i++)
-            {
-                pk::point pos_t = pk::get_neighbor_pos(src.pos, i);
-                pk::unit@ unit_t = (pk::is_valid_pos(pos_t))? pk::get_unit(pos_t) : null;
-                if (pk::is_valid_pos(pos_t) and pk::is_alive(unit_t) and pk::is_enemy(src, unit_t) and unit_t.get_id() != dst.get_id())
-                {
-                    if (tactics_id == Àü¹ı_È¾Ä¡ and pk::get_distance(dst.pos, unit_t.pos) == 1)
-                        count++;
-                    else if (tactics_id == Àü¹ı_¼±Ç³)
-                        count++;
-                }
-            }
-            return count;
-        }
-
-        bool check_splash_valid(pk::unit@ src, pk::unit@ dst)
-        {
-            int count_force = 0;
-            int count_enemy = 0;
-            for (int i = 0; i < ¹æÇâ_³¡; i++)
-            {
-                pk::point pos_t = pk::get_neighbor_pos(dst.pos, i);
-                pk::unit@ unit_t = (pk::is_valid_pos(pos_t))? pk::get_unit(pos_t) : null;
-                pk::hex@ hex_t = pk::get_hex(pos_t);
-                if (pk::is_valid_pos(pos_t) and pk::is_alive(unit_t) and unit_t.get_id() != dst.get_id())
-                {
-                    if (!pk::is_enemy(src, unit_t)) count_force++;
-                    if ( pk::is_enemy(src, unit_t)) 
-                    {
-                        if (hex_t.terrain != ÁöÇü_½£) count_enemy++;
-                        if (hex_t.terrain == ÁöÇü_½£ and src.has_skill(Æ¯±â_»ç¼ö)) count_enemy++;
-                    }
-                }
-            }
-            if (count_enemy >= pk::max(2, (count_force + 1))) return true;
-            return false;
-        }
-        
-        string get_tactics_name(int tactics_id)
-        {
-            pk::array<string> str_tactics = {"µ¹Ãâ", "³ª¼±Ã·", "ÀÌ´ÜÃ·", "°¥Äû", "È¾Ä¡", "¼±Ç³", "È­½Ã", "°ü½Ã", "³­»ç", "µ¹°İ", "µ¹ÆÄ", "µ¹Áø", "°ø¼ºÈ­½Ã", "°ø¼ºÆÄ¼â", "°ø¼º¹æ»ç", "°ø¼ºÅõ¼®", "ÇÔ¼±È­½Ã", "ÇÔ¼±°İµ¹", "ÇÔ¼±Åõ¼®"};
-            if (tactics_id < 0 or tactics_id >= Àü¹ı_³¡) return "Åë»ó";
-            return str_tactics[tactics_id];
-        }
-        
-        //------------------------------------------------------------------------------------------
-        // ºÎ´ë °æÇèÄ¡ È¹µæ ½Ã Ãß°¡Ã³¸® 
-        //------------------------------------------------------------------------------------------
-        
-        // Àü¿ë ¸Ş½ÃÁö Ã³¸®¿ë º¯¼ö
-        pk::unit@   msg_unit;
-        pk::person@ msg_person;
-        string      msg_string = "";
-        
-        // ³ª¼±Ã· Ã³¸®¿ë º¯¼ö
-        pk::unit@ unit;
-        pk::unit@ nasun_unit;
-        bool ³ª¼±Ã·_Å©¸®Æ¼ÄÃ;  // ³ª¼±Ã· ¼º°ø ½Ã Å©¸®Æ¼ÄÃ Á¤º¸
-        bool ³ª¼±Ã·_ÇÇ°İÇàµ¿;  // ³ª¼±Ã· ÇÇ°İºÎ´ëÀÇ Çàµ¿¿Ï·á Á¤º¸
-        int  ³ª¼±Ã·_ÇÇ°İ»óÅÂ;  // ³ª¼±Ã· ÇÇ°İºÎ´ëÀÇ ºÎ´ë»óÅÂ Á¤º¸
-        int  ³ª¼±Ã·_ÇÇ°İÅ¸ÀÌ¸Ó;  // ³ª¼±Ã· ÇÇ°İºÎ´ëÀÇ ºÎ´ë»óÅÂ Å¸ÀÌ¸Ó
-        
-        // ÈÄ¹æÇÇ°İ È¥¶õÃ³¸®¿ë º¯¼ö
-        pk::unit@ back_unit;
-        
-        
-        // °æÇèÄ¡ È¹µæ ½Ã Ã³¸® ÇÔ¼ö
-        void onUnitExpAdd(pk::unit@ unit, int type)
-        {
-            // Ä¿½ºÅÒ ´ëÈ­Ç¥½Ã
-            if (´ëÈ­Ç¥½Ã¼³Á¤ and pk::is_alive(unit) and pk::is_alive(msg_unit) and unit.get_id() == msg_unit.get_id())
-            {
-                pk::say(pk::encode(msg_string), msg_person);
-            }
-            @msg_unit = null;
-            @msg_person = null;
-            msg_string = "";
-            
-            // ³ª¼±Ã·È¥¶õÈ®·ü_°­Á¦Àû¿ë
-            if (³ª¼±Ã·È¥¶õÈ®·ü_°­Á¦Àû¿ë and pk::is_alive(unit) and pk::is_alive(nasun_unit))
-            {
-                pk::person@ def_leader = pk::get_person(nasun_unit.leader);
-                int ³ª¼±Ã·È¥¶õÈ®·ü = (³ª¼±Ã·_Å©¸®Æ¼ÄÃ)? ³ª¼±Ã·_Å©¸®Æ¼ÄÃÈ¥¶õÈ®·ü : ³ª¼±Ã·_Àü¹ı¼º°øÈ¥¶õÈ®·ü;
-                int ³ª¼±Ã·È¥¶õ½Ã°£ = (³ª¼±Ã·_Å©¸®Æ¼ÄÃ)? 2 : 1;
-                
-                if (pk::rand_bool(³ª¼±Ã·È¥¶õÈ®·ü))
-                {
-                    pk::set_status(nasun_unit, unit, ºÎ´ë»óÅÂ_È¥¶õ, ³ª¼±Ã·È¥¶õ½Ã°£, true);
-                }
-                else
-                {
-                    pk::set_status(nasun_unit, unit, ³ª¼±Ã·_ÇÇ°İ»óÅÂ, ³ª¼±Ã·_ÇÇ°İÅ¸ÀÌ¸Ó, false);  // È¥¶õ»óÅÂ¸¦ °­Á¦·Î ÇÇ°İ ´ç½Ã ºÎ´ë»óÅÂ·Î º¯°æ
-                    nasun_unit.action_done = ³ª¼±Ã·_ÇÇ°İÇàµ¿;                       // ÇÇ°İ ´ç½Ã Çàµ¿»óÅÂ·Î Àç¼³Á¤
-                    
-                    if (³ª¼±Ã·_ÇÇ°İ»óÅÂ == ºÎ´ë»óÅÂ_Åë»ó)
-                        pk::say(pk::encode("´ÙÇàÈ÷ ºÎ´ëÈ¥¶õÀº ¸éÇß±º"), def_leader);
-                }
-            }
-            @nasun_unit = null;
-            ³ª¼±Ã·_Å©¸®Æ¼ÄÃ = false;
-            
-            // ÈÄ¹æÇÇ°İ È¥¶õÃ³¸®
-            if (±³Àü¹æÇâ¼³Á¤ and ÈÄ¹æÇÇ°İ½Ã_È¥¶õÀû¿ë and pk::is_alive(unit) and pk::is_alive(back_unit))
-            {
-                if (pk::rand_bool(ÈÄ¹æÇÇ°İ½Ã_È¥¶õÈ®·ü) and back_unit.status == ºÎ´ë»óÅÂ_Åë»ó)
-                {
-                    pk::set_status(back_unit, unit, ºÎ´ë»óÅÂ_È¥¶õ, 1, true);
-                    pk::say(pk::encode("ÈÊ. ÈÄ¹æ ±³¶õ¿¡ ¼º°øÇß±º.."), pk::get_person(unit.leader));
-                }
-            }
-            @back_unit = null;
-            
-        }
-        //------------------------------------------------------------------------------------------
-        
-        bool µğ¹ö±×¸ğµå = false;
-        
 	}
 
 	Main main;
 }
-
-
