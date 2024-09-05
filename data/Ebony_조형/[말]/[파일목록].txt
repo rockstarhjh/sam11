@@ -1,0 +1,15 @@
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\말\말_2189.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\말\말_2191.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\말\말_2192.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\말\말_2193.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\말\말_2194.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\말\말_Base00.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\말\말_Base01.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\말\말_Base02.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\말\말_Base03.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\말\말_권모적토마.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\말\말_백마.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\말\말_서량백마.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\말\말_오추마.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\말\말_옥란백용구.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\말\말_적토마.png

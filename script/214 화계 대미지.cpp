@@ -14,7 +14,7 @@
 
 			if (target.is_instance(pk::unit::type_id))
 			{
-				atk = 300;
+				atk = 350;
 				info.troops_damage = atk + pk::rand(200);
 			}
 			else
@@ -31,7 +31,7 @@
 
 			if (pk::is_alive(attacker) and attacker.has_skill(특기_화신))
 			{
-				info.troops_damage *= 2;
+				info.troops_damage *= 2.5f;
 				info.atk_skill = 특기_화신;
 			}
 			// 화공 특기가 1.5배 피해를 줌 (특기종합패치)

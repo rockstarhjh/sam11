@@ -1,0 +1,15 @@
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\무기\방천화극_대부.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\무기\방천화극_부_Black.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\무기\방천화극_부_Blue.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\무기\방천화극_부_Red.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\무기\방천화극_부_Yellow.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\무기\방천화극_치우부.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\무기\창_Black00.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\무기\창_Blue00.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\무기\창_Blue01.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\무기\창_Green00.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\무기\창_Green01.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\무기\창_Red00.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\무기\창_Red01.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\무기\창_Yellow00.png
+D:\Game\Sam11\Sam11PK2.1\data\Ebony_조형\무기\창_Yellow01.png

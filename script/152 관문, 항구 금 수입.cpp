@@ -46,7 +46,7 @@ namespace 관문_금_수입
             
             // 항구인 경우 금수입 1.5배 적용 ('18.10.15)
             if ( (pk::get_hex_object_id(building) >= 건물_항구시작) and (pk::get_hex_object_id(building) < 건물_항구끝) )
-                n = int(n * 1.5f);
+                n = int(n * 0.8f);
             
             
             // 유저_도시수_패널티 ('20.8.29)

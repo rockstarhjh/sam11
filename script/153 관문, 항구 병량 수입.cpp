@@ -30,7 +30,7 @@ namespace 관문_병량_수입
             
             // 관문인 경우 병량수입 1.5배 적용 ('18.10.15)
             if ( (pk::get_hex_object_id(building) >= 건물_관문시작) and (pk::get_hex_object_id(building) < 건물_관문끝) )
-                n = int(n * 1.5f);
+                n = int(n * 0.8f);
             
              
             // 유저_도시수_패널티 ('20.8.29)

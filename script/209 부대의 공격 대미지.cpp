@@ -74,7 +74,7 @@
 			float 병기상성_약 = float(pk::core["병기상성.약"]); // 0.85f
 			float 정예기교_공격력 = 1.15f;
 			float 단련기교_공격력 = 1.10f;
-			float 크리티컬_공격력 = 1.15f;
+			float 크리티컬_공격력 = 1.5f;
 
 			if (target_unit !is null)
 			{
