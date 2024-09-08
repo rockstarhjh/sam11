@@ -42,11 +42,11 @@
 			if (has_skill)
 				n = n * 2;
 
-			// 관련 기교가 연구되어 있다면 1.25배 (특기종합패치)
+			// 관련 기교가 연구되어 있다면 1.2배 (특기종합패치)
 			if ((weapon_id <= 병기_노) and (pk::has_tech(city, 기교_군제개혁)))
-				n = n * 1.25f;
+				n = n * 1.2f;
 			if ((weapon_id == 병기_군마) and (pk::has_tech(city, 기교_양마산출)))
-				n = n * 1.25f;
+				n = n * 1.2f;
 
 			n = n * func_5c7040(city, weapon_id);
 

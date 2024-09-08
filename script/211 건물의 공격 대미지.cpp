@@ -18,6 +18,10 @@
 			int troops_atk = 0, atk = 0, def = 0, troops = 0;
 			info.src_pos = attacker.get_pos();
 			info.dst_pos = target.get_pos();
+			pk::force@ target_force = pk::get_force(target_unit.get_force_id());
+
+			// 능력연구를 위해 추가
+			pk::force@ attacker_force = pk::get_force(attacker.get_force_id());
 
 			switch (facility_id)
 			{
@@ -62,10 +66,6 @@
 				if (attacker.has_tech(기교_방어강화))
 					info.troops_damage *= 2;
 
-				// 운제가 피해를 40% 감소시킴 (특기종합패치)
-				if (target.has_tech(기교_운제) and target_unit.weapon >= 병기_검 and target_unit.weapon <= 병기_노)
-					info.troops_damage *= 0.6f;
-
 				// 강습, 급습이 확률로 피해를 받지 않음 (특기종합패치)
 				if (pk::is_in_water(target_unit))
 				{
@@ -85,43 +85,63 @@
 				}
 			}
 
+			// 공신 연구시 공신 특기자가 있는 도시, 관문, 항구는 반격 피해량 2배
+			if (attacker.facility >= 시설_도시 and attacker.facility <= 시설_항구)
+			{
+				if (attacker.has_skill(특기_공신) and attacker_force.sp_ability_researched[5] and pk::get_ability(attacker_force.sp_ability[5]).skill == 특기_공신)
+					info.troops_damage *= 2;
+			}
+
 			// 건물 공격이 사격 유형일 때
 			if (attacker.facility >= 시설_궁노 and attacker.facility <= 시설_연노로)
 			{
 				// 불굴, 금강, 화살방패가 막음 (특기종합패치)
+				int effect = 0;
 				if ((target_unit.weapon == 병기_극) and (target.has_tech(기교_화살방패)) and (pk::rand_bool(30)))
 				{
 					info.def_tech = 기교_화살방패;
 					info.troops_damage = 0;
-					pk::create_effect(83, info.dst_pos);
-					pk::play_se(94, info.dst_pos);
+					effect = 1;
 				}
-				else if (target.has_skill(특기_불굴) and (target.troops < int(pk::core::skill_constant(target, 특기_불굴)) and pk::rand_bool(int(pk::core::skill_constant(target, 특기_불굴, 1)))))
-				{
-					info.def_skill = 특기_불굴;
-					info.troops_damage = 0;
-					pk::create_effect(83, info.dst_pos);
-					pk::play_se(94, info.dst_pos);
-				}
-				else if (target.has_skill(특기_금강) and (info.troops_damage < int(pk::core::skill_constant(target, 특기_금강)) and pk::rand_bool(int(pk::core::skill_constant(target, 특기_금강, 1)))))
-				{
-					info.def_skill = 특기_금강;
-					info.troops_damage = 0;
-					pk::create_effect(83, info.dst_pos);
-					pk::play_se(94, info.dst_pos);
-				}
-			}
 
-			// 건물 공격이 투석 공격일 때
-			if (attacker.facility == 시설_투석대)
-			{
-				// 답파가 피해를 반으로 줄임 (특기종합패치)
-				if (target.has_skill(특기_답파))
+				if (target_unit.has_skill(특기_불굴))
 				{
-					info.def_skill = 특기_답파;
-					info.troops_damage *= 0.5f;
-					pk::create_effect(82, info.dst_pos);
-					pk::play_se(93, info.dst_pos);
+					// 불굴 연구시 병력 기준 1000 증가
+					if (target_force.ability_researched[35] and (target.troops < int(pk::core::skill_constant(target, 특기_불굴)) + 1000) and pk::rand_bool(int(pk::core::skill_constant(target, 특기_불굴, 1))))
+					{
+						info.def_skill = 특기_불굴;
+						info.troops_damage = 0;
+						effect = 1;
+					}
+					else if (target.troops < int(pk::core::skill_constant(target, 특기_불굴)) and pk::rand_bool(int(pk::core::skill_constant(target, 특기_불굴, 1))))
+					{
+						info.def_skill = 특기_불굴;
+						info.troops_damage = 0;
+						effect = 1;
+					}
+				}
+
+				if (target_unit.has_skill(특기_금강))
+				{
+					// 금강 연구시 확률 25% 증가
+					if (target_force.ability_researched[37] and info.troops_damage < int(pk::core::skill_constant(target, 특기_금강)) and pk::rand_bool(25 + int(pk::core::skill_constant(target, 특기_금강, 1))))
+					{
+						info.def_skill = 특기_금강;
+						info.troops_damage = 0;
+						effect = 1;
+					}
+					else if (info.troops_damage < int(pk::core::skill_constant(target, 특기_금강)) and pk::rand_bool(int(pk::core::skill_constant(target, 특기_금강, 1))))
+					{
+						info.def_skill = 특기_금강;
+						info.troops_damage = 0;
+						effect = 1;
+					}
+				}
+
+				if (effect == 1)
+				{
+					pk::create_effect(83, info.dst_pos);
+					pk::play_se(94, info.dst_pos);
 				}
 			}
 		}

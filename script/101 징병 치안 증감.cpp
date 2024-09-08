@@ -10,21 +10,30 @@
 		int callback(pk::city@ city, const pk::detail::arrayptr<pk::person@> &in actors, int troops)
 		{
 			int n = 100;
+
+			// 능력연구를 위한 문장
+			bool research = false;
+			pk::force@ force = pk::get_force(city.get_force_id());
+
 			for (int i = 0; i < actors.length; i++)
 			{
 				pk::person@ actor = actors[i];
 				if (pk::is_alive(actor))
+				{
 					n = n + actor.stat[int(pk::core["징병.능력"])];
+
+					if (pk::has_skill(actor, 특기_명성))
+						research = true;
+				}
 			}
 
-			// 인심장악 기교가 치안 저하를 줄임
-			if (pk::has_tech(city, 기교_인심장악))
-				n *= 1.25f;
+			// 명성 연구시 치안감소량이 추가로 증가하지 않음
+			if (force.ability_researched[39] and research)
+				n = n * 1.5f;
 
-			// 특기 위압이 치안 70 이하를 막음 (특기종합패치)
-			pk::building@ building = pk::city_to_building(city);
-			if (building.has_skill(특기_위압))
-				return pk::max(-troops / n, -pk::max(0, city.public_order - 70));
+			// 법령정비 기교가 치안 저하를 줄임
+			if (pk::has_tech(city, 기교_법령정비))
+				n *= 1.2f;
 
 			return -troops / n;
 		}

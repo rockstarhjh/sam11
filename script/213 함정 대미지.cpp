@@ -87,8 +87,8 @@
 					n = n + bakuyaku;
 				if (attacker.has_skill(특기_화신))
 					n = n * 2;
-				// 화공 특기가 1.5배 피해를 줌 (특기종합패치)
-				else if (attacker.has_skill(특기_화공))
+				// 화공이 불함정 피해 1.5배
+				else if (attacker.has_skill(특기_화공))	
 					n = n * 1.5f;
 				if (target.has_skill(특기_등갑))
 				{

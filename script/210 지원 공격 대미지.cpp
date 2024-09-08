@@ -27,6 +27,9 @@
 			{
 				buffed = 1;
 				info.buffed = true;
+				// 투신 특기가 태고대 버프를 2배(10% -> 20%)로 받음 (특기종합패치)
+				if (attacker.has_skill(특기_투신))
+				buffed *= 2;
 			}
 
 			// 디버프
@@ -39,7 +42,10 @@
 				if (pk::has_tech(target_force, 기교_성벽강화))
 					facility_id = 시설_성채;
 				if (func_5aedc0(target_unit.get_pos(), 1, pk::get_facility(facility_id).range, target_unit.get_force_id()))
-					info.debuffer = facility_id;
+				{
+					if (!attacker.has_skill(특기_공성) or !force.sp_ability_researched[5] or pk::get_ability(force.sp_ability[5]).skill != 특기_공성)
+						info.debuffer = facility_id;
+				}
 			}
 
 			float 정예기교_공격력 = 1.15f;
@@ -95,12 +101,12 @@
 				{
 					if (pk::is_in_water(attacker))
 					{
-						if (attacker.has_skill(특기_강습) and pk::rand_bool(int(pk::core::skill_constant(attacker, 특기_강습))))
+						if (attacker.has_skill(특기_강습))
 							troops_damage *= 1.10f;
 					}
 					else
 					{
-						if (attacker.has_skill(특기_급습) and pk::rand_bool(int(pk::core::skill_constant(attacker, 특기_급습))))
+						if (attacker.has_skill(특기_급습))
 							troops_damage *= 1.10f;
 					}
 				}
@@ -111,6 +117,10 @@
 
 				if (attacker.has_skill(특기_소탕))
 					info.energy_damage = pk::max(info.energy_damage, int(pk::core::skill_constant(attacker, 특기_소탕))); // 5
+
+				// 소탕 연구시 기력감소량 3 추가
+				if (attacker.has_skill(특기_소탕) and force.ability_researched[28])
+					info.energy_damage += 3;
 
 				if (attacker.has_skill(특기_위풍))
 					info.energy_damage = pk::max(info.energy_damage, int(pk::core::skill_constant(attacker, 특기_위풍))); // 20
@@ -124,22 +134,29 @@
 				if (target_unit.has_skill(특기_등갑))
 					troops_damage *= 0.5f;
 
-				// 철벽 특기가 진, 요새, 성채 범위에서 추가 방어 (특기종합패치)
-				if (target_unit.has_skill(특기_철벽))
+				// 철벽 연구시 진, 요새, 성채 범위에서 추가 방어 (특기종합패치)
+				pk::force@ target_force = pk::get_force(target_unit.get_force_id());
+				if (info.debuffer == 시설_성채)
 				{
-				if (info.debuffer == 시설_진)
-					troops_damage *= 0.70f;
-				else if (info.debuffer == 시설_요새)
-					troops_damage *= 0.60f;
-				else if (info.debuffer == 시설_성채)
+					if (target_unit.has_skill(특기_철벽) and target_force.ability_researched[38])
 					troops_damage *= 0.50f;
+					else
+					troops_damage *= 0.65f;
+				}
+				else if (info.debuffer == 시설_요새)
+				{
+					if (target_unit.has_skill(특기_철벽) and target_force.ability_researched[38])
+					troops_damage *= 0.60f;
+					else
+					troops_damage *= 0.75f;
 				}
 				else if (info.debuffer == 시설_진)
+				{
+					if (target_unit.has_skill(특기_철벽) and target_force.ability_researched[38])
+					troops_damage *= 0.70f;
+					else
 					troops_damage *= 0.85f;
-				else if (info.debuffer == 시설_요새)
-					troops_damage *= 0.75f;
-				else if (info.debuffer == 시설_성채)
-					troops_damage *= 0.65f;
+				}
 
 				info.troops_damage = troops_damage;
 			}
@@ -173,11 +190,12 @@
 		{
 			if (pk::is_alive(attacker) and pk::is_alive(target) and attacker.weapon == 병기_창 and attacker.has_tech(기교_병량습격))
 			{
-			//	int a = pk::rand(attacker.attr.stat[부대능력_공격]) + attacker.attr.stat[부대능력_공격];
-				int b = pk::max(attacker.troops / 40, 1);
+				// 습격량이 지력에도 비례 (기교패치)
+				int a = pk::rand(attacker.attr.stat[부대능력_공격] + attacker.attr.stat[부대능력_지력]) + attacker.attr.stat[부대능력_공격] + attacker.attr.stat[부대능력_지력];
+				int b = pk::max(attacker.troops / 2, 1);
 				int c = target.food;
 				int d = pk::get_max_food(attacker) - attacker.food;
-				return pk::min(b, c, d);
+				return pk::min(a, b, c, d);
 			}
 			return 0;
 		}
@@ -283,6 +301,7 @@
 
 			pk::point attacker_pos = attacker.get_pos();
 			pk::point target_pos = target.get_pos();
+			pk::force@ target_force = pk::get_force(target.get_force_id());
 
 			if (target.weapon == 병기_극)
 			{
@@ -306,7 +325,13 @@
 
 			if (target.has_skill(특기_불굴))
 			{
-				if (target.troops < int(pk::core::skill_constant(target, 특기_불굴)) and pk::rand_bool(int(pk::core::skill_constant(target, 특기_불굴, 1))))
+				// 불굴 연구시 병력기준 1000명 증가
+				if (target_force.ability_researched[35] and (target.troops < int(pk::core::skill_constant(target, 특기_불굴)) + 1000) and pk::rand_bool(int(pk::core::skill_constant(target, 특기_불굴, 1))))
+				{
+					info.def_skill = 특기_불굴;
+					return true;
+				}
+				else if (target.troops < int(pk::core::skill_constant(target, 특기_불굴)) and pk::rand_bool(int(pk::core::skill_constant(target, 특기_불굴, 1))))
 				{
 					info.def_skill = 특기_불굴;
 					return true;
@@ -315,7 +340,13 @@
 
 			if (target.has_skill(특기_금강))
 			{
-				if (info.troops_damage < int(pk::core::skill_constant(target, 특기_금강)) and pk::rand_bool(int(pk::core::skill_constant(target, 특기_금강, 1))))
+				// 금강 연구시 확률 25% 증가
+				if (target_force.ability_researched[37] and info.troops_damage < int(pk::core::skill_constant(target, 특기_금강)) and pk::rand_bool(25 + int(pk::core::skill_constant(target, 특기_금강, 1))))
+				{
+					info.def_skill = 특기_금강;
+					return true;
+				}
+				else if (info.troops_damage < int(pk::core::skill_constant(target, 특기_금강)) and pk::rand_bool(int(pk::core::skill_constant(target, 특기_금강, 1))))
 				{
 					info.def_skill = 특기_금강;
 					return true;

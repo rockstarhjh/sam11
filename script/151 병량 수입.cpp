@@ -13,6 +13,10 @@
 			if (city is null or !pk::is_valid_force_id(city.get_force_id()))
 				return 0;
 
+			// 능력연구를 위한 문장
+			pk::force@ force = pk::get_force(city.get_force_id());
+			pk::building@ building = pk::city_to_building(city);
+
 			// 기본 병량 수입
 			int n = city.harvest;
 
@@ -53,17 +57,22 @@
 					if (facility_id == 시설_농장 or facility_id == 시설_농장2단 or facility_id == 시설_농장3단)
 					{
 						if (func_49ed70(building.get_pos(), 시설_곡창))
-							y = y * 1.5f;
+						{
+							// 징수 연구시 곡창이 100% 효과를 냄
+							if (building.has_skill(특기_징수) and force.sp_ability_researched[7] and pk::get_ability(force.sp_ability[7]).skill == 특기_징수)
+								y = y * 2;
+							else
+								y = y * 1.5f;
+						}
 
-						// 법령정비 기교가 농장 수입을 25% 증가 (특기종합패치)
+						// 법령정비 기교 농장 수입 20% 증가 (특기종합패치)
 						if (pk::has_tech(city, 기교_법령정비))
-							y = y * 1.25f;
+							y = y * 1.2f;
 					}
 					// 군둔농일 경우 병력수에 비례하여 생산력 조정.
 					else if (facility_id == 시설_군둔농)
-					{
 						y = pk::max(city.troops, 15000) * y / 15000;
-					}
+
 					n = n + y;
 				}
 			}

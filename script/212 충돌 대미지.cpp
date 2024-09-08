@@ -1,4 +1,4 @@
-namespace Ãæµ¹_´ë¹ÌÁö
+ï»¿namespace ì¶©ëŒ_ëŒ€ë¯¸ì§€
 {
 	class Main
 	{
@@ -12,30 +12,47 @@ namespace Ãæµ¹_´ë¹ÌÁö
 			int n = 0;
 
 			// ?
-			n = pk::rand(attacker.attr.stat[ºÎ´ë´É·Â_°ø°İ]) + attacker.attr.stat[ºÎ´ë´É·Â_°ø°İ] / 2;
+			n = pk::rand(attacker.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ê³µê²©]) + attacker.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ê³µê²©] / 2;
 			info._20 = -pk::max(n, 1);
+
+			pk::unit@ sub_target_unit = pk::hex_object_to_unit(sub_target);
+
+			if (!pk::is_alive(sub_target_unit))
+				return;
+
+			pk::force@ sub_target_force = pk::get_force(sub_target_unit.get_force_id());
 
 			if (sub_target.is_instance(pk::unit::type_id))
 			{
-				n = attacker.attr.stat[ºÎ´ë´É·Â_°ø°İ] * 2 - pk::hex_object_to_unit(sub_target).attr.stat[ºÎ´ë´É·Â_¹æ¾î];
+				n = attacker.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ê³µê²©] * 2 - pk::hex_object_to_unit(sub_target).attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ë°©ì–´];
 				if (n < 20) n = 20;
 				info.troops_damage = pk::max(n + pk::rand(n), 1);
-                
-                // °ø°İ/ÇÇ°İºÎ´ë º´·Â Â÷¿¡ µû¸¥ Ãß°¡ È¿°ú : º´·ÂÂ÷ÀÇ 5% ÀÌ³» ·£´ı ('18.10.14)
-                if (attacker.troops >= pk::hex_object_to_unit(sub_target).troops)
-                    info.troops_damage += pk::max(pk::rand( (attacker.troops - pk::hex_object_to_unit(sub_target).troops)/20 ), 0);
-                    
+
+				// íˆ¬ì‹  ì—°êµ¬ì‹œ ì¶©ëŒì— ë§ìœ¼ë©´ ì¬í–‰ë™
+				if (sub_target_unit.has_skill(íŠ¹ê¸°_íˆ¬ì‹ ) and sub_target.get_force_id() == attacker.get_force_id() and sub_target_force.sp_ability_researched[4] and pk::get_ability(sub_target_force.sp_ability[4]).skill == íŠ¹ê¸°_íˆ¬ì‹ )
+				{
+					pk::set_status(sub_target_unit, sub_target_unit, ë¶€ëŒ€ìƒíƒœ_í­ì£¼, 0, true);
+					pk::set_status(sub_target_unit, sub_target_unit, ë¶€ëŒ€ìƒíƒœ_í†µìƒ, 0, true);
+					pk::set_action_done(sub_target_unit, false);
+					if (!pk::is_player_controlled(sub_target_unit))
+					{
+						if (sub_target_unit.order != -1)
+							pk::run_order(sub_target_unit);
+						else
+							pk::set_order(sub_target_unit, ë¶€ëŒ€ì„ë¬´_ëŒ€ê¸°, -1, -1);
+					}
+				}
 			}
 			else
 			{
 				pk::building@ building = pk::hex_object_to_building(sub_target);
 				if (!pk::is_trap_type(building))
 				{
-					n = attacker.attr.stat[ºÎ´ë´É·Â_°ø°İ] + pk::rand(attacker.attr.stat[ºÎ´ë´É·Â_°ø°İ] / 2);
+					n = attacker.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ê³µê²©] + pk::rand(attacker.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ê³µê²©] / 2);
 					n = n / 2;
 					info.hp_damage = pk::max(n, 1);
 				}
-				else if (building.facility == ½Ã¼³_Á¦¹æ and !building.completed)
+				else if (building.facility == ì‹œì„¤_ì œë°© and !building.completed)
 				{
 					info.hp_damage = 0;
 				}

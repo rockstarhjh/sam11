@@ -1,4 +1,4 @@
-namespace ºÎ´ë_º´·®_¼Òºñ
+ï»¿namespace ë¶€ëŒ€_ë³‘ëŸ‰_ì†Œë¹„
 {
 	class Main
 	{
@@ -12,42 +12,58 @@ namespace ºÎ´ë_º´·®_¼Òºñ
 			if (!pk::is_alive(unit))
 				return 0;
 
-			int n = 0;
-            float m = 1.f;
-			float burn = 0.f;
+			// ëŠ¥ë ¥ì—°êµ¬ë¥¼ ìœ„í•œ ë¬¸ì¥
+			pk::force@ force = pk::get_force(unit.get_force_id());
 
-			if (unit.type == ºÎ´ëÁ¾·ù_ÀüÅõ)
+			// ì¶”ê°€ë¬¸ì¥
+			pk::person@ leader = pk::get_person(unit.leader);
+			pk::building@ building = pk::get_building(leader.service);
+
+			int n = 0;
+			float m = 1.f;
+
+			if (unit.type == ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬)
 			{
 				int facility_id = func_49d8e0(unit);
-				if (facility_id == ½Ã¼³_¼ºÃ¤)
-					m = 1.f;
-				else if (facility_id == ½Ã¼³_¿ä»õ)
-					m = 4.f / 3; // 1.333...
-				else if (facility_id == ½Ã¼³_Áø)
-					m = 5.f / 3; // 1.666...
+				if (facility_id == ì‹œì„¤_ì„±ì±„)
+				{
+					if (unit.has_skill(íŠ¹ê¸°_ë‘”ì „)) // ë‘”ì „ íŠ¹ê¸° íš¨ê³¼
+						m = 0.f; // 100% ê°ì†Œ
+					// ë‘”ì „ ì—°êµ¬ì‹œ ê±°ì  ë¶€ëŒ€ë„ ì ìš©
+					else if (pk::is_valid_person_id(building.who_has_skill(íŠ¹ê¸°_ë‘”ì „)) and force.sp_ability_researched[8] and pk::get_ability(force.sp_ability[8]).skill == íŠ¹ê¸°_ë‘”ì „)
+						m = 0.f; // 100% ê°ì†Œ
+					else
+						m = 1.f; // 50% ê°ì†Œ
+				}
+				else if (facility_id == ì‹œì„¤_ìš”ìƒˆ)
+				{
+					if (unit.has_skill(íŠ¹ê¸°_ë‘”ì „)) // ë‘”ì „ íŠ¹ê¸° íš¨ê³¼
+						m = 2.f / 3; // 66% ê°ì†Œ
+					// ë‘”ì „ ì—°êµ¬ì‹œ ê±°ì  ë¶€ëŒ€ë„ ì ìš©
+					else if (pk::is_valid_person_id(building.who_has_skill(íŠ¹ê¸°_ë‘”ì „)) and force.sp_ability_researched[8] and pk::get_ability(force.sp_ability[8]).skill == íŠ¹ê¸°_ë‘”ì „)
+						m = 2.f / 3; // 66% ê°ì†Œ
+					else
+						m = 4.f / 3; // 33% ê°ì†Œ
+				}
+				else if (facility_id == ì‹œì„¤_ì§„)
+				{
+					if (unit.has_skill(íŠ¹ê¸°_ë‘”ì „)) // ë‘”ì „ íŠ¹ê¸° íš¨ê³¼
+						m = 4.f / 3; // 33% ê°ì†Œ
+					// ë‘”ì „ ì—°êµ¬ì‹œ ê±°ì  ë¶€ëŒ€ë„ ì ìš©
+					else if (pk::is_valid_person_id(building.who_has_skill(íŠ¹ê¸°_ë‘”ì „)) and force.sp_ability_researched[8] and pk::get_ability(force.sp_ability[8]).skill == íŠ¹ê¸°_ë‘”ì „)
+						m = 4.f / 3; // 33% ê°ì†Œ
+					else
+						m = 5.f / 3; // 16.66% ê°ì†Œ
+				}
 				else
 					m = 2.f;
 			}
-            
+
 			if (unit.is_on_fire())
-				burn = (6.f - unit.attr.stat[ºÎ´ë´É·Â_Á¤Ä¡] / 20.f) * unit.food / 100;
-            
-            
-            n = int(unit.troops * m / 20.f);   // ±âº» º´·® ¼Òºñ
-            
-            if (pk::get_season() == °èÀı_°Ü¿ï)      // °Ü¿ïÃ¶ º´·® ¼Òºñ 1.2¹è ('18.10.10)
-                n = int(n * 1.2f);
-            
-            if (pk::get_hex(unit.get_pos()).terrain == ÁöÇü_»ê) 
-                n = int(n * 1.2f);               // ºÎ´ë°¡ »ê¾Ç Çà±º ½Ã º´·® ¼Òºñ 1.2¹è ('18.10.18)
-            
-            if (unit.has_skill(Æ¯±â_µĞÀü))    //µĞÀü Æ¯±â : ºÎ´ë º´·® ¼Òºñ ¹İ°¨ ('18.10.5)
-                n = int(n / 2.f);
+				n = n + (6.f - unit.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ì •ì¹˜] / 20.f) * unit.food / 100;
 
+			n = n + unit.troops * m / 20;
 
-            n = int(n + burn);
-            
-            
 			if (n <= 0 and unit.troops > 0)
 				return 1;
 			return n;
@@ -62,16 +78,16 @@ namespace ºÎ´ë_º´·®_¼Òºñ
 			if (!pk::is_alive(force))
 				return -1;
 
-			int facility_id = ½Ã¼³_Áø;
+			int facility_id = ì‹œì„¤_ì§„;
 
-			if (pk::has_tech(force, ±â±³_¼ºº®°­È­))
-				facility_id = ½Ã¼³_¼ºÃ¤;
-			else if (pk::has_tech(force, ±â±³_½Ã¼³°­È­))
-				facility_id = ½Ã¼³_¿ä»õ;
+			if (pk::has_tech(force, ê¸°êµ_ì„±ë²½ê°•í™”))
+				facility_id = ì‹œì„¤_ì„±ì±„;
+			else if (pk::has_tech(force, ê¸°êµ_ì‹œì„¤ê°•í™”))
+				facility_id = ì‹œì„¤_ìš”ìƒˆ;
 
 			array<pk::point> arr = pk::range(unit.get_pos(), 1, pk::get_facility(facility_id).max_range);
 
-			for (int i = 0; i < int(arr.length); i++)
+			for (int i = 0; i < arr.length; i++)
 			{
 				pk::building@ building = pk::get_building(arr[i]);
 				if (pk::is_alive(building) and building.facility == facility_id and building.completed and building.get_force_id() == force_id)
@@ -83,4 +99,4 @@ namespace ºÎ´ë_º´·®_¼Òºñ
 	}
 
 	Main main;
-} 
+}

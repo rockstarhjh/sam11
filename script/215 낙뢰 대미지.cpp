@@ -1,4 +1,4 @@
-namespace ³«·Ú_´ë¹ÌÁö
+ï»¿namespace ë‚™ë¢°_ëŒ€ë¯¸ì§€
 {
 	class Main
 	{
@@ -9,19 +9,38 @@ namespace ³«·Ú_´ë¹ÌÁö
 
 		void callback(pk::damage_info& info, pk::unit@ attacker, pk::hex_object@ target, bool critical)
 		{
+			pk::force@ target_force = pk::get_force(target.get_force_id());
+			pk::unit@ target_unit = pk::hex_object_to_unit(target);
+
 			if (target.is_instance(pk::unit::type_id))
 			{
 				info.troops_damage = 1500 + pk::rand(1000);
-                
-                //º´·Â ÇÇÇØÀÇ 2% ¸¸Å­ ±â·Â°¨¼Ò ('18.10.11)
-                info.energy_damage = info.troops_damage / 50;
+				
+				if (target_unit.has_skill(íŠ¹ê¸°_ë„ì£¼) and target_unit.get_force_id() == attacker.get_force_id())
+				{
+					// ë„ì£¼ ì—°êµ¬ì‹œ 1% í”¼í•´ë§Œì„ ë°›ê³  í”¼ê²©ì‹œ ì¬í–‰ë™
+					if (target_force.sp_ability_researched[6] and pk::get_ability(target_force.sp_ability[6]).skill == íŠ¹ê¸°_ë„ì£¼)
+					{
+						info.troops_damage *= 0.01f;
+						pk::set_status(target_unit, target_unit, ë¶€ëŒ€ìƒíƒœ_í­ì£¼, 0, true);
+						pk::set_status(target_unit, target_unit, ë¶€ëŒ€ìƒíƒœ_í†µìƒ, 0, true);
+						pk::set_action_done(target_unit, false);
+						if (pk::is_alive(target_unit) and !pk::is_player_controlled(target_unit))
+						{
+							if (target_unit.order != -1)
+								pk::run_order(target_unit);
+							else
+								pk::set_order(target_unit, ë¶€ëŒ€ì„ë¬´_ëŒ€ê¸°, -1, -1);
+						}
+					}
+				}
 			}
 			else
 			{
 				info.hp_damage = 700 + pk::rand(300);
-				// È¸º¹ÁßÀÎ Á¦¹æÀÏ °æ¿ì ¹«È¿
+				// íšŒë³µì¤‘ì¸ ì œë°©ì¼ ê²½ìš° ë¬´íš¨
 				pk::building@ building = pk::hex_object_to_building(target);
-				if (building.facility == ½Ã¼³_Á¦¹æ and !building.completed)
+				if (building.facility == ì‹œì„¤_ì œë°© and !building.completed)
 					info.hp_damage = 0;
 			}
 

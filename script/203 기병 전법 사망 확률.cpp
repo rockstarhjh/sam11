@@ -23,6 +23,11 @@
 			if (critical)
 				n = n + 2;
 
+			// 질주 연구시 사망확률 2% 증가
+			pk::force@ force = pk::get_force(attacker.get_force_id());
+			if (pk::has_skill(attacker, 특기_질주) and force.sp_ability_researched[4] and pk::get_ability(force.sp_ability[4]).skill == 특기_질주)
+				n = n + 2;
+
 			if (target.character == 성격_소심)
 				n = n - 1;
 			else if (target.character == 성격_저돌)

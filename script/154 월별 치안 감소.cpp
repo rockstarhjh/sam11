@@ -13,7 +13,7 @@
 				return 0;
 			pk::force@ force = pk::get_force(city.get_force_id());
 
-			// 위압, 친이민족 특기 조건 추가
+			// 친이민족 특기 조건 추가
 			pk::building@ building = pk::city_to_building(city);
 
 			if (force is null)
@@ -22,7 +22,7 @@
 			if (pk::has_tech(force, 기교_법령정비) and pk::rand_bool(50))
 				return 0;
 
-			// 친이민족 특기가 지역에 있으면 감소하지 않음 (특기종합패치)
+			// 친이민족 특기가 지역에 있으면 감소하지 않음
 			if ((city.get_id() == 도시_양평 or city.get_id() == 도시_북평 or city.get_id() == 도시_계) and building.has_skill(특기_친오))
 				return 0;
 			if ((city.get_id() == 도시_무위 or city.get_id() == 도시_안정 or city.get_id() == 도시_천수) and building.has_skill(특기_친강))
@@ -38,10 +38,6 @@
 				n = n - taishu.stat[무장능력_매력];
 			n = pk::max(n, 1) / 10 + pk::rand(3);
 			n = pk::min(n, 5);
-
-			// 위압이 있으면 70 이하로 내려가지 않음 (특기종합패치)
-			if (building.has_skill(특기_위압))
-				return pk::max(-n, -pk::max(0, city.public_order - 70));
 
 			return -n;
 		}

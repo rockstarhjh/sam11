@@ -16,6 +16,10 @@
 			int dst_int = 0;
 
 			pk::unit@ dst = pk::get_unit(dst_pos);
+
+			// 능력연구 효과를 위한 문장
+			pk::force@ src_force = pk::get_force(src.get_force_id());
+
 			if (dst !is null)
 				dst_int = dst.attr.stat[부대능력_지력];
 
@@ -23,22 +27,29 @@
 			{
 				if (dst is null)	// 반계 효과 추가로 비 부대 계략 조건 분리
 				{
-				if (src.has_skill(특기_신산)) return 100;
-				if (src.has_skill(특기_심모)) return 100;
+					if (src.has_skill(특기_신산)) return 100;
+					if (src.has_skill(특기_심모)) return 100;
 				}
-				// 반계 특기무시 효과 (특기종합패치)
-				else if (!dst.has_skill(특기_반계) or (src.has_skill(특기_반계) and dst.has_skill(특기_반계)))
+				else
 				{
-				if (src.has_skill(특기_신산)) return 100;
-				if (src.has_skill(특기_심모)) return 100;
-				if (src.has_skill(특기_묘계) and !pk::is_neighbor_pos(src_pos, dst_pos)) return 100;	// 묘계 특기 변경 (특기종합패치)
-				if (src.has_skill(특기_비책) and pk::is_neighbor_pos(src_pos, dst_pos)) return 100;	// 비책 특기 변경 (특기종합패치)
+					// 능력연구 효과를 위한 문장
+					pk::force@ dst_force = pk::get_force(dst.get_force_id());
 
-				/* 비책 원래 효과 제거 (특기종합패치)
-				// 비책 특기 보유자 지력이 목표 부대 지력보다 낮음
-				int n = pk::get_best_member_stat(src, 특기_비책, 무장능력_지력);
-				if (n > -1 and n < dst_int) return 100;
-				*/
+					// 반계 특기무시 효과
+					if (!src.has_skill(특기_반계) or (src.has_skill(특기_반계) and dst.has_skill(특기_반계)))
+					{
+						// 심모 연구시 계략 크리티컬을 당하지 않음
+						if (dst.has_skill(특기_심모) and dst_force.ability_researched[34] and strategy_id != 계략_진정)	return 0;
+					}
+
+					// 반계 특기무시 효과 (특기종합패치)
+					if (!dst.has_skill(특기_반계) or (src.has_skill(특기_반계) and dst.has_skill(특기_반계)))
+					{
+						if (src.has_skill(특기_신산)) return 100;
+						if (src.has_skill(특기_심모)) return 100;
+						if (src.has_skill(특기_묘계) and !pk::is_neighbor_pos(src_pos, dst_pos)) return 100;	// 묘계 특기 효과
+						if (src.has_skill(특기_비책) and pk::is_neighbor_pos(src_pos, dst_pos)) return 100;	// 비책 특기 효과
+					}
 				}
 			}
 
@@ -55,6 +66,13 @@
 			case 계략_진정:
 				return pk::max(3, (src_int) / 10);
 			case 계략_복병:
+				// 반계 특기무시 효과 (특기종합패치)
+				if (!dst.has_skill(특기_반계) or (src.has_skill(특기_반계) and dst.has_skill(특기_반계)))
+				{
+					// 매복 연구시 복병 성공시 크리티컬
+					if (src.has_skill(특기_매복) and src_force.ability_researched[32])
+						return 100;
+				}
 				return pk::max(3, (src_int - dst_int / 2 + fukuhei_crit_weapon_factor(pk::get_weapon_id(src, src_pos))) / 10);
 			case 계략_동토:
 				return pk::max(3, (src_int - dst_int / 2 + data_849b34(pk::get_person(src.leader).giri)) / 10);

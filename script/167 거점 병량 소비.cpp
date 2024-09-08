@@ -12,6 +12,9 @@
 			if (!pk::is_alive(building) or !pk::is_valid_force_id(building.get_force_id()))
 				return 0;
 
+			// 능력연구를 위한 문장
+			pk::force@ force = pk::get_force(building.get_force_id());
+
 			float n = 0;
 
 			if (building.is_on_fire())
@@ -21,14 +24,14 @@
 				n = n + (6.f - (pol / 20.f)) * pk::get_food(building) / 100.f;
 			}
 
-			// 특기 둔전이 도시에서 병사 3만명의 병량 소모 절감 (특기종합패치)
-			int m = 0;
-			if (pk::is_valid_person_id(building.who_has_skill(특기_둔전)))
-				m = 30000;
-			n = n + pk::max(0, (pk::get_troops(building) - m)) / 40;
+			// 미도 연구시 병량소비량 50% 감소
+			if (building.has_skill(특기_미도) and force.sp_ability_researched[7] and pk::get_ability(force.sp_ability[7]).skill == 특기_미도)
+				n = n + pk::get_troops(building) / 80;
+			else
+				n = n + pk::get_troops(building) / 40;
 
 			if (n <= 0 and pk::get_troops(building) > 0)
-				return 0;
+				return 1;
 			return n;
 		}
 	}

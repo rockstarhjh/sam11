@@ -29,10 +29,9 @@
 			pk::list<pk::person@> prisoner_list;
 
 			// 공격 오브젝트의 포박 특기 보유 확인
-			if (pk::is_alive(attacker_unit) and in_border)
+			if (pk::is_alive(attacker_unit))
 			{
-				// 포박 무장의 통솔, 무력이 적보다 더 높으면 반드시 포박하도록 변경 (특기종합패치)
-				has_hobaku_skill = ((pk::get_best_member_stat(attacker_unit, 특기_포박, 무장능력_통솔) > target_unit.attr.stat[부대능력_통솔]) and (pk::get_best_member_stat(attacker_unit, 특기_포박, 무장능력_무력) > target_unit.attr.stat[부대능력_무력]));
+				has_hobaku_skill = in_border and attacker_unit.has_skill(특기_포박);
 				hobaku_chance = int(pk::core::skill_constant(attacker_unit, 특기_포박));
 			}
 			else if (pk::is_alive(attacker_building))
@@ -49,8 +48,7 @@
 				{
 					for (int i = 0; i < list.size; i++)
 					{
-						// 포박조건 추가 (특기종합패치)
-						if (pk::has_skill(list[i], 특기_포박) and (list[i].stat[무장능력_통솔] > target_unit.attr.stat[부대능력_통솔]) and (list[i].stat[무장능력_무력] > target_unit.attr.stat[부대능력_무력]))
+						if (pk::has_skill(list[i], 특기_포박))
 						{
 							has_hobaku_skill = true;
 							hobaku_chance = pk::max(hobaku_chance, int(pk::core::skill_constant(list[i].get_id(), 특기_포박)));
@@ -80,14 +78,21 @@
 			int bordered_unit_count = 0;
 			int terrain_id = -1;
 
+			// 능력연구를 위한 문장
+			pk::force@ target_force = pk::get_force(target.get_force_id());
+
 			if (pk::is_valid_pos(target_pos))
 			{
 				array<pk::point>@ range = pk::range(target_pos, 0, target_border_radius);
-				for (int i = 0; i < range.length; i++)
+				for (int i = 1; i < range.length; i++)
 				{
 					pk::unit@ unit = pk::get_unit(range[i]);
 					if (pk::is_alive(unit) and unit.get_force_id() == attacker_force_id)
 						bordered_unit_count++;
+
+					// 혈로 연구시 주변 칸 아군부대도 포로로 잡히지 않음 (위 조건식에서 i = 0 을 i = 1로 수정함)
+					if (pk::is_alive(unit) and unit.get_force_id() == target_force_id and unit.has_skill(특기_혈로) and target_force.sp_ability_researched[1] and pk::get_ability(target_force.sp_ability[1]).skill == 특기_혈로)
+						cant_capture = true;
 				}
 				terrain_id = pk::get_hex(target_pos).terrain;
 			}
@@ -115,18 +120,38 @@
 				}
 
 				int n = 0;
+
+				// 능력 기준값을 원본처럼 유지
 				n += pk::max(20, 120 - pk::max(person.stat[무장능력_무력], person.stat[무장능력_지력]));
 				n /= 3;
+
+				// 포위 계수 감소
 				if (bordered_unit_count > 0)
 					n *= 100 + 40 * (pk::has_skill(person, 특기_철벽) ? 0 : bordered_unit_count - 1);
 				if (terrain_id == 지형_습지 or terrain_id == 지형_독천)
 					n *= 1.5f;
 				n /= 100;
 
+				// 극병전법 보너스가 특급에서 감소
 				if (tactics_bonus)
 					n += 20;
+
 				n /= penalty ? 2 : 1;
 
+				// 포박 특기 확률 20% 증가 (관직 효과로 확률이 감소)
+				n += has_hobaku_skill ? 20 : 0;
+
+				// 포박 연구시 100% 포박 (관직 효과로 확률이 감소)
+				if (pk::is_alive(attacker_unit))
+				{
+					pk::force@ attacker_unit_force = pk::get_force(attacker_unit.get_force_id());
+					if (in_border and attacker_unit.has_skill(특기_포박) and attacker_unit_force.ability_researched[40])
+						n += 100;
+				}
+
+				n = pk::min(n, 100);
+
+				// 관직이 높을수록 포로 확률이 감소
 				if (person.mibun == 신분_군주 or person.rank <= 관직_사도)
 				n *= 0.40f;
 				else if (person.rank <= 관직_거기장군)
@@ -149,8 +174,6 @@
 				n *= 0.85f;
 				else if (person.rank <= 관직_무위교위)
 				n *= 0.90f;
-
-				n += has_hobaku_skill ? hobaku_chance : 0;
 
 				if (pk::rand_bool(n))
 					captured.push_back(person);

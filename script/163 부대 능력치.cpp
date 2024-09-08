@@ -21,6 +21,9 @@
 			if (!pk::is_valid_equipment_id(weapon_id) or !pk::is_valid_unit_type(type) or !pk::is_valid_unit_status(status))
 				return;
 
+			// 추가문장
+			pk::building@ building = pk::get_building(leader.service);
+
 			// 부장이 있다면
 			if (member[1] !is null or member[2] !is null)
 			{
@@ -119,6 +122,27 @@
 					atk = atk + 10;
 					def = def + 10;
 				}
+
+				// 답파 연구시 벼랑길, 샛길에서 능력치 상승
+				if (pk::has_skill(member, 특기_답파) and force.sp_ability_researched[1] and pk::get_ability(force.sp_ability[1]).skill == 특기_답파 and (pk::get_hex(leader.get_pos()).terrain == 지형_벼랑길 or pk::get_hex(leader.get_pos()).terrain == 지형_샛길))
+				{
+					atk = atk + 10;
+					def = def + 10;
+				}
+
+				// 난전 연구시 숲에서 능력치 상승
+				if (pk::has_skill(member, 특기_난전) and force.sp_ability_researched[4] and pk::get_ability(force.sp_ability[4]).skill == 특기_난전 and pk::get_hex(leader.get_pos()).terrain == 지형_숲)
+				{
+					atk = atk + 10;
+					def = def + 10;
+				}
+
+				// 등갑 연구시 독천, 여울에서 능력치 상승
+				if (pk::has_skill(member, 특기_등갑) and force.sp_ability_researched[6] and pk::get_ability(force.sp_ability[6]).skill == 특기_등갑 and (pk::get_hex(leader.get_pos()).terrain == 지형_독천 or pk::get_hex(leader.get_pos()).terrain == 지형_여울))
+				{
+					atk = atk + 10;
+					def = def + 10;
+				}
 			}
 
 			attr.stat[부대능력_공격] = pk::min(255.f, pk::max(1.f, (attr.stat[부대능력_무력] * atk * apt * 0.01f) * str * sts));
@@ -155,19 +179,72 @@
 				case 병기_목수:
 					if (pk::has_tech(force, 기교_차축강화))
 						mov = mov + 4;
+
+					// 발명 연구시 거점 부대 4 증가
+					if (force.ability_researched[44] and pk::is_valid_person_id(building.who_has_skill(특기_발명)))
+						mov = mov + 4;
 					break;
 				}
 
 				if (weapon_id <= 병기_노)
 				{
-					mov = mov + int(pk::core::skill_constant(member, 특기_강행)); // 5
+					if (pk::has_skill(member, 특기_강행))
+						mov = mov + int(pk::core::skill_constant(member, 특기_강행)); // 5
+
+					// 강행 특기가 소속 거점 부대의 이동을 2 증가시킴
+					else if (pk::is_valid_person_id(building.who_has_skill(특기_강행)))
+						mov = mov + 2;
+
+					// 강행 연구시 자신과 거점 아군 모두 이동력 3 추가
+					if (force.sp_ability_researched[6] and pk::get_ability(force.sp_ability[6]).skill == 특기_강행 and pk::is_valid_person_id(building.who_has_skill(특기_강행)))
+						mov = mov + 3;
+
+					// 능리 연구시 거점 부대 2 증가
+					if (force.ability_researched[46] and pk::is_valid_person_id(building.who_has_skill(특기_능리)))
+						mov = mov + 2;
 				}
 				else if (weapon_id == 병기_군마)
 				{
-					if (pk::has_skill(member, 특기_강행))
-						mov = mov + int(pk::core::skill_constant(member, 특기_강행)); // 5
-					else if (pk::has_skill(member, 특기_행군))
-						mov = mov + int(pk::core::skill_constant(member, 특기_행군)); // 3
+					// 강행 또는 행군 연구시 강행과 행군이 중첩 가능
+					if ((force.sp_ability_researched[6] and pk::get_ability(force.sp_ability[6]).skill == 특기_강행) or (force.sp_ability_researched[1] and pk::get_ability(force.sp_ability[1]).skill == 특기_행군))
+					{
+						if (pk::has_skill(member, 특기_강행))
+							mov = mov + int(pk::core::skill_constant(member, 특기_강행)); // 5
+
+						// 강행 특기가 소속 거점 부대의 이동을 2 증가시킴
+						else if (pk::is_valid_person_id(building.who_has_skill(특기_강행)))
+							mov = mov + 2;
+
+						// 강행 연구시 자신과 거점 아군 모두 이동력 3 추가
+						if (force.sp_ability_researched[6] and pk::get_ability(force.sp_ability[6]).skill == 특기_강행 and pk::is_valid_person_id(building.who_has_skill(특기_강행)))
+							mov = mov + 3;
+
+						if (pk::has_skill(member, 특기_행군))
+							mov = mov + int(pk::core::skill_constant(member, 특기_행군)); // 3
+
+						// 행군 연구시 이동력 3 추가
+						if (pk::has_skill(member, 특기_행군) and force.sp_ability_researched[1] and pk::get_ability(force.sp_ability[1]).skill == 특기_행군)
+							mov = mov + 3;
+					}
+					// 미연구시
+					else
+					{
+						if (pk::has_skill(member, 특기_강행))
+							mov = mov + int(pk::core::skill_constant(member, 특기_강행)); // 5
+						else
+						{
+							// 강행 특기가 소속 거점 부대의 이동을 2 증가시킴
+							if (pk::is_valid_person_id(building.who_has_skill(특기_강행)))
+								mov = mov + 2;
+
+							if (pk::has_skill(member, 특기_행군))
+								mov = mov + int(pk::core::skill_constant(member, 특기_행군)); // 3
+						}
+					}
+
+					// 번식 연구시 거점 기병 부대 2 증가
+					if (force.ability_researched[45] and pk::is_valid_person_id(building.who_has_skill(특기_번식)))
+						mov = mov + 2;
 				}
 			}
 			else
@@ -176,10 +253,20 @@
 					mov = mov + 3;
 				mov = mov + 5;
 				mov = mov + int(pk::core::skill_constant(member, 특기_운반)); // 5
+
+				// 운반 연구시 이동력 3 추가
+				if (pk::has_skill(member, 특기_운반) and force.ability_researched[42])
+					mov = mov + 3;
 			}
 
 			if (navy)
+			{
 				mov = mov + int(pk::core::skill_constant(member, 특기_조타)); // 4
+
+				// 조선 연구시 거점 부대 4 증가
+				if (force.ability_researched[43] and pk::is_valid_person_id(building.who_has_skill(특기_조선)))
+					mov = mov + 4;
+			}
 
 			attr.stat[부대능력_이동] = mov;
 		}
@@ -195,6 +282,8 @@
 			int leader_id = leader.get_id();
 			int deputy_id = deputy.get_id();
 
+			pk::force@ force = pk::get_force(leader.get_force_id());
+
 			// 의형제, 부부는 100% 지원
 			if (pk::is_gikyoudai(leader, deputy_id) or pk::is_fuufu(leader, deputy_id))
 				return deputy_stat;
@@ -203,8 +292,8 @@
 			if (pk::is_dislike(leader, deputy_id) or pk::is_dislike(deputy, leader_id))
 				return leader_stat;
 
-			// 부장이 보좌 특기가 있다면
-			if (pk::has_skill(deputy, 특기_보좌))
+			// 보좌연구시 부대에 보좌 특기가 있으면 부장 효율 증가
+			if ((pk::has_skill(leader, 특기_보좌) or pk::has_skill(deputy, 특기_보좌)) and force.ability_researched[30])
 			{
 				// 친애무장과 가족은 의형제처럼 100%
 				if (pk::is_like(leader, deputy_id) or pk::is_like(deputy, leader_id) or pk::is_ketsuen(leader, deputy_id))

@@ -13,6 +13,10 @@
 			if (city is null or !pk::is_valid_force_id(city.get_force_id()))
 				return 0;
 
+			// 능력연구를 위한 문장
+			pk::force@ force = pk::get_force(city.get_force_id());
+			pk::building@ building = pk::city_to_building(city);
+
 			// 기본 금 수입
 			int n = city.revenue;
 
@@ -55,11 +59,17 @@
 					if (facility_id == 시설_시장 or facility_id == 시설_시장2단 or facility_id == 시설_시장3단)
 					{
 						if (func_49ed70(building.get_pos(), 시설_조폐))
-							y = y * 1.5f;
+						{
+							// 징세 연구시 조폐가 100% 효과를 냄
+							if (building.has_skill(특기_징세) and force.sp_ability_researched[2] and pk::get_ability(force.sp_ability[2]).skill == 특기_징세)
+								y = y * 2;
+							else
+								y = y * 1.5f;
+						}
 
-						// 항관확장 기교가 시장 수입을 25% 증가 (특기종합패치)
+						// 항관확장 기교 시장 수입 20% 증가 (특기종합패치)
 						if (pk::has_tech(city, 기교_항관확장))
-							y = y * 1.25f;
+							y = y * 1.2f;
 					}
 					n = n + y;
 				}
@@ -82,7 +92,7 @@
 			}
 
 			// 도시 치안값을 백분율로 곱.
-			n = n * pk::max(city.public_order, 50) / 100;
+				n = n * pk::max(city.public_order, 50) / 100;
 
 			return n;
 		}

@@ -11,7 +11,9 @@
 		{
 			bool accurate = true;
 			pk::person@ target_kunshu = pk::get_person(info.target.kunshu);
-			pk::person@ target_gunshi = pk::get_person(info.target.gunshi);	// 논객 조건문 추가 (특기종합패치)
+
+			// 능력연구를 위한 문장
+			pk::force@ actor_force = pk::get_force(info.actor.get_force_id());
 
 			if (!pk::is_alive(target_kunshu)) return pk::int_bool(2, accurate);
 
@@ -43,16 +45,15 @@
 
 			if (n > g) return pk::int_bool(0, accurate);
 
-			// 실행 무장이 논객 특기를 보유하고 있음
-			if (pk::has_skill(info.actor, 특기_논객) and pk::is_alive(target_gunshi))
+			// 논객 연구시 반드시 설전
+			if (pk::has_skill(info.actor, 특기_논객) and actor_force.ability_researched[47])
+				return pk::int_bool(1, accurate);
+			// 논객 미연구시
+			else if (pk::has_skill(info.actor, 특기_논객))
 			{
 				// 특급 모드 플레이어일 경우에만 20%, 나머지 100% 설전
 				// if (difficulty != 난이도_특급 or !info.actor.is_player() or pk::randbool(20)) return pk::int_bool(1, accurate);
 				if (!info.actor.is_player() or pk::rand_bool(int(pk::core::skill_constant(info.actor.get_id(), 특기_논객, difficulty)))) return pk::int_bool(1, accurate);
-
-				// 설전 확률이 논객 무장의 능력 조건(지력, 정치 중 높은 값이 상대 군사의 지력, 정치보다 높음) 충족시 100%로 상승 (특기종합패치)
-				else if (pk::max(info.actor.stat[무장능력_지력], info.actor.stat[무장능력_정치]) > pk::max(target_gunshi.stat[무장능력_지력], target_gunshi.stat[무장능력_정치]))
-				return pk::int_bool(1, accurate);
 			}
 
 			g = (100 - info.target.relations[actor_force_id]) * 2;

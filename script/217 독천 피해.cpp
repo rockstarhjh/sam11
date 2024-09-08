@@ -10,7 +10,10 @@
 		int callback(pk::unit@ unit, const pk::point &in pos)
 		{
 			if (unit.has_skill(특기_해독))
+			{
+				pk::add_energy(unit, 10, true);
 				return 0;
+			}
 			return 200 + pk::rand(200);
 		}
 	}

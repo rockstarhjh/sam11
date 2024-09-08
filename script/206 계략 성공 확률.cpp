@@ -17,6 +17,9 @@
 			pk::unit@ dst = pk::get_unit(dst_pos);
 			int a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, n = 0;
 
+			// 능력연구 효과를 위한 문장
+			pk::force@ src_force = pk::get_force(src.get_force_id());
+
 			// 목표 부대 존재
 			if (dst !is null)
 			{
@@ -34,7 +37,7 @@
 				b = pk::get_building(dst_pos) !is null ? func_5af510(pk::get_building(dst_pos).facility) : data_849a60(pk::get_hex(dst_pos).terrain);
 				if (b == 100) return pk::int_bool(100, false);
 
-				/*c = 100;
+				c = 100;
 				c -= dst_int * 9 / 10;
 				c /= 2;
 				c *= src_int * src_int * 100;
@@ -45,10 +48,8 @@
 				c += b / 2;
 				c -= 5;
 				if (src_int < dst_int) c -= (dst_int - src_int) / 3;
-				if (c < 1) c = 1;*/
+				if (c < 1) c = 1;
 
-				c = new_strategy_chance(src_int, dst_int) / 2 + a + b / 2;		// 개선 함수 call
-				
 				d = a + src_int * 3 / 10 - dst_int / 5 + 55;
 				if (dst is null) d += 10;
 
@@ -88,11 +89,12 @@
 			case 계략_위보:
 				if (dst is null) return pk::int_bool(0, false);
 
+				if (dst.has_skill(특기_규율)) return pk::int_bool(0, true);
+				if (dst.has_skill(특기_명경)) return pk::int_bool(0, true);
+
 				// 반계 특기무시 효과
 				if (!src.has_skill(특기_반계) or (src.has_skill(특기_반계) and dst.has_skill(특기_반계)))
 				{
-					if (dst.has_skill(특기_규율)) return pk::int_bool(0, true);
-					if (dst.has_skill(특기_명경)) return pk::int_bool(0, true);
 					if (pk::get_best_member_stat(dst, 특기_간파, 무장능력_지력) > src_int) return pk::int_bool(0, true);
 					if (pk::get_best_member_stat(dst, 특기_신산, 무장능력_지력) > src_int) return pk::int_bool(0, true);
 				}
@@ -113,7 +115,6 @@
 
 				e = a + d + 70;
 
-				/*
 				f = 100;
 				f -= dst_int * 9 / 10;
 				f *= src_int * src_int * 100;
@@ -125,8 +126,6 @@
 				f += c;
 				if (src_int < dst_int) f -= (dst_int - src_int) / 3;
 				if (f < 1) f = 1;
-				*/
-				f = new_strategy_chance(src_int, dst_int) + a + b + c;		// 개선 함수 call
 
 				n = pk::max(1, pk::min(99, e, f));
 				break;
@@ -134,11 +133,12 @@
 			case 계략_교란:
 				if (dst is null) return pk::int_bool(0, false);
 
+				if (dst.has_skill(특기_침착)) return pk::int_bool(0, true);
+				if (dst.has_skill(특기_명경)) return pk::int_bool(0, true);
+
 				// 반계 특기무시 효과
 				if (!src.has_skill(특기_반계) or (src.has_skill(특기_반계) and dst.has_skill(특기_반계)))
 				{
-					if (dst.has_skill(특기_침착)) return pk::int_bool(0, true);
-					if (dst.has_skill(특기_명경)) return pk::int_bool(0, true);
 					if (pk::get_best_member_stat(dst, 특기_간파, 무장능력_지력) > src_int) return pk::int_bool(0, true);
 					if (pk::get_best_member_stat(dst, 특기_신산, 무장능력_지력) > src_int) return pk::int_bool(0, true);
 				}
@@ -159,7 +159,6 @@
 
 				e = a + d + 70;
 
-				/*
 				f = 100;
 				f -= dst_int * 9 / 10;
 				f *= src_int * src_int * 100;
@@ -171,8 +170,6 @@
 				f += c;
 				if (src_int < dst_int) f -= (dst_int - src_int) / 3;
 				if (f < 1) f = 1;
-				*/
-				f = new_strategy_chance(src_int, dst_int) + a + b + c;		// 개선 함수 call
 
 				n = pk::max(1, pk::min(99, e, f));
 				break;
@@ -191,10 +188,11 @@
 			case 계략_복병:
 				if (dst is null) return pk::int_bool(0, false);
 
+				if (dst.has_skill(특기_침착)) return pk::int_bool(0, true);	// 침착 특기 추가 (특기종합패치)
+
 				// 반계 특기무시 효과
 				if (!src.has_skill(특기_반계) or (src.has_skill(특기_반계) and dst.has_skill(특기_반계)))
 				{
-					if (dst.has_skill(특기_침착)) return pk::int_bool(0, true);	// 침착 특기 추가 (특기종합패치)
 					if (pk::get_best_member_stat(dst, 특기_간파, 무장능력_지력) > src_int) return pk::int_bool(0, true);
 					if (pk::get_best_member_stat(dst, 특기_신산, 무장능력_지력) > src_int) return pk::int_bool(0, true);
 				}
@@ -216,7 +214,6 @@
 
 				e = a + d + 80;
 
-				/*
 				f = 100;
 				f -= dst_int * 9 / 10;
 				f *= src_int * src_int * 100;
@@ -228,8 +225,6 @@
 				f += c;
 				if (src_int < dst_int) f -= (dst_int - src_int) / 3;
 				if (f < 1) f = 1;
-				*/
-				f = new_strategy_chance(src_int, dst_int) + a + b + c;		// 개선 함수 call
 
 				n = pk::max(1, pk::min(99, e, f));
 				break;
@@ -237,10 +232,11 @@
 			case 계략_동토:
 				if (dst is null) return pk::int_bool(0, false);
 
+				if (dst.has_skill(특기_규율)) return pk::int_bool(0, true); // 규율 특기 추가 (특기종합패치)
+
 				// 반계 특기무시 효과
 				if (!src.has_skill(특기_반계) or (src.has_skill(특기_반계) and dst.has_skill(특기_반계)))
 				{
-					if (dst.has_skill(특기_규율)) return pk::int_bool(0, true);	// 규율 특기 추가 (특기종합패치)
 					if (pk::get_best_member_stat(dst, 특기_간파, 무장능력_지력) > src_int) return pk::int_bool(0, true);
 					if (pk::get_best_member_stat(dst, 특기_신산, 무장능력_지력) > src_int) return pk::int_bool(0, true);
 				}
@@ -256,7 +252,6 @@
 				c = src_int * 3 / 10 - dst_int * 4 / 10 + b;
 				e = a + c + 70;
 
-				/*
 				f = 100;
 				f -= dst_int * 9 / 10;
 				f *= src_int * src_int * 100;
@@ -267,14 +262,20 @@
 				f += b;
 				if (src_int < dst_int) f -= (dst_int - src_int) / 3;
 				if (f < 1) f = 1;
-				*/
-				f = new_strategy_chance(src_int, dst_int) + a + b;			// 개선 함수 call
 
 				n = pk::max(1, pk::min(99, e, f));
 				break;
 
 			case 계략_요술:
 				if (dst is null) return pk::int_bool(0, false);
+
+				// 반계 특기무시 효과
+				if (!dst.has_skill(특기_반계) or (src.has_skill(특기_반계) and dst.has_skill(특기_반계)))
+				{
+					// 신산 연구시 요술 반드시 성공
+					if (src.has_skill(특기_신산) and src_force.sp_ability_researched[9] and pk::get_ability(src_force.sp_ability[9]).skill == 특기_신산)
+						return pk::int_bool(100, false);
+				}
 
 				b = data_849b14(pk::get_person(dst.leader).character);
 				c = 100 - dst_int * 9 / 10;
@@ -295,40 +296,50 @@
 				return pk::int_bool(n + pk::core::strategy_chance(src.leader), false);
 
 			case 계략_낙뢰:
+				// 신산 연구시 낙뢰 반드시 성공
+				if (dst is null and src.has_skill(특기_신산) and src_force.sp_ability_researched[9] and pk::get_ability(src_force.sp_ability[9]).skill == 특기_신산)
+					return pk::int_bool(100, false);
+
 				b = src_int * 0.6f;
 				c = a + b + 15;
 				n = pk::max(1, pk::min(99, c));
 				return pk::int_bool(n + pk::core::strategy_chance(src.leader), false);
 			}
 
-			if (dst !is null)	// 스크립트 구조 단순화 (특기종합패치)
+			if (dst !is null)
 			{
 				// 반계 특기무시 효과
 				if (!dst.has_skill(특기_반계) or (src.has_skill(특기_반계) and dst.has_skill(특기_반계)))
 				{
-				if (src.has_skill(특기_경국) and !pk::has_female_member(dst))
-					n *= 2;
-				else if (src.has_skill(특기_연환) and pk::is_neighbor_pos(src_pos, dst_pos)) // 연환 특기 추가 (특기종합패치)
-					n *= 2;
-				else if (src.has_skill(특기_귀모) and !pk::is_neighbor_pos(src_pos, dst_pos)) // 귀모 특기 추가 (특기종합패치)
-					n *= 2;
+					if (src.has_skill(특기_경국) and !pk::has_female_member(dst))
+						n *= 2;
+					else
+					{
+						if (src.has_skill(특기_연환) and pk::is_neighbor_pos(src_pos, dst_pos)) // 연환 특기 효과
+							n *= 2;
+	
+						if (src.has_skill(특기_귀모) and !pk::is_neighbor_pos(src_pos, dst_pos)) // 귀모 특기 효과
+							n *= 2;
+					}
+
+					// 신산 연구시 계략 반드시 성공
+					if (src.has_skill(특기_신산) and src_force.sp_ability_researched[9] and pk::get_ability(src_force.sp_ability[9]).skill == 특기_신산)
+						return pk::int_bool(100, false);
 				}
+
+				// 능력연구 효과를 위한 문장
+				pk::force@ dst_force = pk::get_force(dst.get_force_id());
 
 				// 반계 특기무시 효과
 				if (!src.has_skill(특기_반계) or (src.has_skill(특기_반계) and dst.has_skill(특기_반계)))
 				{
-				if (dst.has_skill(특기_간파)) // 간파 특기 추가 (특기종합패치)
-					n /= 2;
+					// 간파 연구시 계략 성공확률 절반
+					if (dst.has_skill(특기_간파) and dst_force.sp_ability_researched[3] and pk::get_ability(dst_force.sp_ability[3]).skill == 특기_간파 and (strategy_id != 계략_진정 and strategy_id != 계략_소화))
+						n /= 2;
 				}
 			}
 
 			return pk::int_bool(n + pk::core::strategy_chance(src.leader), false);
-		}
-		/** 추가 : 지력차를 절대적으로 적용한 계략 성공률 함수 */	
-		int new_strategy_chance(int src_int, int dst_int)
-		{
-			int n = int((src_int * src_int - dst_int * dst_int) / 20);
-			return n;
 		}
 
 		/** 시설에 따른 화계 상수 */

@@ -11,6 +11,7 @@
 		{
 			pk::unit@ target_unit = pk::hex_object_to_unit(target);
 			int target_strength = int(pk::core["무장.최대능력치"]) + 1;
+			pk::force@ force = pk::get_force(attacker.get_force_id());
 
 			if (target_unit !is null)
 				target_strength = pk::get_best_member_stat(target_unit, 무장능력_무력);
@@ -20,6 +21,12 @@
 			{
 				if (attacker.has_skill(특기_패왕)) return true;
 				if (pk::get_best_member_stat(attacker, 특기_용장, 무장능력_무력) > target_strength) return true;
+
+				// 맹장 연구시 무력이 높으면 칸이동 전법 크리티컬
+				if (tactics_id == 전법_돌출 or tactics_id == 전법_이단첨 or tactics_id == 전법_갈퀴 or tactics_id == 전법_돌격 or tactics_id == 전법_돌진 or tactics_id == 전법_함선격돌)
+				{
+					if (force.sp_ability_researched[5] and pk::get_ability(force.sp_ability[5]).skill == 특기_맹장 and pk::get_best_member_stat(attacker, 특기_맹장, 무장능력_무력) > target_strength) return true;
+				} 
 
 				switch(pk::get_weapon_id(attacker))
 				{
@@ -71,13 +78,43 @@
 			// 공격, 일제
 			else
 			{
-				if (attacker.has_skill(특기_구축)) return true;	// 구축 무력조건 없음 (특기종합패치)
+				if (attacker.has_skill(특기_구축)) return true;	// 구축 무력조건 없음
 				if (pk::get_best_member_stat(attacker, 특기_신장, 무장능력_무력) > target_strength) return true;
 
 				if (pk::get_weapon_id(attacker) == 병기_군마)
 				{
 					if (ranged and attacker.has_skill(특기_백마)) return true;
 				}
+			}
+
+			if (pk::get_weapon_id(attacker) == 병기_창)
+			{
+				if (attacker.has_skill(특기_창신) and force.sp_ability_researched[0] and pk::get_ability(force.sp_ability[0]).skill == 특기_창신)
+					return true;
+			}
+
+			if (pk::get_weapon_id(attacker) == 병기_극)
+			{
+				if (attacker.has_skill(특기_극신) and force.sp_ability_researched[0] and pk::get_ability(force.sp_ability[0]).skill == 특기_극신)
+					return true;
+			}
+
+			if (pk::get_weapon_id(attacker) == 병기_노)
+			{
+				if (attacker.has_skill(특기_궁신) and force.sp_ability_researched[0] and pk::get_ability(force.sp_ability[0]).skill == 특기_궁신)
+					return true;
+			}
+
+			if (pk::get_weapon_id(attacker) == 병기_군마)
+			{
+				if (attacker.has_skill(특기_기신) and force.sp_ability_researched[5] and pk::get_ability(force.sp_ability[5]).skill == 특기_기신)
+					return true;
+			}
+
+			if (pk::get_weapon_id(attacker) >= 병기_주가 and pk::get_weapon_id(attacker) <= 병기_투함)
+			{
+				if (attacker.has_skill(특기_수신) and force.sp_ability_researched[0] and pk::get_ability(force.sp_ability[0]).skill == 특기_수신)
+					return true;
 			}
 
 			// 공성 특기 보유, 건물 목표

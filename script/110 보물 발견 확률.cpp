@@ -9,7 +9,10 @@
 
 		int callback(pk::building@ building, pk::person@ actor, pk::item@ item)
 		{
-			return pk::max(((61 - item.value) / 20)*2, 1);
+			// 강탈이 5% 확률로 아이템 발견
+			if (pk::has_skill(actor, 특기_강탈))
+				return 5;
+			return pk::max((61 - item.value) / 20, 1);
 		}
 	}
 

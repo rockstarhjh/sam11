@@ -9,6 +9,15 @@
 
 		int callback(pk::unit@ attacker, const pk::point &in pos, pk::hex_object@ target, int tactics_id)
 		{
+
+			pk::force@ target_force = pk::get_force(target.get_force_id());
+			// 호위 연구시 칸이동 전법을 당하지 않음
+			if (tactics_id == 전법_돌출 or tactics_id == 전법_이단첨 or tactics_id == 전법_갈퀴 or tactics_id == 전법_돌격 or tactics_id == 전법_돌진 or tactics_id == 전법_함선격돌)
+			{
+				if (target.has_skill(특기_호위) and target_force.sp_ability_researched[1] and pk::get_ability(target_force.sp_ability[1]).skill == 특기_호위)
+				return 0;
+			} 
+
 			if (target.is_instance(pk::unit::type_id) and pk::hex_object_to_unit(target).status != 부대상태_통상)
 				return 100;
 
@@ -18,9 +27,17 @@
 			// if (pk::get_tekisei(attacker) == 적성_A) n = 5; else if (pk::get_tekisei(attacker) == 적성_S) n = 10;
 			n = int(pk::core["적성"][pk::get_tekisei(attacker)]["전법성공확률"]) + pk::core::tactics_chance(attacker.leader);
 
-			// 정묘 특기가 성공률 10%를 올려줌 (특기종합패치)
+			// 정묘 특기 전법 성공률 5% 증가
 			if (attacker.has_skill(특기_정묘))
-			n = n + 10;
+				n = n + 5;
+
+			// 행군 특기 기병 전법 성공률 5% 증가
+			if (attacker.has_skill(특기_행군) and tactics_id >= 전법_돌격 and tactics_id <= 전법_돌진)
+				n = n + 5;
+
+			// 사수 특기 노병 전법 성공률 5% 증가
+			if (attacker.has_skill(특기_사수) and tactics_id >= 전법_화시 and tactics_id <= 전법_난사)
+				n = n + 5;
 
 			switch (tactics_id)
 			{
