@@ -18,6 +18,8 @@ namespace 전투병_수송대_파병
 
     const int  출동부대수_한도 = 3;
 
+    const bool  위임군단_수송관할_지정여부  = true;    //플레이어 위임군단이 수송을 보낼 수 있는 군단 구분해줄 것인지 여부, false면 모든 군단 상대로 수송대 보냄
+
     const bool 대사표시_설정 = false;  
     
     //---------------------------------------------------------------------------------------
@@ -49,41 +51,29 @@ namespace 전투병_수송대_파병
                                         pk::district@ district = pk::get_district(base.get_district_id());	
 
 	if (!force.is_player() or ( force.is_player() and !pk::is_player_controlled(base) and pk::is_alive(district) and district.transport ) )
-
 		{
 
                     if (base.get_force_id() == force_id and needSupport(base))
                         func_redispatch(base);             //  여유 병력 있는 거점에서 위급한 교전 거점으로 지원군 파병
 
-
+               if (pk::get_elapsed_months() > 3)
+			   {				   
                     if (base.get_force_id() == force_id and needGP_PEXtroops(base))
-                        PushGP_PEXtroops(base);                //    초극도로 포화된 항구 관문에서 보급대 보내기  (병력)
-
-                    if (base.get_force_id() == force_id and needS_PEXtroops(base))
-                        PushS_PEXtroops(base);                //  초극도로 포화된 도시에서 보급대 보내기  (병력)
-
-                    if (base.get_force_id() == force_id and needPEXtroops(base))
-                        PushPEXtroops(base);                //  평시 포화된 도시에서 보급대 보내기  (병력)
-
-                    if (base.get_force_id() == force_id and needarmy(base))
-                        Pusharmy(base);                    //  병력이 극소수인 거점으로 병력 보내기
+                        PushGP_PEXtroops(base);                //    초극도로 포화된 거점에서 보급대 보내기  (병력)
 
                     if (base.get_force_id() == force_id and needPorttroops(base))
                         PushPorttroops(base);        //  평시 항구에서 도시로 보급대 보내기  (병력) 3천만 남기는 프로그램 대신
 
-                    if (base.get_force_id() == force_id and needReversetroops(base))
-                        PushReversetroops(base);       //  항구나 관문 병력이 도시보다 많을때 보급대 보내기  (병력) 
-
                     if (base.get_force_id() == force_id and need4thtroops(base))
-                        Push4thtroops(base);        //  항구나 관문 병력이 적을때 도시에서 보급대 보내기  (병력) 
-
-
-                    if (base.get_force_id() == force_id and needEMERtroops(base))
-                        PushEMERtroops(base);        //  전시 관문, 항구에서 세력멸망 직전 도시로 보급대 보내기  (병력)
-
+                        Push4thtroops(base);        //  병력이 적은 거점에 도시에서 보급대 보내기  (병력) 
+				}
+				
+                if (pk::get_city_list(force).count <= 1)
+			    {
                     if (base.get_force_id() == force_id and needEMER1troops(base))
                         PushEMER1troops(base);       //  전시 관문, 항구에서 세력멸망 직전 도시로 지원군 파병
-
+				}				
+				
 		}
 
 				}
@@ -168,16 +158,12 @@ namespace 전투병_수송대_파병
 
 					else if (base.get_force_id() == unit.get_force_id() and unit.type == 부대종류_전투)
 					{
-                                                if (distance <= 7)
+                        if (distance <= 7)
 						{
 							force_units7++;
 						}
 					}
 
-
-					else
-					{
-					}
 				}
 			}
 
@@ -186,16 +172,22 @@ namespace 전투병_수송대_파병
 			int base_troops = pk::get_troops(base);
             pk::force@ force = pk::get_force(base.get_force_id());																  
 
+            int enemy_weight = countNeighborEnemyBase(base);
 
-	// 병력 7천명 이상 있고, 적 침공에 견딜 수 있는 관문, 항구에서 파병 보내라
+	// 후방 병력 1만3천명 이상 있고, 적 침공에 견딜 수 있는 관문, 항구에서 파병 보내라
 
-			if ( 7000 <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and enemy_troops1 * 2.0f <= base_troops and pk::get_city_list(force).count > 1  )
+			if ( enemy_weight == 0 and 13000 <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_거점끝 and enemy_troops1 * 2.0f <= base_troops )
+				return true;
+			
+	// 전방 병력 1만8천명 이상 있고, 적 침공에 견딜 수 있는 관문, 항구에서 파병 보내라
+
+			if ( enemy_weight > 0 and 18000 <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_거점끝 and enemy_troops1 * 2.0f <= base_troops )
 				return true;
 
 
-	// 병력 8천명 이상 있고, 적 침공에 견딜 수 있는 도시에서 파병 보내라
+	// 후방 병력 2만명 이상 있고, 적 침공에 견딜 수 있는 도시에서 파병 보내라
 
-			if ( 8000 <= base_troops and 건물_도시시작 <= base.get_id() and base.get_id() < 건물_도시끝 and enemy_troops1 * 2.0f <= base_troops and pk::get_city_list(force).count > 0  )
+			if ( 20000 <= base_troops and 건물_도시시작 <= base.get_id() and base.get_id() < 건물_도시끝 and enemy_troops1 * 2.0f <= base_troops )
 				return true;
 
 
@@ -211,8 +203,8 @@ namespace 전투병_수송대_파병
         {
             int War_Zone = 0;
 
-                for (int i = 0; i < 건물_거점끝; i++)
-                {
+           for (int i = 0; i < 건물_거점끝; i++)
+           {
                     pk::building@ dst = pk::get_building(i);
                     int dst_id = dst.get_id();
                     int src_id = src.get_id();
@@ -232,24 +224,102 @@ namespace 전투병_수송대_파병
 					
                     // 거리 조건 만족 시 
              if ((0 <= base_dist and base_dist <= max_distance) or city_dist == 1)   
-                  {
+             {
 												          
                 if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst))
-                     {
+                {
 																											
-                      if (건물_도시시작 <= dst_id and dst_id < 건물_항구끝 and !no_enemy_around(dst) and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
-																						  
-                            {
-		                    War_Zone++;
-                            }
+                    if (건물_도시시작 <= dst_id and dst_id < 건물_거점끝 and enemy_around_distance(dst, 10) and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)																						  
+                    {
+						
+			// 근접한 적 부대 수
+			int enemy_units1 = 0;
+			int enemy_troops1 = 0;
 
-                       }
 
-                  }
+			int enemy_units2 = 0;
+			int enemy_troops2 = 0;
+
+			// 3칸 이내 적 부대 수
+			int enemy_units3 = 0;
+			// 3칸 이내 적 병력 수
+			int enemy_troops3 = 0;
+
+			int force_units1 = 0;
+			int force_troops1 = 0;
+
+			int force_units7 = 0;
+			int force_troops3 = 0;
+
+
+			auto range = pk::range(dst.get_pos(), 1, 10);
+			for (int i = 0; i < int(range.length); i++)
+			{
+				auto unit = pk::get_unit(range[i]);
+				if (pk::is_alive(unit))
+				{
+					int distance = pk::get_distance(dst.get_pos(), range[i]);
+					if (pk::is_enemy(dst, unit))
+					{
+						if (distance <= 5)
+						{
+							enemy_units1++;
+							enemy_troops1 += unit.troops;
+
+						}
+						if (distance <= 7)
+						{
+							enemy_units2++;
+							enemy_troops2 += unit.troops;
+						}
+						if (distance <= 10)
+						{
+							enemy_units3++;
+							enemy_troops3 += unit.troops;
+						}
+					}
+
+
+					else if (dst.get_force_id() == unit.get_force_id() and unit.type == 부대종류_전투)
+					{
+                        if (distance <= 3)
+						{
+							force_units1++;
+							force_troops1 += unit.troops;
+						}						
+                        if (distance <= 7)
+						{
+							force_units7++;
+							force_troops3 += unit.troops;
+						}
+					}
+
+				}
+			}
+
+			int base2_troops = pk::get_troops(dst);
+
+// 7900명 이하거나 1.0배의 적 공격 받는 도시에 병력 보낸다
+                    
+if (건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and ((base2_troops + force_troops1 <= 7900 and 0 < enemy_units1) or ((base2_troops + force_troops3 + troops_already(dst)) * 1.0f < enemy_troops3)))
+War_Zone++;
+
+
+
+// 7900명 이하거나 1.0배의 적 공격 받는 항관에 병력 보낸다
+                    
+if (건물_관문시작 <= dst_id and dst_id < 건물_거점끝 and ((base2_troops + force_troops1 <= 7900 and 0 < enemy_units1) or ((base2_troops + force_troops1 + troops_already(dst)) * 1.0f < enemy_troops1)))
+War_Zone++;						
+														       											
+                    }
+
+                }
+
+             }
 
 	
  
-               } 
+          } 
             
 
             return War_Zone;
@@ -270,12 +340,11 @@ namespace 전투병_수송대_파병
 			int target = getUrgentBase(base);
 			if (target == -1) return false;
 
-			if ( 450 > pk::get_building(target).hp) return false;
-
             // 대상거점이 관문/항구인 경우 노병 출진 우대
-            cmd_archer = (건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝);
+            cmd_archer = (건물_관문시작 <= pk::get_building(target).get_id() and pk::get_building(target).get_id() < 건물_항구끝);
 
             pk::list<pk::person@> actors;
+            actors.clear();				
             for (int i = 0; i < person_list.count; i++)
             {
             if (pk::is_unitize(person_list[i])) continue;
@@ -314,7 +383,10 @@ namespace 전투병_수송대_파병
             pk::person@ leader = pk::get_person(actors[0].get_id());
             
             // 원군 병력 산정 : 기준 병력 초과분, 지휘가능병력 확인
-            int reinforce_troops = pk::min(pk::get_command(leader), pk::max(int (pk::get_troops(base) * 0.35f) , pk::get_troops(base) - 10000));
+            int reinforce_troops = pk::min(pk::get_command(leader), pk::max(1000 , pk::get_troops(base) - 10000));
+			if (건물_관문시작 <= pk::get_building(target).get_id() and pk::get_building(target).get_id() < 건물_거점끝)
+	        reinforce_troops = pk::min(pk::min(pk::get_command(leader), 7000), pk::max(1000 , pk::get_troops(base) - 10000));			
+			
 			if (reinforce_troops < 4000 ) return false;
 
             // 최적 무기 선택
@@ -327,7 +399,9 @@ namespace 전투병_수송대_파병
             if (ground_weapon_id == 0) return false;    // 병기 부족
             
             // 수상 무기 선택
-            if (leader.tekisei[병종_수군] == 적성_C)
+            if (pk::get_weapon_amount(base, 병기_누선) < 10 and pk::get_weapon_amount(base, 병기_투함) < 10
+			and leader.mibun != 신분_군주 and leader.mibun != 신분_도독 and leader.mibun != 신분_태수 and leader.mibun == 신분_일반
+			and leader.tekisei[병종_수군] == 적성_C)
                 water_weapon_id = 병기_주가;
             else
             {
@@ -362,8 +436,10 @@ namespace 전투병_수송대_파병
                 cmd.order = 부대임무_공격;
                 cmd.target_pos = pk::get_building(target).get_pos();  // 목표는 전투중인 거점
 
+                string target_name = pk::u8decode(pk::get_name(pk::get_building(target)));
 	if (대사표시_설정) 
-                pk::say(pk::u8encode("아군 거점에 적이 많으니\n전투병으로 참전하겠다!"), leader);																											  
+                pk::say(pk::u8encode(pk::format("전투병 출격이다!\n\x1b[2x{}\x1b[0x(으)로 지원군이 가겠다!", target_name)), leader);	
+																											  
 
                 // 출진.
                 int unit_id = pk::command(cmd);
@@ -382,7 +458,7 @@ namespace 전투병_수송대_파병
         // 무기 선택 함수
         void get_ground_weapon(pk::building@ base, pk::person@ leader, int troops_max, int &out weapon_sel, int &out troops_sel)
         {
-            int troops_min = 2200;
+            int troops_min = 4000;
             int weapon_max = 0;
             int best_tekisei = 적성_C;
             
@@ -390,7 +466,7 @@ namespace 전투병_수송대_파병
             troops_sel = 0;
             
             // 노병 우대 출진
-            if (cmd_archer)
+            if (cmd_archer and troops_min <= pk::get_weapon_amount(base, 병기_노) and 적성_B <= leader.tekisei[pk::equipment_id_to_heishu(병종_노병)])
             {
                 int tekisei = leader.tekisei[pk::equipment_id_to_heishu(병종_노병)];
                 int weapon = pk::get_weapon_amount(base, 병기_노);
@@ -450,6 +526,7 @@ namespace 전투병_수송대_파병
 
             int src_id = src.get_id();
             pk::list<pk::building@> dst_list; 
+			dst_list.clear();			
             @src_k = @src;
 
 
@@ -470,13 +547,62 @@ namespace 전투병_수송대_파병
                     int dst_id = dst.get_id();
 			int base2_troops = pk::get_troops(dst);
 
-
             int max_distance = (dst_id >= 건물_도시끝)? 2 : 1;
 
+                    // 도시거리
+                    int city_dist = -1;
+                    if (dst_id < 건물_도시끝 and src_id < 건물_도시끝)
+                        city_dist = pk::get_city_distance(dst_id, src_id);
+                    
+                    // 거점거리
+                    int base_dist = pk::get_building_distance(dst_id, src_id, src.get_force_id());
 
+                    int enemy_weight_src = countNeighborEnemyBase(src);
 
+                        pk::city@ city_s = pk::get_city(pk::get_city_id(src.pos));	
+                    
+                    // 거리 조건 만족 시
+                    if ((0 <= base_dist and base_dist <= max_distance) or city_dist == 1)
+                    {
+						
+		   
+    // src. dst는 alive 상태에, 서로 다른 아이디에, 국적이 같아야
+    if (!pk::is_alive(src)) continue;
+    if (!pk::is_alive(dst)) continue;
+    if (src_id == dst_id) continue;	
+    if (src.get_force_id() != dst.get_force_id()) continue;
+	
+	if ( 450 >= dst.hp) continue;
+		   
+         // 유저 세력의 위임군단이면
+         //src의 위임설정 물자 수송지를 플레이어 조종 거점으로 설정하면, 아무 제약없이 플레이어 조종 거점까지도 교류 (플레이어 거점에서 플레이어 의지 상관없이 갑자기 수송대가 나갈수도 있음)   
+    if (위임군단_수송관할_지정여부)
+    {    		 
+         pk::district@ src_district = pk::get_district(src.get_district_id());
+         pk::district@ dst_district = pk::get_district(dst.get_district_id());
 
+         if (force.is_player() and !pk::is_player_controlled(src) and pk::is_alive(src_district) and pk::is_alive(dst_district) and src_district.transport) 
+         {	
+         pk::building@ target_building = pk::get_building(src_district.transport_building);
+		 
+         // src의 위임설정 물자 수송지가 같은 군단 소속이면 같은 군단 내에서만 이동 가능 , src와 dst의 군단이 다르거나 dst가 플레이어 조종 군단이면 안됨  
+         if (target_building.get_district_id() == src_district.get_id() and (src.get_district_id() != dst.get_district_id() or pk::is_player_controlled(dst))) continue;
 
+         // src의 위임설정 물자 수송지가 (플레이어가 조종못하는) 위임군단이고, src의 군단과 다른 곳이면, dst도 위임군단이어야 (dst가 플레이어 조종 군단이면 안된다) = 위임군단끼리만 주고 받는 설정. 플레이어 군단만 제외.
+         if (!pk::is_player_controlled(target_building) and target_building.get_district_id() != src_district.get_id() and pk::is_player_controlled(dst)) continue;
+         }
+     }
+	 						
+
+		/** 적의 거점으로부터 떨어진 후방거점들 */
+                pk::person@ Home_taishu = pk::get_person(pk::get_taishu_id(src));			
+
+if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) and pk::is_alive(Home_taishu) and 3 >= battle_unit_check(src, dst))
+       {
+
+		    int a = Home_taishu.character;
+			
+			
 			// 근접한 적 부대 수
 			int enemy_units1 = 0;
 			int enemy_troops1 = 0;
@@ -527,22 +653,18 @@ namespace 전투병_수송대_파병
 
 					else if (dst.get_force_id() == unit.get_force_id() and unit.type == 부대종류_전투)
 					{
-                                                if (distance <= 3)
+                        if (distance <= 3)
 						{
 							force_units1++;
 							force_troops1 += unit.troops;
 						}						
-                                                if (distance <= 7)
+                        if (distance <= 7)
 						{
 							force_units7++;
 							force_troops3 += unit.troops;
 						}
 					}
 
-
-					else
-					{
-					}
 				}
 			}
 
@@ -569,8 +691,6 @@ namespace 전투병_수송대_파병
 
 			int src_force_units7 = 0;
 			int src_force_troops3 = 0;
-
-                pk::person@ Home_taishu = pk::get_person(pk::get_taishu_id(src));	
 
 			auto range_src = pk::range(src.get_pos(), 1, 10);
 			for (int i = 0; i < int(range_src.length); i++)
@@ -609,41 +729,26 @@ namespace 전투병_수송대_파병
 						}						
 					}
 
-
-					else
-					{
-					}
 				}
 			}
+			
+	
+	
+  // 적부대가 근처에 있는 거점들만 추림
+  if (no_enemy_around(dst)) continue;
+
+  // 도시에서 도시로 지원군 보낼때 보내는 도시의 병력이 최소 35000 이상이어야 함 (5만 5천 이상이면 어떤 상황이어도 괜찮다.)
+  if (건물_도시시작 <= src_id and src_id < 건물_도시끝 and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 
+  and pk::get_troops(src) < 35000 + pk::min(int(src_enemy_troops2 * 0.3f) + int(enemy_weight_src * 0.3f), 20000)) continue;
+
+  // 도시에서 관문으로 보낼땐, 도시의 병력이 최소 2만 이상이어야 함 (4만 이상이면 어떤 상황이어도 괜찮다.)
+  if (건물_도시시작 <= src_id and src_id < 건물_도시끝 and 건물_관문시작 <= dst_id and dst_id < 건물_거점끝 
+  and pk::get_troops(src) < 20000 + ((base_dist - 1) * 7000)  + pk::min(int(src_enemy_troops2 * 0.3f) + int(enemy_weight_src * 0.3f), 13000)) continue;
 
 
-
-                    // 도시거리
-                    int city_dist = -1;
-                    if (dst_id < 건물_도시끝 and src_id < 건물_도시끝)
-                        city_dist = pk::get_city_distance(dst_id, src_id);
+// 7900명 이하거나 1.0배의 적 공격 받는 도시에 병력 보낸다
                     
-                    // 거점거리
-                    int base_dist = pk::get_building_distance(dst_id, src_id, src.get_force_id());
-
-                    int enemy_weight_src = countNeighborEnemyBase(src);
-
-                        pk::city@ city_s = pk::get_city(pk::get_city_id(src.pos));	
-                    
-                    // 거리 조건 만족 시
-                    if ((0 <= base_dist and base_dist <= max_distance) or city_dist == 1)
-                    {
-
-		/** 적의 거점으로부터 떨어진 후방거점들 */
-
-if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) and pk::is_alive(Home_taishu))
-       {
-
-		    int a = Home_taishu.character;
-
-// 후방 도시에서 7900명 이하거나 1.0배의 적 공격 받는 도시에 병력 보낸다
-                    
-if (건물_도시시작 <= src_id and src_id < 건물_도시끝 and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and ((base2_troops + force_troops1 <= 7900 and 0 < enemy_units1) or ((base2_troops + force_troops3 + troops_already(dst)) * 1.0f < enemy_troops3)) and enemy_weight_src == 0 and func_enemy_city_count(city_s, 1) == 0 and 3 >= battle_unit_check(src, dst) and 20000 + (4000 * ( 3 - a )) < pk::get_troops(src))
+if (건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and ((base2_troops + force_troops1 <= 7900 and 0 < enemy_units1) or ((base2_troops + force_troops3 + troops_already(dst)) * 1.0f < enemy_troops3)))
                        {
                            best_dst = dst_id;
                            dst_list.add(dst);  // 수송가능 거점리스트 추가
@@ -651,214 +756,15 @@ if (건물_도시시작 <= src_id and src_id < 건물_도시끝 and 건물_도�
 
 
 
-// 후방 항관에서 7900명 이하거나 1.0배의 적 공격 받는 도시에 병력 보낸다
+// 7900명 이하거나 1.0배의 적 공격 받는 항관에 병력 보낸다
                     
-if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and ((base2_troops + force_troops1 <= 7900 and 0 < enemy_units1) or ((base2_troops + force_troops3 + troops_already(dst)) * 1.0f < enemy_troops3)) and enemy_weight_src == 0 and func_enemy_city_count(city_s, 1) == 0 and 3 >= battle_unit_check(src, dst) )
+if (건물_관문시작 <= dst_id and dst_id < 건물_거점끝 and ((base2_troops + force_troops1 <= 7900 and 0 < enemy_units1) or ((base2_troops + force_troops1 + troops_already(dst)) * 1.0f < enemy_troops1)) )
                        {
                            best_dst = dst_id;
                            dst_list.add(dst);  // 수송가능 거점리스트 추가
                         }
 
 
-
-
-
-
-
-// 후방 도시에서 6900명 이하거나 1.0배의 적 공격 받는관문에 병력 보낸다
-
-  else if (건물_도시시작 <= src_id and src_id < 건물_도시끝 and 건물_관문시작 <= dst_id and dst_id < 건물_관문끝 and ((base2_troops + force_troops1 <= 6900 and 0 < enemy_units1) or ((base2_troops + force_troops1 + troops_already(dst)) * 1.0f < enemy_troops1)) and enemy_weight_src == 0 and func_enemy_city_count(city_s, 1) == 0 and 3 >= battle_unit_check(src, dst) )
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                       }
-
-
-
-// 후방 항관에서 6900명 이하거나 1.0배의 적 공격 받는관문에 병력 보낸다
-
-  else if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_관문시작 <= dst_id and dst_id < 건물_관문끝 and ((base2_troops + force_troops1 <= 6900 and 0 < enemy_units1) or ((base2_troops + force_troops3 + troops_already(dst)) * 1.0f < enemy_troops3)) and enemy_weight_src == 0 and func_enemy_city_count(city_s, 1) == 0 and 3 >= battle_unit_check(src, dst) )
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                       }
-
-
-
-
-
-
-
-// 후방 도시에서 6900명 이하거나 1.0배의 적 공격 받는 항구에 병력 보낸다
-
-   else if (건물_도시시작 <= src_id and src_id < 건물_도시끝 and 건물_항구시작 <= dst_id and dst_id < 건물_항구끝 and ((base2_troops + force_troops1 <= 6900 and 0 < enemy_units1) or ((base2_troops + force_troops1 + troops_already(dst)) * 1.0f < enemy_troops1)) and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id and enemy_weight_src == 0 and func_enemy_city_count(city_s, 1) == 0 and 3 >= battle_unit_check(src, dst) )
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                       }
-
-
-
-// 후방 항관에서 6900명 이하거나 1.0배의 적 공격 받는 항구에 병력 보낸다
-
-   else if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_항구시작 <= dst_id and dst_id < 건물_항구끝 and ((base2_troops + force_troops1 <= 6900 and 0 < enemy_units1) or ((base2_troops + force_troops3 + troops_already(dst)) * 1.0f < enemy_troops3)) and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id and enemy_weight_src == 0 and func_enemy_city_count(city_s, 1) == 0 and 3 >= battle_unit_check(src, dst) )
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                       }
-
-
-
-
-
-
-
-
-
-		/** 전방거점이지만 적의 거점과 직접적으로 닿아 있진 않은 거점들 */
-
-// 전방 도시 중 바로 적 거점과 인접하지 않은 도시에서 7900명 이하거나 1.0배의 적 공격 받는 도시에 병력 보낸다
-                    
-if (건물_도시시작 <= src_id and src_id < 건물_도시끝 and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and ((base2_troops + force_troops1 <= 7900 and 0 < enemy_units1) or ((base2_troops + force_troops3 + troops_already(dst)) * 1.0f < enemy_troops3)) and enemy_weight_src == 0 and func_enemy_city_count(city_s, 1) >= 1 and 3 >= battle_unit_check(src, dst) and 20000 + (4000 * ( 3 - a )) < pk::get_troops(src))
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                        }
-
-
-
-// 전방 항관 중 바로 적 거점과 인접하지 않은 항관에서에서 7900명 이하거나 1.0배의 적 공격 받는 도시에 병력 보낸다
-                    
-if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and ((base2_troops + force_troops1 <= 7900 and 0 < enemy_units1) or ((base2_troops + force_troops3 + troops_already(dst)) * 1.0f < enemy_troops3)) and enemy_weight_src == 0 and func_enemy_city_count(city_s, 1) >= 1 and 3 >= battle_unit_check(src, dst) )
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                        }
-
-
-
-
-
-
-																								 
-// 전방 도시 중 바로 적 거점과 인접하지 않은 도시에서 6900명 이하거나 1.0배의 적 공격 받는관문에 병력 보낸다
-
-  else if (건물_도시시작 <= src_id and src_id < 건물_도시끝 and 건물_관문시작 <= dst_id and dst_id < 건물_관문끝 and ((base2_troops + force_troops1 <= 6900 and 0 < enemy_units1) or ((base2_troops + force_troops1 + troops_already(dst)) * 1.0f < enemy_troops1 )) and enemy_weight_src == 0 and func_enemy_city_count(city_s, 1) >= 1 and 3 >= battle_unit_check(src, dst) )
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                       }
-
-
-
-// 전방 항관 중 바로 적 거점과 인접하지 않은 항관에서 6900명 이하거나 1.0배의 적 공격 받는관문에 병력 보낸다
-
-  else if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_관문시작 <= dst_id and dst_id < 건물_관문끝 and ((base2_troops + force_troops1 <= 6900 and 0 < enemy_units1) or ((base2_troops + force_troops3 + troops_already(dst)) * 1.0f < enemy_troops3 )) and enemy_weight_src == 0 and func_enemy_city_count(city_s, 1) >= 1 and 3 >= battle_unit_check(src, dst) )
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                       }
-
-
-
-
-
-
-																								  
-// 전방 도시 중 바로 적 거점과 인접하지 않은 도시에서 6900명 이하거나 1.0배의 적 공격 받는 항구에 병력 보낸다
-
-   else if (건물_도시시작 <= src_id and src_id < 건물_도시끝 and 건물_항구시작 <= dst_id and dst_id < 건물_항구끝 and ((base2_troops + force_troops1 <= 6900 and 0 < enemy_units1) or ((base2_troops + force_troops1 + troops_already(dst)) * 1.0f < enemy_troops1)) and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id and enemy_weight_src == 0 and func_enemy_city_count(city_s, 1) >= 1 and 3 >= battle_unit_check(src, dst) )
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                       }
-
-
-
-// 전방 항관 중 바로 적 거점과 인접하지 않은 항관에서 6900명 이하거나 1.0배의 적 공격 받는 항구에 병력 보낸다
-
-   else if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_항구시작 <= dst_id and dst_id < 건물_항구끝 and ((base2_troops + force_troops1 <= 6900 and 0 < enemy_units1) or ((base2_troops + force_troops3 + troops_already(dst)) * 1.0f < enemy_troops3)) and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id and enemy_weight_src == 0 and func_enemy_city_count(city_s, 1) >= 1 and 3 >= battle_unit_check(src, dst) )
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                       }
-
-
-
-
-
-
-
-
-
-
-
-
-		/** 적의 거점과 맞닿아있는 전방 거점들 */
-
-// 적 거점과 맞닿은 전방 도시에서 7900명 이하거나 1.0배의 적 공격 받는 도시에 병력 보낸다
-                    
-if (건물_도시시작 <= src_id and src_id < 건물_도시끝 and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and ((base2_troops + force_troops1 <= 7900 and 0 < enemy_units1) or ((base2_troops + force_troops3 + troops_already(dst)) * 1.0f < enemy_troops3)) and enemy_weight_src > 0  and func_enemy_city_count(city_s, 1) >= 1 and 1 >= battle_unit_check(src, dst) and (EnemyBase_troops(src) * 0.5f) + ( ( 3 - a ) * 7000 ) < pk::get_troops(src) and src_enemy_troops3 * ( 4 - a ) < pk::get_troops(src) )
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                        }
-
-
-
-// 적 거점과 맞닿은 전방 항구 관문에서 7900명 이하거나 1.0배의 적 공격 받는 도시에 병력 보낸다
-                    
-if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and ((base2_troops + force_troops1 <= 7900 and 0 < enemy_units1) or ((base2_troops + force_troops3 + troops_already(dst)) * 1.0f < enemy_troops3)) and enemy_weight_src > 0 and func_enemy_city_count(city_s, 1) >= 1 and 1 >= battle_unit_check(src, dst) and src_enemy_troops1 * ( 4 - a ) < pk::get_troops(src) )
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                        }
-
-
-
-
-
-
-// 적 거점과 맞닿은 전방 도시에서 6900명 이하거나 1.0배의 적 공격 받는관문에 병력 보낸다
-
-  else if (건물_도시시작 <= src_id and src_id < 건물_도시끝 and 건물_관문시작 <= dst_id and dst_id < 건물_관문끝 and ((base2_troops + force_troops1 <= 6900 and 0 < enemy_units1) or ((base2_troops + force_troops1 + troops_already(dst)) * 1.0f < enemy_troops1)) and enemy_weight_src > 0 and func_enemy_city_count(city_s, 1) >= 1 and 1 >= battle_unit_check(src, dst) and ((base_dist == 1 and src_enemy_troops1 * ( 4 - a ) < pk::get_troops(src)) or (base_dist == 2 and src_enemy_troops2 + (4000 * ( 4 - a )) < pk::get_troops(src))) and !enemy_approach_direct(src) )
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                       }
-
-
-
-// 적 거점과 맞닿은 전방 항관에서 6900명 이하거나 1.0배의 적 공격 받는관문에 병력 보낸다
-
-  else if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_관문시작 <= dst_id and dst_id < 건물_관문끝 and ((base2_troops + force_troops1 <= 6900 and 0 < enemy_units1) or ((base2_troops + force_troops3 + troops_already(dst)) * 1.0f < enemy_troops3)) and enemy_weight_src > 0 and func_enemy_city_count(city_s, 1) >= 1 and 1 >= battle_unit_check(src, dst) and ((base_dist == 1 and src_enemy_troops1 * ( 4 - a ) < pk::get_troops(src)) or (base_dist == 2 and src_enemy_troops3 + (5000 * ( 4 - a )) < pk::get_troops(src))) )
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                       }
-
-
-
-
-
-
-// 적 거점과 맞닿은 전방 도시에서 6900명 이하거나 1.0배의 적 공격 받는 항구에 병력 보낸다
-
-   else if (건물_도시시작 <= src_id and src_id < 건물_도시끝 and 건물_항구시작 <= dst_id and dst_id < 건물_항구끝 and ((base2_troops + force_troops1 <= 6900 and 0 < enemy_units1) or ((base2_troops + force_troops1 + troops_already(dst)) * 1.0f < enemy_troops1)) and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id and enemy_weight_src > 0 and func_enemy_city_count(city_s, 1) >= 1 and 1 >= battle_unit_check(src, dst) and ((base_dist == 1 and src_enemy_troops1 * ( 4 - a ) < pk::get_troops(src)) or (base_dist == 2 and src_enemy_troops3 + (5000 * ( 4 - a )) < pk::get_troops(src))) and !enemy_approach_direct(src))
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                       }
-
-
-
-// 적 거점과 맞닿은 전방 항관에서 6900명 이하거나 1.0배의 적 공격 받는 항구에 병력 보낸다
-
-   else if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_항구시작 <= dst_id and dst_id < 건물_항구끝 and ((base2_troops + force_troops1 <= 6900 and 0 < enemy_units1) or ((base2_troops + force_troops3 + troops_already(dst)) * 1.0f < enemy_troops3)) and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id and enemy_weight_src > 0 and func_enemy_city_count(city_s, 1) >= 1 and 1 >= battle_unit_check(src, dst) and ((base_dist == 1 and src_enemy_troops1 * ( 4 - a ) < pk::get_troops(src)) or (base_dist == 2 and src_enemy_troops3 + (5000 * ( 4 - a )) < pk::get_troops(src))) )
-                       {
-                           best_dst = dst_id;
-                           dst_list.add(dst);  // 수송가능 거점리스트 추가
-                       }
 
        }
 
@@ -876,8 +782,6 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
                 dst_list.sort(function(a, b)
                 {
 					
-                   return (main.gap_troops(a) - main.troops_already(a) > main.gap_troops(b) - main.troops_already(b));								
-					
                     int build_dist_a = pk::get_building_distance(a.get_id(), main.src_k.get_id(), a.get_force_id());
                     int build_dist_b = pk::get_building_distance(b.get_id(), main.src_k.get_id(), b.get_force_id());
 
@@ -885,9 +789,9 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
                     int pos_dist_b = pk::get_distance(b.pos, main.src_k.pos);
 
                     if (build_dist_a != build_dist_b) 
-                        return (build_dist_a < build_dist_b);
+                        return (main.gap_troops(a) - main.troops_already(a) - (10000 * build_dist_a) > main.gap_troops(b) - main.troops_already(b) - (10000 * build_dist_b));
                     
-                    return (pos_dist_a < pos_dist_b);
+                    return (main.gap_troops(a) - main.troops_already(a) - (1000 * pos_dist_a) > main.gap_troops(b) - main.troops_already(b) - (1000 * pos_dist_b));
                 });
                 best_dst = dst_list[0].get_id();
             }
@@ -907,7 +811,7 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
 
         //----------------------------------------------------------------------------------
-        //   초극도로 포화된 항구 관문에서 보급대 보내기  (병력)
+        //   초극도로 포화된 거점에서 보급대 보내기  (병력)
         //----------------------------------------------------------------------------------
 
 
@@ -925,16 +829,27 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
                         int enemy_weight = countNeighborEnemyBase(base);
 
+			pk::city@ city_a = pk::get_city(pk::get_city_id(base.pos));
 
 
 
+	// 주변에 적이 없고 거점의 병력 최대 제한치까지 여유 공간이 적거점인근이면 2만 그외엔 3만6천 이하로 줄어들기 시작하면, 관문, 항구에서 보급 보내라
 
-	// 거점의 병력 최대 제한치까지 여유 공간이 3만5천 이하로 줄어들기 시작하면, 주변에 적이 있던 말던  관문, 항구에서 보급 보내라
-
-			if ( pk::get_max_troops(base) - 35000 <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and no_enemy_around(base))
+			if (건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝
+				and ((enemy_weight == 0 and pk::get_max_troops(base) - 36000 <= base_troops) or (enemy_weight > 0 and pk::get_max_troops(base) - 20000 <= base_troops)))
 				return true;
 
 
+	// 거점의 병력 최대 제한치까지 여유 공간이 3만6천 이하로 줄어들기 시작한 적 침공에서 안전하고, 주변에 적의 거점이 없는 도시에서 보급 보내라
+
+			if (pk::get_max_troops(base) - 36000 <= base_troops and 건물_도시시작 <= base.get_id() and base.get_id() < 건물_도시끝 and enemy_weight == 0 and func_enemy_city_count(city_a, 1) == 0 )
+				return true;
+
+
+	// 거점의 병력 최대 제한치까지 여유 공간이 1만5천 이하로 줄어들기 시작한 적 침공에서 안전한 전방의 도시에서 보급 보내라
+
+			if (pk::get_max_troops(base) - 15000 <= base_troops and 건물_도시시작 <= base.get_id() and base.get_id() < 건물_도시끝 and (enemy_weight > 0 or func_enemy_city_count(city_a, 1) > 0) )
+				return true;
 
             
 			return false;
@@ -960,19 +875,16 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 			int target = getBackupGP_PEXBase(base);
 			if (target == -1) return false;
 
-			if (!no_enemy_around(pk::get_building(target))) return false;
-			if (enemy_approach(pk::get_building(target))) return false;
-			if (close_combat(pk::get_building(target))) return false;
-
             pk::building@ target_base = pk::get_building(target);
 
-            if (건물_관문시작 <= target and target < 건물_항구끝)
-            reinforce_troops = pk::min(4500, pk::max(3000, int (pk::get_troops(base) * 0.35f) ));
+            if (건물_관문시작 <= target and target < 건물_항구끝 and pk::get_max_troops(base) - pk::get_troops(base) + 5000 <= pk::get_max_troops(target_base) - pk::get_troops(target_base))
+            reinforce_troops = pk::min(4500, pk::max(3000, int (((pk::get_max_troops(target_base) - pk::get_troops(target_base)) - (pk::get_max_troops(base) - pk::get_troops(base))) * 0.5f) ));
 
-            if (건물_도시시작 <= target and target < 건물_도시끝 and 45000 <= pk::get_max_troops(target_base) - pk::get_troops(target_base))
-            reinforce_troops = pk::min(15000, pk::min(pk::get_troops(base) - 10000, pk::get_max_troops(target_base) - pk::get_troops(target_base) - 31000 ));		
+            if (건물_도시시작 <= target and target < 건물_도시끝 and pk::get_max_troops(base) - pk::get_troops(base) + 10000 <= pk::get_max_troops(target_base) - pk::get_troops(target_base))
+            reinforce_troops = pk::min(15000, pk::min(pk::get_troops(base) - 10000, int (((pk::get_max_troops(target_base) - pk::get_troops(target_base)) - (pk::get_max_troops(base) - pk::get_troops(base))) * 0.5f) ));		
 
             pk::list<pk::person@> actors;
+            actors.clear();				
             for (int i = 0; i < person_list.count; i++)
             {
             if (pk::is_unitize(person_list[i])) continue;
@@ -1013,9 +925,9 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
                 retreat_skill = leader.skill;   // 특기 백업
                 leader.skill = 특기_도주;         // 도주 특기 부여
             }
-     
 
-            int unit_food = int(pk::min( 0.3f * pk::get_food(base), 2.0f * reinforce_troops));
+		    float food_ratio = pk::min(2.0f, pk::get_food(base) / float(pk::get_troops(base) + 1));     
+            int unit_food = int(pk::min( 0.3f * pk::get_food(base), food_ratio * reinforce_troops));
             if (unit_food < int(0.5f * reinforce_troops)) return false;   // 병량 부족 
        
 
@@ -1054,9 +966,10 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 			if (unit_id != -1)
 				pk::get_unit(unit_id).action_done = (!거점수송_원거리이동);  // 기본값 true 에서 false 로 변경하여 2회 이동하도록 함 ('19.3.5)
             
-	if (대사표시_설정)             
-            pk::say(pk::u8encode("항관이 과포화 상태다!\n어디 빈 거점 없나?"), leader);
-            
+                string target_name = pk::u8decode(pk::get_name(pk::get_building(target)));	
+	if (대사표시_설정) 																									  
+                pk::say(pk::u8encode(pk::format("이곳은 병력 포화상태다!\n\x1b[2x{}\x1b[0x(으)로 병력을 수송한다.", target_name)), leader);	
+           
             // 임시 도주 효과 ('19.3.6)
             if (거점수송_일시도주설정)
             {
@@ -1081,6 +994,7 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 			int best_distance = 0;
             int src_id = src.get_id();
             pk::list<pk::building@> dst_list; 
+			dst_list.clear();			
             @src_GP_PEX = @src;
 
 
@@ -1119,9 +1033,44 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
                         int enemy_weight = countNeighborEnemyBase(dst);
 						int enemy_weight_src = countNeighborEnemyBase(src);
 
-	// 병력 최대치까지 아직 4만 여유 있는 , 적 침공에서 안전한 도시로 보급 보내라
+
+    // src. dst는 alive 상태에, 서로 다른 아이디에, 국적이 같아야
+    if (!pk::is_alive(src)) continue;
+    if (!pk::is_alive(dst)) continue;
+    if (src_id == dst_id) continue;	
+    if (src.get_force_id() != dst.get_force_id()) continue;
+	
+		   
+         // 유저 세력의 위임군단이면
+         //src의 위임설정 물자 수송지를 플레이어 조종 거점으로 설정하면, 아무 제약없이 플레이어 조종 거점까지도 교류 (플레이어 거점에서 플레이어 의지 상관없이 갑자기 수송대가 나갈수도 있음)   
+    if (위임군단_수송관할_지정여부)
+    {    		 
+         pk::district@ src_district = pk::get_district(src.get_district_id());
+         pk::district@ dst_district = pk::get_district(dst.get_district_id());
+
+         if (force.is_player() and !pk::is_player_controlled(src) and pk::is_alive(src_district) and pk::is_alive(dst_district) and src_district.transport) 
+         {	
+         pk::building@ target_building = pk::get_building(src_district.transport_building);
+		 
+         // src의 위임설정 물자 수송지가 같은 군단 소속이면 같은 군단 내에서만 이동 가능 , src와 dst의 군단이 다르거나 dst가 플레이어 조종 군단이면 안됨  
+         if (target_building.get_district_id() == src_district.get_id() and (src.get_district_id() != dst.get_district_id() or pk::is_player_controlled(dst))) continue;
+
+         // src의 위임설정 물자 수송지가 (플레이어가 조종못하는) 위임군단이고, src의 군단과 다른 곳이면, dst도 위임군단이어야 (dst가 플레이어 조종 군단이면 안된다) = 위임군단끼리만 주고 받는 설정. 플레이어 군단만 제외.
+         if (!pk::is_player_controlled(target_building) and target_building.get_district_id() != src_district.get_id() and pk::is_player_controlled(dst)) continue;
+         }
+     }
+
+
+		if (!no_enemy_around(dst)) continue;						
+						
+
+
+   if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) and func_already (dst) <= 3)
+   {
+
+	// 공급지 여유 공간보다 병력 최대치까지 1만 이상 더 여유 있는 , 적 침공에서 안전한 도시로 보급 보내라
                     
-        if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst)  and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and ( base2_troops <= pk::get_max_troops(dst) - 40000 ) and  no_enemy_around(dst) and enemy_weight == 0 and func_already (dst) <= 3 )
+        if (건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and pk::get_max_troops(src) - pk::get_troops(src) + 10000 <= pk::get_max_troops(dst) - pk::get_troops(dst) and (enemy_weight == 0 or (0 < enemy_weight and enemy_weight_src == 0)))
                     {
                         best_dst = dst_id;
                         dst_list.add(dst);  // 수송가능 거점리스트 추가
@@ -1129,33 +1078,16 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
 
 
-           // 병력 최대치까지 아직 4만 여유 있는 , 적 침공에서 안전한 관문, 항구로 보급 보내라
+           // 공급지 여유 공간보다 병력 최대치까지 아직 5천 이상 더 여유 있는 , 적 침공에서 안전한 관문, 항구로 보급 보내라
 
-       else if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst)  and 건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and  base2_troops <= pk::get_max_troops(dst) - 40000 and no_enemy_around(dst) and enemy_weight  == 0 and func_already (dst) <= 3 and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
+       else if (건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and pk::get_max_troops(src) - pk::get_troops(src) + 5000 <= pk::get_max_troops(dst) - pk::get_troops(dst) and (enemy_weight == 0 or (0 < enemy_weight and enemy_weight_src == 0)) and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
                     {
                         best_dst = dst_id;
                         dst_list.add(dst);  // 수송가능 거점리스트 추가
                     }
 
 
-           // 병력 최대치까지 아직 4만 여유 있는 , 접경지대의 도시로 보급 보내라
-
-       else if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst)  and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and base2_troops <= pk::get_max_troops(dst) - 40000 and no_enemy_around(dst) and  1 <= enemy_weight and enemy_weight_src == 0 and func_already (dst) <= 3 )
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
-
-
-
-           // 병력 최대치까지 아직 4만 여유 있는 , 접경지대의 관문, 항구로 보급 보내라
-
-       else if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst)  and 건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and base2_troops <= pk::get_max_troops(dst) - 40000 and no_enemy_around(dst) and 1 <= enemy_weight and enemy_weight_src == 0 and func_already (dst) <= 3 and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
-
+   }
 
 
                 }
@@ -1178,9 +1110,10 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
                     int pos_dist_a = pk::get_distance(a.pos, main.src_GP_PEX.pos);
                     int pos_dist_b = pk::get_distance(b.pos, main.src_GP_PEX.pos);
 
-                    if (build_dist_a != build_dist_b) 
+                    if (pk::get_max_troops(a) - pk::get_troops(a) == pk::get_max_troops(b) - pk::get_troops(b) and build_dist_a != build_dist_b) 
                         return (build_dist_a < build_dist_b);
-                    
+
+                    if (pk::get_max_troops(a) - pk::get_troops(a) == pk::get_max_troops(b) - pk::get_troops(b) and build_dist_a == build_dist_b)                     
                     return (pos_dist_a < pos_dist_b);
                 });
                 best_dst = dst_list[0].get_id();
@@ -1191,901 +1124,6 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 			return best_dst;
 		}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //----------------------------------------------------------------------------------
-        //   초극도로 포화된 도시에서 보급대 보내기  (병력)
-        //----------------------------------------------------------------------------------
-
-
-
-
-		/** 병력 있는 거점 찾기 */
-
-		bool needS_PEXtroops (pk::building@ base)
-		{
-			if (!no_enemy_around(base)) return false;
-
-			int base_troops = pk::get_troops(base);
-
-
-                        int enemy_weight = countNeighborEnemyBase(base);
-
-
-
-
-
-	// 거점의 병력 최대 제한치까지 여유 공간이 1만5천 이하로 줄어들기 시작한 적 침공에서 안전하고, 주변에 적의 거점이 없는  관문, 항구에서 보급 보내라
-
-			if ( pk::get_max_troops(base) - 15000 <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and no_enemy_around(base) and enemy_weight  == 0 )
-				return true;
-
-
-	// 거점의 병력 최대 제한치까지 여유 공간이 1만5천 이하로 줄어들기 시작한 적 침공에서 안전하고, 주변에 적의 거점이 없는 도시에서 보급 보내라
-
-			if ( pk::get_max_troops(base) - 15000 <= base_troops and 건물_도시시작 <= base.get_id() and base.get_id() < 건물_도시끝 and no_enemy_around(base) and enemy_weight  == 0)
-				return true;
-
-
-
-	// 거점의 병력 최대 제한치까지 여유 공간이 1만5천 이하로 줄어들기 시작하면 보급 보내라
-			if ( pk::get_max_troops(base) - 15000 <= base_troops and base.get_id() < 건물_거점끝 and no_enemy_around(base)  )
-				return true;
-
-            
-			return false;
-		}
-
-
-
-
-
-
-
-		/** 35% 보급 명령 */
-
-		bool PushS_PEXtroops(pk::building@ base)
-		{
-
-            int reinforce_troops = pk::min(10000, pk::max(3000, int (pk::get_troops(base) * 0.35f) ));
-			// 명령 가능한 무장이 있는지 확인.
-			auto person_list = pk::get_idle_person_list(base);
-			if (person_list.count == 0) return false;
-
-			// 수송할 인접 거접이 있는지 확인.
-			int target = getBackupS_PEXBase(base);
-			if (target == -1) return false;
-
-			if (!no_enemy_around(pk::get_building(target))) return false;
-			if (enemy_approach(pk::get_building(target))) return false;
-			if (close_combat(pk::get_building(target))) return false;
-
-
-            if (건물_관문시작 <= target and target < 건물_항구끝)
-            reinforce_troops = pk::min(4500, pk::max(3000, int (pk::get_troops(base) * 0.35f) ));
-
-            pk::list<pk::person@> actors;
-            for (int i = 0; i < person_list.count; i++)
-            {
-            if (pk::is_unitize(person_list[i])) continue;
-            if (pk::is_absent(person_list[i])) continue;
-            if (person_list[i].order != -1) continue;				
-            if (person_list[i].get_force_id() != base.get_force_id()) continue; 
-            if (person_list[i].get_force_id() != pk::get_building(target).get_force_id()) continue; 
-            if (person_list[i].location != person_list[i].service) continue;
-            if (person_list[i].action_done) continue;
-            if (pk::is_absent(person_list[i])) continue;
-            if (person_list[i].mibun == 신분_포로) continue;
-            if (person_list[i].mibun == 신분_재야) continue;
-
-            if (!pk::is_unitize(person_list[i]) and !pk::is_absent(person_list[i])
-                and person_list[i].order == -1 and person_list[i].get_force_id() == base.get_force_id() and person_list[i].get_force_id() == pk::get_building(target).get_force_id() 
-                and person_list[i].location == person_list[i].service and !person_list[i].action_done and !pk::is_absent(person_list[i])
-                and (person_list[i].mibun == 신분_군주 or person_list[i].mibun == 신분_도독 or person_list[i].mibun == 신분_태수 or person_list[i].mibun == 신분_일반)) 
-				
-                actors.add(person_list[i]);
-            }
-
-       if (actors.count == 0 ) return false;
-	   
-			// 무력 통솔 낮은 순으로 정렬.
-			actors.sort(function(a, b)
-			{
-                        bool a_Supply = pk::has_skill(a, 특기_운반);
-                        bool b_Supply = pk::has_skill(b, 특기_운반);
-                        if ( a_Supply and !b_Supply) return true;
-                        if (!a_Supply and  b_Supply) return false;				
-				return (a.stat[무장능력_무력] + a.stat[무장능력_통솔]) < (b.stat[무장능력_무력] + b.stat[무장능력_통솔]);
-			});
-            pk::person@ leader = pk::get_person(actors[0].get_id());
-            
-            // 임시 도주 효과 ('19.3.6)
-            if (거점수송_일시도주설정)
-            {
-                retreat_skill = leader.skill;   // 특기 백업
-                leader.skill = 특기_도주;         // 도주 특기 부여
-            }
-     
-
-            int unit_food = int(pk::min( 0.3f * pk::get_food(base), 2.0f * reinforce_troops));
-            if (unit_food < int(0.5f * reinforce_troops)) return false;   // 병량 부족 
-       
-
-            float supply_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
-            float weapon_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
-            
-			// 출진 명령 정보 생성.
-			pk::com_deploy_cmd_info cmd;
-			@cmd.base = @base;
-			cmd.type = 부대종류_수송;
-			cmd.member[0] = leader.get_id();
-			cmd.gold = pk::min(int(pk::get_gold(base) * 0.2f), 5000);
-			cmd.food = pk::min(pk::max (5000 , unit_food), 25000);
-			cmd.troops = reinforce_troops;
-			int i = 0;
-			for (int weapon_id = 0; weapon_id < 병기_끝; weapon_id++)
-			{
-                int weapon_amount = 0;
-                if (weapon_id < 병기_충차)
-                    weapon_amount = pk::min(int(pk::get_weapon_amount(base, weapon_id) * 0.25f), 20000);
-                else
-                    weapon_amount = pk::min(int(pk::get_weapon_amount(base, weapon_id)), 4);
-                
-				if (weapon_amount > 0)
-				{
-					cmd.weapon_id[i] = weapon_id;
-					cmd.weapon_amount[i] = weapon_amount;
-					i++;
-				}
-			}
-			cmd.order = 부대임무_공격;
-			cmd.target_pos = pk::get_building(target).get_pos();
-
-			// 출진.
-			int unit_id = pk::command(cmd);
-			if (unit_id != -1)
-				pk::get_unit(unit_id).action_done = (!거점수송_원거리이동);  // 기본값 true 에서 false 로 변경하여 2회 이동하도록 함 ('19.3.5)
-            
-	if (대사표시_설정)             
-            pk::say(pk::u8encode("안돼...병력 과포화 상태다!\n어디 빈 거점 없나?"), leader);
-            
-            // 임시 도주 효과 ('19.3.6)
-            if (거점수송_일시도주설정)
-            {
-                leader.skill = retreat_skill;         // 특기 복원
-            }
-            
-            
-			return true;
-		}
-
-
-
-
-
-        
-		/** 가장 가깝고 위기에 빠진 아군 도시에 보급을 보냄 */
-
-        pk::building@ src_S_PEX;
-		int getBackupS_PEXBase(pk::building@ src)
-		{
-			int best_dst = -1;
-			int best_distance = 0;
-            int src_id = src.get_id();
-            pk::list<pk::building@> dst_list; 
-            @src_S_PEX = @src;
-
-
-
-            
-            int search_base = 건물_도시끝;
-            if      (거점수송_거점검색모드 == 0) search_base = 건물_도시끝;
-            else if (거점수송_거점검색모드 == 1) search_base = 건물_거점끝;
-            
-            pk::force@ force = pk::get_force(src.get_force_id());
-            
-			// 수송 거점 검색
-
-                for (int i = 0; i < search_base; i++)
-                {
-                    pk::building@ dst = pk::get_building(i);
-                    int dst_id = dst.get_id();
-			int base2_troops = pk::get_troops(dst);
-
-
-                    // 도시거리
-                    int city_dist = -1;
-                    if (dst_id < 건물_도시끝 and src_id < 건물_도시끝)
-                        city_dist = pk::get_city_distance(dst_id, src_id);
-                    
-                    // 거점거리
-                    int base_dist = pk::get_building_distance(dst_id, src_id, src.get_force_id());
-                    
-                    // 거리 조건 만족 시  (거리 1~3)
-                if ( (base_dist == 1 and !intercept1_Enemy_base(src, dst) and !intercept_delta_Enemy_base(src, dst)) or ((base_dist == 2 or (city_dist == 1 and base_dist <= 3)) and !intercept2_Enemy_base(src, dst) and !intercept_delta_Enemy_base(src, dst)) )   
-                    {
-                       // 목적지가 역병 혹은 메뚜기 재해지역이면 수송 안보냄
-	          pk::city@ city_c = pk::get_city(pk::get_city_id(dst.pos));
-                        if (city_c.ekibyou or city_c.inago)  continue;
-
-                        int enemy_weight = countNeighborEnemyBase(dst);
-
-	// 병력 최대치까지 아직 3만 여유 있는 , 적 침공에서 안전한 도시로 보급 보내라
-                    
-        if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and ( base2_troops <= pk::get_max_troops(dst) - 30000 ) and no_enemy_around(dst) and enemy_weight  == 0 and func_already (dst) <= 3 )
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
-
-
-
-           // 병력 최대치까지 아직 2만 여유 있는 , 적 침공에서 안전한 관문, 항구로 보급 보내라
-
-       else if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) and 건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and  base2_troops <= pk::get_max_troops(dst) - 20000 and no_enemy_around(dst) and enemy_weight  == 0 and func_already (dst) <= 3 and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
-
-
-           // 병력 최대치까지 아직 3만 여유 있는 , 접경지대의 도시로 보급 보내라
-
-       else if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and base2_troops <= pk::get_max_troops(dst) - 30000 and no_enemy_around(dst) and  1 <= enemy_weight  and func_already (dst) <= 3 )
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
-
-
-
-           // 병력 최대치까지 아직 2만 여유 있는 , 접경지대의 관문, 항구로 보급 보내라
-
-       else if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) and 건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and base2_troops <= pk::get_max_troops(dst) - 20000 and no_enemy_around(dst) and 1 <= enemy_weight  and func_already (dst) <= 3 and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
-
-
-
-                }
-
-
-   } 
-
-            
-            // 출진가능 거점리스트 정렬 (거점 거리 오름차순, 좌표거리 오름차순)
-            if (dst_list.count == 0)
-                best_dst = -1;
-            else
-            {
-                dst_list.sort(function(a, b)
-                {
-                    return (pk::get_max_troops(a) - pk::get_troops(a) > pk::get_max_troops(b) - pk::get_troops(b));					
-										
-                    int build_dist_a = pk::get_building_distance(a.get_id(), main.src_S_PEX.get_id(), a.get_force_id());
-                    int build_dist_b = pk::get_building_distance(b.get_id(), main.src_S_PEX.get_id(), b.get_force_id());
-
-                    int pos_dist_a = pk::get_distance(a.pos, main.src_S_PEX.pos);
-                    int pos_dist_b = pk::get_distance(b.pos, main.src_S_PEX.pos);
-
-                    if (build_dist_a != build_dist_b) 
-                        return (build_dist_a < build_dist_b);
-                    
-                    return (pos_dist_a < pos_dist_b);
-                });
-                best_dst = dst_list[0].get_id();
-            }
-                
-            
-            
-			return best_dst;
-		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //----------------------------------------------------------------------------------
-        //  평시 포화된 도시에서 보급대 보내기  (병력)
-        //----------------------------------------------------------------------------------
-
-
-
-
-		/** 병력 있는 거점 찾기 */
-
-		bool needPEXtroops (pk::building@ base)
-		{
-			if (!no_enemy_around(base)) return false;
-
-			int base_troops = pk::get_troops(base);
-
-
-                        int enemy_weight = countNeighborEnemyBase(base);
-
-
-
-
-
-	// 병력 최대 기준 45% 이상 있고, 적 침공에서 안전하고, 주변에 적의 거점이 없는  관문, 항구에서 보급 보내라
-
-			if ( pk::get_max_troops(base) * 0.45f  <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and no_enemy_around(base) and enemy_weight  == 0 )
-				return true;
-
-
-	// 병력 최대 기준까지 여유 공간이 2만 9천 밖에 없고, 적 침공에서 안전하고, 주변에 적의 거점이 없는 도시에서 보급 보내라
-
-			if ( pk::get_max_troops(base) - 29000 <= base_troops and 건물_도시시작 <= base.get_id() and base.get_id() < 건물_도시끝 and no_enemy_around(base) and enemy_weight  == 0)
-				return true;
-
-
-
-	// 병력 최대 기준까지 여유 공간이 2만 9천 이하 밖에 없으면 보급 보내라
-			if ( pk::get_max_troops(base) - 29000 <= base_troops and base.get_id() < 건물_거점끝 and no_enemy_around(base)  )
-				return true;
-
-            
-			return false;
-		}
-
-
-
-
-
-
-
-		/** 35% 보급 명령 */
-
-		bool PushPEXtroops(pk::building@ base)
-		{
-
-            int reinforce_troops = pk::min(15000, pk::max(3000, int (pk::get_troops(base) * 0.35f) ));
-			// 명령 가능한 무장이 있는지 확인.
-			auto person_list = pk::get_idle_person_list(base);
-			if (person_list.count == 0) return false;
-
-			// 수송할 인접 거접이 있는지 확인.
-			int target = getBackupPEXBase(base);
-			if (target == -1) return false;
-
-			if (!no_enemy_around(pk::get_building(target))) return false;
-			if (enemy_approach(pk::get_building(target))) return false;
-			if (close_combat(pk::get_building(target))) return false;
-
-            if (건물_관문시작 <= target and target < 건물_항구끝)
-            reinforce_troops = pk::min(4500, pk::max(3000, int (pk::get_troops(base) * 0.35f) ));
-
-            pk::list<pk::person@> actors;
-            for (int i = 0; i < person_list.count; i++)
-            {
-            if (pk::is_unitize(person_list[i])) continue;
-            if (pk::is_absent(person_list[i])) continue;
-            if (person_list[i].order != -1) continue;				
-            if (person_list[i].get_force_id() != base.get_force_id()) continue; 
-            if (person_list[i].get_force_id() != pk::get_building(target).get_force_id()) continue; 
-            if (person_list[i].location != person_list[i].service) continue;
-            if (person_list[i].action_done) continue;
-            if (pk::is_absent(person_list[i])) continue;
-            if (person_list[i].mibun == 신분_포로) continue;
-            if (person_list[i].mibun == 신분_재야) continue;
-
-            if (!pk::is_unitize(person_list[i]) and !pk::is_absent(person_list[i])
-                and person_list[i].order == -1 and person_list[i].get_force_id() == base.get_force_id() and person_list[i].get_force_id() == pk::get_building(target).get_force_id() 
-                and person_list[i].location == person_list[i].service and !person_list[i].action_done and !pk::is_absent(person_list[i])
-                and (person_list[i].mibun == 신분_군주 or person_list[i].mibun == 신분_도독 or person_list[i].mibun == 신분_태수 or person_list[i].mibun == 신분_일반)) 
-				
-                actors.add(person_list[i]);
-            }
-
-       if (actors.count == 0 ) return false;
-	   
-			// 무력 통솔 낮은 순으로 정렬.
-			actors.sort(function(a, b)
-			{
-                        bool a_Supply = pk::has_skill(a, 특기_운반);
-                        bool b_Supply = pk::has_skill(b, 특기_운반);
-                        if ( a_Supply and !b_Supply) return true;
-                        if (!a_Supply and  b_Supply) return false;					
-				return (a.stat[무장능력_무력] + a.stat[무장능력_통솔]) < (b.stat[무장능력_무력] + b.stat[무장능력_통솔]);
-			});
-            pk::person@ leader = pk::get_person(actors[0].get_id());
-            
-            // 임시 도주 효과 ('19.3.6)
-            if (거점수송_일시도주설정)
-            {
-                retreat_skill = leader.skill;   // 특기 백업
-                leader.skill = 특기_도주;         // 도주 특기 부여
-            }
-     
-
-            int unit_food = int(pk::min( 0.3f * pk::get_food(base), 2.0f * reinforce_troops));
-            if (unit_food < int(0.5f * reinforce_troops)) return false;   // 병량 부족 
-       
-
-            float supply_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
-            float weapon_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
-            
-			// 출진 명령 정보 생성.
-			pk::com_deploy_cmd_info cmd;
-			@cmd.base = @base;
-			cmd.type = 부대종류_수송;
-			cmd.member[0] = leader.get_id();
-			cmd.gold = pk::min(int(pk::get_gold(base) * 0.2f), 5000);
-			cmd.food = pk::min(pk::max (5000 , unit_food), 25000);
-			cmd.troops = reinforce_troops;
-			int i = 0;
-			for (int weapon_id = 0; weapon_id < 병기_끝; weapon_id++)
-			{
-                int weapon_amount = 0;
-                if (weapon_id < 병기_충차)
-                    weapon_amount = pk::min(int(pk::get_weapon_amount(base, weapon_id) * 0.25f), 20000);
-                else
-                    weapon_amount = pk::min(int(pk::get_weapon_amount(base, weapon_id)), 4);
-                
-				if (weapon_amount > 0)
-				{
-					cmd.weapon_id[i] = weapon_id;
-					cmd.weapon_amount[i] = weapon_amount;
-					i++;
-				}
-			}
-			cmd.order = 부대임무_공격;
-			cmd.target_pos = pk::get_building(target).get_pos();
-
-			// 출진.
-			int unit_id = pk::command(cmd);
-			if (unit_id != -1)
-				pk::get_unit(unit_id).action_done = (!거점수송_원거리이동);  // 기본값 true 에서 false 로 변경하여 2회 이동하도록 함 ('19.3.5)
-            
-	if (대사표시_설정)             
-            pk::say(pk::u8encode("현재 병력 포화 상태다!\n병력을 분산 배치하라!"), leader);
-            
-            // 임시 도주 효과 ('19.3.6)
-            if (거점수송_일시도주설정)
-            {
-                leader.skill = retreat_skill;         // 특기 복원
-            }
-            
-            
-			return true;
-		}
-
-
-
-
-
-        
-		/** 가장 가깝고 위기에 빠진 아군 도시에 보급을 보냄 */
-
-        pk::building@ src_PEX;
-		int getBackupPEXBase(pk::building@ src)
-		{
-			int best_dst = -1;
-			int best_distance = 0;
-            int src_id = src.get_id();
-            pk::list<pk::building@> dst_list; 
-            @src_PEX = @src;
-
-
-
-            
-            int search_base = 건물_도시끝;
-            if      (거점수송_거점검색모드 == 0) search_base = 건물_도시끝;
-            else if (거점수송_거점검색모드 == 1) search_base = 건물_거점끝;
-            
-            pk::force@ force = pk::get_force(src.get_force_id());
-            
-			// 수송 거점 검색
-
-                for (int i = 0; i < search_base; i++)
-                {
-                    pk::building@ dst = pk::get_building(i);
-                    int dst_id = dst.get_id();
-			int base2_troops = pk::get_troops(dst);
-
-
-                    // 도시거리
-                    int city_dist = -1;
-                    if (dst_id < 건물_도시끝 and src_id < 건물_도시끝)
-                        city_dist = pk::get_city_distance(dst_id, src_id);
-                    
-                    // 거점거리
-                    int base_dist = pk::get_building_distance(dst_id, src_id, src.get_force_id());
-                    
-                    // 거리 조건 만족 시 (거리 1~3)
-                if ( (base_dist == 1 and !intercept1_Enemy_base(src, dst) and !intercept_delta_Enemy_base(src, dst)) or ((base_dist == 2 or (city_dist == 1 and base_dist <= 3)) and !intercept2_Enemy_base(src, dst) and !intercept_delta_Enemy_base(src, dst)) )  
-                    {
-                       // 목적지가 역병 혹은 메뚜기 재해지역이면 수송 안보냄
-	          pk::city@ city_c = pk::get_city(pk::get_city_id(dst.pos));
-                        if (city_c.ekibyou or city_c.inago)  continue;
-
-                        int enemy_weight = countNeighborEnemyBase(dst);
-
-	// 병력 최대 기준 42% 이하로, , 적 침공에서 안전한 도시로 보급 보내라
-                    
-        if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst)  and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and ( base2_troops <= pk::get_max_troops(dst) * 0.42f  or  base2_troops <= pk::get_max_troops(dst) - 70000 )  and no_enemy_around(dst) and enemy_weight  == 0 and func_already (dst) <= 3 )
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
-
-
-
-           // 병력 6천 이하로 , 적 침공에서 안전한 관문, 항구로 보급 보내라
-
-       else if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst)  and 건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and  base2_troops <= 6000 and no_enemy_around(dst) and enemy_weight  == 0 and func_already (dst) <= 3 and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
-
-
-           // 병력 최대 기준 52% 이하로,  접경지대의 도시로 보급 보내라
-
-       else if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst)  and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and ( base2_troops <= pk::get_max_troops(dst) * 0.52f  or  base2_troops <= pk::get_max_troops(dst) - 60000 ) and no_enemy_around(dst) and  1 <= enemy_weight  and func_already (dst) <= 3 )
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
-
-
-
-           // 병력 1만 3천 이하로,  접경지대의 관문, 항구로 보급 보내라
-
-       else if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst)  and 건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and base2_troops <= 13000 and no_enemy_around(dst) and 1 <= enemy_weight  and func_already (dst) <= 3 and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
-
-
-
-                }
-
-	
-   } 
-
-            
-            // 출진가능 거점리스트 정렬 (거점 거리 오름차순, 좌표거리 오름차순)
-            if (dst_list.count == 0)
-                best_dst = -1;
-            else
-            {
-                dst_list.sort(function(a, b)
-                {
-                    return (pk::get_max_troops(a) - pk::get_troops(a) > pk::get_max_troops(b) - pk::get_troops(b));					
-										
-                    int build_dist_a = pk::get_building_distance(a.get_id(), main.src_PEX.get_id(), a.get_force_id());
-                    int build_dist_b = pk::get_building_distance(b.get_id(), main.src_PEX.get_id(), b.get_force_id());
-
-                    int pos_dist_a = pk::get_distance(a.pos, main.src_PEX.pos);
-                    int pos_dist_b = pk::get_distance(b.pos, main.src_PEX.pos);
-
-                    if (build_dist_a != build_dist_b) 
-                        return (build_dist_a < build_dist_b);
-                    
-                    return (pos_dist_a < pos_dist_b);
-                });
-                best_dst = dst_list[0].get_id();
-            }
-                
-            
-            
-			return best_dst;
-		}
-
-
-
-
-
-
-
-
-        //----------------------------------------------------------------------------------
-        //  병력이 극소수인 거점으로 병력 보내기
-        //----------------------------------------------------------------------------------
-
-
-
-
-		/** 병력 있는 거점 찾기 */
-
-		bool needarmy(pk::building@ base)
-		{
-			if (!no_enemy_around(base)) return false;
-
-			int base_troops = pk::get_troops(base);
-
-
-                        int enemy_weight = countNeighborEnemyBase(base);
-
-
-
-
-
-	// 병력 5천 이상 있고, 적 침공에서 안전하고, 주변에 적 부대가 없는  관문, 항구에서 보급 보내라
-
-			if (5000  <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and no_enemy_around(base) and  enemy_weight == 0 )
-				return true;
-			
-	// 병력 1만 이상 있고, 적 침공에서 안전하고, 전방의 관문, 항구에서 보급 보내라
-
-			if (10000  <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and no_enemy_around(base) and  enemy_weight > 0)
-				return true;			
-			
-
-
-	// 병력 1만 7천 이상 있고, 적 침공에서 안전하고, 주변에 적 부대가 없는 도시에서 보급 보내라
-
-			if ( 17000  <= base_troops and 건물_도시시작 <= base.get_id() and base.get_id() < 건물_도시끝 and no_enemy_around(base) )
-				return true;
-
-
-
-
-
-            
-			return false;
-		}
-
-
-
-
-
-
-
-		/** 35% 보급 명령 */
-
-		bool Pusharmy(pk::building@ base)
-		{
-
-            int reinforce_troops = pk::min(15000, pk::max(3000, int (pk::get_troops(base) * 0.35f) ));
-			// 명령 가능한 무장이 있는지 확인.
-			auto person_list = pk::get_idle_person_list(base);
-			if (person_list.count == 0) return false;
-
-			// 수송할 인접 거접이 있는지 확인.
-			int target = getBackupMINBase(base);
-			if (target == -1) return false;
-
-			if (!no_enemy_around(pk::get_building(target))) return false;
-			if (enemy_approach(pk::get_building(target))) return false;
-			if (close_combat(pk::get_building(target))) return false;
-
-            if (건물_관문시작 <= target and target < 건물_항구끝)
-            reinforce_troops = pk::min(5000, pk::max(3000, int (pk::get_troops(base) * 0.35f) ));
-
-            pk::list<pk::person@> actors;
-            for (int i = 0; i < person_list.count; i++)
-            {
-            if (pk::is_unitize(person_list[i])) continue;
-            if (pk::is_absent(person_list[i])) continue;
-            if (person_list[i].order != -1) continue;				
-            if (person_list[i].get_force_id() != base.get_force_id()) continue; 
-            if (person_list[i].get_force_id() != pk::get_building(target).get_force_id()) continue; 
-            if (person_list[i].location != person_list[i].service) continue;
-            if (person_list[i].action_done) continue;
-            if (pk::is_absent(person_list[i])) continue;
-            if (person_list[i].mibun == 신분_포로) continue;
-            if (person_list[i].mibun == 신분_재야) continue;
-
-            if (!pk::is_unitize(person_list[i]) and !pk::is_absent(person_list[i])
-                and person_list[i].order == -1 and person_list[i].get_force_id() == base.get_force_id() and person_list[i].get_force_id() == pk::get_building(target).get_force_id() 
-                and person_list[i].location == person_list[i].service and !person_list[i].action_done and !pk::is_absent(person_list[i])
-                and (person_list[i].mibun == 신분_군주 or person_list[i].mibun == 신분_도독 or person_list[i].mibun == 신분_태수 or person_list[i].mibun == 신분_일반)) 
-				
-                actors.add(person_list[i]);
-            }
-
-       if (actors.count == 0 ) return false;
-	   
-			// 무력 통솔 낮은 순으로 정렬.
-			actors.sort(function(a, b)
-			{
-                        bool a_Supply = pk::has_skill(a, 특기_운반);
-                        bool b_Supply = pk::has_skill(b, 특기_운반);
-                        if ( a_Supply and !b_Supply) return true;
-                        if (!a_Supply and  b_Supply) return false;					
-				return (a.stat[무장능력_무력] + a.stat[무장능력_통솔]) < (b.stat[무장능력_무력] + b.stat[무장능력_통솔]);
-			});
-            pk::person@ leader = pk::get_person(actors[0].get_id());
-            
-            // 임시 도주 효과 ('19.3.6)
-            if (거점수송_일시도주설정)
-            {
-                retreat_skill = leader.skill;   // 특기 백업
-                leader.skill = 특기_도주;         // 도주 특기 부여
-            }
-     
-
-            int unit_food = int(pk::min( 0.3f * pk::get_food(base), 2.0f * reinforce_troops));
-            if (unit_food < int(0.5f * reinforce_troops)) return false;   // 병량 부족 
-       
-
-            float supply_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
-            float weapon_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
-            
-			// 출진 명령 정보 생성.
-			pk::com_deploy_cmd_info cmd;
-			@cmd.base = @base;
-			cmd.type = 부대종류_수송;
-			cmd.member[0] = leader.get_id();
-			cmd.gold = pk::min(int(pk::get_gold(base) * 0.2f), 5000);
-			cmd.food = pk::min(pk::max (5000 , unit_food), 25000);
-			cmd.troops = reinforce_troops;
-			int i = 0;
-			for (int weapon_id = 0; weapon_id < 병기_끝; weapon_id++)
-			{
-                int weapon_amount = 0;
-                if (weapon_id < 병기_충차)
-                    weapon_amount = pk::min(int(pk::get_weapon_amount(base, weapon_id) * 0.25f), 20000);
-                else
-                    weapon_amount = pk::min(int(pk::get_weapon_amount(base, weapon_id)), 4);
-                
-				if (weapon_amount > 0)
-				{
-					cmd.weapon_id[i] = weapon_id;
-					cmd.weapon_amount[i] = weapon_amount;
-					i++;
-				}
-			}
-			cmd.order = 부대임무_공격;
-			cmd.target_pos = pk::get_building(target).get_pos();
-
-			// 출진.
-			int unit_id = pk::command(cmd);
-			if (unit_id != -1)
-				pk::get_unit(unit_id).action_done = (!거점수송_원거리이동);  // 기본값 true 에서 false 로 변경하여 2회 이동하도록 함 ('19.3.5)
-            
-	if (대사표시_설정)             
-            pk::say(pk::u8encode("아군 거점에 병력이 너무 적다!\n병력을 보내 충원하라!"), leader);
-            
-            // 임시 도주 효과 ('19.3.6)
-            if (거점수송_일시도주설정)
-            {
-                leader.skill = retreat_skill;         // 특기 복원
-            }
-            
-            
-			return true;
-		}
-
-
-
-
-
-        
-		/** 가장 가깝고 위기에 빠진 아군 도시에 보급을 보냄 */
-
-        pk::building@ src_nar;
-		int getBackupMINBase(pk::building@ src)
-		{
-			int best_dst = -1;
-			int best_distance = 0;
-            int src_id = src.get_id();
-            pk::list<pk::building@> dst_list; 
-            @src_nar = @src;
-
-
-
-            
-            int search_base = 건물_도시끝;
-            if      (거점수송_거점검색모드 == 0) search_base = 건물_도시끝;
-            else if (거점수송_거점검색모드 == 1) search_base = 건물_거점끝;
-            
-            pk::force@ force = pk::get_force(src.get_force_id());
-            
-			// 수송 거점 검색
-
-                for (int i = 0; i < search_base; i++)
-                {
-                    pk::building@ dst = pk::get_building(i);
-                    int dst_id = dst.get_id();
-			int base2_troops = pk::get_troops(dst);
-
-
-                    // 도시거리
-                    int city_dist = -1;
-                    if (dst_id < 건물_도시끝 and src_id < 건물_도시끝)
-                        city_dist = pk::get_city_distance(dst_id, src_id);
-                    
-                    // 거점거리
-                    int base_dist = pk::get_building_distance(dst_id, src_id, src.get_force_id());
-                    
-                    // 거리 조건 만족 시  (거리 1~3)
-                if ( (base_dist == 1 and !intercept1_Enemy_base(src, dst) and !intercept_delta_Enemy_base(src, dst)) or ((base_dist == 2 or (city_dist == 1 and base_dist <= 3)) and !intercept2_Enemy_base(src, dst) and !intercept_delta_Enemy_base(src, dst)) )  
-                    {
-                       // 목적지가 역병 혹은 메뚜기 재해지역이면 수송 안보냄
-	          pk::city@ city_c = pk::get_city(pk::get_city_id(dst.pos));
-                        if (city_c.ekibyou or city_c.inago)  continue;
-
-                        int enemy_weight = countNeighborEnemyBase(src);
-                        int enemy_weight_dst = countNeighborEnemyBase(dst);
-
-
-	//  보급 받는 곳이 후방이면 보내는 곳도 후방, 받는 곳이 전방이면 보내는 곳은 안따짐
-
-    if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) and ((enemy_weight_dst == 0 and enemy_weight == 0) or enemy_weight_dst > 0))
-        {
-
-	// 병력 최대 기준 10% 이하로,적 침공에서 안전한 도시로 보급 보내라
-                    
-        if (건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and base2_troops <= pk::get_max_troops(dst) * 0.10f   and no_enemy_around(dst) and func_already (dst) <= 1 and func_supplycheck(src,dst) == 0)
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
-
-
-
-           // 병력 2300 이하로 , 적 침공에서 안전한 관문, 항구로 보급 보내라
-
-       else if (건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and  base2_troops <= 2300 and no_enemy_around(dst) and func_already (dst) <= 1 and func_supplycheck(src,dst) == 0 and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
-
-         }
-
-                }
-
-	
-   } 
-
-            
-            // 출진가능 거점리스트 정렬 (거점 거리 오름차순, 좌표거리 오름차순)
-            if (dst_list.count == 0)
-                best_dst = -1;
-            else
-            {
-                dst_list.sort(function(a, b)
-                {
-                    int build_dist_a = pk::get_building_distance(a.get_id(), main.src_nar.get_id(), a.get_force_id());
-                    int build_dist_b = pk::get_building_distance(b.get_id(), main.src_nar.get_id(), b.get_force_id());
-
-                    int pos_dist_a = pk::get_distance(a.pos, main.src_nar.pos);
-                    int pos_dist_b = pk::get_distance(b.pos, main.src_nar.pos);
-
-                    if (build_dist_a != build_dist_b) 
-                        return (build_dist_a < build_dist_b);
-                    
-                    return (pos_dist_a < pos_dist_b);
-                });
-                best_dst = dst_list[0].get_id();
-            }
-                
-            
-            
-			return best_dst;
-		}
 
 
 
@@ -2120,12 +1158,12 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
 	// 병력 1만 3천 이상, 적 침공에서 안전한 관문, 항구에서 보급 보내라
 
-			if ( 13000  <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and no_enemy_around(base) and enemy_weight == 0 and user_weight == 0 )
+			if ( 13000  <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and enemy_weight == 0 and user_weight == 0 )
 				return true;
 
 	// 병력 1만 8천 이상, 전방의 안전한 관문, 항구에서 보급 보내라
 
-			if ( 18000  <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and no_enemy_around(base) and (enemy_weight >= 1 or user_weight >= 1) )
+			if ( 18000  <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and (enemy_weight > 0 or user_weight > 0) )
 				return true;
 
 
@@ -2153,7 +1191,7 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 			if (enemy_weight == 0 and user_weight == 0) 
             reinforce_troops = pk::min(10000, pk::max(3000, int (pk::get_troops(base) - 8000) ));
 
-			if (enemy_weight >= 1 or user_weight >= 1) 
+			if (enemy_weight > 0 or user_weight > 0) 
             reinforce_troops = pk::min(10000, pk::max(3000, int (pk::get_troops(base) - 11000) ));
 
 
@@ -2165,14 +1203,11 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 			int target = getBackupPBase(base);
 			if (target == -1) return false;
 
-			if (enemy_approach(pk::get_building(target))) return false;
-			if (close_combat(pk::get_building(target))) return false;
-
-
             if (건물_관문시작 <= target and target < 건물_항구끝)
             reinforce_troops = pk::min(5000, pk::max(3000, int (pk::get_troops(base) * 0.45f) ));
 
             pk::list<pk::person@> actors;
+            actors.clear();					
             for (int i = 0; i < person_list.count; i++)
             {
             if (pk::is_unitize(person_list[i])) continue;
@@ -2253,9 +1288,10 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 			if (unit_id != -1)
 				pk::get_unit(unit_id).action_done = (!거점수송_원거리이동);  // 기본값 true 에서 false 로 변경하여 2회 이동하도록 함 ('19.3.5)
             
-	if (대사표시_설정)             
-            pk::say(pk::u8encode("당장의 위기는 없는 듯 하니\n성으로 병력을 이동시킨다!"), leader);
-            
+                string target_name = pk::u8decode(pk::get_name(pk::get_building(target)));	
+	if (대사표시_설정) 																									  
+                pk::say(pk::u8encode(pk::format("당장의 위기는 없는 듯하니\n병력을 \x1b[2x{}\x1b[0x(으)로 이동시키자!", target_name)), leader);	
+           
             // 임시 도주 효과 ('19.3.6)
             if (거점수송_일시도주설정)
             {
@@ -2280,6 +1316,7 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 			int best_distance = 0;
             int src_id = src.get_id();
             pk::list<pk::building@> dst_list; 
+			dst_list.clear();			
             @src_po = @src;
 
 
@@ -2315,12 +1352,46 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 	          pk::city@ city_c = pk::get_city(pk::get_city_id(dst.pos));
                         if (city_c.ekibyou or city_c.inago)  continue;
 
+
+    // src. dst는 alive 상태에, 서로 다른 아이디에, 국적이 같아야
+    if (!pk::is_alive(src)) continue;
+    if (!pk::is_alive(dst)) continue;
+    if (src_id == dst_id) continue;	
+    if (src.get_force_id() != dst.get_force_id()) continue;
+	
+		   
+         // 유저 세력의 위임군단이면
+         //src의 위임설정 물자 수송지를 플레이어 조종 거점으로 설정하면, 아무 제약없이 플레이어 조종 거점까지도 교류 (플레이어 거점에서 플레이어 의지 상관없이 갑자기 수송대가 나갈수도 있음)   
+    if (위임군단_수송관할_지정여부)
+    {    		 
+         pk::district@ src_district = pk::get_district(src.get_district_id());
+         pk::district@ dst_district = pk::get_district(dst.get_district_id());
+
+         if (force.is_player() and !pk::is_player_controlled(src) and pk::is_alive(src_district) and pk::is_alive(dst_district) and src_district.transport) 
+         {	
+         pk::building@ target_building = pk::get_building(src_district.transport_building);
+		 
+         // src의 위임설정 물자 수송지가 같은 군단 소속이면 같은 군단 내에서만 이동 가능 , src와 dst의 군단이 다르거나 dst가 플레이어 조종 군단이면 안됨  
+         if (target_building.get_district_id() == src_district.get_id() and (src.get_district_id() != dst.get_district_id() or pk::is_player_controlled(dst))) continue;
+
+         // src의 위임설정 물자 수송지가 (플레이어가 조종못하는) 위임군단이고, src의 군단과 다른 곳이면, dst도 위임군단이어야 (dst가 플레이어 조종 군단이면 안된다) = 위임군단끼리만 주고 받는 설정. 플레이어 군단만 제외.
+         if (!pk::is_player_controlled(target_building) and target_building.get_district_id() != src_district.get_id() and pk::is_player_controlled(dst)) continue;
+         }
+     }
+
+
+		if (!no_enemy_around(dst)) continue;	
+
+
                         int enemy_weight = countNeighborEnemyBase(dst);
                         int user_weight = countNeighborUserBase(dst);
 
+     if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst))
+    {
+
 	// 병력 최대 기준 50% 이하로, 적 침공에서 안전한 도시로 보급 보내라
                     
-        if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst)  and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and base2_troops <= pk::get_max_troops(dst) * 0.5f and func_already (dst) <= 1  and no_enemy_around(dst) and func_supplycheck(src,dst) == 0 )
+        if (건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and base2_troops <= pk::get_max_troops(dst) * 0.5f and func_already (dst) <= 1  and enemy_weight == 0 and user_weight == 0 and func_supplycheck(src,dst) == 0 )
                     {
                         best_dst = dst_id;
                         dst_list.add(dst);  // 수송가능 거점리스트 추가
@@ -2330,7 +1401,7 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
            // 병력 5천 이하로 , 적 침공에서 안전한 관문, 항구로 보급 보내라
 
-       else if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst)  and 건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and base2_troops <= 5000 and func_already (dst) <= 1 and no_enemy_around(dst) and func_supplycheck(src,dst) == 0 and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
+       else if (건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and base2_troops <= 5000 and func_already (dst) <= 1 and enemy_weight == 0 and user_weight == 0 and func_supplycheck(src,dst) == 0 and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
                     {
                         best_dst = dst_id;
                         dst_list.add(dst);  // 수송가능 거점리스트 추가
@@ -2339,7 +1410,7 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
            // 병력 최대 기준 60% 이하로,  접경지대의 도시로 보급 보내라
 
-       else if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and base2_troops <= pk::get_max_troops(dst) * 0.6f and no_enemy_around(dst) and ( 1 <= enemy_weight or 1 <= user_weight ) and func_already (dst) <= 1 and func_supplycheck(src,dst) == 0 )
+       else if (건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and base2_troops <= pk::get_max_troops(dst) * 0.6f and ( 0 < enemy_weight or 0 < user_weight ) and func_already (dst) <= 1 and func_supplycheck(src,dst) == 0 )
                     {
                         best_dst = dst_id;
                         dst_list.add(dst);  // 수송가능 거점리스트 추가
@@ -2349,12 +1420,14 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
            // 병력 1만 이하로, 접경지대의 관문, 항구로 보급 보내라
 
-       else if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst)  and 건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and base2_troops <= 10000 and no_enemy_around(dst) and  ( 1 <= enemy_weight or 1 <= user_weight ) and func_already (dst) <= 1 and func_supplycheck(src,dst) == 0 and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
+       else if (건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and base2_troops <= 10000 and ( 0 < enemy_weight or 0 < user_weight ) and func_already (dst) <= 1 and func_supplycheck(src,dst) == 0 and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
                     {
                         best_dst = dst_id;
                         dst_list.add(dst);  // 수송가능 거점리스트 추가
                     }
 
+
+    }
 
 
                 }
@@ -2396,12 +1469,9 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
 
 
-
-
-
-
+		
         //----------------------------------------------------------------------------------
-        //  항구나 관문 병력이 도시보다 많을때 보급대 보내기  (병력) 
+        //  병력이 적은 거점에 도시에서 보급대 보내기  (병력)
         //----------------------------------------------------------------------------------
 
 
@@ -2409,276 +1479,34 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
 		/** 병력 있는 거점 찾기 */
 
-		bool needReversetroops (pk::building@ base)
+		bool need4thtroops (pk::building@ dst)
 		{
-			if (!no_enemy_around(base)) return false;
+			if (!no_enemy_around(dst)) return false;
 
-			int base_troops = pk::get_troops(base);
-
-
-                        int enemy_weight = countNeighborEnemyBase(base);
-
-
-	// 병력 5천 이상, 적 침공에서 안전한 관문, 항구에서 보급 보내라
-
-			if ( 5000  <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and no_enemy_around(base) )
-				return true;
-
-
-
-
-            
-			return false;
-		}
-
-
-
-
-
-
-
-		/** 35% 보급 명령 */
-
-		bool PushReversetroops(pk::building@ base)
-		{
-
-            int reinforce_troops = pk::min(10000, pk::max(1500, int (pk::get_troops(base) * 0.35f) ));
-			// 명령 가능한 무장이 있는지 확인.
-			auto person_list = pk::get_idle_person_list(base);
-			if (person_list.count == 0) return false;
-
-			// 수송할 인접 거접이 있는지 확인.
-			int target = getBackupREBase(base);
-			if (target == -1) return false;
-
-			if (!no_enemy_around(pk::get_building(target))) return false;
-			if (enemy_approach(pk::get_building(target))) return false;
-			if (close_combat(pk::get_building(target))) return false;
-
-            pk::building@ target_base = pk::get_building(target);
-			
-            if (건물_도시시작 <= target and target < 건물_도시끝 and 16000 <= pk::get_troops(base) and 45000 <= pk::get_max_troops(target_base) - pk::get_troops(target_base))
-            reinforce_troops = pk::min(15000, pk::min(pk::get_troops(base) - 10000, pk::get_max_troops(target_base) - pk::get_troops(target_base) - 31000 ));		
-	
-
-            if (건물_관문시작 <= target and target < 건물_항구끝)
-            reinforce_troops = pk::min(5000, pk::max(1500, int (pk::get_troops(base) * 0.35f) ));
-
-            pk::list<pk::person@> actors;
-            for (int i = 0; i < person_list.count; i++)
-            {
-            if (pk::is_unitize(person_list[i])) continue;
-            if (pk::is_absent(person_list[i])) continue;
-            if (person_list[i].order != -1) continue;				
-            if (person_list[i].get_force_id() != base.get_force_id()) continue; 
-            if (person_list[i].get_force_id() != pk::get_building(target).get_force_id()) continue; 
-            if (person_list[i].location != person_list[i].service) continue;
-            if (person_list[i].action_done) continue;
-            if (pk::is_absent(person_list[i])) continue;
-            if (person_list[i].mibun == 신분_포로) continue;
-            if (person_list[i].mibun == 신분_재야) continue;
-
-            if (!pk::is_unitize(person_list[i]) and !pk::is_absent(person_list[i])
-                and person_list[i].order == -1 and person_list[i].get_force_id() == base.get_force_id() and person_list[i].get_force_id() == pk::get_building(target).get_force_id() 
-                and person_list[i].location == person_list[i].service and !person_list[i].action_done and !pk::is_absent(person_list[i])
-                and (person_list[i].mibun == 신분_군주 or person_list[i].mibun == 신분_도독 or person_list[i].mibun == 신분_태수 or person_list[i].mibun == 신분_일반)) 
-				
-                actors.add(person_list[i]);
-            }
-
-       if (actors.count == 0 ) return false;
-	   
-			// 무력 통솔 낮은 순으로 정렬.
-			actors.sort(function(a, b)
-			{
-                        bool a_Supply = pk::has_skill(a, 특기_운반);
-                        bool b_Supply = pk::has_skill(b, 특기_운반);
-                        if ( a_Supply and !b_Supply) return true;
-                        if (!a_Supply and  b_Supply) return false;					
-				return (a.stat[무장능력_무력] + a.stat[무장능력_통솔]) < (b.stat[무장능력_무력] + b.stat[무장능력_통솔]);
-			});
-            pk::person@ leader = pk::get_person(actors[0].get_id());
-            
-            // 임시 도주 효과 ('19.3.6)
-            if (거점수송_일시도주설정)
-            {
-                retreat_skill = leader.skill;   // 특기 백업
-                leader.skill = 특기_도주;         // 도주 특기 부여
-            }
-            
-            int unit_food = int(pk::min( 0.3f * pk::get_food(base), 2.0f * reinforce_troops));
-            if (unit_food < int(0.5f * reinforce_troops)) return false;   // 병량 부족 
-
-
-            float supply_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
-            float weapon_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
-            
-			// 출진 명령 정보 생성.
-			pk::com_deploy_cmd_info cmd;
-			@cmd.base = @base;
-			cmd.type = 부대종류_수송;
-			cmd.member[0] = leader.get_id();
-			cmd.gold = pk::min(int(pk::get_gold(base) * 0.15f), 7000);
-			cmd.food = pk::min(pk::max (2000 , unit_food), 25000);
-			cmd.troops = reinforce_troops;
-			int i = 0;
-			for (int weapon_id = 0; weapon_id < 병기_끝; weapon_id++)
-			{
-                int weapon_amount = 0;
-                if (weapon_id < 병기_충차)
-                    weapon_amount = pk::min(int(pk::get_weapon_amount(base, weapon_id) * 0.35f), 60000);
-                else
-                    weapon_amount = pk::min(int(pk::get_weapon_amount(base, weapon_id)), 6);
-                
-				if (weapon_amount > 0)
-				{
-					cmd.weapon_id[i] = weapon_id;
-					cmd.weapon_amount[i] = weapon_amount;
-					i++;
-				}
-			}
-			cmd.order = 부대임무_공격;
-			cmd.target_pos = pk::get_building(target).get_pos();
-
-			// 출진.
-			int unit_id = pk::command(cmd);
-			if (unit_id != -1)
-				pk::get_unit(unit_id).action_done = (!거점수송_원거리이동);  // 기본값 true 에서 false 로 변경하여 2회 이동하도록 함 ('19.3.5)
-            
-	if (대사표시_설정)             
-            pk::say(pk::u8encode("성의 병력이 오히려 더 적군.\n성으로 병력을 이동시킨다!"), leader);
-            
-            // 임시 도주 효과 ('19.3.6)
-            if (거점수송_일시도주설정)
-            {
-                leader.skill = retreat_skill;         // 특기 복원
-            }
-            
-            
-			return true;
-		}
-
-
-
-
-
-        
-		/** 가장 가깝고 위기에 빠진 아군 도시에 보급을 보냄 */
-
-        pk::building@ src_RE;
-		int getBackupREBase(pk::building@ src)
-		{
-			int best_dst = -1;
-			int best_distance = 0;
-            int src_id = src.get_id();
-            pk::list<pk::building@> dst_list; 
-            @src_RE = @src;
-
-
-
-            
-            int search_base = 건물_도시끝;
-            if      (거점수송_거점검색모드 == 0) search_base = 건물_도시끝;
-            else if (거점수송_거점검색모드 == 1) search_base = 건물_거점끝;
-            
-            pk::force@ force = pk::get_force(src.get_force_id());
-            
-			// 수송 거점 검색
-
-                for (int i = 0; i < search_base; i++)
-                {
-                    pk::building@ dst = pk::get_building(i);
-                    int dst_id = dst.get_id();
 			int base2_troops = pk::get_troops(dst);
-
-
-                    // 도시거리
-                    int city_dist = -1;
-                    if (dst_id < 건물_도시끝 and src_id < 건물_도시끝)
-                        city_dist = pk::get_city_distance(dst_id, src_id);
-                    
-                    // 거점거리
-                    int base_dist = pk::get_building_distance(dst_id, src_id, src.get_force_id());
-                    
-                    // 거리 조건 만족 시  (거리 1~3)
-                if ( (base_dist == 1 and !intercept1_Enemy_base(src, dst) and !intercept_delta_Enemy_base(src, dst)) or ((base_dist == 2 or (city_dist == 1 and base_dist <= 3)) and !intercept2_Enemy_base(src, dst) and !intercept_delta_Enemy_base(src, dst)) )  
-                    {
-                       // 목적지가 역병 혹은 메뚜기 재해지역이면 수송 안보냄
-	          pk::city@ city_c = pk::get_city(pk::get_city_id(dst.pos));
-                        if (city_c.ekibyou or city_c.inago)  continue;
+                    int dst_id = dst.get_id();			
 
                         int enemy_weight = countNeighborEnemyBase(dst);
+                    int user_weight = countNeighborUserBase(dst);
 
-	// 병력이 항구 관문보다 적은 적의 침공에서 안전한 도시로 보급 보내라
+	// 병력이 6천 이하인 적의 침공에서 안전한 항구 관문으로 보급 보내라
                     
- if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst)  and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and base2_troops <= pk::get_troops(src) and func_already (dst) <= 1 and no_enemy_around(dst) and func_supplycheck(src,dst) == 0 )
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
+ if (건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and base2_troops <= 6000 and enemy_weight == 0 and user_weight == 0  and func_already (dst) <= 1 and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
+return true;
+					
+					
+	// 병력이 8천 이하인 전방의 항구 관문으로 보급 보내라
+                    					
+ if (건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and base2_troops <= 8000 and (0 < enemy_weight or 0 < user_weight) and func_already (dst) <= 1 and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
+return true;	
 
 
+	// 병력이 8천이하인,적 침공에서 안전한 도시로 보급 보내라
+                    					
+ if (건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and base2_troops <= 8000 and func_already (dst) <= 1 )
+return true;
 
-                }
-
-	
-   } 
-
-            
-            // 출진가능 거점리스트 정렬 (거점 거리 오름차순, 좌표거리 오름차순)
-            if (dst_list.count == 0)
-                best_dst = -1;
-            else
-            {
-                dst_list.sort(function(a, b)
-                {
-                    int build_dist_a = pk::get_building_distance(a.get_id(), main.src_RE.get_id(), a.get_force_id());
-                    int build_dist_b = pk::get_building_distance(b.get_id(), main.src_RE.get_id(), b.get_force_id());
-
-                    int pos_dist_a = pk::get_distance(a.pos, main.src_RE.pos);
-                    int pos_dist_b = pk::get_distance(b.pos, main.src_RE.pos);
-
-                    if (build_dist_a != build_dist_b) 
-                        return (build_dist_a < build_dist_b);
-                    
-                    return (pos_dist_a < pos_dist_b);
-                });
-                best_dst = dst_list[0].get_id();
-            }
-                
-            
-            
-			return best_dst;
-		}
-		
-		
-        //----------------------------------------------------------------------------------
-        //  항구나 관문 병력이 적을때 도시에서 보급대 보내기  (병력) 
-        //----------------------------------------------------------------------------------
-
-
-
-
-		/** 병력 있는 거점 찾기 */
-
-		bool need4thtroops (pk::building@ base)
-		{
-			if (!no_enemy_around(base)) return false;
-
-			int base_troops = pk::get_troops(base);
-
-
-                        int enemy_weight = countNeighborEnemyBase(base);
-
-
-	// 병력 1만 2천 이상, 적 침공에서 안전한 도시에서 보급 보내라
-
-			if ( 12000  <= base_troops and 건물_도시시작 <= base.get_id() and base.get_id() < 건물_도시끝 and no_enemy_around(base) )
-				return true;
-
-
-
-            
+           
 			return false;
 		}
 
@@ -2692,31 +1520,29 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
 		bool Push4thtroops(pk::building@ base)
 		{
-
-            int reinforce_troops = pk::min(1500, int (pk::get_troops(base) * 0.15f));
-			// 명령 가능한 무장이 있는지 확인.
-			auto person_list = pk::get_idle_person_list(base);
-			if (person_list.count == 0) return false;
-
 			// 수송할 인접 거접이 있는지 확인.
 			int target = getBackup4thBase(base);
 			if (target == -1) return false;
 
-			if (enemy_approach(pk::get_building(target))) return false;
-			if (close_combat(pk::get_building(target))) return false;
+            pk::building@ src = pk::get_building(target);			
 
+            int reinforce_troops = pk::min(5000, int (pk::get_troops(src) * 0.15f));
+			// 명령 가능한 무장이 있는지 확인.
+			auto person_list = pk::get_idle_person_list(src);
+			if (person_list.count == 0) return false;
 
             if (건물_관문시작 <= target and target < 건물_항구끝)
-            reinforce_troops = pk::min(5000, int (pk::get_troops(base) * 0.15f));
+            reinforce_troops = pk::min(5000, int (pk::get_troops(src) * 0.15f));
 
             pk::list<pk::person@> actors;
+            actors.clear();				
             for (int i = 0; i < person_list.count; i++)
             {
             if (pk::is_unitize(person_list[i])) continue;
             if (pk::is_absent(person_list[i])) continue;
             if (person_list[i].order != -1) continue;				
             if (person_list[i].get_force_id() != base.get_force_id()) continue; 
-            if (person_list[i].get_force_id() != pk::get_building(target).get_force_id()) continue; 
+            if (person_list[i].get_force_id() != src.get_force_id()) continue; 
             if (person_list[i].location != person_list[i].service) continue;
             if (person_list[i].action_done) continue;
             if (pk::is_absent(person_list[i])) continue;
@@ -2724,7 +1550,7 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
             if (person_list[i].mibun == 신분_재야) continue;
 
             if (!pk::is_unitize(person_list[i]) and !pk::is_absent(person_list[i])
-                and person_list[i].order == -1 and person_list[i].get_force_id() == base.get_force_id() and person_list[i].get_force_id() == pk::get_building(target).get_force_id() 
+                and person_list[i].order == -1 and person_list[i].get_force_id() == base.get_force_id() and person_list[i].get_force_id() == src.get_force_id() 
                 and person_list[i].location == person_list[i].service and !person_list[i].action_done and !pk::is_absent(person_list[i])
                 and (person_list[i].mibun == 신분_군주 or person_list[i].mibun == 신분_도독 or person_list[i].mibun == 신분_태수 or person_list[i].mibun == 신분_일반)) 
 				
@@ -2751,7 +1577,7 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
                 leader.skill = 특기_도주;         // 도주 특기 부여
             }
             
-            int unit_food = int(pk::min( 0.3f * pk::get_food(base), 2.0f * reinforce_troops));
+            int unit_food = int(pk::min( 0.3f * pk::get_food(src), 2.0f * reinforce_troops));
             if (unit_food < int(0.5f * reinforce_troops)) return false;   // 병량 부족 
 
 
@@ -2760,10 +1586,10 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
             
 			// 출진 명령 정보 생성.
 			pk::com_deploy_cmd_info cmd;
-			@cmd.base = @base;
+			@cmd.base = @src;
 			cmd.type = 부대종류_수송;
 			cmd.member[0] = leader.get_id();
-			cmd.gold = pk::min(int(pk::get_gold(base) * 0.05f), 7000);
+			cmd.gold = pk::min(int(pk::get_gold(src) * 0.05f), 7000);
 			cmd.food = pk::min(pk::max (2000 , unit_food), 25000);
 			cmd.troops = reinforce_troops;
 			int i = 0;
@@ -2771,9 +1597,9 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 			{
                 int weapon_amount = 0;
                 if (weapon_id < 병기_충차)
-                    weapon_amount = pk::min(int(pk::get_weapon_amount(base, weapon_id) * 0.15f), 60000);
+                    weapon_amount = pk::min(int(pk::get_weapon_amount(src, weapon_id) * 0.15f), 60000);
                 else
-                    weapon_amount = pk::min(int(pk::get_weapon_amount(base, weapon_id)), 1);
+                    weapon_amount = pk::min(int(pk::get_weapon_amount(src, weapon_id)), 1);
                 
 				if (weapon_amount > 0)
 				{
@@ -2783,15 +1609,16 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 				}
 			}
 			cmd.order = 부대임무_공격;
-			cmd.target_pos = pk::get_building(target).get_pos();
+			cmd.target_pos = base.get_pos();
 
 			// 출진.
 			int unit_id = pk::command(cmd);
 			if (unit_id != -1)
 				pk::get_unit(unit_id).action_done = (!거점수송_원거리이동);  // 기본값 true 에서 false 로 변경하여 2회 이동하도록 함 ('19.3.5)
             
-	if (대사표시_설정)             
-            pk::say(pk::u8encode("항관에 병력이 모자른다.\n병력을 이동시킨다!"), leader);
+                string target_name = pk::u8decode(pk::get_name(base));	
+	if (대사표시_설정) 																									  
+                pk::say(pk::u8encode(pk::format("아군 거점의 병력이 적어보인다!\n\x1b[2x{}\x1b[0x(으)로 군사들을 보내라!", target_name)), leader);	
             
             // 임시 도주 효과 ('19.3.6)
             if (거점수송_일시도주설정)
@@ -2810,14 +1637,15 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
         
 		/** 가장 가깝고 위기에 빠진 아군 도시에 보급을 보냄 */
 
-        pk::building@ src_4th;
-		int getBackup4thBase(pk::building@ src)
+        pk::building@ dst_4th;
+		int getBackup4thBase(pk::building@ dst)
 		{
-			int best_dst = -1;
+			int best_src = -1;
 			int best_distance = 0;
-            int src_id = src.get_id();
-            pk::list<pk::building@> dst_list; 
-            @src_4th = @src;
+            int dst_id = dst.get_id();
+            pk::list<pk::building@> src_list; 
+			src_list.clear();			
+            @dst_4th = @dst;
 
 
 
@@ -2826,15 +1654,15 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
             if      (거점수송_거점검색모드 == 0) search_base = 건물_도시끝;
             else if (거점수송_거점검색모드 == 1) search_base = 건물_거점끝;
             
-            pk::force@ force = pk::get_force(src.get_force_id());
+            pk::force@ force = pk::get_force(dst.get_force_id());
             
 			// 수송 거점 검색
 
                 for (int i = 0; i < search_base; i++)
                 {
-                    pk::building@ dst = pk::get_building(i);
-                    int dst_id = dst.get_id();
-			int base2_troops = pk::get_troops(dst);
+                    pk::building@ src = pk::get_building(i);
+                    int src_id = src.get_id();
+			int base_troops = pk::get_troops(src);
 
                 
                     // 도시거리
@@ -2852,26 +1680,50 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 	          pk::city@ city_c = pk::get_city(pk::get_city_id(dst.pos));
                         if (city_c.ekibyou or city_c.inago)  continue;
 
-                        int enemy_weight = countNeighborEnemyBase(dst);
-                    int user_weight = countNeighborUserBase(dst);
 
-	// 병력이 6천 이하인 적의 침공에서 안전한 항구 관문으로 보급 보내라
-                    
- if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) and 건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and base2_troops <= 6000 and enemy_weight == 0 and user_weight == 0  and 13000 <= pk::get_troops(src) and func_already (dst) <= 1 and no_enemy_around(dst) and func_supplycheck(src,dst) == 0  and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
-					
-					
-	// 병력이 8천 이하인 전방의 항구 관문으로 보급 보내라
-                    					
- if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) and 건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and base2_troops <= 8000 and (1 <= enemy_weight or 1 <= user_weight) and 13000 <= pk::get_troops(src) and func_already (dst) <= 1 and no_enemy_around(dst) and func_supplycheck(src,dst) == 0  and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }					
+    // src. dst는 alive 상태에, 서로 다른 아이디에, 국적이 같아야
+    if (!pk::is_alive(src)) continue;
+    if (!pk::is_alive(dst)) continue;
+    if (src_id == dst_id) continue;	
+    if (src.get_force_id() != dst.get_force_id()) continue;
+	
+		   
+         // 유저 세력의 위임군단이면
+         //src의 위임설정 물자 수송지를 플레이어 조종 거점으로 설정하면, 아무 제약없이 플레이어 조종 거점까지도 교류 (플레이어 거점에서 플레이어 의지 상관없이 갑자기 수송대가 나갈수도 있음)   
+    if (위임군단_수송관할_지정여부)
+    {    		 
+         pk::district@ src_district = pk::get_district(src.get_district_id());
+         pk::district@ dst_district = pk::get_district(dst.get_district_id());
 
+         if (force.is_player() and !pk::is_player_controlled(src) and pk::is_alive(src_district) and pk::is_alive(dst_district) and src_district.transport) 
+         {	
+         pk::building@ target_building = pk::get_building(src_district.transport_building);
+		 
+         // src의 위임설정 물자 수송지가 같은 군단 소속이면 같은 군단 내에서만 이동 가능 , src와 dst의 군단이 다르거나 dst가 플레이어 조종 군단이면 안됨  
+         if (target_building.get_district_id() == src_district.get_id() and (src.get_district_id() != dst.get_district_id() or pk::is_player_controlled(dst))) continue;
+
+         // src의 위임설정 물자 수송지가 (플레이어가 조종못하는) 위임군단이고, src의 군단과 다른 곳이면, dst도 위임군단이어야 (dst가 플레이어 조종 군단이면 안된다) = 위임군단끼리만 주고 받는 설정. 플레이어 군단만 제외.
+         if (!pk::is_player_controlled(target_building) and target_building.get_district_id() != src_district.get_id() and pk::is_player_controlled(dst)) continue;
+         }
+     }
+
+
+		if (!no_enemy_around(src)) continue;
+
+
+     if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst))
+     {
+
+	// 병력 1만 2천 이상, 적 침공에서 안전한 도시에서 보급 보내라
+				
+			if ( 12000  <= base_troops and 건물_도시시작 <= src.get_id() and src.get_id() < 건물_도시끝 and func_supplycheck(src,dst) == 0 )
+                    {
+                        best_src = src_id;
+                        src_list.add(src);  // 수송가능 거점리스트 추가
+                    }																   
+			
+				
+     }
 
 
                 }
@@ -2882,242 +1734,63 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
             
             // 출진가능 거점리스트 정렬 (거점 거리 오름차순, 좌표거리 오름차순)
-            if (dst_list.count == 0)
-                best_dst = -1;
+            if (src_list.count == 0)
+                best_src = -1;
             else
             {
-                dst_list.sort(function(a, b)
+                src_list.sort(function(a, b)
                 {
-                    int build_dist_a = pk::get_building_distance(a.get_id(), main.src_4th.get_id(), a.get_force_id());
-                    int build_dist_b = pk::get_building_distance(b.get_id(), main.src_4th.get_id(), b.get_force_id());
+                    int build_dist_a = pk::get_building_distance(a.get_id(), main.dst_4th.get_id(), a.get_force_id());
+                    int build_dist_b = pk::get_building_distance(b.get_id(), main.dst_4th.get_id(), b.get_force_id());
 
-                    int pos_dist_a = pk::get_distance(a.pos, main.src_4th.pos);
-                    int pos_dist_b = pk::get_distance(b.pos, main.src_4th.pos);
+                    int pos_dist_a = pk::get_distance(a.pos, main.dst_4th.pos);
+                    int pos_dist_b = pk::get_distance(b.pos, main.dst_4th.pos);
 
                     if (build_dist_a != build_dist_b) 
                         return (build_dist_a < build_dist_b);
                     
                     return (pos_dist_a < pos_dist_b);
                 });
-                best_dst = dst_list[0].get_id();
+                best_src = src_list[0].get_id();
             }
                 
             
             
-			return best_dst;
+			return best_src;
 		}
 
 
 
 
 
+
+
+
+
+
+
         //----------------------------------------------------------------------------------
-        //  전시 관문, 항구에서 세력멸망 직전 도시로 보급대 보내기  (병력) 
+        //  전시 관문, 항구에서 세력멸망 직전 도시로 지원군 파병
         //----------------------------------------------------------------------------------
+
 
 
 
 
 		/** 병력 있는 거점 찾기 */
 
-		bool needEMERtroops (pk::building@ base)
+		bool needEMER1troops (pk::building@ dst)
 		{
-            pk::force@ force = pk::get_force(base.get_force_id());
+            pk::force@ force = pk::get_force(dst.get_force_id());			
 			if (pk::get_city_list(force).count > 1) return false;			
-			
-			if (!no_enemy_around(base)) return false;
 
-			int base_troops = pk::get_troops(base);
+			if (!enemy_approach_direct(dst)) return false;
 
-
-                        int enemy_weight = countNeighborEnemyBase(base);
-
-
-	// 병력 2천 이상 있고, 당장은 안전한 관문, 항구에서 보급 보내라
-
-			if ( 2000  <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and no_enemy_around(base) and pk::get_city_list(force).count <= 1 )
-				return true;
-
-
-
-
-            
-			return false;
-		}
-
-
-
-
-
-
-
-		/** 60% 보급 명령 */
-
-		bool PushEMERtroops(pk::building@ base)
-		{
-
-            int reinforce_troops = pk::min(26000, pk::max(pk::get_troops(base) - 1000, int (pk::get_troops(base) * 0.60f) ));
-			// 명령 가능한 무장이 있는지 확인.
-			auto person_list = pk::get_idle_person_list(base);
-			if (person_list.count == 0) return false;
-
-			// 수송할 인접 거접이 있는지 확인.
-			int target = getBackupBPBase(base);
-			if (target == -1) return false;
-
-			if (!enemy_approach_direct(pk::get_building(target))) return false;
-
-
-
-            if (건물_관문시작 <= target and target < 건물_항구끝)
-            reinforce_troops = pk::min(26000, pk::max(pk::get_troops(base) - 1000, int (pk::get_troops(base) * 0.60f) ));
-
-            pk::list<pk::person@> actors;
-            for (int i = 0; i < person_list.count; i++)
-            {
-            if (pk::is_unitize(person_list[i])) continue;
-            if (pk::is_absent(person_list[i])) continue;
-            if (person_list[i].order != -1) continue;				
-            if (person_list[i].get_force_id() != base.get_force_id()) continue; 
-            if (person_list[i].get_force_id() != pk::get_building(target).get_force_id()) continue; 
-            if (person_list[i].location != person_list[i].service) continue;
-            if (person_list[i].action_done) continue;
-            if (pk::is_absent(person_list[i])) continue;
-            if (person_list[i].mibun == 신분_포로) continue;
-            if (person_list[i].mibun == 신분_재야) continue;
-
-            if (!pk::is_unitize(person_list[i]) and !pk::is_absent(person_list[i])
-                and person_list[i].order == -1 and person_list[i].get_force_id() == base.get_force_id() and person_list[i].get_force_id() == pk::get_building(target).get_force_id() 
-                and person_list[i].location == person_list[i].service and !person_list[i].action_done and !pk::is_absent(person_list[i])
-                and (person_list[i].mibun == 신분_군주 or person_list[i].mibun == 신분_도독 or person_list[i].mibun == 신분_태수 or person_list[i].mibun == 신분_일반)) 
-				
-                actors.add(person_list[i]);
-            }
-
-       if (actors.count == 0 ) return false;
-	   
-			// 무력 통솔 낮은 순으로 정렬.
-			actors.sort(function(a, b)
-			{
-                        bool a_Supply = pk::has_skill(a, 특기_운반);
-                        bool b_Supply = pk::has_skill(b, 특기_운반);
-                        if ( a_Supply and !b_Supply) return true;
-                        if (!a_Supply and  b_Supply) return false;					
-				return (a.stat[무장능력_무력] + a.stat[무장능력_통솔]) < (b.stat[무장능력_무력] + b.stat[무장능력_통솔]);
-			});
-            pk::person@ leader = pk::get_person(actors[0].get_id());
-            
-            // 임시 도주 효과 ('19.3.6)
-            if (거점수송_일시도주설정)
-            {
-                retreat_skill = leader.skill;   // 특기 백업
-                leader.skill = 특기_도주;         // 도주 특기 부여
-            }
-            
-            int unit_food = int(pk::min( 0.7f * pk::get_food(base), 2.0f * reinforce_troops));
-            if (unit_food < int(0.4f * reinforce_troops)) return false;   // 병량 부족 
-
-            float supply_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
-            float weapon_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
-            
-			// 출진 명령 정보 생성.
-			pk::com_deploy_cmd_info cmd;
-			@cmd.base = @base;
-			cmd.type = 부대종류_수송;
-			cmd.member[0] = leader.get_id();
-			cmd.gold = pk::min(int(pk::get_gold(base) * 0.60f), 10000);
-			cmd.food = pk::min(pk::max (5000 , unit_food), 25000);
-			cmd.troops = reinforce_troops;
-			int i = 0;
-			for (int weapon_id = 0; weapon_id < 병기_끝; weapon_id++)
-			{
-                int weapon_amount = 0;
-                if (weapon_id < 병기_충차)
-                    weapon_amount = pk::min(int(pk::get_weapon_amount(base, weapon_id) * 0.60f), 100000);
-                else
-                    weapon_amount = pk::min(int(pk::get_weapon_amount(base, weapon_id)), 10);
-                
-				if (weapon_amount > 0)
-				{
-					cmd.weapon_id[i] = weapon_id;
-					cmd.weapon_amount[i] = weapon_amount;
-					i++;
-				}
-			}
-			cmd.order = 부대임무_공격;
-			cmd.target_pos = pk::get_building(target).get_pos();
-
-			// 출진.
-			int unit_id = pk::command(cmd);
-			if (unit_id != -1)
-				pk::get_unit(unit_id).action_done = (!거점수송_원거리이동);  // 기본값 true 에서 false 로 변경하여 2회 이동하도록 함 ('19.3.5)
-            
-	if (대사표시_설정)             
-            pk::say(pk::u8encode("성이 함락 직전이다!\n속히 보급을 보내겠다!"), leader);
-            
-            // 임시 도주 효과 ('19.3.6)
-            if (거점수송_일시도주설정)
-            {
-                leader.skill = retreat_skill;         // 특기 복원
-            }
-            
-            
-			return true;
-		}
-
-
-
-
-
-        
-		/** 가장 가깝고 위기에 빠진 아군 도시에 보급을 보냄 */
-
-        pk::building@ src_em;
-		int getBackupBPBase(pk::building@ src)
-		{
-			int best_dst = -1;
-			int best_distance = 0;
-            int src_id = src.get_id();
-            pk::list<pk::building@> dst_list; 
-            @src_em = @src;
-
-
-
-            
-            int search_base = 건물_도시끝;
-            if      (거점수송_거점검색모드 == 0) search_base = 건물_도시끝;
-            else if (거점수송_거점검색모드 == 1) search_base = 건물_거점끝;
-            
-            pk::force@ force = pk::get_force(src.get_force_id());
-            
-			// 수송 거점 검색
-
-                for (int i = 0; i < search_base; i++)
-                {
-                    pk::building@ dst = pk::get_building(i);
-                    int dst_id = dst.get_id();
-			int base2_troops = pk::get_troops(dst);
-
-            int max_distance = (dst_id >= 건물_도시끝)? 2 : 2;
-
-
-                    // 도시거리
-                    int city_dist = -1;
-                    if (dst_id < 건물_도시끝 and src_id < 건물_도시끝)
-                        city_dist = pk::get_city_distance(dst_id, src_id);
-                    
-                    // 거점거리
-                    int base_dist = pk::get_building_distance(dst_id, src_id, src.get_force_id());
-                    
-                    // 거리 조건 만족 시
-                    if ( (0 <= base_dist and base_dist <= max_distance) or city_dist == 1)
-                    {
-
+            int dst_id = dst.get_id();			
 
 			// 근접한 적 부대 수
 			int enemy_units1 = 0;
 			int enemy_troops1 = 0;
-
 			// 3칸 이내 적 부대 수
 			int enemy_units3 = 0;
 			// 3칸 이내 적 병력 수
@@ -3142,6 +1815,7 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 						{
 							enemy_units1++;
 							enemy_troops1 += unit.troops;
+
 						}
 						if (distance <= 10)
 						{
@@ -3153,161 +1827,21 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
 					else if (dst.get_force_id() == unit.get_force_id() and unit.type == 부대종류_전투)
 					{
-                                                if (distance <= 3)
+                        if (distance <= 7)
 						{
 							force_units7++;
 						}
 					}
 
 
-					else
-					{
-					}
 				}
-			}
-
-
-                        int enemy_weight = countNeighborEnemyBase(dst);
-
-
-
-
-           // 병력 8천 이하에 위기의 도시로 보급 보내라
-
-       if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and base2_troops <= 8000 and 1 <= enemy_units3 and 0 == enemy_units1 and force_units7 == 0 and func_already (dst) <= 3 and 0 < enemy_weight )
-                    {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
-
-
-
-
-
-
-
-                }
-
-	
-   } 
-
-            
-            // 출진가능 거점리스트 정렬 (거점 거리 오름차순, 좌표거리 오름차순)
-            if (dst_list.count == 0)
-                best_dst = -1;
-            else
-            {
-                dst_list.sort(function(a, b)
-                {
-                    int build_dist_a = pk::get_building_distance(a.get_id(), main.src_em.get_id(), a.get_force_id());
-                    int build_dist_b = pk::get_building_distance(b.get_id(), main.src_em.get_id(), b.get_force_id());
-
-                    int pos_dist_a = pk::get_distance(a.pos, main.src_em.pos);
-                    int pos_dist_b = pk::get_distance(b.pos, main.src_em.pos);
-
-                    if (build_dist_a != build_dist_b) 
-                        return (build_dist_a < build_dist_b);
-                    
-                    return (pos_dist_a < pos_dist_b);
-                });
-                best_dst = dst_list[0].get_id();
-            }
-                
-            
-            
-			return best_dst;
-		}
-
-
-
-
-
-
-
-
-
-
-
-        //----------------------------------------------------------------------------------
-        //  전시 관문, 항구에서 세력멸망 직전 도시로 지원군 파병
-        //----------------------------------------------------------------------------------
-
-
-
-
-
-		/** 병력 있는 거점 찾기 */
-
-		bool needEMER1troops (pk::building@ base)
-		{
-            pk::force@ force = pk::get_force(base.get_force_id());			
-			if (pk::get_city_list(force).count > 1) return false;			
+			}			
 			
-			// 근접한 적 부대 수
-			int enemy_units1 = 0;
-			int enemy_troops1 = 0;
 
-			// 3칸 이내 적 부대 수
-			int enemy_units3 = 0;
-			// 3칸 이내 적 병력 수
-			int enemy_troops3 = 0;
-
-
-
-			int force_units7 = 0;
-
-
-
-			auto range = pk::range(base.get_pos(), 1, 10);
-			for (int i = 0; i < int(range.length); i++)
-			{
-				auto unit = pk::get_unit(range[i]);
-				if (pk::is_alive(unit))
-				{
-					int distance = pk::get_distance(base.get_pos(), range[i]);
-					if (pk::is_enemy(base, unit))
-					{
-						if (distance <= 1)
-						{
-							enemy_units1++;
-							enemy_troops1 += unit.troops;
-						}
-						if (distance <= 10)
-						{
-							enemy_units3++;
-							enemy_troops3 += unit.troops;
-						}
-					}
-
-
-					else if (base.get_force_id() == unit.get_force_id() and unit.type == 부대종류_전투)
-					{
-                                                if (distance <= 7)
-						{
-							force_units7++;
-						}
-					}
-
-
-					else
-					{
-					}
-				}
-			}
-
-			if (enemy_units1 >= 10)  // 거점 포위 상태로 수송 불가
-				return false;
-			int base_troops = pk::get_troops(base);
-
-
-                        int enemy_weight = countNeighborEnemyBase(base);
-
-
-	// 병력 2천 이상 있고, 당장은 안전한 관문, 항구에서 보급 보내라
-
-			if ( 2000  <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and pk::get_city_list(force).count <= 1  )
+           // 병력 1만2천 이하거나 항관보다 병력 적은 위기의 도시로 보급 보내라
+                        int enemy_weight = countNeighborEnemyBase(dst);
+       if (건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and pk::get_troops(dst) <= 12000 and 1 <= enemy_units1 and  force_units7 <= 1 and 0 < enemy_weight )
 				return true;
-
 
 
             
@@ -3324,24 +1858,26 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
 		bool PushEMER1troops(pk::building@ base)
 		{
-			// 명령 가능한 무장이 있는지 확인.
-			auto person_list = pk::get_idle_person_list(base);
-			if (person_list.count == 0) return false;
-
 			// 수송할 인접 거접이 있는지 확인.
 			int target = getUrgentBaseEM(base);
 			if (target == -1) return false;
 
-			if (!enemy_approach_direct(pk::get_building(target))) return false;
+            pk::building@ src = pk::get_building(target);
+
+			// 명령 가능한 무장이 있는지 확인.
+			auto person_list = pk::get_idle_person_list(src);
+			if (person_list.count == 0) return false;
+
 
             pk::list<pk::person@> actors;
+            actors.clear();						
             for (int i = 0; i < person_list.count; i++)
             {
             if (pk::is_unitize(person_list[i])) continue;
             if (pk::is_absent(person_list[i])) continue;
             if (person_list[i].order != -1) continue;				
             if (person_list[i].get_force_id() != base.get_force_id()) continue; 
-            if (person_list[i].get_force_id() != pk::get_building(target).get_force_id()) continue; 
+            if (person_list[i].get_force_id() != src.get_force_id()) continue; 
             if (person_list[i].location != person_list[i].service) continue;
             if (person_list[i].action_done) continue;
             if (pk::is_absent(person_list[i])) continue;
@@ -3349,7 +1885,7 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
             if (person_list[i].mibun == 신분_재야) continue;
 
             if (!pk::is_unitize(person_list[i]) and !pk::is_absent(person_list[i])
-                and person_list[i].order == -1 and person_list[i].get_force_id() == base.get_force_id() and person_list[i].get_force_id() == pk::get_building(target).get_force_id() 
+                and person_list[i].order == -1 and person_list[i].get_force_id() == base.get_force_id() and person_list[i].get_force_id() == src.get_force_id() 
                 and person_list[i].location == person_list[i].service and !person_list[i].action_done and !pk::is_absent(person_list[i])
                 and (person_list[i].mibun == 신분_군주 or person_list[i].mibun == 신분_도독 or person_list[i].mibun == 신분_태수 or person_list[i].mibun == 신분_일반)) 
 				
@@ -3368,7 +1904,7 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
             pk::person@ leader = pk::get_person(actors[0].get_id());
             
             // 원군 병력 산정 : 기준 병력 초과분, 지휘가능병력 확인
-            int reinforce_troops = pk::min(pk::get_command(leader), pk::max(1000, pk::get_troops(base) - 1000));
+            int reinforce_troops = pk::min(pk::get_command(leader), pk::max(1000, pk::get_troops(src) - 1000));
 
             // 최적 무기 선택
             int ground_weapon_id = 병기_검;
@@ -3376,30 +1912,32 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
             int unit_troops = reinforce_troops;
             
             // 육상 무기 선택
-            get_ground_weaponEM(base, leader, reinforce_troops, ground_weapon_id, unit_troops);
+            get_ground_weaponEM(src, leader, reinforce_troops, ground_weapon_id, unit_troops);
             if (ground_weapon_id == 0) return false;    // 병기 부족
             
             // 수상 무기 선택
-            if (leader.tekisei[병종_수군] == 적성_C)
+            if (pk::get_weapon_amount(src, 병기_누선) < 10 and pk::get_weapon_amount(src, 병기_투함) < 10
+			and leader.mibun != 신분_군주 and leader.mibun != 신분_도독 and leader.mibun != 신분_태수 and leader.mibun == 신분_일반
+			and leader.tekisei[병종_수군] == 적성_C)
                 water_weapon_id = 병기_주가;
             else
             {
-                if      (pk::get_weapon_amount(base, 병기_누선) > 0) water_weapon_id = 병기_누선;
-                else if (pk::get_weapon_amount(base, 병기_투함) > 0) water_weapon_id = 병기_투함;
+                if      (pk::get_weapon_amount(src, 병기_누선) > 0) water_weapon_id = 병기_누선;
+                else if (pk::get_weapon_amount(src, 병기_투함) > 0) water_weapon_id = 병기_투함;
             }
             
             // 병량 계산
-            int unit_food = int(pk::min( 0.7f * pk::get_food(base), 2.0f * unit_troops));
+            int unit_food = int(pk::min( 0.7f * pk::get_food(src), 2.0f * unit_troops));
             if (unit_food < int(0.4f * unit_troops)) return false;   // 병량 부족
             
             // 출진 명령
 
                 // 출진 명령 정보 생성.
                 pk::com_deploy_cmd_info cmd;
-                @cmd.base = @base;
+                @cmd.base = @src;
                 cmd.type = 부대종류_전투;
                 cmd.member[0] = leader.get_id();
-                cmd.gold = (pk::get_gold(base) >= 1000) ? int(pk::min(1000.f, pk::get_gold(base) * 0.1f)) : 0;
+                cmd.gold = (pk::get_gold(src) >= 1000) ? int(pk::min(1000.f, pk::get_gold(src) * 0.1f)) : 0;
                 cmd.troops = pk::max(1, unit_troops);
                 cmd.weapon_id[0] = ground_weapon_id;
                 cmd.weapon_id[1] = water_weapon_id;
@@ -3408,15 +1946,17 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
                 cmd.food = unit_food;
 
                 cmd.order = 부대임무_이동;
-                cmd.target_pos = pk::get_building(target).get_pos();  // 목표는 전투중인 거점
+                cmd.target_pos = base.get_pos();  // 목표는 전투중인 거점
 
+                string target_name = pk::u8decode(pk::get_name(base));
 	if (대사표시_설정) 
-                pk::say(pk::u8encode("아군 거점이 절체절명!\n전투병들을 투입하라!"), leader);																											  
+                pk::say(pk::u8encode(pk::format("우리 군이 절체절명의 위기에 빠졌다!\n\x1b[2x{}\x1b[0x(으)로 전투 지원군이 가겠다!", target_name)), leader);	
+																										  
 
                 // 출진.
                 int unit_id = pk::command(cmd);
                 if (unit_id != -1)
-                    pk::get_unit(unit_id).action_done = true;
+				pk::get_unit(unit_id).action_done = (!거점수송_원거리이동);  // 기본값 true 에서 false 로 변경하여 2회 이동하도록 함 ('19.3.5)
 
             
             return true;
@@ -3475,16 +2015,17 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 		/** 가장 가깝고 위기에 빠진 아군 도시에 지원군 보냄 */
 
 
-        pk::building@ src_kEM;
-		int getUrgentBaseEM(pk::building@ src)
+        pk::building@ dst_kEM;
+		int getUrgentBaseEM(pk::building@ dst)
 		{
-			int best_dst = -1;
+			int best_src = -1;
 			int best_distance = 0;
 
 
-            int src_id = src.get_id();
-            pk::list<pk::building@> dst_list; 
-            @src_kEM = @src;
+            int dst_id = dst.get_id();
+            pk::list<pk::building@> src_list; 
+			src_list.clear();			
+            @dst_kEM = @dst;
 
 
 
@@ -3493,76 +2034,19 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
             if      (거점수송_거점검색모드 == 0) search_base = 건물_도시끝;
             else if (거점수송_거점검색모드 == 1) search_base = 건물_거점끝;
             
-            pk::force@ force = pk::get_force(src.get_force_id());
+            pk::force@ force = pk::get_force(dst.get_force_id());
             
             
 			// 수송 거점 검색
 
                 for (int i = 0; i < search_base; i++)
                 {
-                    pk::building@ dst = pk::get_building(i);
-                    int dst_id = dst.get_id();
+                    pk::building@ src = pk::get_building(i);
+                    int src_id = src.get_id();
 			int base2_troops = pk::get_troops(dst);
 
 
             int max_distance = (dst_id >= 건물_도시끝)? 2 : 2;
-
-
-
-
-
-			// 근접한 적 부대 수
-			int enemy_units1 = 0;
-			int enemy_troops1 = 0;
-			// 3칸 이내 적 부대 수
-			int enemy_units3 = 0;
-			// 3칸 이내 적 병력 수
-			int enemy_troops3 = 0;
-
-
-
-			int force_units7 = 0;
-
-
-
-			auto range = pk::range(dst.get_pos(), 1, 10);
-			for (int i = 0; i < int(range.length); i++)
-			{
-				auto unit = pk::get_unit(range[i]);
-				if (pk::is_alive(unit))
-				{
-					int distance = pk::get_distance(dst.get_pos(), range[i]);
-					if (pk::is_enemy(dst, unit))
-					{
-						if (distance <= 3)
-						{
-							enemy_units1++;
-							enemy_troops1 += unit.troops;
-
-						}
-						if (distance <= 10)
-						{
-							enemy_units3++;
-							enemy_troops3 += unit.troops;
-						}
-					}
-
-
-					else if (dst.get_force_id() == unit.get_force_id() and unit.type == 부대종류_전투)
-					{
-                                                if (distance <= 7)
-						{
-							force_units7++;
-						}
-					}
-
-
-					else
-					{
-					}
-				}
-			}
-
 
 
                     // 도시거리
@@ -3577,17 +2061,45 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
                     if ( (0 <= base_dist and base_dist <= max_distance) or city_dist == 1)
                     {
 
+			// 근접한 적 부대 수
+			int enemy_units1 = 0;
+			int enemy_troops1 = 0;
 
+			auto range = pk::range(src.get_pos(), 1, 1);
+			for (int i = 0; i < int(range.length); i++)
+			{
+				auto unit = pk::get_unit(range[i]);
+				if (pk::is_alive(unit))
+				{
+					int distance = pk::get_distance(src.get_pos(), range[i]);
+					if (pk::is_enemy(src, unit))
+					{
+						if (distance <= 1)
+						{
+							enemy_units1++;
+							enemy_troops1 += unit.troops;
+						}
 
-           // 병력 1만2천 이하거나 항관보다 병력 적은 위기의 도시로 보급 보내라
-                        int enemy_weight = countNeighborEnemyBase(dst);
-       if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) and 건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and (base2_troops <= 12000 or base2_troops <= pk::get_troops(src)) and 1 <= enemy_units1 and  force_units7 <= 1 and 0 < enemy_weight )
+					}
+	  
+				}
+			}
+
+			if (enemy_units1 >= 10)  // 거점 포위 상태로 수송 불가
+				continue;
+			int base_troops = pk::get_troops(src);
+            int enemy_weight = countNeighborEnemyBase(src);
+
+						
+	// 병력 2천 이상 있고, 당장은 안전한 관문, 항구에서 보급 보내라
+
+			if (src_id != dst_id and src.get_force_id() == dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) 
+		    and 2000  <= pk::get_troops(src) and 건물_관문시작 <= src.get_id() and src.get_id() < 건물_항구끝 and pk::get_city_list(force).count <= 1  )
                     {
-                        best_dst = dst_id;
-                        dst_list.add(dst);  // 수송가능 거점리스트 추가
-                    }
-
-
+                        best_src = src_id;
+                        src_list.add(src);  // 수송가능 거점리스트 추가
+                    }						
+						
 
 
 
@@ -3598,29 +2110,29 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
 
             // 출진가능 거점리스트 정렬 (거점 거리 오름차순, 좌표거리 오름차순)
-            if (dst_list.count == 0)
-                best_dst = -1;
+            if (src_list.count == 0)
+                best_src = -1;
             else
             {
-                dst_list.sort(function(a, b)
+                src_list.sort(function(a, b)
                 {
-                    int build_dist_a = pk::get_building_distance(a.get_id(), main.src_kEM.get_id(), a.get_force_id());
-                    int build_dist_b = pk::get_building_distance(b.get_id(), main.src_kEM.get_id(), b.get_force_id());
+                    int build_dist_a = pk::get_building_distance(a.get_id(), main.dst_kEM.get_id(), a.get_force_id());
+                    int build_dist_b = pk::get_building_distance(b.get_id(), main.dst_kEM.get_id(), b.get_force_id());
 
-                    int pos_dist_a = pk::get_distance(a.pos, main.src_kEM.pos);
-                    int pos_dist_b = pk::get_distance(b.pos, main.src_kEM.pos);
+                    int pos_dist_a = pk::get_distance(a.pos, main.dst_kEM.pos);
+                    int pos_dist_b = pk::get_distance(b.pos, main.dst_kEM.pos);
 
                     if (build_dist_a != build_dist_b) 
                         return (build_dist_a < build_dist_b);
                     
                     return (pos_dist_a < pos_dist_b);
                 });
-                best_dst = dst_list[0].get_id();
+                best_src = src_list[0].get_id();
             }
                 
             
             
-			return best_dst;
+			return best_src;
 		}
 
 
@@ -3640,7 +2152,7 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
                     troops += pk::get_troops(dst);
             }
             
-            weight = int(troops / 3000);
+            weight = int(troops);
             return weight;
         }
 
@@ -3805,23 +2317,28 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
 
          //  거리에 따른 인근 적대 도시 숫자 체크. masterpiecek님의 AI_도시물자수송.cpp﻿를 참조했습니다.
-
-
 		int func_enemy_city_count(pk::city@ city, int distance)
 		{
-			int enemy_city_count = 0;
-			for (int i = 0; i < 도시_끝; i++)
+			int enemy_cities = 0;
+			for (int city_id = 0; city_id < 도시_끝; city_id++)
 			{
-				pk::city@ enemycity = pk::get_city(i);
-				int city_distance = pk::get_city_distance(city.get_id(), i);
+				pk::city@ enemy_city = pk::get_city(city_id);
+				if (!pk::is_alive(enemy_city)) continue;
 
-				if (pk::is_alive(enemycity) and city.get_id() != i and pk::is_enemy(city, enemycity) and city_distance <= distance) 
+				// 검색기준 도시 제외
+				if (city.get_id() == city_id) continue;
 
-				enemy_city_count++;
-																	  										   				   
+				// 검색기준 도시와 확인대상 도시가 적이 아닌 경우 제외
+				if (!pk::is_enemy(city, enemy_city)) continue;
+
+				// 도시 간 거리가 일정거리를 초과하는 경우 제외
+				int city_distance = pk::get_city_distance(city.get_id(), city_id);
+				if (city_distance > distance) continue;
+
+				enemy_cities++;
 			}
 
-			return enemy_city_count;
+			return enemy_cities;
 		}
 		
 		
@@ -3901,17 +2418,13 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
 					else if (dst.get_force_id() == unit.get_force_id() and unit.type == 부대종류_전투)
 					{
-                                                if (distance <= 7)
+                        if (distance <= 7)
 						{
 							force_units7++;
 							force_troops3 += unit.troops;
 						}
 					}
 
-
-					else
-					{
-					}
 				}
 			}
             
@@ -3930,9 +2443,11 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 			for (int unit_id = 0; unit_id < 부대_끝; unit_id++)
 			{
 				pk::unit@ unit = pk::get_unit(unit_id);
+			if (!pk::is_alive(unit)) continue;				
 			if (building.get_force_id() == -1) continue;
 			if (unit.get_force_id() == -1) continue;
-				if ( pk::is_alive(unit) and 1 <= unit.troops  and unit.get_force_id() == building.get_force_id() and unit.target == building.get_id()) 
+			if (unit.get_force_id() != building.get_force_id()) continue;			
+			if (unit.target != building.get_id()) continue;	
 
 				already += unit.troops;
 			}
@@ -3945,6 +2460,9 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
         // ***** 거리 1 간 수송시 중간의 적 거점 확인 ***** //
         bool intercept1_Enemy_base(pk::building@ src, pk::building@ dst)
         {
+		    int distance = pk::get_distance(src.get_pos(), dst.get_pos());
+	        if (distance <= 10)	return false;
+	
             for (int i = 0; i < 건물_거점끝; i++)
 			{
                 pk::building@ intercept = pk::get_building(i);
@@ -3968,6 +2486,9 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
         // ***** 거리 2 간 수송시 중간의 적 거점 확인 ***** //
         bool intercept2_Enemy_base(pk::building@ src, pk::building@ dst)
         {
+		    int distance = pk::get_distance(src.get_pos(), dst.get_pos());
+	        if (distance <= 10)	return false;
+				
             for (int i = 0; i < 건물_거점끝; i++)
 			{
                 pk::building@ intercept = pk::get_building(i);
@@ -3987,7 +2508,7 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 
 
 
-        // ***** 허창 3각지대 간 수송시 중간의 적 거점 확인 ***** //
+        // ***** 허창, 완, 북평 3각지대 간 수송시 중간의 적 거점 확인 ***** //
         bool intercept_delta_Enemy_base(pk::building@ src, pk::building@ dst)
         {
             for (int i = 0; i < 건물_거점끝; i++)
@@ -3997,24 +2518,63 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
                 int dst_id = dst.get_id();
                 int intercept_id = intercept.get_id();
                 
+				// 허창 3각지대
                 if (src_id != dst_id and src_id != intercept_id and dst_id != intercept_id and pk::is_enemy(src, intercept) and pk::is_enemy(dst, intercept) and
-                   (((src_id == 건물_진류 or src_id == 건물_허창 or src_id == 건물_완 or src_id == 건물_낙양 or src_id == 건물_관도항) and
-                   (dst_id == 건물_진류 or dst_id == 건물_허창 or dst_id == 건물_완 or dst_id == 건물_낙양 or dst_id == 건물_관도항) and
+                   (((src_id == 건물_진류 or src_id == 건물_허창 or src_id == 건물_완 or src_id == 건물_낙양) and
+                   (dst_id == 건물_진류 or dst_id == 건물_허창 or dst_id == 건물_완 or dst_id == 건물_낙양) and
                    (intercept_id == 건물_진류 or intercept_id == 건물_허창 or intercept_id == 건물_완 or intercept_id == 건물_호로관 or intercept_id == 건물_관도항)) or
-                   ((src_id == 건물_진류 or src_id == 건물_허창 or src_id == 건물_완 or src_id == 건물_호로관 or src_id == 건물_관도항) and
-                   (dst_id == 건물_진류 or dst_id == 건물_허창 or dst_id == 건물_완 or dst_id == 건물_호로관 or dst_id == 건물_관도항) and
-                   (intercept_id == 건물_진류 or intercept_id == 건물_허창 or intercept_id == 건물_완 or intercept_id == 건물_호로관 or intercept_id == 건물_관도항))) )
+				   
+                   ((src_id == 건물_진류 or src_id == 건물_허창 or src_id == 건물_완 or src_id == 건물_호로관) and
+                   (dst_id == 건물_진류 or dst_id == 건물_허창 or dst_id == 건물_완 or dst_id == 건물_호로관) and
+                   (intercept_id == 건물_진류 or intercept_id == 건물_허창 or intercept_id == 건물_완 or intercept_id == 건물_호로관 or intercept_id == 건물_관도항)) or
+				   
+                   (src_id == 건물_관도항 and
+                   (dst_id == 건물_허창 or dst_id == 건물_완 or dst_id == 건물_낙양) and
+                   (intercept_id == 건물_진류 or intercept_id == 건물_허창 or intercept_id == 건물_완 or intercept_id == 건물_호로관)) or		
 
-	return true;
+                   ((src_id == 건물_허창 or src_id == 건물_완 or src_id == 건물_낙양) and
+                   dst_id == 건물_관도항 and
+                   (intercept_id == 건물_진류 or intercept_id == 건물_허창 or intercept_id == 건물_완 or intercept_id == 건물_호로관)) or		
+
+                   (src_id == 건물_관도항 and
+                   (dst_id == 건물_허창 or dst_id == 건물_완 or dst_id == 건물_호로관) and
+                   (intercept_id == 건물_진류 or intercept_id == 건물_허창 or intercept_id == 건물_완 or intercept_id == 건물_호로관)) or
+
+                   ((src_id == 건물_허창 or src_id == 건물_완 or src_id == 건물_호로관) and
+                   dst_id == 건물_관도항 and
+                   (intercept_id == 건물_진류 or intercept_id == 건물_허창 or intercept_id == 건물_완 or intercept_id == 건물_호로관)) ) )
+	               return true;
+
+
+				// 북평 3각지대
+                if (src_id != dst_id and src_id != intercept_id and dst_id != intercept_id and pk::is_enemy(src, intercept) and pk::is_enemy(dst, intercept) and
+                   (src_id == 건물_북평 or src_id == 건물_계 or src_id == 건물_남피) and
+                   (dst_id == 건물_북평 or dst_id == 건물_계 or dst_id == 건물_남피) and
+                   (intercept_id == 건물_북평 or intercept_id == 건물_계 or intercept_id == 건물_남피))				   
+	               return true;
+				   
+				   
+				// 완 3각지대
+                if (src_id != dst_id and src_id != intercept_id and dst_id != intercept_id and pk::is_enemy(src, intercept) and pk::is_enemy(dst, intercept) and
+                   (src_id == 건물_상용 or src_id == 건물_무관) and
+                   (dst_id == 건물_상용 or dst_id == 건물_무관) and
+                   intercept_id == 건물_완)				   
+	               return true;			
+
+                if (src_id != dst_id and src_id != intercept_id and dst_id != intercept_id and pk::is_enemy(src, intercept) and pk::is_enemy(dst, intercept) and
+                   (src_id == 건물_방릉항 or src_id == 건물_무관) and
+                   (dst_id == 건물_방릉항 or dst_id == 건물_무관) and
+                   intercept_id == 건물_완)				   
+	               return true;				   
+				   
+				   
             }
             
 	return false;
         }
 
 
-
         //---------------------------------------------------------------------------------------
-
         //---------------------------------------------------------------------------------------
 
         // ***** 거점 근처에서 적과 아군이 간격 없이 직접적으로 교전중인가? ***** //
@@ -4029,8 +2589,9 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
                             pk::unit@ unit_e = pk::get_unit(pos_i);
                             if (pk::is_alive(unit_e) and pk::is_enemy(base, unit_e))
 				{	
-		  
-                pk::unit@ unit_f = get_neighbor_enemy_unit(unit_e);
+
+			    int target = get_neighbor_enemy_unit(unit_e);		  
+                pk::unit@ unit_f = pk::get_unit(target);
 				
 				if (pk::is_alive(unit_f) and pk::is_enemy(unit_e, unit_f) and base.get_force_id() == unit_f.get_force_id())					
 	            return true;
@@ -4053,10 +2614,18 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
                 {
 				auto unit_e = pk::get_unit(range[i]);
 				if (pk::is_alive(unit_e) and pk::is_enemy(base, unit_e))
-				{	
-                    pk::building@ base_t = get_neighbor_enemy_base(unit_e);	
+				{
+			        int target = get_neighbor_enemy_base(unit_e);
+			        int target2 = get_neighbor_enemy_base_2(unit_e);					
+                    pk::building@ base_t = pk::get_building(target);
+                    pk::building@ base_k = pk::get_building(target2);
+					
 				if (pk::is_alive(base_t) and base_t.get_id() == base.get_id())					
 	            return true;
+			
+				else if (pk::is_alive(base_k) and base_k.get_id() == base.get_id())					
+	            return true;					
+	
                 }
                 }				
             
@@ -4086,7 +2655,7 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 	            return true;
                 }
 
-                if (pk::is_valid_pos(neighbor_pos_mark))
+                else if (pk::is_valid_pos(neighbor_pos_mark))
                 {
                     pk::unit@ unit_m = pk::get_unit(neighbor_pos_mark);	
 										
@@ -4098,12 +2667,15 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 	return false;
         }
 		
+
+
         //---------------------------------------------------------------------------------------
 
         //---------------------------------------------------------------------------------------
         // 적부대가 아군부대와 직접 마주할 상황 (2022.06. 일송정 추가)
-        pk::unit@ get_neighbor_enemy_unit(pk::unit@ unit)
+		int get_neighbor_enemy_unit(pk::unit@ unit)
         {
+			int best_unit = -1;			
             pk::array<pk::point> arr_range = pk::get_movable_pos(unit);  // 이동가능좌표
             for (int j = 0; j < int(arr_range.length); j++)
             {
@@ -4117,56 +2689,69 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
                     pk::unit@ unit_t = pk::get_unit(neighbor_pos);
 
                     if (pk::is_alive(unit_t) and unit_t.get_id() != unit.get_id() and pk::is_enemy(unit, unit_t))
-                        return unit_t;
+                        best_unit = unit_t.get_id();
                 }
 
-                if (pk::is_valid_pos(neighbor_pos_mark))
+                else if (pk::is_valid_pos(neighbor_pos_mark))
                 {
                     pk::unit@ unit_m = pk::get_unit(neighbor_pos_mark);	
 										
                     if (pk::is_alive(unit_m) and unit_m.get_id() != unit.get_id() and pk::is_enemy(unit, unit_m))
-                        return unit_m;					
+                        best_unit = unit_m.get_id();				
                 }
             }  
             }			
-            return null;
+			return best_unit;
         }
         //---------------------------------------------------------------------------------------
 
         //---------------------------------------------------------------------------------------
         // 적부대가 우리 거점 경계 범위 까지 올 수 있는 상황
-        pk::building@ get_neighbor_enemy_base(pk::unit@ unit)
+		int get_neighbor_enemy_base(pk::unit@ unit)
         {
+			int best_dst = -1;		
+			
             pk::array<pk::point> arr_range = pk::get_movable_pos(unit);  // 이동가능좌표
             for (int j = 0; j < int(arr_range.length); j++)
             {
                 pk::point pos = arr_range[j];				
 
                 pk::array<pk::point> arr_t = pk::range(pos, 1, 4);   // 주변좌표
-                pk::array<pk::point> arr_tm = pk::range(unit.pos, 1, 4);   // 주변좌표	
-                for (int j = 0; j < int(arr_t.length); j++)
+	
+                for (int k = 0; k < int(arr_t.length); k++)
                 {				
-                if (pk::is_valid_pos(arr_t[j]))
+                if (pk::is_valid_pos(arr_t[k]))
                 {
-                    pk::building@ base = pk::get_building(arr_t[j]);
-                    if (pk::is_alive(base) and pk::is_enemy(unit, base))
-                        return base;
+                    pk::building@ base = pk::get_building(arr_t[k]);
+                    if (pk::is_alive(base) and base.get_id() < 건물_거점끝 and pk::is_enemy(unit, base))
+                        best_dst = base.get_id();
                 }
                 }
+
+            }			
+			return best_dst;
+        }		
+		
+		int get_neighbor_enemy_base_2(pk::unit@ unit)
+        {
+			    int best_dst = -1;			
+                pk::array<pk::point> arr_tm = pk::range(unit.pos, 1, 4);   // 주변좌표
+
                 for (int j = 0; j < int(arr_tm.length); j++)
                 {				
                 if (pk::is_valid_pos(arr_tm[j]))
                 {
                     pk::building@ base_mark = pk::get_building(arr_tm[j]);
 
-                    if (pk::is_alive(base_mark) and pk::is_enemy(unit, base_mark))
-                        return base_mark;
+                    if (pk::is_alive(base_mark) and base_mark.get_id() < 건물_거점끝 and pk::is_enemy(unit, base_mark))
+                        best_dst = base_mark.get_id();
 
                 }
                 }				            
-            }			
-            return null;
+            			
+			return best_dst;
         }
+		
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
 
@@ -4178,10 +2763,17 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
                 {
 				auto unit_e = pk::get_unit(range[i]);
 				if (pk::is_alive(unit_e) and pk::is_enemy(base, unit_e))
-				{	
-                    pk::building@ base_t = get_neighbor_enemy_base_direct(unit_e);	
+				{
+			        int target = get_neighbor_enemy_base_direct(unit_e);
+			        int target2 = get_neighbor_enemy_base_direct_2(unit_e);					
+                    pk::building@ base_t = pk::get_building(target);
+                    pk::building@ base_k = pk::get_building(target2);						
 				if (pk::is_alive(base_t) and base_t.get_id() == base.get_id())					
 	            return true;
+			
+				else if (pk::is_alive(base_k) and base_k.get_id() == base.get_id())					
+	            return true;			
+			
                 }
                 }				
             
@@ -4191,40 +2783,52 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         // 적부대가 우리 거점 경계 범위 까지 올 수 있는 상황 (항관이 있어서 바로 못오는 경우까지 감안)
-        pk::building@ get_neighbor_enemy_base_direct(pk::unit@ unit)
+		int get_neighbor_enemy_base_direct(pk::unit@ unit)
         {
+			int best_dst = -1;			
             pk::array<pk::point> arr_range = pk::get_movable_pos(unit);  // 이동가능좌표
             for (int j = 0; j < int(arr_range.length); j++)
             {
                 pk::point pos = arr_range[j];				
 
                 pk::array<pk::point> arr_t = pk::range(pos, 1, 2);   // 주변좌표
-                pk::array<pk::point> arr_tm = pk::range(unit.pos, 1, 2);   // 주변좌표	
-                for (int j = 0; j < int(arr_t.length); j++)
+
+                for (int k = 0; k < int(arr_t.length); k++)
                 {				
-                if (pk::is_valid_pos(arr_t[j]))
+                if (pk::is_valid_pos(arr_t[k]))
                 {
-                    pk::building@ base = pk::get_building(arr_t[j]);
-                    if (pk::is_alive(base) and pk::is_enemy(unit, base))
-                        return base;
+                    pk::building@ base = pk::get_building(arr_t[k]);
+                    if (pk::is_alive(base) and base.get_id() < 건물_거점끝 and pk::is_enemy(unit, base))
+                        best_dst = base.get_id();
                 }
                 }
+
+            }			
+			return best_dst;
+        }
+
+
+		int get_neighbor_enemy_base_direct_2(pk::unit@ unit)
+        {
+			    int best_dst = -1;				
+                pk::array<pk::point> arr_tm = pk::range(unit.pos, 1, 2);   // 주변좌표		
+
                 for (int j = 0; j < int(arr_tm.length); j++)
                 {				
                 if (pk::is_valid_pos(arr_tm[j]))
                 {
                     pk::building@ base_mark = pk::get_building(arr_tm[j]);
 
-                    if (pk::is_alive(base_mark) and pk::is_enemy(unit, base_mark))
-                        return base_mark;
+                    if (pk::is_alive(base_mark) and base_mark.get_id() < 건물_거점끝 and pk::is_enemy(unit, base_mark))
+                        best_dst = base_mark.get_id();
 
                 }
                 }				            
-            }			
-            return null;
+            			
+			return best_dst;
         }
+
         //---------------------------------------------------------------------------------------
-																								 
         //---------------------------------------------------------------------------------------
 
         // ***** 적 부대의 아군 거점 근처 존재 여부***** //
@@ -4251,9 +2855,6 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
 						}
 					}
 
-					else
-					{
-					}
 				}
 			}
 
@@ -4268,7 +2869,47 @@ if (건물_관문시작 <= src_id and src_id < 건물_항구끝 and 건물_도�
         }
 
         //---------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------
 
+        // ***** 적 부대의 아군 거점 근처 존재 여부, 거리 변수(2024.04. 일송정 추가)***** //
+        bool enemy_around_distance(pk::building@ base, int unit_distance)
+        {
+
+			int enemy_units3 = 0;
+			int enemy_troops3 = 0;
+
+			auto range = pk::range(base.get_pos(), 1, unit_distance);
+			for (int i = 0; i < int(range.length); i++)
+			{
+				auto unit = pk::get_unit(range[i]);
+				if (pk::is_alive(unit))
+				{
+					int distance = pk::get_distance(base.get_pos(), range[i]);
+					if (pk::is_enemy(base, unit))
+					{
+
+						if (distance <= unit_distance)
+						{
+							enemy_units3++;
+							enemy_troops3 += unit.troops;
+						}
+					}
+
+				}
+			}
+
+
+	
+		if (enemy_troops3 > 0 and enemy_units3 > 0)					
+	            return true;
+
+				
+            
+	return false;
+        }
+
+
+        //---------------------------------------------------------------------------------------       		
 
 
 	};

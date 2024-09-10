@@ -69,18 +69,22 @@
 				uint total_weapons = 0;
 				for (int i = 병기_창; i <= 병기_군마; i++)
 					total_weapons = total_weapons + pk::get_weapon_amount(building, i);
+				
+				pk::city@ my_city = pk::building_to_city(building);
+				
 				switch (base.status)
 				{
 				case 거점상태_후방:
+
+			    if ( my_city.num_devs < my_city.max_devs and pk::get_elapsed_months() > 3)
+			    {
+					context.push_cmd(거점AI_개발);					
+					context.push_cmd(거점AI_개발);	
+					context.push_cmd(거점AI_개발);					
+					context.push_cmd(거점AI_개발);						
 				
+			    }					
 
-                 if (pk::get_max_troops(building) * 0.81f <= pk::get_troops(building) )
-			         {
-
-					context.push_cmd(거점AI_설치);
-					context.push_cmd(거점AI_설치);
-
-       				  }
 
 						context.push_cmd(거점AI_징병);
 						context.push_cmd(거점AI_생산);						  
@@ -114,18 +118,16 @@
 
 				case 거점상태_경계:
 
-                if (pk::get_max_troops(building) * 0.81f <= pk::get_troops(building) )
-			         {
-                                           if (!front_base(building))					
-					context.push_cmd(거점AI_공격);
-                                           if (!front_base(building))
-					context.push_cmd(거점AI_공격);
-					context.push_cmd(거점AI_설치);
-					context.push_cmd(거점AI_설치);
+			    if ( my_city.num_devs < my_city.max_devs and pk::get_elapsed_months() > 3)
+			    {
+					context.push_cmd(거점AI_개발);					
+					context.push_cmd(거점AI_개발);	
+					context.push_cmd(거점AI_개발);					
+					context.push_cmd(거점AI_개발);						
+				
+			    }	
 
-				     }	
-                                           if (!front_base(building))					 
-					context.push_cmd(거점AI_공격);
+	
 						context.push_cmd(거점AI_징병);
 						context.push_cmd(거점AI_생산);										   
 					context.push_cmd(거점AI_최소인재탐색);
@@ -159,17 +161,16 @@
 
 				case 거점상태_전방:
 
-              if (pk::get_max_troops(building) * 0.81f <= pk::get_troops(building) )
-			        {
-                                           if (!front_base(building))
-					context.push_cmd(거점AI_공격);
-                                           if (!front_base(building))
-					context.push_cmd(거점AI_공격);
-					context.push_cmd(거점AI_설치);
-					context.push_cmd(거점AI_설치);
-				 }
-                                           if (!front_base(building))
-					context.push_cmd(거점AI_공격);
+			    if ( my_city.num_devs < my_city.max_devs and pk::get_elapsed_months() > 3)
+			    {
+					context.push_cmd(거점AI_개발);					
+					context.push_cmd(거점AI_개발);	
+					context.push_cmd(거점AI_개발);					
+					context.push_cmd(거점AI_개발);						
+				
+			    }	
+
+
 						context.push_cmd(거점AI_징병);
 						context.push_cmd(거점AI_생산);						
 					context.push_cmd(거점AI_설치);
@@ -255,16 +256,7 @@
 
 			else if (10000 < pk::get_troops(building))
 			  {
-                if (pk::get_max_troops(building) * 0.81f <= pk::get_troops(building) )
-			        {
-					context.push_cmd(거점AI_방어);
-	  
-					context.push_cmd(거점AI_방어);
-                                           if (!front_base(building))
-					context.push_cmd(거점AI_공격);	
-                                           if (!front_base(building))														  	   
-					context.push_cmd(거점AI_공격);
-				    }
+
 					
 					context.push_cmd(거점AI_방어);
 					// 적 군사시설만 있음
@@ -333,15 +325,7 @@
 
 	 else if (10000 < pk::get_troops(building))
 			{
-              if (pk::get_max_troops(building) * 0.81f <= pk::get_troops(building) )
-			    {
-                                           if (!front_base(building))														
-					context.push_cmd(거점AI_공격);
-                                           if (!front_base(building))
-					context.push_cmd(거점AI_공격);
-					context.push_cmd(거점AI_설치);
-					context.push_cmd(거점AI_설치);
-				 }					
+					
 					context.push_cmd(거점AI_포상);
 					context.push_cmd(거점AI_훈련);
 					context.push_cmd(거점AI_계략);
@@ -372,17 +356,7 @@
 
 	 else if (10000 < pk::get_troops(building))
 		{
-            if (pk::get_max_troops(building) * 0.81f <= pk::get_troops(building) )
-			      {
-                                           if (!front_base(building))
-					context.push_cmd(거점AI_공격);
-                                           if (!front_base(building))
-					context.push_cmd(거점AI_공격);
-					context.push_cmd(거점AI_설치);
-					context.push_cmd(거점AI_설치);
-				    }
-                                           if (!front_base(building))
-					context.push_cmd(거점AI_공격);								   
+								   
 					context.push_cmd(거점AI_포상);
 					context.push_cmd(거점AI_훈련);
 					context.push_cmd(거점AI_계략);
@@ -415,18 +389,9 @@
 
 		else if (10000 < pk::get_troops(building))
 			 {
-              if (pk::get_max_troops(building) * 0.81f <= pk::get_troops(building) )
-			    {
-                                           if (!front_base(building))
-					context.push_cmd(거점AI_공격);
-                                           if (!front_base(building))
-					context.push_cmd(거점AI_공격);
-					context.push_cmd(거점AI_설치);
-					context.push_cmd(거점AI_설치);
-			    }					
+					
 					context.push_cmd(거점AI_포상);
-                                           if (!front_base(building))
-					context.push_cmd(거점AI_공격);
+
 					context.push_cmd(거점AI_설치);
 					context.push_cmd(거점AI_훈련);
 
@@ -453,18 +418,7 @@
 
 	else if (10000 < pk::get_troops(building))
 			{
-               if (pk::get_max_troops(building) * 0.81f <= pk::get_troops(building) )
 
-			                {
-
-					context.push_cmd(거점AI_방어);
-					context.push_cmd(거점AI_방어);
-                                           if (!front_base(building))
-					context.push_cmd(거점AI_공격);
-                                           if (!front_base(building))
-					context.push_cmd(거점AI_공격);
-
-				        }
 					context.push_cmd(거점AI_방어);									   
 					context.push_cmd(거점AI_훈련);
 											 
@@ -484,6 +438,10 @@
         {
             for (int f = 0; f < 건물_거점끝; f++)
 			{
+				
+                pk::force@ force = pk::get_force(building.get_force_id());				
+				if (pk::get_city_count(force) <= 1) return false;	
+							
                     pk::building@ front_base = pk::get_building(f);
                 int building_id = building.get_id();					
                 int front_base_id = front_base.get_id();	
@@ -525,7 +483,9 @@
 
                 int a = pk::get_person(pk::get_kunshu_id(building)).character;
 				
-      if (pk::is_alive(front_base) and building_id != front_base_id and building.get_force_id() == front_base.get_force_id() and ((0 <= city_dist and city_dist <= 2) or building.get_district_id() == front_base.get_district_id() ) and ((front_base_id < 건물_도시끝 and front_force_troops3 + pk::get_troops(front_base) + troops_already(front_base) + (( a - 1 ) * 6000) <= front_enemy_troops3) or (front_base_id >= 건물_도시끝 and front_force_troops3 + pk::get_troops(front_base) + troops_already(front_base) + (Friendly_base(front_base) * 0.5f) <= front_enemy_troops3)))
+      if (pk::is_alive(front_base) and building_id != front_base_id and building.get_force_id() == front_base.get_force_id() and ((0 <= city_dist and city_dist <= 2) or building.get_district_id() == front_base.get_district_id() ) 
+	  and ((front_base_id < 건물_도시끝 and front_force_troops3 + pk::get_troops(front_base) + troops_already(front_base) + (( a - 1 ) * 6000) <= front_enemy_troops3) or (front_base_id >= 건물_도시끝 and front_force_troops3 + pk::get_troops(front_base) + troops_already(front_base) + (Friendly_base(front_base) * 0.5f) <= front_enemy_troops3)
+      or (front_base_id < 건물_도시끝 and pk::get_troops(front_base) + front_force_troops3 < 10000) or (front_base_id >= 건물_도시끝 and pk::get_troops(front_base) + front_force_troops3 < 4000)  ))
 		  
 	return true;
             }

@@ -598,7 +598,7 @@
         Main()
         {
             add_subject_confirm_menu();
-            //add_subject_renew_menu();           // 테스트 용도의 메뉴 (회의를 강제로 갱신한다)
+            add_subject_renew_menu();           // 테스트 용도의 메뉴 (회의를 강제로 갱신한다)
 
             pk::bind(102, pk::trigger102_t(init));
             pk::bind(103, pk::trigger103_t(awake));

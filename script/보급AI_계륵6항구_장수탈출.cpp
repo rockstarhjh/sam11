@@ -31,10 +31,9 @@ namespace 계륵6항구_장수탈출utf8
 			// 플레이어 조종 거점, 이민족 세력은 제외.
 			if (pk::is_normal_force(force_id))
 			{
-				for (int i = 0; i < 건물_거점끝; i++)
+				for (int i = 건물_관문시작; i < 건물_거점끝; i++)
 				{
 					auto base = pk::get_building(i);
-
 
                     if (!pk::is_player_controlled(base) and base.get_force_id() == force_id and needPersonSupport(base))
                         PushPersonSupport(base);
@@ -111,6 +110,7 @@ namespace 계륵6항구_장수탈출utf8
             
             // 소환 대상 무장
             pk::list<pk::person@> actors;
+            actors.clear();			
             for (int i = 0; i < max; i++)
             {
             if (pk::is_unitize(person_list[i])) continue;
@@ -152,6 +152,7 @@ namespace 계륵6항구_장수탈출utf8
 
             int src_id = src.get_id();			
             pk::list<pk::building@> dst_list; 	
+            dst_list.clear();				
             @src_port = @src;			
             
 			// 거점까지 확인.
@@ -236,29 +237,35 @@ if (person_list.count > 0 and pk::is_alive(src) and pk::is_alive(dst) and src_id
                     troops += pk::get_troops(dst);
             }
             
-            weight = int(troops / 3000);
+            weight = int(troops);
             return weight;
         }
 
 
 
          //  거리에 따른 인근 적대 도시 숫자 체크, masterpiecek님의 AI_도시물자수송.cpp﻿를 참조했습니다.
-
 		int func_enemy_city_count(pk::city@ city, int distance)
 		{
-			int enemy_city_count = 0;
-			for (int i = 0; i < 도시_끝; i++)
+			int enemy_cities = 0;
+			for (int city_id = 0; city_id < 도시_끝; city_id++)
 			{
-				pk::city@ enemycity = pk::get_city(i);
-				int city_distance = pk::get_city_distance(city.get_id(), i);
+				pk::city@ enemy_city = pk::get_city(city_id);
+				if (!pk::is_alive(enemy_city)) continue;
 
-				if (pk::is_alive(enemycity) and city.get_id() != i and pk::is_enemy(city, enemycity) and city_distance <= distance) 
+				// 검색기준 도시 제외
+				if (city.get_id() == city_id) continue;
 
-				enemy_city_count++;
-																	  										  				   
+				// 검색기준 도시와 확인대상 도시가 적이 아닌 경우 제외
+				if (!pk::is_enemy(city, enemy_city)) continue;
+
+				// 도시 간 거리가 일정거리를 초과하는 경우 제외
+				int city_distance = pk::get_city_distance(city.get_id(), city_id);
+				if (city_distance > distance) continue;
+
+				enemy_cities++;
 			}
 
-			return enemy_city_count;
+			return enemy_cities;
 		}
 
 

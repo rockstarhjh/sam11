@@ -129,11 +129,11 @@ namespace 거점철수
 			int base_troops = pk::get_troops(base);
 			int base_hp = base.hp;
 			// 잔여 내구가 아슬아슬한 경우
-			if (enemy_units3 > 0 and base_troops < enemy_troops3 * 0.8f and base_hp < pk::max(500, int(pk::get_max_hp(base) * 0.3f)) )
+			if (enemy_units3 > 0 and base_troops < enemy_troops3 * 0.8f and base_hp < pk::max(500, int(pk::get_max_hp(base) * 0.03f)) )
 				return true;
 
 			// 잔여 내구가 아슬아슬한 경우 2 (2020.08.31. 일송정 추가)
-			if (enemy_units3 > 0 and enemy_troops3 >= 4000 and base_hp <= 700 )
+			if (enemy_units3 > 0 and enemy_troops3 >= 4000 and base_hp <= 550 )
 				return true;
 
 
@@ -164,6 +164,7 @@ namespace 거점철수
 			if (target == -1) return false;
 
             pk::list<pk::person@> actors;
+            actors.clear();				
             for (int i = 0; i < person_list.count; i++)
             {
             if (pk::is_unitize(person_list[i])) continue;
@@ -259,6 +260,7 @@ namespace 거점철수
 			int best_distance = 0;
             int src_id = src.get_id();
             pk::list<pk::building@> dst_list; 
+			dst_list.clear();			
             @src_t = @src;
             
             int search_base = 건물_도시끝;
@@ -292,6 +294,16 @@ namespace 거점철수
             {
                 dst_list.sort(function(a, b)
                 {
+                bool no_enemy_around_a = main.no_enemy_around(a);
+                bool no_enemy_around_b = main.no_enemy_around(b);			
+                if ( no_enemy_around_a and !no_enemy_around_b) return true;
+                if (!no_enemy_around_a and  no_enemy_around_b) return false;					
+
+                bool enemies_around_a = pk::enemies_around(a);
+                bool enemies_around_b = pk::enemies_around(b);
+                if (!enemies_around_a and  enemies_around_b) return true;					
+                if ( enemies_around_a and !enemies_around_b) return false;				
+										
                     int build_dist_a = pk::get_building_distance(a.get_id(), main.src_t.get_id(), a.get_force_id());
                     int build_dist_b = pk::get_building_distance(b.get_id(), main.src_t.get_id(), b.get_force_id());
 
@@ -310,6 +322,49 @@ namespace 거점철수
             
 			return best_dst;
 		}
+
+
+        //---------------------------------------------------------------------------------------
+
+        // ***** 적 부대의 아군 거점 근처 존재 여부 *****  //
+        bool no_enemy_around(pk::building@ base)
+        {
+
+			int enemy_units3 = 0;
+			int enemy_troops3 = 0;
+
+			auto range = pk::range(base.get_pos(), 1, 10);
+			for (int i = 0; i < int(range.length); i++)
+			{
+				auto unit = pk::get_unit(range[i]);
+				if (pk::is_alive(unit))
+				{
+					int distance = pk::get_distance(base.get_pos(), range[i]);
+					if (pk::is_enemy(base, unit))
+					{
+
+						if (distance <= 10)
+						{
+							enemy_units3++;
+							enemy_troops3 += unit.troops;
+						}
+					}
+
+				}
+			}
+
+
+	
+		if (enemy_troops3 == 0 and enemy_units3 == 0)					
+	            return true;
+
+				
+            
+	return false;
+        }
+
+        //---------------------------------------------------------------------------------------
+
         
         
 	};

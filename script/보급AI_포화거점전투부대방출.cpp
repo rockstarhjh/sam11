@@ -36,7 +36,7 @@ namespace 포화거점전투부대방출
 			int force_id = force.get_id();
 
 			// 플레이어 조종 거점, 이민족 세력은 제외.
-			if ( pk::is_normal_force(force_id))
+			if ( pk::is_normal_force(force_id) and pk::get_elapsed_months() > 3)
 			{
 				for (int i = 0; i < 건물_거점끝; i++)
 				{
@@ -44,7 +44,7 @@ namespace 포화거점전투부대방출
                     pk::district@ district = pk::get_district(base.get_district_id());					
 
 
-                    if ( ( !force.is_player() and base.get_force_id() == force_id and needWanderers(base) and pk::get_elapsed_months() > 3 ) or ( force.is_player() and pk::is_alive(district) and !pk::is_player_controlled(base) and base.get_force_id() == force_id and needWanderers(base) and pk::get_elapsed_months() > 3 and district.attack ) )
+                    if ( ( !force.is_player() and base.get_force_id() == force_id and needWanderers(base) ) or ( force.is_player() and pk::is_alive(district) and !pk::is_player_controlled(base) and base.get_force_id() == force_id and needWanderers(base) and district.attack ) )
 
                         func_redispatch(base); 
 
@@ -67,11 +67,15 @@ namespace 포화거점전투부대방출
         {
 
                 int push_count = 0; 
+                float ratio = 0.5f; 
+
+                if ( 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 )
+                ratio = 0.30f;					
                 
                 int max_count = pk::max(1, pk::min(출동부대수_한도, 11));
                
                 bool cmd = false;
-                while(push_count < max_count and pk::get_max_troops(base) * 0.5f < pk::get_troops(base) )
+                while(push_count < max_count and pk::get_max_troops(base) * ratio < pk::get_troops(base) )
                 {
                     push_count += 1;
                     cmd = (PushWanderers(base) or cmd);  
@@ -97,9 +101,9 @@ namespace 포화거점전투부대방출
 			pk::city@ city_a = pk::get_city(pk::get_city_id(base.pos));
 
 
-	// 병력 77% 이상 있는 관문, 항구에서 파병 보내라
+	// 병력 50% 이상 있는 관문, 항구에서 파병 보내라
 
-			if ( pk::get_max_troops(base) * 0.77f <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 )
+			if ( pk::get_max_troops(base) * 0.40f <= base_troops and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 )
 				return true;
 
 
@@ -132,6 +136,7 @@ namespace 포화거점전투부대방출
 			if (target == -1) return false;
 
             pk::list<pk::person@> actors;
+            actors.clear();				
             for (int i = 0; i < person_list.count; i++)
             {
             if (pk::is_unitize(person_list[i])) continue;
@@ -165,7 +170,8 @@ namespace 포화거점전투부대방출
             pk::person@ leader = pk::get_person(actors[0].get_id());
             
             // 원군 병력 산정 : 기준 병력 초과분, 지휘가능병력 확인
-            int reinforce_troops = pk::min(pk::get_command(leader), pk::max(int (pk::get_troops(base) * 0.35f) , pk::get_troops(base) - 10000));
+            int reinforce_troops = pk::min(pk::get_command(leader), pk::max(1000 , pk::get_troops(base) - 10000));
+            if (reinforce_troops < 3000) return false;
 
             // 최적 무기 선택
             int ground_weapon_id = 병기_검;
@@ -177,7 +183,9 @@ namespace 포화거점전투부대방출
             if (ground_weapon_id == 0) return false;    // 병기 부족
             
             // 수상 무기 선택
-            if (leader.tekisei[병종_수군] == 적성_C)
+            if (pk::get_weapon_amount(base, 병기_누선) < 10 and pk::get_weapon_amount(base, 병기_투함) < 10
+			and leader.mibun != 신분_군주 and leader.mibun != 신분_도독 and leader.mibun != 신분_태수 and leader.mibun == 신분_일반
+			and leader.tekisei[병종_수군] == 적성_C)
                 water_weapon_id = 병기_주가;
             else
             {
@@ -186,7 +194,13 @@ namespace 포화거점전투부대방출
             }
             
             // 병량 계산
-            int unit_food = int(pk::min( 0.5f * pk::get_food(base), 2.0f * unit_troops));
+		    float food_ratio = pk::min(2.0f, pk::get_food(base) / float(pk::get_troops(base) + 1));
+
+            if (pk::get_food(base) / float(pk::get_troops(base) + 1) < 0.6f)
+            food_ratio = 0.6f;
+   				
+            int unit_food = int(pk::min( 0.5f * pk::get_food(base), food_ratio * unit_troops));
+
             if (unit_food < int(0.5f * unit_troops)) return false;   // 병량 부족
 
 
@@ -205,13 +219,71 @@ namespace 포화거점전투부대방출
                 cmd.weapon_amount[0] = unit_troops;
                 cmd.weapon_amount[1] = (water_weapon_id == 병기_주가)? 0 : 1;
                 cmd.food = unit_food;
+				
+			  if (건물_관문시작 <= base.get_id() and base.get_id() < 건물_거점끝 and pk::enemies_around(base))
+              {				
+                 pk::list<pk::unit@> list_enemy_unit;
+        
+                 pk::array<pk::point> arr_empty_pos;
+                 pk::array<pk::point> arr_neighbor_pos = pk::range(base.pos, 1, 8);
+                 for (int i = 0; i < int(arr_neighbor_pos.length); i++)
+                 {
+                    pk::point neighbor_pos = arr_neighbor_pos[i];
+                    if (pk::is_valid_pos(neighbor_pos))
+                    {
+                       pk::hex@ hex = pk::get_hex(neighbor_pos);
+                       int terrain_id = hex.terrain;
+                       if (pk::is_enabled_terrain(terrain_id) and !hex.has_building and !hex.has_unit)
+                       {
+                          bool check = true;
+                          pk::array<pk::unit@> arr_unit = pk::list_to_array(list_enemy_unit);
+                          for (int j = 0; j < int(arr_unit.length); j++)
+                          {
+                            if (!check or (pk::get_distance(neighbor_pos, arr_unit[j].pos) < 2))
+                                check = false;
+                            if (!check or bool(pk::core["지형"][terrain_id]["이동가능"]) == false)
+                                check = false;
+                            if (!check or terrain_id == 지형_산 or terrain_id == 지형_물가)
+                                check = false;
+                            if (!check or pk::is_on_fire(neighbor_pos))
+                                check = false;
+                          }
+                          if (check)
+                            arr_empty_pos.insertLast(neighbor_pos);
+                       }
+                    }
+                 }
+                 if (int(arr_empty_pos.length) == 0)
+                 {	
+                 cmd.order = 부대임무_정복;			 
+                 cmd.target_pos = pk::get_building(target).get_pos();  // 목표는 전투중인 거점
+				 
+                 string target_name = pk::u8decode(pk::get_name(pk::get_building(target)));
+	             if (대사표시_설정) 
+                 pk::say(pk::u8encode(pk::format("거점이 포화상태다!\n이 기회에 \x1b[2x{}\x1b[0x에 공격을 가하겠다!", target_name)), leader);				 
+                 }
+                 else
+                 {
+                 cmd.order = 부대임무_이동;					 
+                 pk::point dst_pos = arr_empty_pos[0];
+                 cmd.target_pos = dst_pos;	
 
-                cmd.order = 부대임무_공격;
-                cmd.target_pos = pk::get_building(target).get_pos();  // 목표는 전투중인 거점
+	             if (대사표시_설정)	
+                 pk::say(pk::u8encode("거점이 포화상태다!\n여유 병력들은 이동하라!"), leader);
+			
+                 }										 			
+              }		
+			  else
+              {	
+              cmd.order = 부대임무_정복;				  
+              cmd.target_pos = pk::get_building(target).get_pos();  // 목표는 전투중인 거점
+			  
+              string target_name = pk::u8decode(pk::get_name(pk::get_building(target)));
+	          if (대사표시_설정) 
+              pk::say(pk::u8encode(pk::format("거점이 포화상태다!\n이 기회에 \x1b[2x{}\x1b[0x에 공격을 가하겠다!", target_name)), leader);				  
+              }
 
-
-	if (대사표시_설정) 
-                pk::say(pk::u8encode("거점이 포화상태다!\n여유 병력들은 이동하라!"), leader);																											  
+																										  
 
                 // 출진.
                 int unit_id = pk::command(cmd);
@@ -229,7 +301,7 @@ namespace 포화거점전투부대방출
         // 무기 선택 함수
         void get_ground_weapon1(pk::building@ base, pk::person@ leader, int troops_max, int &out weapon_sel, int &out troops_sel)
         {
-            int troops_min = 2200;
+            int troops_min = 3000;
             int weapon_max = 0;
             int best_tekisei = 적성_C;
             
@@ -286,6 +358,7 @@ namespace 포화거점전투부대방출
 
             int src_id = src.get_id();
             pk::list<pk::building@> dst_list; 
+			dst_list.clear();			
             @src_wd = @src;
 
             
@@ -302,7 +375,7 @@ namespace 포화거점전투부대방출
 
 
 
-            int max_distance = (dst_id >= 건물_도시끝)? 2 : 1;
+            int max_distance = (dst_id >= 건물_도시끝)? 2 : 2;
 
 
 
@@ -322,7 +395,8 @@ namespace 포화거점전투부대방출
 
          // 적 거점에 공격 보낸다
 
-                       if (src_id != dst_id and src.get_force_id() != dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) and dst_id < 건물_거점끝  and  pk::is_enemy(src, dst) )
+                       if (src_id != dst_id and src.get_force_id() != dst.get_force_id() and pk::is_alive(src) and pk::is_alive(dst) and dst_id < 건물_거점끝  and  pk::is_enemy(src, dst) 
+						   and 건물_파양항 != dst_id and 건물_노릉항 != dst_id and 건물_서하항 != dst_id and 건물_하양항 != dst_id and 건물_해현항 != dst_id and 건물_강도항 != dst_id)
                        {
                            best_dst = dst_id;
                            dst_list.add(dst);  // 파병가능 거점리스트 추가
@@ -344,8 +418,8 @@ namespace 포화거점전투부대방출
             {
                 dst_list.sort(function(a, b)
                 {
-                    int build_dist_a = pk::get_building_distance(a.get_id(), main.src_wd.get_id(), a.get_force_id());
-                    int build_dist_b = pk::get_building_distance(b.get_id(), main.src_wd.get_id(), b.get_force_id());
+                    int build_dist_a = pk::get_building_distance(a.get_id(), main.src_wd.get_id(), main.src_wd.get_force_id());
+                    int build_dist_b = pk::get_building_distance(b.get_id(), main.src_wd.get_id(), main.src_wd.get_force_id());
 
                     int pos_dist_a = pk::get_distance(a.pos, main.src_wd.pos);
                     int pos_dist_b = pk::get_distance(b.pos, main.src_wd.pos);
@@ -353,7 +427,7 @@ namespace 포화거점전투부대방출
                     if (build_dist_a != build_dist_b) 
                         return (build_dist_a < build_dist_b);
                     
-                    return (pos_dist_a < pos_dist_b);
+                    return (pk::get_troops(a) + (1000 * pos_dist_a) < pk::get_troops(b) + (1000 * pos_dist_b));
                 });
                 best_dst = dst_list[0].get_id();
             }
@@ -365,24 +439,29 @@ namespace 포화거점전투부대방출
 
 
          // 거리에 따른 인근 적대 도시 숫자 체크, masterpiecek님의 AI_도시물자수송.cpp﻿를 참조했습니다.
-
 		int func_enemy_city_count(pk::city@ city, int distance)
 		{
-			int enemy_city_count = 0;
-			for (int i = 0; i < 도시_끝; i++)
+			int enemy_cities = 0;
+			for (int city_id = 0; city_id < 도시_끝; city_id++)
 			{
-				pk::city@ enemycity = pk::get_city(i);
-				int city_distance = pk::get_city_distance(city.get_id(), i);
+				pk::city@ enemy_city = pk::get_city(city_id);
+				if (!pk::is_alive(enemy_city)) continue;
 
-				if (pk::is_alive(enemycity) and city.get_id() != i and pk::is_enemy(city, enemycity) and city_distance <= distance) 
+				// 검색기준 도시 제외
+				if (city.get_id() == city_id) continue;
 
-				enemy_city_count++;
-																	  										   				   
+				// 검색기준 도시와 확인대상 도시가 적이 아닌 경우 제외
+				if (!pk::is_enemy(city, enemy_city)) continue;
+
+				// 도시 간 거리가 일정거리를 초과하는 경우 제외
+				int city_distance = pk::get_city_distance(city.get_id(), city_id);
+				if (city_distance > distance) continue;
+
+				enemy_cities++;
 			}
 
-			return enemy_city_count;
+			return enemy_cities;
 		}
-
 
 
 
