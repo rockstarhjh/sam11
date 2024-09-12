@@ -6820,15 +6820,15 @@
             pk::message_box(pk::u8encode("이건 내가 그대에게 내리는 포상이오."), Emperor);
             pk::message_box(pk::u8encode("영광이옵니다."), winner);
             pk::building@ winnerBuilding = pk::get_building(winner.service);
-            pk::add_gold(winnerBuilding, 우승_상금, true);
+            pk::add_gold(winnerBuilding, 우승_기교, true);
             pk::add_kouseki(winner, 우승_공적);
-            pk::message_box(pk::u8encode(pk::format("\x1b[2x상금\x1b[0x \x1b[1x{}\x1b[0x을 받고 그 명성으로 \n\x1b[2x공적\x1b[0x이 \x1b[1x{}\x1b[0x만큼 올랐습니다", 우승_상금, 우승_공적)));
+            pk::message_box(pk::u8encode(pk::format("\x1b[2x상금\x1b[0x \x1b[1x{}\x1b[0x을 받고 그 명성으로 \n\x1b[2x공적\x1b[0x이 \x1b[1x{}\x1b[0x만큼 올랐습니다", 우승_기교, 우승_공적)));
             pk::message_box(pk::u8encode(pk::format("\x1b[2x{}\x1b[0x에게도 포상을 내리겠소.", pk::u8decode(pk::get_name(runnerUp)))), Emperor);
             pk::message_box(pk::u8encode("영광이옵니다."), runnerUp);
             pk::building@ runnerUpBuilding = pk::get_building(runnerUp.service);
-            pk::add_gold(runnerUpBuilding, 준우승_상금, true);
+            pk::add_gold(runnerUpBuilding, 준우승_기교, true);
             pk::add_kouseki(runnerUp, 준우승_공적);
-            pk::message_box(pk::u8encode(pk::format("\x1b[2x상금\x1b[0x \x1b[1x{}\x1b[0x을 받고 그 명성으로 \n\x1b[2x공적\x1b[0x이 \x1b[1x{}\x1b[0x만큼 올랐습니다", 준우승_상금, 준우승_공적)));
+            pk::message_box(pk::u8encode(pk::format("\x1b[2x상금\x1b[0x \x1b[1x{}\x1b[0x을 받고 그 명성으로 \n\x1b[2x공적\x1b[0x이 \x1b[1x{}\x1b[0x만큼 올랐습니다", 준우승_기교, 준우승_공적)));
             
             if (!HasTitle(winner))
             {

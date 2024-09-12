@@ -1,61 +1,61 @@
 /*
-// ÀÛ¼ºÀÚ: ±â¸¶Ã¥»ç
-// Update: '18.11.10   / º¯°æ³»¿ë : °ÅÁ¡¿ø±º ±â´É ½Å±Ô Ãß°¡
-// Update: '19.3.4     / º¯°æ³»¿ë : °ÅÁ¡¿ø±º ¼¼ÆÃ°ª ÀÏºÎ Á¶Á¤, ¼ö¼ÛºÎ´ë/ÀüÅõºÎ´ë ¼±ÅÃ ¾Ë°í¸®Áò Àû¿ë, ¿ø±ººÎ´ë¼ö Á¶Àı±â´É Ãß°¡, ´Ù¼ö°ÅÁ¡¿¡¼­ ¿ø±ºÃâº´ °¡´É
-// Update: '19.3.7     / º¯°æ³»¿ë : ±³Àü°ÅÁ¡ ¹«ÀåÆÄº´ ±â´É Ãß°¡, °ü¹®/Ç×±¸·Î ¼ö¼Û½Ã º´·Â/¹°ÀÚ ÃÖ´ëÄ¡ Á¶Á¤ (Áõ¹ß¹æÁö), ÃâÁø°ÅÁ¡ °Ë»öÇÔ¼ö °³¼±
-// Update: '19.3.14    / º¯°æ³»¿ë : °ÅÁ¡°Ë»ö¸ğµå Ãß°¡, ¿ø±º°ÅÁ¡ °Ë»ö¿À·ù Á¶Ä¡, µµ½Ã°ÅÁ¡ ¿ø±ºÀÎ °æ¿ì ´Ù¹æ¸é ºĞ»êÃâÁø ±â´É Ãß°¡, ¿ø±ºÃâº´ °ÅÁ¡ÀÇ Àü¹æ/ÈÄ¹æ¿©ºÎ¿¡ µû¶ó ±âÁØº´·Â °¡º¯
-// Update: '19.3.16    / º¯°æ³»¿ë : ±³Àüº´·Â ¿­¼¼ÀÎ °ÅÁ¡ºÎÅÍ ¿ø±ºÆÄº´
-// Update: '19.3.17    / º¯°æ³»¿ë : µ¿¸Í¼¼·Â¿ø±º ÆÄº´¼³Á¤ Ãß°¡
-// Update: '19.3.30    / º¯°æ³»¿ë : µ¿¸Í¼¼·Â¿ø±º ÆÄº´¼³Á¤ À¯Àú¼¼·Â Á¦¿Ü
-// Update: '19.5.26    / º¯°æ³»¿ë : ³­ÀÌµµ_Æ¯±Ş ¼³Á¤ ½Ã¿¡¸¸ µ¿ÀÛÇÏµµ·Ï º¯°æ
-// Update: '20.2.8     / º¯°æ³»¿ë : µ¿¸Í¼¼·Â¿ø±ºÀº ¹«Á¶°Ç ÀüÅõºÎ´ë·Î Ãâº´ÇÏµµ·Ï ¼öÁ¤
-// Update: '20.9.15    / º¯°æ³»¿ë : ÀüÅõº´°ú ³ëº´Æ¯±â ¿ì´ëÇÔ¼ö ¿À·ù ¼öÁ¤, º´·ÂÀÖ´Â ºó°ÅÁ¡À¸·Î ¹«Àå¼ÒÈ¯ Ãß°¡, °ÅÁ¡¿ø±º ½ÇÇàÇÔ¼ö ºĞ¸®, °ÅÁ¡°ø·« Áö¿ø±º ±â´É Ãß°¡
-// Update: '20.9.20    / º¯°æ³»¿ë : °ÅÁ¡ÁÖº¯ °Ë»ö ½Ã ºÎ´ëÁÂÇ¥ÀÇ ¿µ¿ªµµ½Ã È®ÀÎ Ãß°¡ (±³Àü ÁßÀÎ Å¸°ÅÁ¡°ú °Å¸®°¡ °¡±î¿î °æ¿ì ¿ÀÀÎ½Ä ¾ÈµÇµµ·Ï ÇÔ)
+// ì‘ì„±ì: ê¸°ë§ˆì±…ì‚¬
+// Update: '18.11.10   / ë³€ê²½ë‚´ìš© : ê±°ì ì›êµ° ê¸°ëŠ¥ ì‹ ê·œ ì¶”ê°€
+// Update: '19.3.4     / ë³€ê²½ë‚´ìš© : ê±°ì ì›êµ° ì„¸íŒ…ê°’ ì¼ë¶€ ì¡°ì •, ìˆ˜ì†¡ë¶€ëŒ€/ì „íˆ¬ë¶€ëŒ€ ì„ íƒ ì•Œê³ ë¦¬ì¦˜ ì ìš©, ì›êµ°ë¶€ëŒ€ìˆ˜ ì¡°ì ˆê¸°ëŠ¥ ì¶”ê°€, ë‹¤ìˆ˜ê±°ì ì—ì„œ ì›êµ°ì¶œë³‘ ê°€ëŠ¥
+// Update: '19.3.7     / ë³€ê²½ë‚´ìš© : êµì „ê±°ì  ë¬´ì¥íŒŒë³‘ ê¸°ëŠ¥ ì¶”ê°€, ê´€ë¬¸/í•­êµ¬ë¡œ ìˆ˜ì†¡ì‹œ ë³‘ë ¥/ë¬¼ì ìµœëŒ€ì¹˜ ì¡°ì • (ì¦ë°œë°©ì§€), ì¶œì§„ê±°ì  ê²€ìƒ‰í•¨ìˆ˜ ê°œì„ 
+// Update: '19.3.14    / ë³€ê²½ë‚´ìš© : ê±°ì ê²€ìƒ‰ëª¨ë“œ ì¶”ê°€, ì›êµ°ê±°ì  ê²€ìƒ‰ì˜¤ë¥˜ ì¡°ì¹˜, ë„ì‹œê±°ì  ì›êµ°ì¸ ê²½ìš° ë‹¤ë°©ë©´ ë¶„ì‚°ì¶œì§„ ê¸°ëŠ¥ ì¶”ê°€, ì›êµ°ì¶œë³‘ ê±°ì ì˜ ì „ë°©/í›„ë°©ì—¬ë¶€ì— ë”°ë¼ ê¸°ì¤€ë³‘ë ¥ ê°€ë³€
+// Update: '19.3.16    / ë³€ê²½ë‚´ìš© : êµì „ë³‘ë ¥ ì—´ì„¸ì¸ ê±°ì ë¶€í„° ì›êµ°íŒŒë³‘
+// Update: '19.3.17    / ë³€ê²½ë‚´ìš© : ë™ë§¹ì„¸ë ¥ì›êµ° íŒŒë³‘ì„¤ì • ì¶”ê°€
+// Update: '19.3.30    / ë³€ê²½ë‚´ìš© : ë™ë§¹ì„¸ë ¥ì›êµ° íŒŒë³‘ì„¤ì • ìœ ì €ì„¸ë ¥ ì œì™¸
+// Update: '19.5.26    / ë³€ê²½ë‚´ìš© : ë‚œì´ë„_íŠ¹ê¸‰ ì„¤ì • ì‹œì—ë§Œ ë™ì‘í•˜ë„ë¡ ë³€ê²½
+// Update: '20.2.8     / ë³€ê²½ë‚´ìš© : ë™ë§¹ì„¸ë ¥ì›êµ°ì€ ë¬´ì¡°ê±´ ì „íˆ¬ë¶€ëŒ€ë¡œ ì¶œë³‘í•˜ë„ë¡ ìˆ˜ì •
+// Update: '20.9.15    / ë³€ê²½ë‚´ìš© : ì „íˆ¬ë³‘ê³¼ ë…¸ë³‘íŠ¹ê¸° ìš°ëŒ€í•¨ìˆ˜ ì˜¤ë¥˜ ìˆ˜ì •, ë³‘ë ¥ìˆëŠ” ë¹ˆê±°ì ìœ¼ë¡œ ë¬´ì¥ì†Œí™˜ ì¶”ê°€, ê±°ì ì›êµ° ì‹¤í–‰í•¨ìˆ˜ ë¶„ë¦¬, ê±°ì ê³µëµ ì§€ì›êµ° ê¸°ëŠ¥ ì¶”ê°€
+// Update: '20.9.20    / ë³€ê²½ë‚´ìš© : ê±°ì ì£¼ë³€ ê²€ìƒ‰ ì‹œ ë¶€ëŒ€ì¢Œí‘œì˜ ì˜ì—­ë„ì‹œ í™•ì¸ ì¶”ê°€ (êµì „ ì¤‘ì¸ íƒ€ê±°ì ê³¼ ê±°ë¦¬ê°€ ê°€ê¹Œìš´ ê²½ìš° ì˜¤ì¸ì‹ ì•ˆë˜ë„ë¡ í•¨)
 */
 
 
-namespace °ÅÁ¡¿ø±º
+namespace ê±°ì ì›êµ°
 {
     
     //=======================================================================================
-    // °ÅÁ¡¹æ¾î¿ø±º (by ±â¸¶Ã¥»ç)
-    const bool °ÅÁ¡¿ø±º_¼³Á¤ = true;       // ÀÎÁ¢ µµ½Ã ¿ø±º ¼ö¼Û´ë Ãâº´ ¼³Á¤
+    // ê±°ì ë°©ì–´ì›êµ° (by ê¸°ë§ˆì±…ì‚¬)
+    const bool ê±°ì ì›êµ°_ì„¤ì • = true;       // ì¸ì ‘ ë„ì‹œ ì›êµ° ìˆ˜ì†¡ëŒ€ ì¶œë³‘ ì„¤ì •
     
-    const int  °ÅÁ¡¿ø±º_Àû±º°Ë»ö¹üÀ§ = 5;    // ±³Àü °ÅÁ¡¿¡¼­ºÎÅÍ ÀûºÎ´ë¸¦ °Ë»öÇÏ´Â °Å¸® (°ü¹®/Ç×±¸´Â ÃÖ´ë 6À¸·Î Á¦ÇÑµÊ)
+    const int  ê±°ì ì›êµ°_ì êµ°ê²€ìƒ‰ë²”ìœ„ = 5;    // êµì „ ê±°ì ì—ì„œë¶€í„° ì ë¶€ëŒ€ë¥¼ ê²€ìƒ‰í•˜ëŠ” ê±°ë¦¬ (ê´€ë¬¸/í•­êµ¬ëŠ” ìµœëŒ€ 6ìœ¼ë¡œ ì œí•œë¨)
     
-    const int  °ÅÁ¡¿ø±º_°ÅÁ¡ÃÖ¼Òº´·Â = 20000;  // Àû°ÅÁ¡ ºñÀÎÁ¢ÇÑ ÈÄ¹æ°ÅÁ¡, ±âÁØº´·Â ÀÌ»ó º¸À¯ ½Ã ÃÊ°ú º´·Â¸¸Å­ ¿ø±º ¼ö¼Û
-    const int  °ÅÁ¡¿ø±º_°æ°èº´·Â´ÜÀ§ = 5000;   // Àû°ÅÁ¡°ú ÀÎÁ¢ÇÑ °æ¿ì, °æ°èº´·Â ´ÜÀ§·Î Àûº´·Â¿¡ ºñ·ÊÇÏ¿© °ÅÁ¡ÃÖ¼Òº´·Â Áõ°¡
+    const int  ê±°ì ì›êµ°_ê±°ì ìµœì†Œë³‘ë ¥ = 20000;  // ì ê±°ì  ë¹„ì¸ì ‘í•œ í›„ë°©ê±°ì , ê¸°ì¤€ë³‘ë ¥ ì´ìƒ ë³´ìœ  ì‹œ ì´ˆê³¼ ë³‘ë ¥ë§Œí¼ ì›êµ° ìˆ˜ì†¡
+    const int  ê±°ì ì›êµ°_ê²½ê³„ë³‘ë ¥ë‹¨ìœ„ = 5000;   // ì ê±°ì ê³¼ ì¸ì ‘í•œ ê²½ìš°, ê²½ê³„ë³‘ë ¥ ë‹¨ìœ„ë¡œ ì ë³‘ë ¥ì— ë¹„ë¡€í•˜ì—¬ ê±°ì ìµœì†Œë³‘ë ¥ ì¦ê°€
     
-    const int  °ÅÁ¡¿ø±º_ÃÖ´ëÀüÅõº´·Â = 8000;   // ÀüÅõºÎ´ë ÃâÁø ½Ã ÃÖ´ëº´·Â ±âÁØ
-    const int  °ÅÁ¡¿ø±º_ÃÖ¼ÒÃâÁøº´·Â = 3000;   // ÃâÁøÇÒ ºÎ´ë ÃÖ¼Òº´·Â ±âÁØ, ¿©À¯ º´·ÂÀÌ ÃÖ¼Òº´·Â ±âÁØ ¹Ì´Ş ½Ã ÃâÁø ¾ÈÇÔ
-    const int  °ÅÁ¡¿ø±º_µµ½ÃÃâÁø°Å¸® = 2;      // µµ½ÃÀÎ °æ¿ì °Å¸® ¸¸Á· °ÅÁ¡ ÀÖÀ» ½Ã ¿ø±º Ãâº´ (1 ~ 3 »çÀÌ), °ü¹®/Ç×±¸´Â ¹«Á¶°Ç °Å¸® 1 ÀÌ³»¸¸ °Ë»ö
-    const int  °ÅÁ¡¿ø±º_ÃâÁø°ÅÁ¡¹«Àå¼ö = 2;     // ¿ø±ºÃâÁøÇÒ °ÅÁ¡ÀÇ ÀÜ·ù¹«Àå¼ö, ±âÁØ¼ö ÀÌ»óÀÌ°í ¹ÌÇàµ¿ ÀÖÀ» °æ¿ì ÃâÁø°¡´É (Àû °ÅÁ¡ ÁÖº¯¿¡ ÀÖÀ» °æ¿ì ÀÜ·ù¹«Àå¼ö ºñ·ÊÁõ°¡)
+    const int  ê±°ì ì›êµ°_ìµœëŒ€ì „íˆ¬ë³‘ë ¥ = 8000;   // ì „íˆ¬ë¶€ëŒ€ ì¶œì§„ ì‹œ ìµœëŒ€ë³‘ë ¥ ê¸°ì¤€
+    const int  ê±°ì ì›êµ°_ìµœì†Œì¶œì§„ë³‘ë ¥ = 3000;   // ì¶œì§„í•  ë¶€ëŒ€ ìµœì†Œë³‘ë ¥ ê¸°ì¤€, ì—¬ìœ  ë³‘ë ¥ì´ ìµœì†Œë³‘ë ¥ ê¸°ì¤€ ë¯¸ë‹¬ ì‹œ ì¶œì§„ ì•ˆí•¨
+    const int  ê±°ì ì›êµ°_ë„ì‹œì¶œì§„ê±°ë¦¬ = 2;      // ë„ì‹œì¸ ê²½ìš° ê±°ë¦¬ ë§Œì¡± ê±°ì  ìˆì„ ì‹œ ì›êµ° ì¶œë³‘ (1 ~ 3 ì‚¬ì´), ê´€ë¬¸/í•­êµ¬ëŠ” ë¬´ì¡°ê±´ ê±°ë¦¬ 1 ì´ë‚´ë§Œ ê²€ìƒ‰
+    const int  ê±°ì ì›êµ°_ì¶œì§„ê±°ì ë¬´ì¥ìˆ˜ = 2;     // ì›êµ°ì¶œì§„í•  ê±°ì ì˜ ì”ë¥˜ë¬´ì¥ìˆ˜, ê¸°ì¤€ìˆ˜ ì´ìƒì´ê³  ë¯¸í–‰ë™ ìˆì„ ê²½ìš° ì¶œì§„ê°€ëŠ¥ (ì  ê±°ì  ì£¼ë³€ì— ìˆì„ ê²½ìš° ì”ë¥˜ë¬´ì¥ìˆ˜ ë¹„ë¡€ì¦ê°€)
     
-    const int  °ÅÁ¡¿ø±º_°ÅÁ¡°Ë»ö¸ğµå = 1;      // 0: µµ½Ã¸¸ °Ë»öÇÏ¿© ¿ø±ºÃâº´,  1: µµ½Ã+°ü¹®+Ç×±¸ ¸ğµÎ °Ë»öÇÏ¿© ¿ø±ºÃâº´
+    const int  ê±°ì ì›êµ°_ê±°ì ê²€ìƒ‰ëª¨ë“œ = 1;      // 0: ë„ì‹œë§Œ ê²€ìƒ‰í•˜ì—¬ ì›êµ°ì¶œë³‘,  1: ë„ì‹œ+ê´€ë¬¸+í•­êµ¬ ëª¨ë‘ ê²€ìƒ‰í•˜ì—¬ ì›êµ°ì¶œë³‘
     
-    // ºÎ´ëÁ¾·ù¸ğµå
-    // ¤¤ 2¹ø ¸ğµå »ç¿ë ½Ã °ÅÁ¡°£ °Å¸®, °ÅÁ¡º° ¹«Àå¼ö¸¦ ±âÁØÀ¸·Î º´Á¾¼±ÅÃ (¿ø°Å¸®°ÅÁ¡, ±³Àü°ÅÁ¡ ¹«Àå¾ø°Å³ª, ±³Àü°ÅÁ¡ ¹«ÀåÃæºĞ, ÃâÁø°ÅÁ¡ ¹«ÀåºÎÁ· ½Ã ¼ö¼ÛºÎ´ë ÃâÁø)
-    const int  °ÅÁ¡¿ø±º_ºÎ´ëÁ¾·ù¸ğµå = 0;        // 2: ÀüÅõ/¼ö¼ÛºÎ´ë ¸ğµÎ Çã¿ë,  1: ¼ö¼ÛºÎ´ë¸¸ Çã¿ë,  0: ÀüÅõºÎ´ë¸¸ Çã¿ë
-    const int  °ÅÁ¡¿ø±º_±³Àü°ÅÁ¡¹«Àå¼ö = 10;     // ºÎ´ëÁ¾·ù¸ğµå2 Àû¿ë ½Ã : ±³Àü°ÅÁ¡ÀÇ ¹«Àå¼ö ±âÁØ ÀÌ»óÀÏ °æ¿ì ¹«ÀåÃæºĞÀ¸·Î ÆÇ´ÜÇÏ¿© ¼ö¼ÛºÎ´ë Ãâº´
+    // ë¶€ëŒ€ì¢…ë¥˜ëª¨ë“œ
+    // ã„´ 2ë²ˆ ëª¨ë“œ ì‚¬ìš© ì‹œ ê±°ì ê°„ ê±°ë¦¬, ê±°ì ë³„ ë¬´ì¥ìˆ˜ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ë³‘ì¢…ì„ íƒ (ì›ê±°ë¦¬ê±°ì , êµì „ê±°ì  ë¬´ì¥ì—†ê±°ë‚˜, êµì „ê±°ì  ë¬´ì¥ì¶©ë¶„, ì¶œì§„ê±°ì  ë¬´ì¥ë¶€ì¡± ì‹œ ìˆ˜ì†¡ë¶€ëŒ€ ì¶œì§„)
+    const int  ê±°ì ì›êµ°_ë¶€ëŒ€ì¢…ë¥˜ëª¨ë“œ = 0;        // 2: ì „íˆ¬/ìˆ˜ì†¡ë¶€ëŒ€ ëª¨ë‘ í—ˆìš©,  1: ìˆ˜ì†¡ë¶€ëŒ€ë§Œ í—ˆìš©,  0: ì „íˆ¬ë¶€ëŒ€ë§Œ í—ˆìš©
+    const int  ê±°ì ì›êµ°_êµì „ê±°ì ë¬´ì¥ìˆ˜ = 10;     // ë¶€ëŒ€ì¢…ë¥˜ëª¨ë“œ2 ì ìš© ì‹œ : êµì „ê±°ì ì˜ ë¬´ì¥ìˆ˜ ê¸°ì¤€ ì´ìƒì¼ ê²½ìš° ë¬´ì¥ì¶©ë¶„ìœ¼ë¡œ íŒë‹¨í•˜ì—¬ ìˆ˜ì†¡ë¶€ëŒ€ ì¶œë³‘
     
-    const int  °ÅÁ¡¿ø±º_ÀüÅõºÎ´ë¼ö = 4;      // ÇÑ ÅÏ¿¡ ÃâÁø°¡´ÉÇÑ ÃÖ´ë ºÎ´ë¼ö (´Ü, °ÅÁ¡°£ °Å¸®¿¡ µû¶ó ÇÑ °ÅÁ¡¿¡¼­ ÃâÁø°¡´É ºÎ´ë¼ö °Å¸®´ç 1¾¿ Â÷°¨, ÃÖ¼Ò 1ºÎ´ë °¡´É)
-    const int  °ÅÁ¡¿ø±º_¼ö¼ÛºÎ´ë¼ö = 2;      // ÇÑ ÅÏ¿¡ ÃâÁø°¡´ÉÇÑ ÃÖ´ë ºÎ´ë¼ö
+    const int  ê±°ì ì›êµ°_ì „íˆ¬ë¶€ëŒ€ìˆ˜ = 4;      // í•œ í„´ì— ì¶œì§„ê°€ëŠ¥í•œ ìµœëŒ€ ë¶€ëŒ€ìˆ˜ (ë‹¨, ê±°ì ê°„ ê±°ë¦¬ì— ë”°ë¼ í•œ ê±°ì ì—ì„œ ì¶œì§„ê°€ëŠ¥ ë¶€ëŒ€ìˆ˜ ê±°ë¦¬ë‹¹ 1ì”© ì°¨ê°, ìµœì†Œ 1ë¶€ëŒ€ ê°€ëŠ¥)
+    const int  ê±°ì ì›êµ°_ìˆ˜ì†¡ë¶€ëŒ€ìˆ˜ = 2;      // í•œ í„´ì— ì¶œì§„ê°€ëŠ¥í•œ ìµœëŒ€ ë¶€ëŒ€ìˆ˜
     
-    const bool °ÅÁ¡¿ø±º_¹«ÀåÆÄº´¼³Á¤ = false;    // ºó °ÅÁ¡¿¡ Àû±º Ä§·« ½Ã ÀÎÁ¢ °ÅÁ¡¿¡¼­ ¹«Àå ÆÄº´Áö¿ø
+    const bool ê±°ì ì›êµ°_ë¬´ì¥íŒŒë³‘ì„¤ì • = false;    // ë¹ˆ ê±°ì ì— ì êµ° ì¹¨ëµ ì‹œ ì¸ì ‘ ê±°ì ì—ì„œ ë¬´ì¥ íŒŒë³‘ì§€ì›
     
-    const bool °ÅÁ¡¿ø±º_µ¿¸Í¼¼·Â¿ø±º = false;    // µ¿¸Í¼¼·ÂÀÇ °ÅÁ¡¿¡¼­µµ ¿ø±º ÆÄº´
+    const bool ê±°ì ì›êµ°_ë™ë§¹ì„¸ë ¥ì›êµ° = false;    // ë™ë§¹ì„¸ë ¥ì˜ ê±°ì ì—ì„œë„ ì›êµ° íŒŒë³‘
     
     //------------------------------------------------------------
-    // °ÅÁ¡°ø·«¿ø±º (by ±â¸¶Ã¥»ç)
-    const bool °ÅÁ¡°ø·«_¼³Á¤ = true;       // ÀÎÁ¢ÇÑ °ø·«µµ½Ã¿¡ Áö¿ø±º Ãâº´ ¼³Á¤ (¼ö¼Û´ë, °ø¼ºº´±â, ÀüÅõºÎ´ë)
+    // ê±°ì ê³µëµì›êµ° (by ê¸°ë§ˆì±…ì‚¬)
+    const bool ê±°ì ê³µëµ_ì„¤ì • = true;       // ì¸ì ‘í•œ ê³µëµë„ì‹œì— ì§€ì›êµ° ì¶œë³‘ ì„¤ì • (ìˆ˜ì†¡ëŒ€, ê³µì„±ë³‘ê¸°, ì „íˆ¬ë¶€ëŒ€)
     
-    const int  °ÅÁ¡°ø·«_ÀüÅõºÎ´ë¼ö  = 2;     // °ø·«Áö¿ø±º ÀüÅõºÎ´ë ÃâÁø ºÎ´ë¼ö (ÃÖ¼Ò1 ~ ÃÖ´ë3)
+    const int  ê±°ì ê³µëµ_ì „íˆ¬ë¶€ëŒ€ìˆ˜  = 2;     // ê³µëµì§€ì›êµ° ì „íˆ¬ë¶€ëŒ€ ì¶œì§„ ë¶€ëŒ€ìˆ˜ (ìµœì†Œ1 ~ ìµœëŒ€3)
     
-    const bool °ÅÁ¡°ø·«_¼ö¼ÛºÎ´ëÇã¿ë = false;   // °ø·«Áö¿ø±º ¼ö¼Û´ë Çã¿ë
-    const int  °ÅÁ¡°ø·«_¼ö¼ÛºÎ´ë¼ö = 1;     // °ø·«Áö¿ø±º ¼ö¼ÛºÎ´ë ÃâÁø ºÎ´ë¼ö (ÃÖ¼Ò1 ~ ÃÖ´ë3)
+    const bool ê±°ì ê³µëµ_ìˆ˜ì†¡ë¶€ëŒ€í—ˆìš© = false;   // ê³µëµì§€ì›êµ° ìˆ˜ì†¡ëŒ€ í—ˆìš©
+    const int  ê±°ì ê³µëµ_ìˆ˜ì†¡ë¶€ëŒ€ìˆ˜ = 1;     // ê³µëµì§€ì›êµ° ìˆ˜ì†¡ë¶€ëŒ€ ì¶œì§„ ë¶€ëŒ€ìˆ˜ (ìµœì†Œ1 ~ ìµœëŒ€3)
     
-    const bool °ÅÁ¡°ø·«_°ø¼ºº´±âÇã¿ë = true;   // °ø·«Áö¿ø±º °ø¼ºº´±â Çã¿ë
-    const int  °ÅÁ¡°ø·«_°ø¼ººÎ´ë¼ö = 3;      // °ø·«Áö¿ø±º °ø¼ººÎ´ë ÃâÁø ºÎ´ë¼ö (ÃÖ¼Ò1 ~ ÃÖ´ë5)
+    const bool ê±°ì ê³µëµ_ê³µì„±ë³‘ê¸°í—ˆìš© = true;   // ê³µëµì§€ì›êµ° ê³µì„±ë³‘ê¸° í—ˆìš©
+    const int  ê±°ì ê³µëµ_ê³µì„±ë¶€ëŒ€ìˆ˜ = 3;      // ê³µëµì§€ì›êµ° ê³µì„±ë¶€ëŒ€ ì¶œì§„ ë¶€ëŒ€ìˆ˜ (ìµœì†Œ1 ~ ìµœëŒ€5)
     
     
     //=======================================================================================
@@ -77,17 +77,17 @@ namespace °ÅÁ¡¿ø±º
 
             if (!pk::is_campaign())
 			{
-                // ÇÃ·¹ÀÌ¾î, ÀÌ¹ÎÁ· ¼¼·ÂÀº Á¦¿Ü.
-                // ³­ÀÌµµ Æ¯±Ş ½Ã¿¡¸¸ µ¿ÀÛ Ãß°¡ ('19.5.26)
-                if (!force.is_player() and pk::is_normal_force(force_id) and pk::get_scenario().difficulty == ³­ÀÌµµ_Æ¯±Ş)
+                // í”Œë ˆì´ì–´, ì´ë¯¼ì¡± ì„¸ë ¥ì€ ì œì™¸.
+                // ë‚œì´ë„ íŠ¹ê¸‰ ì‹œì—ë§Œ ë™ì‘ ì¶”ê°€ ('19.5.26)
+                if (!force.is_player() and pk::is_normal_force(force_id) and pk::get_scenario().difficulty == ë‚œì´ë„_íŠ¹ê¸‰)
                 {
                     
-                    if (°ÅÁ¡¿ø±º_¼³Á¤) func_reinforcement(force);   // °ÅÁ¡ ¿ø±º Ãâº´ ('18.11.10, Ãß°¡)
-                    if (°ÅÁ¡°ø·«_¼³Á¤) func_attack_support(force);  // °ÅÁ¡°ø·«Áö¿ø ½ÇÇàÇÔ¼ö È£Ãâ ('20.9.14, Ãß°¡)
+                    if (ê±°ì ì›êµ°_ì„¤ì •) func_reinforcement(force);   // ê±°ì  ì›êµ° ì¶œë³‘ ('18.11.10, ì¶”ê°€)
+                    if (ê±°ì ê³µëµ_ì„¤ì •) func_attack_support(force);  // ê±°ì ê³µëµì§€ì› ì‹¤í–‰í•¨ìˆ˜ í˜¸ì¶œ ('20.9.14, ì¶”ê°€)
                 }
 			}
 
-			// ÀÌÀü ÇÚµé·¯°¡ ÀÖ´Ù¸é Ã¼ÀÎ.
+			// ì´ì „ í•¸ë“¤ëŸ¬ê°€ ìˆë‹¤ë©´ ì²´ì¸.
 			if (prev_callback_261 !is null)
 				return prev_callback_261(force);
             
@@ -95,17 +95,17 @@ namespace °ÅÁ¡¿ø±º
 		}
         
         //---------------------------------------------------------------------------------------
-        //          °ÅÁ¡ ¿ø±º ½ÇÇà ÇÔ¼ö
+        //          ê±°ì  ì›êµ° ì‹¤í–‰ í•¨ìˆ˜
         //---------------------------------------------------------------------------------------
         
-        // ¼öÁ¤±İÁö
-        pk::list<pk::building@> list_engage_base;        // ¿ø±º ÇÊ¿äÇÑ ±³Àü°ÅÁ¡ ¸®½ºÆ®
-        pk::list<pk::building@> list_reinforce_base;     // ¿ø±º ÃâÁø°ÅÁ¡ ¸®½ºÆ®
-        pk::array<int> arr_reinforce_count(°Ç¹°_°ÅÁ¡³¡, 0);   // ¿ø±º ÈÄº¸°ÅÁ¡ ÃâÁø´ë»ó °ÅÁ¡¼ö
-        pk::array<int> arr_engage_troops(°Ç¹°_°ÅÁ¡³¡, 0);     // ±³ÀüÁßÀÎ °ÅÁ¡ÀÇ º´·ÂÂ÷
-        pk::array<int> unit_count(2, 0);   // [0] ÀüÅõºÎ´ë ÃâÁø¼ö, [1] ¼ö¼ÛºÎ´ë ÃâÁø¼ö
+        // ìˆ˜ì •ê¸ˆì§€
+        pk::list<pk::building@> list_engage_base;        // ì›êµ° í•„ìš”í•œ êµì „ê±°ì  ë¦¬ìŠ¤íŠ¸
+        pk::list<pk::building@> list_reinforce_base;     // ì›êµ° ì¶œì§„ê±°ì  ë¦¬ìŠ¤íŠ¸
+        pk::array<int> arr_reinforce_count(ê±´ë¬¼_ê±°ì ë, 0);   // ì›êµ° í›„ë³´ê±°ì  ì¶œì§„ëŒ€ìƒ ê±°ì ìˆ˜
+        pk::array<int> arr_engage_troops(ê±´ë¬¼_ê±°ì ë, 0);     // êµì „ì¤‘ì¸ ê±°ì ì˜ ë³‘ë ¥ì°¨
+        pk::array<int> unit_count(2, 0);   // [0] ì „íˆ¬ë¶€ëŒ€ ì¶œì§„ìˆ˜, [1] ìˆ˜ì†¡ë¶€ëŒ€ ì¶œì§„ìˆ˜
         
-        //----- °ÅÁ¡¿ø±º ½ÇÇàÇÔ¼ö
+        //----- ê±°ì ì›êµ° ì‹¤í–‰í•¨ìˆ˜
         void func_reinforcement(pk::force@ force)
         {
             int force_id = force.get_id();
@@ -114,66 +114,66 @@ namespace °ÅÁ¡¿ø±º
             list_reinforce_base.clear();
             clear_reinforce_info();
             
-            for (int i = (°Ç¹°_°ÅÁ¡³¡ - 1); i >= 0; i--)
+            for (int i = (ê±´ë¬¼_ê±°ì ë - 1); i >= 0; i--)
             {
                 pk::building@ base = pk::get_building(i);
                 pk::district@ district = pk::get_district(base.get_district_id());
                 
-                if (base.get_force_id() == force_id and needReinforce(base))    // ÀÚ¼¼·Â °ÅÁ¡ °Ë»ö
+                if (base.get_force_id() == force_id and needReinforce(base))    // ìì„¸ë ¥ ê±°ì  ê²€ìƒ‰
                 {
-                    // ºó °ÅÁ¡¿¡ ±³Àü ½Ã ¹«Àå Áö¿ø
-                    if (°ÅÁ¡¿ø±º_¹«ÀåÆÄº´¼³Á¤ and needPersonSupport(base))
-                        PushPersonSupport(base);    // ºó °ÅÁ¡¿¡ ¹«ÀåÁö¿ø ÅÏ´ç 1È¸ ¼öÇà (¼ÒÈ¯ ¸í·É)
+                    // ë¹ˆ ê±°ì ì— êµì „ ì‹œ ë¬´ì¥ ì§€ì›
+                    if (ê±°ì ì›êµ°_ë¬´ì¥íŒŒë³‘ì„¤ì • and needPersonSupport(base))
+                        PushPersonSupport(base);    // ë¹ˆ ê±°ì ì— ë¬´ì¥ì§€ì› í„´ë‹¹ 1íšŒ ìˆ˜í–‰ (ì†Œí™˜ ëª…ë ¹)
 
-                    // º´·Â ÀÖÁö¸¸ ¹«ÀåÀÌ ¾ø´Â °ÅÁ¡ °Ë»öÇÏ¿© ¹«ÀåÀ» º¸³»¼­ ¼ö¼Û Áö¿ø À¯µµ ('20.9.13)
+                    // ë³‘ë ¥ ìˆì§€ë§Œ ë¬´ì¥ì´ ì—†ëŠ” ê±°ì  ê²€ìƒ‰í•˜ì—¬ ë¬´ì¥ì„ ë³´ë‚´ì„œ ìˆ˜ì†¡ ì§€ì› ìœ ë„ ('20.9.13)
                     int send_person = getNearestReinforce(base, force, /*has_person*/false);     
-                    if (°ÅÁ¡¿ø±º_¹«ÀåÆÄº´¼³Á¤ and send_person != -1)
-                        PushPersonSupport(pk::get_building(send_person));  // ¹«ÀåÀÌ ¾ø´Â °ÅÁ¡À¸·Î ¹«Àå Áö¿ø
+                    if (ê±°ì ì›êµ°_ë¬´ì¥íŒŒë³‘ì„¤ì • and send_person != -1)
+                        PushPersonSupport(pk::get_building(send_person));  // ë¬´ì¥ì´ ì—†ëŠ” ê±°ì ìœ¼ë¡œ ë¬´ì¥ ì§€ì›
 
-                    // ¿ø±ºÃâº´°¡´É °ÅÁ¡°Ë»ö
+                    // ì›êµ°ì¶œë³‘ê°€ëŠ¥ ê±°ì ê²€ìƒ‰
                     int src_target = getNearestReinforce(base, force, /*has_person*/true);
                     if (src_target != -1)
                     {
-                        list_engage_base.add(base);     // ¿ø±ºÇÊ¿ä °ÅÁ¡¸®½ºÆ® Ãß°¡
+                        list_engage_base.add(base);     // ì›êµ°í•„ìš” ê±°ì ë¦¬ìŠ¤íŠ¸ ì¶”ê°€
                         
-                        // ¿ø±ºÇÊ¿ä °ÅÁ¡ÀÌ µµ½ÃÀÎ °æ¿ì: ¿ø±º ÈÄº¸°ÅÁ¡ Ä«¿îÆ® Ãß°¡
-                        if (base.get_id() < °Ç¹°_µµ½Ã³¡)   
+                        // ì›êµ°í•„ìš” ê±°ì ì´ ë„ì‹œì¸ ê²½ìš°: ì›êµ° í›„ë³´ê±°ì  ì¹´ìš´íŠ¸ ì¶”ê°€
+                        if (base.get_id() < ê±´ë¬¼_ë„ì‹œë)   
                             arr_reinforce_count[src_target] += 1;
                     }
                 }
             }
             
-            // º´·ÂÂ÷¸¦ ±âÁØÀ¸·Î Á¤·Ä ('19.3.16)
+            // ë³‘ë ¥ì°¨ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ì •ë ¬ ('19.3.16)
             list_engage_base.sort(function(a, b)
             {
-                if (a.get_id() < °Ç¹°_µµ½Ã³¡ and b.get_id() < °Ç¹°_µµ½Ã³¡)
+                if (a.get_id() < ê±´ë¬¼_ë„ì‹œë and b.get_id() < ê±´ë¬¼_ë„ì‹œë)
                     return (main.arr_engage_troops[a.get_id()] > main.arr_engage_troops[b.get_id()]);
                 
                 return (a.get_id() > b.get_id());
             });
             
-            // ¿ø±ºÇÊ¿ä °ÅÁ¡À¸·Î ¿ø±º Ãâº´ ('19.3.13)
+            // ì›êµ°í•„ìš” ê±°ì ìœ¼ë¡œ ì›êµ° ì¶œë³‘ ('19.3.13)
             pk::array<pk::building@> arr_engage_base = pk::list_to_array(list_engage_base);
             for (int i = 0; i < int(arr_engage_base.length); i++)
             {
-                list_reinforce_base.clear();    // ÃâÁø¿Ï·á °ÅÁ¡ ¸®½ºÆ® ÃÊ±âÈ­
+                list_reinforce_base.clear();    // ì¶œì§„ì™„ë£Œ ê±°ì  ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
                 pk::building@ base = arr_engage_base[i];
                 
-                unit_count[0] = 0;  // ÃâÁøÇÑ ÀüÅõºÎ´ë¼ö ÃÊ±âÈ­
-                unit_count[1] = 0;  // ÃâÁøÇÑ ¼ö¼ÛºÎ´ë¼ö ÃÊ±âÈ­
-                int push_count = 0;  // push È½¼ö È®ÀÎ º¯¼ö
+                unit_count[0] = 0;  // ì¶œì§„í•œ ì „íˆ¬ë¶€ëŒ€ìˆ˜ ì´ˆê¸°í™”
+                unit_count[1] = 0;  // ì¶œì§„í•œ ìˆ˜ì†¡ë¶€ëŒ€ìˆ˜ ì´ˆê¸°í™”
+                int push_count = 0;  // push íšŸìˆ˜ í™•ì¸ ë³€ìˆ˜
                 
                 int engage_troops = arr_engage_troops[base.get_id()];
-                pk::array<int> max_count(2, 0);     // ÃÖ´ë ÃâÁø°¡´É ºÎ´ë¼ö
-                max_count[0] = pk::max(1, pk::min(°ÅÁ¡¿ø±º_ÀüÅõºÎ´ë¼ö, 1 + engage_troops/4000));
-                max_count[1] = pk::max(1, °ÅÁ¡¿ø±º_¼ö¼ÛºÎ´ë¼ö);
+                pk::array<int> max_count(2, 0);     // ìµœëŒ€ ì¶œì§„ê°€ëŠ¥ ë¶€ëŒ€ìˆ˜
+                max_count[0] = pk::max(1, pk::min(ê±°ì ì›êµ°_ì „íˆ¬ë¶€ëŒ€ìˆ˜, 1 + engage_troops/4000));
+                max_count[1] = pk::max(1, ê±°ì ì›êµ°_ìˆ˜ì†¡ë¶€ëŒ€ìˆ˜);
                 
-                // ÃâÁø°ÅÁ¡ °Ë»öÀ» Æ÷ÇÔÇÏ¿© ÃâÁø ¸í·É ¹İº¹ ¼öÇà ('19.3.4 ¼öÁ¤)
+                // ì¶œì§„ê±°ì  ê²€ìƒ‰ì„ í¬í•¨í•˜ì—¬ ì¶œì§„ ëª…ë ¹ ë°˜ë³µ ìˆ˜í–‰ ('19.3.4 ìˆ˜ì •)
                 bool cmd = false;
                 while(unit_count[0] < max_count[0] and unit_count[1] < max_count[1] and push_count < (max_count[0] + max_count[1]))
                 {
                     push_count += 1;
-                    cmd = (PushReinforce(base) or cmd);    // ¿ø±º Ãâº´
+                    cmd = (PushReinforce(base) or cmd);    // ì›êµ° ì¶œë³‘
                 }
             }
             
@@ -185,11 +185,11 @@ namespace °ÅÁ¡¿ø±º
         
         
         //----------------------------------------------------------------------------------
-        //          °ÅÁ¡ ¿ø±º
+        //          ê±°ì  ì›êµ°
         //----------------------------------------------------------------------------------
         
         
-		/** ¿ø±ºÀÌ ÇÊ¿äÇÑ »óÈ²ÀÎÁö ÆÇ´Ü */
+		/** ì›êµ°ì´ í•„ìš”í•œ ìƒí™©ì¸ì§€ íŒë‹¨ */
 		bool needReinforce(pk::building@ base)
 		{
 			int enemy_units1 = 0;
@@ -200,17 +200,17 @@ namespace °ÅÁ¡¿ø±º
 			int enemy_troops3 = 0;
 			int force_units3 = 0;
 
-            // Àû±º°Ë»ö¹üÀ§
-            int ref_city_id = pk::get_city_id(base.pos);   // °ÅÁ¡ ÁÂÇ¥°¡ ¼Ò¼ÓµÈ µµ½Ã È®ÀÎ ('20.9.20)
+            // ì êµ°ê²€ìƒ‰ë²”ìœ„
+            int ref_city_id = pk::get_city_id(base.pos);   // ê±°ì  ì¢Œí‘œê°€ ì†Œì†ëœ ë„ì‹œ í™•ì¸ ('20.9.20)
             pk::building@ ref_city = pk::get_building(ref_city_id);
-			pk::array<pk::point> range = pk::range(base.pos, 1, ((base.facility == ½Ã¼³_µµ½Ã) ? (°ÅÁ¡¿ø±º_Àû±º°Ë»ö¹üÀ§ + 1) : pk::min(6, °ÅÁ¡¿ø±º_Àû±º°Ë»ö¹üÀ§)) );
+			pk::array<pk::point> range = pk::range(base.pos, 1, ((base.facility == ì‹œì„¤_ë„ì‹œ) ? (ê±°ì ì›êµ°_ì êµ°ê²€ìƒ‰ë²”ìœ„ + 1) : pk::min(6, ê±°ì ì›êµ°_ì êµ°ê²€ìƒ‰ë²”ìœ„)) );
 			for (int i = 0; i < int(range.length); i++)
 			{
                 pk::point pos = range[i];
 				pk::unit@ unit = pk::get_unit(pos);
 				if (pk::is_alive(unit))
 				{
-                    int pos_city_id = pk::get_city_id(unit.pos);   // ºÎ´ë ÁÂÇ¥°¡ ¼Ò¼ÓµÈ µµ½Ã È®ÀÎ ('20.9.20)
+                    int pos_city_id = pk::get_city_id(unit.pos);   // ë¶€ëŒ€ ì¢Œí‘œê°€ ì†Œì†ëœ ë„ì‹œ í™•ì¸ ('20.9.20)
                     pk::building@ pos_city = pk::get_building(pos_city_id);
                     if (pk::is_alive(pos_city) and pk::is_alive(ref_city) and pos_city_id == ref_city_id)
                     {
@@ -221,20 +221,20 @@ namespace °ÅÁ¡¿ø±º
                             {
                                 enemy_units1++;
                             }
-                            if (distance <= pk::max(3, (°ÅÁ¡¿ø±º_Àû±º°Ë»ö¹üÀ§/2)))
+                            if (distance <= pk::max(3, (ê±°ì ì›êµ°_ì êµ°ê²€ìƒ‰ë²”ìœ„/2)))
                             {
                                 enemy_units2++;
                                 enemy_troops2 += unit.troops;
                             }
-                            if (distance <= °ÅÁ¡¿ø±º_Àû±º°Ë»ö¹üÀ§)
+                            if (distance <= ê±°ì ì›êµ°_ì êµ°ê²€ìƒ‰ë²”ìœ„)
                             {
                                 enemy_units3++;
                                 enemy_troops3 += unit.troops;
                             }
                         }
-                        else if (base.get_force_id() == unit.get_force_id() and unit.type == ºÎ´ëÁ¾·ù_ÀüÅõ)
+                        else if (base.get_force_id() == unit.get_force_id() and unit.type == ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬)
                         {
-                            if (distance <= °ÅÁ¡¿ø±º_Àû±º°Ë»ö¹üÀ§)
+                            if (distance <= ê±°ì ì›êµ°_ì êµ°ê²€ìƒ‰ë²”ìœ„)
                             {
                                 force_units3++;
                             }
@@ -245,29 +245,29 @@ namespace °ÅÁ¡¿ø±º
             
 			int base_troops = pk::get_troops(base);
             
-            // ±³Àü º´·ÂÂ÷ ¾÷µ¥ÀÌÆ®
+            // êµì „ ë³‘ë ¥ì°¨ ì—…ë°ì´íŠ¸
             arr_engage_troops[base.get_id()] = (enemy_troops3 - (base_troops + force_units3));
             
-            // ¹æ¾îºÎ´ë ¼ö°¡ °ø°İºÎ´ë ¼öº¸´Ù ÀûÀ» °æ¿ì
+            // ë°©ì–´ë¶€ëŒ€ ìˆ˜ê°€ ê³µê²©ë¶€ëŒ€ ìˆ˜ë³´ë‹¤ ì ì„ ê²½ìš°
             if ((enemy_units1 >= 1 or enemy_units2 >= 2 or enemy_units3 >= 3) and force_units3 <= enemy_units3 and force_units3 > 0)
                 return true;
             
-			// ¿ø±º Ãâº´ ¹ßµ¿ µÉ ÀÜ¿© ³»±¸ Á¶°Ç
+			// ì›êµ° ì¶œë³‘ ë°œë™ ë  ì”ì—¬ ë‚´êµ¬ ì¡°ê±´
 			if (base_troops < int(enemy_troops3 * 1.0f) and int(base.hp) > pk::max(500, int(pk::get_max_hp(base) * 0.3f)) and int(base.hp) < int(pk::get_max_hp(base) * 0.9f))
 				return true;
             
-			// ¿ø±º Ãâº´ ¹ßµ¿ µÉ ÀÜ¿© º´·Â Á¶°Ç
+			// ì›êµ° ì¶œë³‘ ë°œë™ ë  ì”ì—¬ ë³‘ë ¥ ì¡°ê±´
 			if (base_troops < int(enemy_troops2 * 1.0f) and base_troops < int(enemy_troops3 * 0.5f) and int(base.hp) < pk::max(1000, int(pk::get_max_hp(base) * 0.5f)) )
 				return true;
             
-            // °ü¹®/Ç×±¸ÀÎ °æ¿ì º´·Â ¾ø°í, Àû±º Ä§·« ½Ã Áï°¢ ¿ø±ºÃâº´
-            if (base.get_id() >= °Ç¹°_µµ½Ã³¡ and base_troops == 0 and enemy_units3 > 0)
+            // ê´€ë¬¸/í•­êµ¬ì¸ ê²½ìš° ë³‘ë ¥ ì—†ê³ , ì êµ° ì¹¨ëµ ì‹œ ì¦‰ê° ì›êµ°ì¶œë³‘
+            if (base.get_id() >= ê±´ë¬¼_ë„ì‹œë and base_troops == 0 and enemy_units3 > 0)
                 return true;
             
 			return false;
 		}
         
-		/** ±âÁØ º´·Â ÀÌ»óÀÇ °¡Àå °¡±î¿î ¾Æ±º °ÅÁ¡À» ¾òÀ½. */
+		/** ê¸°ì¤€ ë³‘ë ¥ ì´ìƒì˜ ê°€ì¥ ê°€ê¹Œìš´ ì•„êµ° ê±°ì ì„ ì–»ìŒ. */
         pk::building@ dst_t;
 		int getNearestReinforce(pk::building@ dst, pk::force@ force, bool has_person=true)
 		{
@@ -277,86 +277,86 @@ namespace °ÅÁ¡¿ø±º
             
             pk::city@ city_of_dst = pk::get_city(pk::get_city_id(dst.pos));
             bool is_enemy_line = pk::is_enemy(city_of_dst, force);
-            int max_distance = (dst_id >= °Ç¹°_µµ½Ã³¡)? (is_enemy_line? 2 : 1) : pk::max(1, pk::min(3, °ÅÁ¡¿ø±º_µµ½ÃÃâÁø°Å¸®));
-            bool reinforce_mode = pk::is_enemy(force, dst);   // true: Àû¼¼·Â, false: ÀÚ¼¼·Â ¶Ç´Â µ¿¸Í±º
-            if (reinforce_mode) max_distance = pk::min(2, max_distance); // °ø·«±ºÀÎ °æ¿ì °Ë»ö°Å¸® 2 ÀÌÇÏ·Î Á¦ÇÑ
+            int max_distance = (dst_id >= ê±´ë¬¼_ë„ì‹œë)? (is_enemy_line? 2 : 1) : pk::max(1, pk::min(3, ê±°ì ì›êµ°_ë„ì‹œì¶œì§„ê±°ë¦¬));
+            bool reinforce_mode = pk::is_enemy(force, dst);   // true: ì ì„¸ë ¥, false: ìì„¸ë ¥ ë˜ëŠ” ë™ë§¹êµ°
+            if (reinforce_mode) max_distance = pk::min(2, max_distance); // ê³µëµêµ°ì¸ ê²½ìš° ê²€ìƒ‰ê±°ë¦¬ 2 ì´í•˜ë¡œ ì œí•œ
             
             @dst_t = @dst;
             pk::list<pk::building@> src_list; 
             
-            int search_base = °Ç¹°_µµ½Ã³¡;
-            if      (has_person and °ÅÁ¡¿ø±º_°ÅÁ¡°Ë»ö¸ğµå == 0) search_base = °Ç¹°_µµ½Ã³¡;
-            else if (has_person and °ÅÁ¡¿ø±º_°ÅÁ¡°Ë»ö¸ğµå == 1) search_base = °Ç¹°_°ÅÁ¡³¡;
-            else if (!has_person) search_base = °Ç¹°_°ÅÁ¡³¡;     // °Ë»öÁ¶°Ç Ãß°¡ ('20.9.13)
+            int search_base = ê±´ë¬¼_ë„ì‹œë;
+            if      (has_person and ê±°ì ì›êµ°_ê±°ì ê²€ìƒ‰ëª¨ë“œ == 0) search_base = ê±´ë¬¼_ë„ì‹œë;
+            else if (has_person and ê±°ì ì›êµ°_ê±°ì ê²€ìƒ‰ëª¨ë“œ == 1) search_base = ê±´ë¬¼_ê±°ì ë;
+            else if (!has_person) search_base = ê±´ë¬¼_ê±°ì ë;     // ê²€ìƒ‰ì¡°ê±´ ì¶”ê°€ ('20.9.13)
             
-			// ¿ø±º ÃâÁø °ÅÁ¡ °Ë»ö
+			// ì›êµ° ì¶œì§„ ê±°ì  ê²€ìƒ‰
 			for (int i = 0; i < search_base; i++)
 			{
 				pk::building@ src = pk::get_building(i);
                 int src_id = src.get_id();
                 
                 bool check_reinforce_force = false;
-                if (!reinforce_mode)   // ÀÚ¼¼·Â ¶Ç´Â µ¿¸Í±º °ÅÁ¡ °Ë»ö
-                    check_reinforce_force = (°ÅÁ¡¿ø±º_µ¿¸Í¼¼·Â¿ø±º)? (!pk::is_enemy(dst, src) and !src.is_player()) : (dst.get_force_id() == src.get_force_id() and !src.is_player());
-                else    // Å¸¼¼·Â °ÅÁ¡ °Ë»ö (ÇÔ¼ö¿¡¼­ ÁöÁ¤µÈ ¼¼·Â)
+                if (!reinforce_mode)   // ìì„¸ë ¥ ë˜ëŠ” ë™ë§¹êµ° ê±°ì  ê²€ìƒ‰
+                    check_reinforce_force = (ê±°ì ì›êµ°_ë™ë§¹ì„¸ë ¥ì›êµ°)? (!pk::is_enemy(dst, src) and !src.is_player()) : (dst.get_force_id() == src.get_force_id() and !src.is_player());
+                else    // íƒ€ì„¸ë ¥ ê±°ì  ê²€ìƒ‰ (í•¨ìˆ˜ì—ì„œ ì§€ì •ëœ ì„¸ë ¥)
                     check_reinforce_force = (pk::is_enemy(dst, src) and !src.is_player()) and (force.get_id() == src.get_force_id());
                 
-                // Å¸ °ÅÁ¡, ±³Àü¾Æ´Ô, ¿ø±ºÇÊ¿ä°ÅÁ¡ ¾Æ´Ô, ÃâÁø¿Ï·á°ÅÁ¡ ¾Æ´Ô
+                // íƒ€ ê±°ì , êµì „ì•„ë‹˜, ì›êµ°í•„ìš”ê±°ì  ì•„ë‹˜, ì¶œì§„ì™„ë£Œê±°ì  ì•„ë‹˜
 				if (dst_id != src_id and check_reinforce_force and !pk::enemies_around(src) 
                     and !needReinforce(src) and !list_reinforce_base.contains(src) and !list_attack_base.contains(src))
                 {
-                    // µµ½Ã°Å¸®
+                    // ë„ì‹œê±°ë¦¬
                     int city_dist = -1;
-                    if (dst_id < °Ç¹°_µµ½Ã³¡ and src_id < °Ç¹°_µµ½Ã³¡)
+                    if (dst_id < ê±´ë¬¼_ë„ì‹œë and src_id < ê±´ë¬¼_ë„ì‹œë)
                         city_dist = pk::get_city_distance(dst_id, src_id);
                     
-                    // °ÅÁ¡°Å¸®
+                    // ê±°ì ê±°ë¦¬
                     int base_dist = pk::get_building_distance(dst_id, src_id, dst.get_force_id());
                     
-                    // °Å¸® Á¶°Ç ¸¸Á· ½Ã
+                    // ê±°ë¦¬ ì¡°ê±´ ë§Œì¡± ì‹œ
                     if ( (0 <= base_dist and base_dist <= max_distance) or city_dist == 1)
                     {
                         int enemy_weight = countNeighborEnemyBase(src);
-                        int ref_troops = (enemy_weight * °ÅÁ¡¿ø±º_°æ°èº´·Â´ÜÀ§) + °ÅÁ¡¿ø±º_°ÅÁ¡ÃÖ¼Òº´·Â;
+                        int ref_troops = (enemy_weight * ê±°ì ì›êµ°_ê²½ê³„ë³‘ë ¥ë‹¨ìœ„) + ê±°ì ì›êµ°_ê±°ì ìµœì†Œë³‘ë ¥;
                         int src_troops = pk::get_troops(src);
                         int src_food = pk::get_food(src);
                         
-                        int ref_p_count = pk::max(1, (enemy_weight / 4) + °ÅÁ¡¿ø±º_ÃâÁø°ÅÁ¡¹«Àå¼ö);
-                        int person_count = pk::get_person_list(src, pk::mibun_flags(½ÅºĞ_±ºÁÖ, ½ÅºĞ_µµµ¶, ½ÅºĞ_ÅÂ¼ö, ½ÅºĞ_ÀÏ¹İ)).count;
+                        int ref_p_count = pk::max(1, (enemy_weight / 4) + ê±°ì ì›êµ°_ì¶œì§„ê±°ì ë¬´ì¥ìˆ˜);
+                        int person_count = pk::get_person_list(src, pk::mibun_flags(ì‹ ë¶„_êµ°ì£¼, ì‹ ë¶„_ë„ë…, ì‹ ë¶„_íƒœìˆ˜, ì‹ ë¶„_ì¼ë°˜)).count;
                         int idle_p_count = pk::get_idle_person_list(src).count;
                         
                         int weapon_amount = 0;
                         int siege_amount = 0;
             
-                        for (int j = º´±â_Ã¢; j <= º´±â_±º¸¶; j++)     // Ã¢±Ø³ë¸¶ º´±â¼ö·® ÇÕÇÏ±â
+                        for (int j = ë³‘ê¸°_ì°½; j <= ë³‘ê¸°_êµ°ë§ˆ; j++)     // ì°½ê·¹ë…¸ë§ˆ ë³‘ê¸°ìˆ˜ëŸ‰ í•©í•˜ê¸°
                         {
                             weapon_amount += pk::get_weapon_amount(src, j);
                         }
-                        for (int j = º´±â_ÃæÂ÷; j <= º´±â_¸ñ¼ö; j++)     // °ø¼ºº´±â ¼ö·® ÇÕÇÏ±â
+                        for (int j = ë³‘ê¸°_ì¶©ì°¨; j <= ë³‘ê¸°_ëª©ìˆ˜; j++)     // ê³µì„±ë³‘ê¸° ìˆ˜ëŸ‰ í•©í•˜ê¸°
                         {
                             siege_amount += pk::get_weapon_amount(src, j);
                         }
                         
-                        // ÃâÁø´ë»ó°ÅÁ¡ Á¶°Ç (¹«Àå¼ö, º´·Â, º´±â, º´·® º¸À¯·®)
+                        // ì¶œì§„ëŒ€ìƒê±°ì  ì¡°ê±´ (ë¬´ì¥ìˆ˜, ë³‘ë ¥, ë³‘ê¸°, ë³‘ëŸ‰ ë³´ìœ ëŸ‰)
                         if (((has_person and person_count >= ref_p_count and idle_p_count > 0) or (!has_person and person_count == 0))
                             and src_troops > ref_troops and weapon_amount >= ref_troops and src_food >= int(1.5f * ref_troops))
                         {
-                            if (!reinforce_mode)    // ÀÚ¼¼·Â ¶Ç´Â µ¿¸Í±º
+                            if (!reinforce_mode)    // ìì„¸ë ¥ ë˜ëŠ” ë™ë§¹êµ°
                             {
                                 best_src = src_id;
-                                src_list.add(src);  // ÃâÁø°¡´É °ÅÁ¡¸®½ºÆ®
+                                src_list.add(src);  // ì¶œì§„ê°€ëŠ¥ ê±°ì ë¦¬ìŠ¤íŠ¸
                             }
-                            else if (reinforce_mode and siege_amount > 2)  // Àû¼¼·Â, °ø¼ºº´±â º¸À¯À¯¹« Ãß°¡ È®ÀÎ
+                            else if (reinforce_mode and siege_amount > 2)  // ì ì„¸ë ¥, ê³µì„±ë³‘ê¸° ë³´ìœ ìœ ë¬´ ì¶”ê°€ í™•ì¸
                             {
                                 best_src = src_id;
-                                src_list.add(src);  // ÃâÁø°¡´É °ÅÁ¡¸®½ºÆ®
+                                src_list.add(src);  // ì¶œì§„ê°€ëŠ¥ ê±°ì ë¦¬ìŠ¤íŠ¸
                             }
                         }
                     }
                 }
 			}
             
-            // ÃâÁø°¡´É °ÅÁ¡¸®½ºÆ® Á¤·Ä (°ÅÁ¡ °Å¸® ¿À¸§Â÷¼ø, ÁÂÇ¥°Å¸® ¿À¸§Â÷¼ø)
+            // ì¶œì§„ê°€ëŠ¥ ê±°ì ë¦¬ìŠ¤íŠ¸ ì •ë ¬ (ê±°ì  ê±°ë¦¬ ì˜¤ë¦„ì°¨ìˆœ, ì¢Œí‘œê±°ë¦¬ ì˜¤ë¦„ì°¨ìˆœ)
             if (src_list.count == 0)
                 best_src = -1;
             else
@@ -379,12 +379,12 @@ namespace °ÅÁ¡¿ø±º
 
         //----------------------------------------------------------------------------------
         
-        // ***** ÁÖº¯ Àû°ÅÁ¡ ¼ö È®ÀÎ ***** //
+        // ***** ì£¼ë³€ ì ê±°ì  ìˆ˜ í™•ì¸ ***** //
         int countNeighborEnemyBase(pk::building@ src)
         {
             int weight = 0;
             int troops = 0;
-            for (int i = 0; i < °Ç¹°_°ÅÁ¡³¡; i++)
+            for (int i = 0; i < ê±´ë¬¼_ê±°ì ë; i++)
 			{
                 pk::building@ dst = pk::get_building(i);
                 int src_id = src.get_id();
@@ -394,7 +394,7 @@ namespace °ÅÁ¡¿ø±º
                     troops += pk::get_troops(dst);
             }
             
-            weight = int(troops / °ÅÁ¡¿ø±º_°æ°èº´·Â´ÜÀ§);
+            weight = int(troops / ê±°ì ì›êµ°_ê²½ê³„ë³‘ë ¥ë‹¨ìœ„);
             return weight;
         }
         
@@ -402,72 +402,72 @@ namespace °ÅÁ¡¿ø±º
         //----------------------------------------------------------------------------------
         
         
-		// ***** ¿ø±º ÃâÁø ¸í·É ***** //
+		// ***** ì›êµ° ì¶œì§„ ëª…ë ¹ ***** //
         bool PushReinforce(pk::building@ dst_base)
 		{
-			// ¿ø±º ºÎ´ë°¡ ÃâÁøÇÒ ÀÎ±Ù °ÅÁ¡ÀÌ ÀÖ´ÂÁö È®ÀÎ
+			// ì›êµ° ë¶€ëŒ€ê°€ ì¶œì§„í•  ì¸ê·¼ ê±°ì ì´ ìˆëŠ”ì§€ í™•ì¸
             pk::force@ force = pk::get_force(dst_base.get_force_id());
 			int target = getNearestReinforce(dst_base, force, /*has_person*/true);
 			if (target == -1) return false;
 
-            // ¿ø±º ÃâÁø °ÅÁ¡
+            // ì›êµ° ì¶œì§„ ê±°ì 
             pk::building@ src_base = pk::get_building(target);
             int src_id = src_base.get_id();
             int dst_id = dst_base.get_id();
             
-            // ÃâÁø ºÎ´ë Á¾·ù ÆÇ´Ü ('19.3.4)
+            // ì¶œì§„ ë¶€ëŒ€ ì¢…ë¥˜ íŒë‹¨ ('19.3.4)
             int reinforce_type = -1;
-            if (°ÅÁ¡¿ø±º_µ¿¸Í¼¼·Â¿ø±º and !pk::is_enemy(src_base, dst_base) and src_base.get_force_id() != dst_base.get_force_id())
-                reinforce_type = ºÎ´ëÁ¾·ù_ÀüÅõ; // µ¿¸Í¼¼·Â¿ø±ºÀº ¹«Á¶°Ç ÀüÅõºÎ´ë ('20.2.8)
+            if (ê±°ì ì›êµ°_ë™ë§¹ì„¸ë ¥ì›êµ° and !pk::is_enemy(src_base, dst_base) and src_base.get_force_id() != dst_base.get_force_id())
+                reinforce_type = ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬; // ë™ë§¹ì„¸ë ¥ì›êµ°ì€ ë¬´ì¡°ê±´ ì „íˆ¬ë¶€ëŒ€ ('20.2.8)
             else
             {
-                if (°ÅÁ¡¿ø±º_ºÎ´ëÁ¾·ù¸ğµå == 0) reinforce_type = ºÎ´ëÁ¾·ù_ÀüÅõ;   // ¹«Á¶°Ç ÀüÅõºÎ´ë
-                if (°ÅÁ¡¿ø±º_ºÎ´ëÁ¾·ù¸ğµå == 1) reinforce_type = ºÎ´ëÁ¾·ù_¼ö¼Û;   // ¹«Á¶°Ç ¼ö¼ÛºÎ´ë
-                if (°ÅÁ¡¿ø±º_ºÎ´ëÁ¾·ù¸ğµå == 2) reinforce_type = get_reinforce_unit_type(src_base, dst_base);
+                if (ê±°ì ì›êµ°_ë¶€ëŒ€ì¢…ë¥˜ëª¨ë“œ == 0) reinforce_type = ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬;   // ë¬´ì¡°ê±´ ì „íˆ¬ë¶€ëŒ€
+                if (ê±°ì ì›êµ°_ë¶€ëŒ€ì¢…ë¥˜ëª¨ë“œ == 1) reinforce_type = ë¶€ëŒ€ì¢…ë¥˜_ìˆ˜ì†¡;   // ë¬´ì¡°ê±´ ìˆ˜ì†¡ë¶€ëŒ€
+                if (ê±°ì ì›êµ°_ë¶€ëŒ€ì¢…ë¥˜ëª¨ë“œ == 2) reinforce_type = get_reinforce_unit_type(src_base, dst_base);
             }
-            if (reinforce_type < 0 or reinforce_type > ºÎ´ëÁ¾·ù_³¡) return false;
+            if (reinforce_type < 0 or reinforce_type > ë¶€ëŒ€ì¢…ë¥˜_ë) return false;
             
-            // ÃâÁø°ÅÁ¡°ú ¸ñÇ¥°ÅÁ¡°£ °Å¸®
+            // ì¶œì§„ê±°ì ê³¼ ëª©í‘œê±°ì ê°„ ê±°ë¦¬
             int distance = pk::get_building_distance(src_id, dst_id, src_base.get_force_id());
             
-            // ¸ñÇ¥°ÅÁ¡ ¸¹À» °æ¿ì ºĞ»ê ('19.3.13)
+            // ëª©í‘œê±°ì  ë§ì„ ê²½ìš° ë¶„ì‚° ('19.3.13)
             int divide = pk::max(1, arr_reinforce_count[src_id]);
             
-            // °ÅÁ¡ °Å¸® ¹× Á¾·ù¿¡ µû¸¥ ÃâÁø°¡´É ºÎ´ë¼ö Á¦ÇÑ ('19.3.5)
+            // ê±°ì  ê±°ë¦¬ ë° ì¢…ë¥˜ì— ë”°ë¥¸ ì¶œì§„ê°€ëŠ¥ ë¶€ëŒ€ìˆ˜ ì œí•œ ('19.3.5)
             int engage_troops = arr_engage_troops[dst_base.get_id()];
-            pk::array<int> max_unit(2, 0);  // ÃÖ´ë ÃâÁø°¡´É ºÎ´ë¼ö
-            max_unit[0] = pk::max(1, pk::min(1 + engage_troops/4000  , int((°ÅÁ¡¿ø±º_ÀüÅõºÎ´ë¼ö - (distance - 1))/divide) ) );
-            max_unit[1] = pk::max(1, int( °ÅÁ¡¿ø±º_¼ö¼ÛºÎ´ë¼ö/divide) );
+            pk::array<int> max_unit(2, 0);  // ìµœëŒ€ ì¶œì§„ê°€ëŠ¥ ë¶€ëŒ€ìˆ˜
+            max_unit[0] = pk::max(1, pk::min(1 + engage_troops/4000  , int((ê±°ì ì›êµ°_ì „íˆ¬ë¶€ëŒ€ìˆ˜ - (distance - 1))/divide) ) );
+            max_unit[1] = pk::max(1, int( ê±°ì ì›êµ°_ìˆ˜ì†¡ë¶€ëŒ€ìˆ˜/divide) );
             
-            if (dst_id >= °Ç¹°_µµ½Ã³¡)   // °ü¹®/°ÅÁ¡Àº ÇÑ °ÅÁ¡¿¡¼­ 1ºÎ´ë¸¸
+            if (dst_id >= ê±´ë¬¼_ë„ì‹œë)   // ê´€ë¬¸/ê±°ì ì€ í•œ ê±°ì ì—ì„œ 1ë¶€ëŒ€ë§Œ
             {
                 max_unit[0] = 1;
                 max_unit[1] = 1;
             }
             
-            int push_count = 0;  // push È½¼ö È®ÀÎ º¯¼ö
+            int push_count = 0;  // push íšŸìˆ˜ í™•ì¸ ë³€ìˆ˜
             
-            // ÃâÁø°ÅÁ¡¿¡¼­ ¹İº¹ÀûÀ¸·Î ÃâÁø ¸í·É ¼öÇà ('19.3.4)
+            // ì¶œì§„ê±°ì ì—ì„œ ë°˜ë³µì ìœ¼ë¡œ ì¶œì§„ ëª…ë ¹ ìˆ˜í–‰ ('19.3.4)
             while(unit_count[0] < max_unit[0] and unit_count[1] < max_unit[1] and  push_count < (max_unit[0] + max_unit[1]))
             {
                 push_count += 1;
                 
-                if (reinforce_type == ºÎ´ëÁ¾·ù_¼ö¼Û)
+                if (reinforce_type == ë¶€ëŒ€ì¢…ë¥˜_ìˆ˜ì†¡)
                 {
-                    int unit_id = PushTransportUnit(src_base, dst_base, true);  // ¼ö¼ÛºÎ´ë ÃâÁø
+                    int unit_id = PushTransportUnit(src_base, dst_base, true);  // ìˆ˜ì†¡ë¶€ëŒ€ ì¶œì§„
                     if (unit_id != -1)
                     {
-                        unit_count[1] += 1;     // ¼ö¼ÛºÎ´ë Ä«¿îÆ®
+                        unit_count[1] += 1;     // ìˆ˜ì†¡ë¶€ëŒ€ ì¹´ìš´íŠ¸
                         if (!list_reinforce_base.contains(src_base))
                             list_reinforce_base.add(src_base);
                     }
                 }
-                else if (reinforce_type == ºÎ´ëÁ¾·ù_ÀüÅõ)
+                else if (reinforce_type == ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬)
                 {
-                    int unit_id = PushCombatUnit(src_base, dst_base, true);     // ÀüÅõºÎ´ë ÃâÁø
+                    int unit_id = PushCombatUnit(src_base, dst_base, true);     // ì „íˆ¬ë¶€ëŒ€ ì¶œì§„
                     if (unit_id != -1)
                     {
-                        unit_count[0] += 1;     // ÀüÅõºÎ´ë Ä«¿îÆ®
+                        unit_count[0] += 1;     // ì „íˆ¬ë¶€ëŒ€ ì¹´ìš´íŠ¸
                         if (!list_reinforce_base.contains(src_base))
                             list_reinforce_base.add(src_base);
                     }
@@ -480,122 +480,122 @@ namespace °ÅÁ¡¿ø±º
         
         //----------------------------------------------------------------------------------
         
-        // ÃâÁø°ÅÁ¡ ¹× ´ë»ó°ÅÁ¡ÀÇ ¹«Àå¼ö·Î ÃâÁøÇÒ ºÎ´ëÁ¾·ù °áÁ¤ ('19.3.4)
+        // ì¶œì§„ê±°ì  ë° ëŒ€ìƒê±°ì ì˜ ë¬´ì¥ìˆ˜ë¡œ ì¶œì§„í•  ë¶€ëŒ€ì¢…ë¥˜ ê²°ì • ('19.3.4)
         int get_reinforce_unit_type(pk::building@ src_base, pk::building@ dst_base)
         {
             if (!pk::is_alive(src_base) or !pk::is_alive(dst_base)) return -1;
 
-            // °ÅÁ¡º° ¼Ò¼Ó¹«Àå Á¤º¸
-            pk::list<pk::person@> list_src_men = pk::get_person_list(src_base, pk::mibun_flags(½ÅºĞ_±ºÁÖ, ½ÅºĞ_µµµ¶, ½ÅºĞ_ÅÂ¼ö, ½ÅºĞ_ÀÏ¹İ));
-            pk::list<pk::person@> list_dst_men = pk::get_person_list(dst_base, pk::mibun_flags(½ÅºĞ_±ºÁÖ, ½ÅºĞ_µµµ¶, ½ÅºĞ_ÅÂ¼ö, ½ÅºĞ_ÀÏ¹İ));
+            // ê±°ì ë³„ ì†Œì†ë¬´ì¥ ì •ë³´
+            pk::list<pk::person@> list_src_men = pk::get_person_list(src_base, pk::mibun_flags(ì‹ ë¶„_êµ°ì£¼, ì‹ ë¶„_ë„ë…, ì‹ ë¶„_íƒœìˆ˜, ì‹ ë¶„_ì¼ë°˜));
+            pk::list<pk::person@> list_dst_men = pk::get_person_list(dst_base, pk::mibun_flags(ì‹ ë¶„_êµ°ì£¼, ì‹ ë¶„_ë„ë…, ì‹ ë¶„_íƒœìˆ˜, ì‹ ë¶„_ì¼ë°˜));
             
-            // ¹«Àå¼ö
-            int src_count = list_src_men.count;    // ÃâÁø°ÅÁ¡ ¹ÌÇàµ¿ ¹«Àå¼ö
-            int dst_count = list_dst_men.count;    // ¸ñÇ¥°ÅÁ¡ ÀüÃ¼ ¹«Àå¼ö
+            // ë¬´ì¥ìˆ˜
+            int src_count = list_src_men.count;    // ì¶œì§„ê±°ì  ë¯¸í–‰ë™ ë¬´ì¥ìˆ˜
+            int dst_count = list_dst_men.count;    // ëª©í‘œê±°ì  ì „ì²´ ë¬´ì¥ìˆ˜
             
-            // °ÅÁ¡°Å¸®
+            // ê±°ì ê±°ë¦¬
             int distance = pk::get_building_distance(src_base.get_id(), dst_base.get_id(), src_base.get_force_id());
             
-            // ÃâÁø ºÎ´ëÁ¾·ù °áÁ¤
+            // ì¶œì§„ ë¶€ëŒ€ì¢…ë¥˜ ê²°ì •
             int reinforce_type = -1;
             if (pk::get_troops(dst_base) < 3000 and unit_count[1] < 1)
-                reinforce_type = ºÎ´ëÁ¾·ù_¼ö¼Û;    // º´·ÂºÎÁ· °ÅÁ¡¿¡ ¼ö¼ÛºÎ´ë ¾Èº¸³½ °æ¿ì ¼ö¼ÛºÎ´ë ÃâÁø
+                reinforce_type = ë¶€ëŒ€ì¢…ë¥˜_ìˆ˜ì†¡;    // ë³‘ë ¥ë¶€ì¡± ê±°ì ì— ìˆ˜ì†¡ë¶€ëŒ€ ì•ˆë³´ë‚¸ ê²½ìš° ìˆ˜ì†¡ë¶€ëŒ€ ì¶œì§„
             
             else if (distance <= 1)
-                reinforce_type = ºÎ´ëÁ¾·ù_ÀüÅõ;    // °¡±î¿î °Å¸®ÀÎ °æ¿ì : ÀüÅõºÎ´ë
+                reinforce_type = ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬;    // ê°€ê¹Œìš´ ê±°ë¦¬ì¸ ê²½ìš° : ì „íˆ¬ë¶€ëŒ€
             
             else if (dst_count == 0)
-                reinforce_type = ºÎ´ëÁ¾·ù_ÀüÅõ;    // ¸ñÇ¥°ÅÁ¡ ¹«Àå¾øÀ» ½Ã : ÀüÅõºÎ´ë
+                reinforce_type = ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬;    // ëª©í‘œê±°ì  ë¬´ì¥ì—†ì„ ì‹œ : ì „íˆ¬ë¶€ëŒ€
             
-            else if (dst_count >= pk::max(1, °ÅÁ¡¿ø±º_±³Àü°ÅÁ¡¹«Àå¼ö))
-                reinforce_type = ºÎ´ëÁ¾·ù_¼ö¼Û;    // ¸ñÇ¥°ÅÁ¡ n¸í ÀÌ»ó : ¼ö¼ÛºÎ´ë
+            else if (dst_count >= pk::max(1, ê±°ì ì›êµ°_êµì „ê±°ì ë¬´ì¥ìˆ˜))
+                reinforce_type = ë¶€ëŒ€ì¢…ë¥˜_ìˆ˜ì†¡;    // ëª©í‘œê±°ì  nëª… ì´ìƒ : ìˆ˜ì†¡ë¶€ëŒ€
             
-            else if (src_count <= pk::max(1, °ÅÁ¡¿ø±º_ÃâÁø°ÅÁ¡¹«Àå¼ö)) 
-                reinforce_type = ºÎ´ëÁ¾·ù_¼ö¼Û;    // ÃâÁø¹«Àå ÀûÀ» °æ¿ì : ¼ö¼ÛºÎ´ë
+            else if (src_count <= pk::max(1, ê±°ì ì›êµ°_ì¶œì§„ê±°ì ë¬´ì¥ìˆ˜)) 
+                reinforce_type = ë¶€ëŒ€ì¢…ë¥˜_ìˆ˜ì†¡;    // ì¶œì§„ë¬´ì¥ ì ì„ ê²½ìš° : ìˆ˜ì†¡ë¶€ëŒ€
             
             else                     
-                reinforce_type = ºÎ´ëÁ¾·ù_ÀüÅõ;    // ÀüÅõºÎ´ë
+                reinforce_type = ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬;    // ì „íˆ¬ë¶€ëŒ€
             
             return reinforce_type;
         }
         
-        // °Ç¹°ID¿¡ µû¶ó °ÅÁ¡ Á¾·ù°ª ¹İÈ¯
+        // ê±´ë¬¼IDì— ë”°ë¼ ê±°ì  ì¢…ë¥˜ê°’ ë°˜í™˜
         int get_base_type(int building_id)
         {
             int type = -1;
-            if (°Ç¹°_µµ½Ã½ÃÀÛ <= building_id and building_id < °Ç¹°_µµ½Ã³¡) type = 0;
-            if (°Ç¹°_°ü¹®½ÃÀÛ <= building_id and building_id < °Ç¹°_°ü¹®³¡) type = 1;
-            if (°Ç¹°_Ç×±¸½ÃÀÛ <= building_id and building_id < °Ç¹°_Ç×±¸³¡) type = 2;
+            if (ê±´ë¬¼_ë„ì‹œì‹œì‘ <= building_id and building_id < ê±´ë¬¼_ë„ì‹œë) type = 0;
+            if (ê±´ë¬¼_ê´€ë¬¸ì‹œì‘ <= building_id and building_id < ê±´ë¬¼_ê´€ë¬¸ë) type = 1;
+            if (ê±´ë¬¼_í•­êµ¬ì‹œì‘ <= building_id and building_id < ê±´ë¬¼_í•­êµ¬ë) type = 2;
             return type;
         }
         
         //----------------------------------------------------------------------------------
         
-        // ¼ö¼ÛºÎ´ë ÃâÁø Ã³¸®
+        // ìˆ˜ì†¡ë¶€ëŒ€ ì¶œì§„ ì²˜ë¦¬
         int PushTransportUnit(pk::building@ src_base, pk::building@ dst_base, bool do_cmd = true)
         {
             if (!pk::is_alive(src_base) or !pk::is_alive(dst_base)) return -1;
             
-            int enemy_weight = countNeighborEnemyBase(src_base);    // Àûº´·Â °¡ÁßÄ¡
-            int ref_troops = (enemy_weight * °ÅÁ¡¿ø±º_°æ°èº´·Â´ÜÀ§) + °ÅÁ¡¿ø±º_°ÅÁ¡ÃÖ¼Òº´·Â;
-            if (pk::get_troops(src_base) <= (ref_troops + °ÅÁ¡¿ø±º_ÃÖ¼ÒÃâÁøº´·Â)) return -1;    // º´·Â ºÎÁ·
+            int enemy_weight = countNeighborEnemyBase(src_base);    // ì ë³‘ë ¥ ê°€ì¤‘ì¹˜
+            int ref_troops = (enemy_weight * ê±°ì ì›êµ°_ê²½ê³„ë³‘ë ¥ë‹¨ìœ„) + ê±°ì ì›êµ°_ê±°ì ìµœì†Œë³‘ë ¥;
+            if (pk::get_troops(src_base) <= (ref_troops + ê±°ì ì›êµ°_ìµœì†Œì¶œì§„ë³‘ë ¥)) return -1;    // ë³‘ë ¥ ë¶€ì¡±
               
-            int person_count = pk::get_person_list(src_base, pk::mibun_flags(½ÅºĞ_±ºÁÖ, ½ÅºĞ_µµµ¶, ½ÅºĞ_ÅÂ¼ö, ½ÅºĞ_ÀÏ¹İ)).count;
-            if (person_count <= pk::max(1, (enemy_weight/4) + °ÅÁ¡¿ø±º_ÃâÁø°ÅÁ¡¹«Àå¼ö)) return -1;   // ¹«Àå ºÎÁ·
+            int person_count = pk::get_person_list(src_base, pk::mibun_flags(ì‹ ë¶„_êµ°ì£¼, ì‹ ë¶„_ë„ë…, ì‹ ë¶„_íƒœìˆ˜, ì‹ ë¶„_ì¼ë°˜)).count;
+            if (person_count <= pk::max(1, (enemy_weight/4) + ê±°ì ì›êµ°_ì¶œì§„ê±°ì ë¬´ì¥ìˆ˜)) return -1;   // ë¬´ì¥ ë¶€ì¡±
             
             auto person_list = pk::get_idle_person_list(src_base);
             int base_type = get_base_type(dst_base.get_id());
-            if (base_type == 0 and person_list.count <= 1) return -1;   // ¹«Àå ºÎÁ· (µµ½Ã)
-            if (base_type > 0  and person_list.count < 1)  return -1;   // ¹«Àå ºÎÁ· (°ü¹®,Ç×±¸)
+            if (base_type == 0 and person_list.count <= 1) return -1;   // ë¬´ì¥ ë¶€ì¡± (ë„ì‹œ)
+            if (base_type > 0  and person_list.count < 1)  return -1;   // ë¬´ì¥ ë¶€ì¡± (ê´€ë¬¸,í•­êµ¬)
             
-            // Á¤Ä¡·Â ³ôÀº ¼øÀ¸·Î Á¤·Ä.
+            // ì •ì¹˜ë ¥ ë†’ì€ ìˆœìœ¼ë¡œ ì •ë ¬.
 			person_list.sort(function(a, b)
 			{
-				return (float(a.stat[¹«Àå´É·Â_Á¤Ä¡]) / float(a.stat[¹«Àå´É·Â_¹«·Â])) > (float(b.stat[¹«Àå´É·Â_Á¤Ä¡]) / float(b.stat[¹«Àå´É·Â_¹«·Â]));
+				return (float(a.stat[ë¬´ì¥ëŠ¥ë ¥_ì •ì¹˜]) / float(a.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥])) > (float(b.stat[ë¬´ì¥ëŠ¥ë ¥_ì •ì¹˜]) / float(b.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥]));
 			});
             pk::person@ leader = pk::get_person(person_list[0].get_id());
             
-            // ¿ø±º º´·Â »êÁ¤ : ±âÁØ º´·Â ÃÊ°úºĞ
+            // ì›êµ° ë³‘ë ¥ ì‚°ì • : ê¸°ì¤€ ë³‘ë ¥ ì´ˆê³¼ë¶„
             int reinforce_troops = pk::min( pk::max(1, (45000 - ref_troops)), pk::max(1, pk::get_troops(src_base) - ref_troops));
             
-            // ´ë»ó°ÅÁ¡ÀÌ °ü¹®/Ç×±¸ÀÎ °æ¿ì ¿ø±ºº´·Â Á¦ÇÑ
+            // ëŒ€ìƒê±°ì ì´ ê´€ë¬¸/í•­êµ¬ì¸ ê²½ìš° ì›êµ°ë³‘ë ¥ ì œí•œ
             if (base_type > 0)
             {
-                if (pk::has_tech(dst_base, ±â±³_Ç×°üÈ®Àå))
+                if (pk::has_tech(dst_base, ê¸°êµ_í•­ê´€í™•ì¥))
                     reinforce_troops = pk::min(20000, reinforce_troops);
                 else
                     reinforce_troops = pk::min(10000, reinforce_troops);
             }
             
-            // º´·® °è»ê
+            // ë³‘ëŸ‰ ê³„ì‚°
             int unit_food = int(pk::min(2.0f * reinforce_troops, pk::max( 0.5f * pk::get_food(src_base), 1.2f * reinforce_troops)));
-            if (unit_food < int(0.5f * reinforce_troops)) return -1;   // º´·® ºÎÁ·
+            if (unit_food < int(0.5f * reinforce_troops)) return -1;   // ë³‘ëŸ‰ ë¶€ì¡±
             
-            // ÃâÁø ¸í·É
+            // ì¶œì§„ ëª…ë ¹
             if (do_cmd)
             {
-                // ÃâÁø ¸í·É Á¤º¸ »ı¼º.
+                // ì¶œì§„ ëª…ë ¹ ì •ë³´ ìƒì„±.
                 pk::com_deploy_cmd_info cmd;
                 @cmd.base = @src_base;
-                cmd.type = ºÎ´ëÁ¾·ù_¼ö¼Û;
+                cmd.type = ë¶€ëŒ€ì¢…ë¥˜_ìˆ˜ì†¡;
                 cmd.member[0] = leader.get_id();
                 cmd.gold = (pk::get_gold(src_base) >= 1000) ? int(pk::min(2000.f, pk::get_gold(src_base) * 0.1f)) : 0;
                 cmd.food = pk::min(unit_food, 500000);
                 cmd.troops = pk::min(60000, pk::max(1, reinforce_troops));
                 
-                // Ã¢±Ø³ë¸¶ º´±â¼ö·® ÇÕÇÏ±â
+                // ì°½ê·¹ë…¸ë§ˆ ë³‘ê¸°ìˆ˜ëŸ‰ í•©í•˜ê¸°
                 int weapon_sum = 0;
-                for (int j = º´±â_Ã¢; j <= º´±â_±º¸¶; j++)     
+                for (int j = ë³‘ê¸°_ì°½; j <= ë³‘ê¸°_êµ°ë§ˆ; j++)     
                 {
                     weapon_sum += pk::get_weapon_amount(src_base, j);
                 }
                 
-                // º´±â ÀüÃ¼ ¼ö·®Àº º´·Â¸¸Å­, º´±âº° ºñÀ²´ë·Î ¹èºĞ
+                // ë³‘ê¸° ì „ì²´ ìˆ˜ëŸ‰ì€ ë³‘ë ¥ë§Œí¼, ë³‘ê¸°ë³„ ë¹„ìœ¨ëŒ€ë¡œ ë°°ë¶„
                 int i = 0;
-                for (int weapon_id = º´±â_Ã¢; weapon_id <= º´±â_±º¸¶; weapon_id++)
+                for (int weapon_id = ë³‘ê¸°_ì°½; weapon_id <= ë³‘ê¸°_êµ°ë§ˆ; weapon_id++)
                 {
                     int weapon_amount = int(pk::get_weapon_amount(src_base, weapon_id) * 0.9f);
-                    if (weapon_id <= º´±â_±º¸¶ and weapon_amount > 0)
+                    if (weapon_id <= ë³‘ê¸°_êµ°ë§ˆ and weapon_amount > 0)
                     {
                         cmd.weapon_id[i] = weapon_id;
                         cmd.weapon_amount[i] = pk::min(100000, weapon_amount, reinforce_troops * weapon_amount / weapon_sum);
@@ -609,24 +609,24 @@ namespace °ÅÁ¡¿ø±º
                     }
                 }
                 
-                cmd.order = ºÎ´ëÀÓ¹«_ÀÌµ¿;
-                cmd.target_pos = dst_base.get_pos();  // ¸ñÇ¥´Â ÀüÅõÁßÀÎ °ÅÁ¡
+                cmd.order = ë¶€ëŒ€ì„ë¬´_ì´ë™;
+                cmd.target_pos = dst_base.get_pos();  // ëª©í‘œëŠ” ì „íˆ¬ì¤‘ì¸ ê±°ì 
 
-                // ÃâÁø.
+                // ì¶œì§„.
                 int unit_id = pk::command(cmd);
                 pk::unit@ unit_cmd = pk::get_unit(unit_id);
                 if (pk::is_alive(unit_cmd))
                 {
                     unit_cmd.action_done = true;
                     
-                    if (µğ¹ö±×¸ğµå) 
+                    if (ë””ë²„ê·¸ëª¨ë“œ) 
                     {
                         string src_name  = pk::decode(pk::get_name(src_base));
                         string dst_name  = pk::decode(pk::get_name(dst_base));
                         string unit_name = pk::decode(pk::get_name(leader));
                         string order_str = get_order_info(unit_cmd.order);
-                        string cmd_info  = (pk::is_enemy(src_base, dst_base))? "°ÅÁ¡°ø·«" : "°ÅÁ¡¿ø±º";
-                        pk::info(pk::format("{}: {}´ë {}: {}¡æ{}", cmd_info, unit_name, order_str, src_name, dst_name));
+                        string cmd_info  = (pk::is_enemy(src_base, dst_base))? "ê±°ì ê³µëµ" : "ê±°ì ì›êµ°";
+                        pk::info(pk::format("{}: {}ëŒ€ {}: {}â†’{}", cmd_info, unit_name, order_str, src_name, dst_name));
                     }
                     return unit_id;
                 }
@@ -637,112 +637,112 @@ namespace °ÅÁ¡¿ø±º
         
         //----------------------------------------------------------------------------------
         
-        // ÀüÅõºÎ´ë ÃâÁø Ã³¸®
+        // ì „íˆ¬ë¶€ëŒ€ ì¶œì§„ ì²˜ë¦¬
         int PushCombatUnit(pk::building@ src_base, pk::building@ dst_base, bool do_cmd = true)
         {
             if (!pk::is_alive(src_base) or !pk::is_alive(dst_base)) return -1;
             
-            int enemy_weight = countNeighborEnemyBase(src_base);    // Àûº´·Â °¡ÁßÄ¡
-            int ref_troops = (enemy_weight * °ÅÁ¡¿ø±º_°æ°èº´·Â´ÜÀ§) + °ÅÁ¡¿ø±º_°ÅÁ¡ÃÖ¼Òº´·Â;
-            if (pk::get_troops(src_base) <= (ref_troops + °ÅÁ¡¿ø±º_ÃÖ¼ÒÃâÁøº´·Â)) return -1;    // º´·Â ºÎÁ·
+            int enemy_weight = countNeighborEnemyBase(src_base);    // ì ë³‘ë ¥ ê°€ì¤‘ì¹˜
+            int ref_troops = (enemy_weight * ê±°ì ì›êµ°_ê²½ê³„ë³‘ë ¥ë‹¨ìœ„) + ê±°ì ì›êµ°_ê±°ì ìµœì†Œë³‘ë ¥;
+            if (pk::get_troops(src_base) <= (ref_troops + ê±°ì ì›êµ°_ìµœì†Œì¶œì§„ë³‘ë ¥)) return -1;    // ë³‘ë ¥ ë¶€ì¡±
             
-            int person_count = pk::get_person_list(src_base, pk::mibun_flags(½ÅºĞ_±ºÁÖ, ½ÅºĞ_µµµ¶, ½ÅºĞ_ÅÂ¼ö, ½ÅºĞ_ÀÏ¹İ)).count;
-            if (person_count <= pk::max(1, (enemy_weight/4) + °ÅÁ¡¿ø±º_ÃâÁø°ÅÁ¡¹«Àå¼ö)) return -1;   // ¹«Àå ºÎÁ·
+            int person_count = pk::get_person_list(src_base, pk::mibun_flags(ì‹ ë¶„_êµ°ì£¼, ì‹ ë¶„_ë„ë…, ì‹ ë¶„_íƒœìˆ˜, ì‹ ë¶„_ì¼ë°˜)).count;
+            if (person_count <= pk::max(1, (enemy_weight/4) + ê±°ì ì›êµ°_ì¶œì§„ê±°ì ë¬´ì¥ìˆ˜)) return -1;   // ë¬´ì¥ ë¶€ì¡±
             
             auto person_list = pk::get_idle_person_list(src_base);
-            if (person_list.count == 0) return -1;   // ¹«Àå ºÎÁ·
+            if (person_list.count == 0) return -1;   // ë¬´ì¥ ë¶€ì¡±
             
-            // ´ë»ó°ÅÁ¡ÀÌ °ü¹®/Ç×±¸ÀÎ °æ¿ì ³ëº´ ÃâÁø ¿ì´ë
+            // ëŒ€ìƒê±°ì ì´ ê´€ë¬¸/í•­êµ¬ì¸ ê²½ìš° ë…¸ë³‘ ì¶œì§„ ìš°ëŒ€
             int base_type = get_base_type(dst_base.get_id());
             cmd_archer = (base_type > 0);
             
-            // Åë¼Ö+¹«·Â ³ôÀº ¼øÀ¸·Î Á¤·Ä.
+            // í†µì†”+ë¬´ë ¥ ë†’ì€ ìˆœìœ¼ë¡œ ì •ë ¬.
 			person_list.sort(function(a, b)
 			{
-                if (main.cmd_archer)    // ³ëº´ ¿ì´ë ÃâÁø
+                if (main.cmd_archer)    // ë…¸ë³‘ ìš°ëŒ€ ì¶œì§„
                 {
-                    // ±Ãº´ Æ¯±â ¹İ¿µ ('20.9.13)
-                    bool a_archer = (pk::has_skill(a, Æ¯±â_±Ã½Å) or pk::has_skill(a, Æ¯±â_±ÃÀå) or pk::has_skill(a, Æ¯±â_»ç¼ö));
-                    bool b_archer = (pk::has_skill(b, Æ¯±â_±Ã½Å) or pk::has_skill(b, Æ¯±â_±ÃÀå) or pk::has_skill(b, Æ¯±â_»ç¼ö));
+                    // ê¶ë³‘ íŠ¹ê¸° ë°˜ì˜ ('20.9.13)
+                    bool a_archer = (pk::has_skill(a, íŠ¹ê¸°_ê¶ì‹ ) or pk::has_skill(a, íŠ¹ê¸°_ê¶ì¥) or pk::has_skill(a, íŠ¹ê¸°_ì‚¬ìˆ˜));
+                    bool b_archer = (pk::has_skill(b, íŠ¹ê¸°_ê¶ì‹ ) or pk::has_skill(b, íŠ¹ê¸°_ê¶ì¥) or pk::has_skill(b, íŠ¹ê¸°_ì‚¬ìˆ˜));
                     if ( a_archer and !b_archer) return true;   
                     if (!a_archer and  b_archer) return false;  
-                    // ±Ãº´ Àû¼º
-                    if (a.tekisei[º´Á¾_³ëº´] != b.tekisei[º´Á¾_³ëº´]) return (a.tekisei[º´Á¾_³ëº´] > b.tekisei[º´Á¾_³ëº´]);
-                    // ¹«Àå ´É·Â
-                    return (a.stat[¹«Àå´É·Â_¹«·Â] + a.stat[¹«Àå´É·Â_Åë¼Ö]) > (b.stat[¹«Àå´É·Â_¹«·Â] + b.stat[¹«Àå´É·Â_Åë¼Ö]);
+                    // ê¶ë³‘ ì ì„±
+                    if (a.tekisei[ë³‘ì¢…_ë…¸ë³‘] != b.tekisei[ë³‘ì¢…_ë…¸ë³‘]) return (a.tekisei[ë³‘ì¢…_ë…¸ë³‘] > b.tekisei[ë³‘ì¢…_ë…¸ë³‘]);
+                    // ë¬´ì¥ ëŠ¥ë ¥
+                    return (a.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] + a.stat[ë¬´ì¥ëŠ¥ë ¥_í†µì†”]) > (b.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] + b.stat[ë¬´ì¥ëŠ¥ë ¥_í†µì†”]);
                 }
                 
-				return (a.stat[¹«Àå´É·Â_¹«·Â] + a.stat[¹«Àå´É·Â_Åë¼Ö]) > (b.stat[¹«Àå´É·Â_¹«·Â] + b.stat[¹«Àå´É·Â_Åë¼Ö]);
+				return (a.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] + a.stat[ë¬´ì¥ëŠ¥ë ¥_í†µì†”]) > (b.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] + b.stat[ë¬´ì¥ëŠ¥ë ¥_í†µì†”]);
 			});
             pk::person@ leader = pk::get_person(person_list[0].get_id());
             
-            // ¿ø±º º´·Â »êÁ¤ : ±âÁØ º´·Â ÃÊ°úºĞ, ÁöÈÖ°¡´Éº´·Â È®ÀÎ
-            int reinforce_troops = pk::min(°ÅÁ¡¿ø±º_ÃÖ´ëÀüÅõº´·Â, pk::get_command(leader), pk::max(1, pk::get_troops(src_base) - ref_troops));
+            // ì›êµ° ë³‘ë ¥ ì‚°ì • : ê¸°ì¤€ ë³‘ë ¥ ì´ˆê³¼ë¶„, ì§€íœ˜ê°€ëŠ¥ë³‘ë ¥ í™•ì¸
+            int reinforce_troops = pk::min(ê±°ì ì›êµ°_ìµœëŒ€ì „íˆ¬ë³‘ë ¥, pk::get_command(leader), pk::max(1, pk::get_troops(src_base) - ref_troops));
 
-            // ÃÖÀû ¹«±â ¼±ÅÃ
-            int ground_weapon_id = º´±â_°Ë;
-            int water_weapon_id = º´±â_ÁÖ°¡;
+            // ìµœì  ë¬´ê¸° ì„ íƒ
+            int ground_weapon_id = ë³‘ê¸°_ê²€;
+            int water_weapon_id = ë³‘ê¸°_ì£¼ê°€;
             int unit_troops = reinforce_troops;
             
-            // À°»ó ¹«±â ¼±ÅÃ
+            // ìœ¡ìƒ ë¬´ê¸° ì„ íƒ
             get_ground_weapon(src_base, leader, reinforce_troops, ground_weapon_id, unit_troops);
-            if (ground_weapon_id == 0) return -1;    // º´±â ºÎÁ·
+            if (ground_weapon_id == 0) return -1;    // ë³‘ê¸° ë¶€ì¡±
             
-            // ¼ö»ó ¹«±â ¼±ÅÃ
+            // ìˆ˜ìƒ ë¬´ê¸° ì„ íƒ
             if (check_building_has_port(src_base) and check_building_has_port(dst_base))
             {
-                if (leader.tekisei[º´Á¾_¼ö±º] == Àû¼º_C)
-                    water_weapon_id = º´±â_ÁÖ°¡;
+                if (leader.tekisei[ë³‘ì¢…_ìˆ˜êµ°] == ì ì„±_C)
+                    water_weapon_id = ë³‘ê¸°_ì£¼ê°€;
                 else
                 {
-                    if      (pk::get_weapon_amount(src_base, º´±â_´©¼±) > 0) water_weapon_id = º´±â_´©¼±;
-                    else if (pk::get_weapon_amount(src_base, º´±â_ÅõÇÔ) > 0) water_weapon_id = º´±â_ÅõÇÔ;
-                    else water_weapon_id = º´±â_ÁÖ°¡;
+                    if      (pk::get_weapon_amount(src_base, ë³‘ê¸°_ëˆ„ì„ ) > 0) water_weapon_id = ë³‘ê¸°_ëˆ„ì„ ;
+                    else if (pk::get_weapon_amount(src_base, ë³‘ê¸°_íˆ¬í•¨) > 0) water_weapon_id = ë³‘ê¸°_íˆ¬í•¨;
+                    else water_weapon_id = ë³‘ê¸°_ì£¼ê°€;
                 }
             }
             else
-                water_weapon_id = º´±â_ÁÖ°¡;
+                water_weapon_id = ë³‘ê¸°_ì£¼ê°€;
             
-            // º´·® °è»ê
+            // ë³‘ëŸ‰ ê³„ì‚°
             int unit_food = int(pk::min(2.0f * unit_troops, pk::max( 0.5f * pk::get_food(src_base), 1.2f * unit_troops)));
-            if (unit_food < int(0.5f * unit_troops)) return -1;   // º´·® ºÎÁ·
+            if (unit_food < int(0.5f * unit_troops)) return -1;   // ë³‘ëŸ‰ ë¶€ì¡±
             
-            // ÃâÁø ¸í·É
+            // ì¶œì§„ ëª…ë ¹
             if (do_cmd)
             {
-                // ÃâÁø ¸í·É Á¤º¸ »ı¼º.
+                // ì¶œì§„ ëª…ë ¹ ì •ë³´ ìƒì„±.
                 pk::com_deploy_cmd_info cmd;
                 @cmd.base = @src_base;
-                cmd.type = ºÎ´ëÁ¾·ù_ÀüÅõ;
+                cmd.type = ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬;
                 cmd.member[0] = leader.get_id();
                 cmd.gold = (pk::get_gold(src_base) >= 1000) ? int(pk::min(1000.f, pk::get_gold(src_base) * 0.1f)) : 0;
                 cmd.troops = pk::max(1, unit_troops);
                 cmd.weapon_id[0] = ground_weapon_id;
                 cmd.weapon_id[1] = water_weapon_id;
                 cmd.weapon_amount[0] = (is_siege_weapon(ground_weapon_id))? 1 : pk::max(1, unit_troops);
-                cmd.weapon_amount[1] = (water_weapon_id == º´±â_ÁÖ°¡)? 0 : 1;
+                cmd.weapon_amount[1] = (water_weapon_id == ë³‘ê¸°_ì£¼ê°€)? 0 : 1;
                 cmd.food = pk::min(50000, unit_food);
 
-                cmd.order = (src_base.get_force_id() == dst_base.get_force_id())? ºÎ´ëÀÓ¹«_°ø°İ : 
-                                             ((pk::is_enemy(src_base, dst_base))? ºÎ´ëÀÓ¹«_°ø°İ : ºÎ´ëÀÓ¹«_ÀÌµ¿);    // ÀÚ¼¼·Â, Àû°ÅÁ¡, µ¿¸Í±º
+                cmd.order = (src_base.get_force_id() == dst_base.get_force_id())? ë¶€ëŒ€ì„ë¬´_ê³µê²© : 
+                                             ((pk::is_enemy(src_base, dst_base))? ë¶€ëŒ€ì„ë¬´_ê³µê²© : ë¶€ëŒ€ì„ë¬´_ì´ë™);    // ìì„¸ë ¥, ì ê±°ì , ë™ë§¹êµ°
 
-                cmd.target_pos = dst_base.get_pos();  // ¸ñÇ¥´Â ÀüÅõÁßÀÎ °ÅÁ¡
+                cmd.target_pos = dst_base.get_pos();  // ëª©í‘œëŠ” ì „íˆ¬ì¤‘ì¸ ê±°ì 
 
-                // ÃâÁø.
+                // ì¶œì§„.
                 int unit_id = pk::command(cmd);
                 pk::unit@ unit_cmd = pk::get_unit(unit_id);
                 if (pk::is_alive(unit_cmd))
                 {
                     unit_cmd.action_done = true;
                     
-                    if (µğ¹ö±×¸ğµå) 
+                    if (ë””ë²„ê·¸ëª¨ë“œ) 
                     {
                         string src_name  = pk::decode(pk::get_name(src_base));
                         string dst_name  = pk::decode(pk::get_name(dst_base));
                         string unit_name = pk::decode(pk::get_name(leader));
                         string order_str = get_order_info(unit_cmd.order);
-                        string cmd_info  = (pk::is_enemy(src_base, dst_base))? "°ÅÁ¡°ø·«" : "°ÅÁ¡¿ø±º";
-                        pk::info(pk::format("{}: {}´ë {}: {}¡æ{}", cmd_info, unit_name, order_str, src_name, dst_name));
+                        string cmd_info  = (pk::is_enemy(src_base, dst_base))? "ê±°ì ê³µëµ" : "ê±°ì ì›êµ°";
+                        pk::info(pk::format("{}: {}ëŒ€ {}: {}â†’{}", cmd_info, unit_name, order_str, src_name, dst_name));
                     }
                     return unit_id;
                 }
@@ -751,107 +751,107 @@ namespace °ÅÁ¡¿ø±º
             return -1;
         }
         
-        // ³ëº´¿ì´ë ÃâÁø¿©ºÎ
+        // ë…¸ë³‘ìš°ëŒ€ ì¶œì§„ì—¬ë¶€
         bool cmd_archer = false;    
         
         
-        // °ø¼ºº´±â ºÎ´ë ÃâÁø Ã³¸®
+        // ê³µì„±ë³‘ê¸° ë¶€ëŒ€ ì¶œì§„ ì²˜ë¦¬
         int PushSiegeUnit(pk::building@ src_base, pk::building@ dst_base, bool do_cmd = true)
         {
             if (!pk::is_alive(src_base) or !pk::is_alive(dst_base)) return -1;
             
-            int enemy_weight = countNeighborEnemyBase(src_base);    // Àûº´·Â °¡ÁßÄ¡
-            int ref_troops = (enemy_weight * °ÅÁ¡¿ø±º_°æ°èº´·Â´ÜÀ§) + °ÅÁ¡¿ø±º_°ÅÁ¡ÃÖ¼Òº´·Â;
-            if (pk::get_troops(src_base) <= (ref_troops + °ÅÁ¡¿ø±º_ÃÖ¼ÒÃâÁøº´·Â)) return -1;    // º´·Â ºÎÁ·
+            int enemy_weight = countNeighborEnemyBase(src_base);    // ì ë³‘ë ¥ ê°€ì¤‘ì¹˜
+            int ref_troops = (enemy_weight * ê±°ì ì›êµ°_ê²½ê³„ë³‘ë ¥ë‹¨ìœ„) + ê±°ì ì›êµ°_ê±°ì ìµœì†Œë³‘ë ¥;
+            if (pk::get_troops(src_base) <= (ref_troops + ê±°ì ì›êµ°_ìµœì†Œì¶œì§„ë³‘ë ¥)) return -1;    // ë³‘ë ¥ ë¶€ì¡±
             
-            int person_count = pk::get_person_list(src_base, pk::mibun_flags(½ÅºĞ_±ºÁÖ, ½ÅºĞ_µµµ¶, ½ÅºĞ_ÅÂ¼ö, ½ÅºĞ_ÀÏ¹İ)).count;
-            if (person_count <= pk::max(1, (enemy_weight/4) + °ÅÁ¡¿ø±º_ÃâÁø°ÅÁ¡¹«Àå¼ö)) return -1;   // ¹«Àå ºÎÁ·
+            int person_count = pk::get_person_list(src_base, pk::mibun_flags(ì‹ ë¶„_êµ°ì£¼, ì‹ ë¶„_ë„ë…, ì‹ ë¶„_íƒœìˆ˜, ì‹ ë¶„_ì¼ë°˜)).count;
+            if (person_count <= pk::max(1, (enemy_weight/4) + ê±°ì ì›êµ°_ì¶œì§„ê±°ì ë¬´ì¥ìˆ˜)) return -1;   // ë¬´ì¥ ë¶€ì¡±
             
             auto person_list = pk::get_idle_person_list(src_base);
-            if (person_list.count == 0) return -1;   // ¹«Àå ºÎÁ·
+            if (person_list.count == 0) return -1;   // ë¬´ì¥ ë¶€ì¡±
 
-            // °ÅÁ¡ °ø¼ºº´±â Àç°í È®ÀÎ
-            int siege_dir_id = (pk::has_tech(src_base, ±â±³_¸ñ¼ö°³¹ß))? º´±â_¸ñ¼ö : º´±â_ÃæÂ÷;
-            int siege_rng_id = (pk::has_tech(src_base, ±â±³_Åõ¼®°³¹ß))? º´±â_Åõ¼® : º´±â_Á¤¶õ;
-            int amt_siege_dir = pk::get_weapon_amount(src_base, siege_dir_id);  // Á÷Á¢ °ø¼ºº´±â ¼ö·®
-            int amt_siege_rng = pk::get_weapon_amount(src_base, siege_rng_id);  // °£Á¢ °ø¼ºº´±â ¼ö·®
-            if ((amt_siege_rng + amt_siege_dir) == 0) return -1;     // °ø¼ºº´±â ¾øÀ½
+            // ê±°ì  ê³µì„±ë³‘ê¸° ì¬ê³  í™•ì¸
+            int siege_dir_id = (pk::has_tech(src_base, ê¸°êµ_ëª©ìˆ˜ê°œë°œ))? ë³‘ê¸°_ëª©ìˆ˜ : ë³‘ê¸°_ì¶©ì°¨;
+            int siege_rng_id = (pk::has_tech(src_base, ê¸°êµ_íˆ¬ì„ê°œë°œ))? ë³‘ê¸°_íˆ¬ì„ : ë³‘ê¸°_ì •ë€;
+            int amt_siege_dir = pk::get_weapon_amount(src_base, siege_dir_id);  // ì§ì ‘ ê³µì„±ë³‘ê¸° ìˆ˜ëŸ‰
+            int amt_siege_rng = pk::get_weapon_amount(src_base, siege_rng_id);  // ê°„ì ‘ ê³µì„±ë³‘ê¸° ìˆ˜ëŸ‰
+            if ((amt_siege_rng + amt_siege_dir) == 0) return -1;     // ê³µì„±ë³‘ê¸° ì—†ìŒ
             
-            // °ø¼ºÆ¯±â ¿ì´ë, ±â·ÂÈ¸º¹ Æ¯±â ¿ì´ë, Åë¼Ö+¹«·Â ³ôÀº ¼øÀ¸·Î Á¤·Ä.
+            // ê³µì„±íŠ¹ê¸° ìš°ëŒ€, ê¸°ë ¥íšŒë³µ íŠ¹ê¸° ìš°ëŒ€, í†µì†”+ë¬´ë ¥ ë†’ì€ ìˆœìœ¼ë¡œ ì •ë ¬.
 			person_list.sort(function(a, b)
 			{
-                // °ø¼º Æ¯±â ¿ì´ë
-                bool a_skill = (pk::has_skill(a, Æ¯±â_°ø½Å) or pk::has_skill(a, Æ¯±â_°ø¼º) or pk::has_skill(a, Æ¯±â_»çÁ¤));
-                bool b_skill = (pk::has_skill(b, Æ¯±â_°ø½Å) or pk::has_skill(b, Æ¯±â_°ø¼º) or pk::has_skill(b, Æ¯±â_»çÁ¤));
+                // ê³µì„± íŠ¹ê¸° ìš°ëŒ€
+                bool a_skill = (pk::has_skill(a, íŠ¹ê¸°_ê³µì‹ ) or pk::has_skill(a, íŠ¹ê¸°_ê³µì„±) or pk::has_skill(a, íŠ¹ê¸°_ì‚¬ì •));
+                bool b_skill = (pk::has_skill(b, íŠ¹ê¸°_ê³µì‹ ) or pk::has_skill(b, íŠ¹ê¸°_ê³µì„±) or pk::has_skill(b, íŠ¹ê¸°_ì‚¬ì •));
                 if ( a_skill and !b_skill) return true;   
                 if (!a_skill and  b_skill) return false;  
-                // ±â·ÂÈ¸º¹ Æ¯±â ¿ì´ë
-                bool a_energy = (pk::has_skill(a, Æ¯±â_ÁÖ¾Ç) or pk::has_skill(a, Æ¯±â_½Ã»ó) or pk::has_skill(a, Æ¯±â_³ë¹ß));
-                bool b_energy = (pk::has_skill(b, Æ¯±â_ÁÖ¾Ç) or pk::has_skill(b, Æ¯±â_½Ã»ó) or pk::has_skill(b, Æ¯±â_³ë¹ß));
+                // ê¸°ë ¥íšŒë³µ íŠ¹ê¸° ìš°ëŒ€
+                bool a_energy = (pk::has_skill(a, íŠ¹ê¸°_ì£¼ì•…) or pk::has_skill(a, íŠ¹ê¸°_ì‹œìƒ) or pk::has_skill(a, íŠ¹ê¸°_ë…¸ë°œ));
+                bool b_energy = (pk::has_skill(b, íŠ¹ê¸°_ì£¼ì•…) or pk::has_skill(b, íŠ¹ê¸°_ì‹œìƒ) or pk::has_skill(b, íŠ¹ê¸°_ë…¸ë°œ));
                 if ( a_energy and !b_energy) return true;   
                 if (!a_energy and  b_energy) return false;  
-                // º´±â Àû¼º
-                if (a.tekisei[º´Á¾_º´±â] != b.tekisei[º´Á¾_º´±â]) return (a.tekisei[º´Á¾_º´±â] > b.tekisei[º´Á¾_º´±â]);
-                // ¹«Àå ´É·Â
-                return (a.stat[¹«Àå´É·Â_¹«·Â] + a.stat[¹«Àå´É·Â_Åë¼Ö]) > (b.stat[¹«Àå´É·Â_¹«·Â] + b.stat[¹«Àå´É·Â_Åë¼Ö]);
+                // ë³‘ê¸° ì ì„±
+                if (a.tekisei[ë³‘ì¢…_ë³‘ê¸°] != b.tekisei[ë³‘ì¢…_ë³‘ê¸°]) return (a.tekisei[ë³‘ì¢…_ë³‘ê¸°] > b.tekisei[ë³‘ì¢…_ë³‘ê¸°]);
+                // ë¬´ì¥ ëŠ¥ë ¥
+                return (a.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] + a.stat[ë¬´ì¥ëŠ¥ë ¥_í†µì†”]) > (b.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] + b.stat[ë¬´ì¥ëŠ¥ë ¥_í†µì†”]);
 			});
             pk::person@ leader = pk::get_person(person_list[0].get_id());
             
-            // ¿ø±º º´·Â »êÁ¤ : ±âÁØ º´·Â ÃÊ°úºĞ, ÁöÈÖ°¡´Éº´·Â È®ÀÎ
-            int reinforce_troops = pk::min(°ÅÁ¡¿ø±º_ÃÖ´ëÀüÅõº´·Â, pk::get_command(leader), pk::max(1, pk::get_troops(src_base) - ref_troops));
+            // ì›êµ° ë³‘ë ¥ ì‚°ì • : ê¸°ì¤€ ë³‘ë ¥ ì´ˆê³¼ë¶„, ì§€íœ˜ê°€ëŠ¥ë³‘ë ¥ í™•ì¸
+            int reinforce_troops = pk::min(ê±°ì ì›êµ°_ìµœëŒ€ì „íˆ¬ë³‘ë ¥, pk::get_command(leader), pk::max(1, pk::get_troops(src_base) - ref_troops));
 
-            // ÃÖÀû ¹«±â ¼±ÅÃ
-            int ground_weapon_id = º´±â_°Ë;
-            int water_weapon_id = º´±â_ÁÖ°¡;
+            // ìµœì  ë¬´ê¸° ì„ íƒ
+            int ground_weapon_id = ë³‘ê¸°_ê²€;
+            int water_weapon_id = ë³‘ê¸°_ì£¼ê°€;
             int unit_troops = reinforce_troops;
             
-            // °£Á¢ °ø¼ºº´±âºÎÅÍ ¿ì¼± ¼±ÅÃ (»çÁ¤Æ¯±â´Â °£Á¢, °ø¼ºÆ¯±â´Â Á÷Á¢ º´±â ¿ì¼± ¹èÁ¤)
-            if      (amt_siege_rng > 0 and pk::has_skill(leader, Æ¯±â_»çÁ¤)) ground_weapon_id = siege_rng_id;
-            else if (amt_siege_dir > 0 and pk::has_skill(leader, Æ¯±â_°ø¼º)) ground_weapon_id = siege_dir_id;
+            // ê°„ì ‘ ê³µì„±ë³‘ê¸°ë¶€í„° ìš°ì„  ì„ íƒ (ì‚¬ì •íŠ¹ê¸°ëŠ” ê°„ì ‘, ê³µì„±íŠ¹ê¸°ëŠ” ì§ì ‘ ë³‘ê¸° ìš°ì„  ë°°ì •)
+            if      (amt_siege_rng > 0 and pk::has_skill(leader, íŠ¹ê¸°_ì‚¬ì •)) ground_weapon_id = siege_rng_id;
+            else if (amt_siege_dir > 0 and pk::has_skill(leader, íŠ¹ê¸°_ê³µì„±)) ground_weapon_id = siege_dir_id;
             else if (amt_siege_rng > 0)  ground_weapon_id = siege_rng_id;
             else if (amt_siege_dir > 0)  ground_weapon_id = siege_dir_id;
             
             
-            // º´·® °è»ê
+            // ë³‘ëŸ‰ ê³„ì‚°
             int unit_food = int(pk::min(2.0f * unit_troops, pk::max( 0.5f * pk::get_food(src_base), 1.2f * unit_troops)));
-            if (unit_food < int(0.5f * unit_troops)) return -1;   // º´·® ºÎÁ·
+            if (unit_food < int(0.5f * unit_troops)) return -1;   // ë³‘ëŸ‰ ë¶€ì¡±
             
-            // ÃâÁø ¸í·É
+            // ì¶œì§„ ëª…ë ¹
             if (do_cmd)
             {
-                // ÃâÁø ¸í·É Á¤º¸ »ı¼º.
+                // ì¶œì§„ ëª…ë ¹ ì •ë³´ ìƒì„±.
                 pk::com_deploy_cmd_info cmd;
                 @cmd.base = @src_base;
-                cmd.type = ºÎ´ëÁ¾·ù_ÀüÅõ;
+                cmd.type = ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬;
                 cmd.member[0] = leader.get_id();
-                cmd.gold = 0;   // °ø¼ºº´±â ºÎ´ë´Â °Ç¼³ºÒ°¡·Î ±İ¼ÒÁö ¾ÈÇÔ
+                cmd.gold = 0;   // ê³µì„±ë³‘ê¸° ë¶€ëŒ€ëŠ” ê±´ì„¤ë¶ˆê°€ë¡œ ê¸ˆì†Œì§€ ì•ˆí•¨
                 cmd.troops = pk::max(1, unit_troops);
                 cmd.weapon_id[0] = ground_weapon_id;
                 cmd.weapon_id[1] = water_weapon_id;
                 cmd.weapon_amount[0] = (is_siege_weapon(ground_weapon_id))? 1 : pk::max(1, unit_troops);
-                cmd.weapon_amount[1] = (water_weapon_id == º´±â_ÁÖ°¡)? 0 : 1;
+                cmd.weapon_amount[1] = (water_weapon_id == ë³‘ê¸°_ì£¼ê°€)? 0 : 1;
                 cmd.food = pk::min(50000, unit_food);
 
-                cmd.order = (src_base.get_force_id() == dst_base.get_force_id())? ºÎ´ëÀÓ¹«_°ø°İ : 
-                                             ((pk::is_enemy(src_base, dst_base))? ºÎ´ëÀÓ¹«_°ø°İ : ºÎ´ëÀÓ¹«_ÀÌµ¿);    // ÀÚ¼¼·Â, Àû°ÅÁ¡, µ¿¸Í±º
+                cmd.order = (src_base.get_force_id() == dst_base.get_force_id())? ë¶€ëŒ€ì„ë¬´_ê³µê²© : 
+                                             ((pk::is_enemy(src_base, dst_base))? ë¶€ëŒ€ì„ë¬´_ê³µê²© : ë¶€ëŒ€ì„ë¬´_ì´ë™);    // ìì„¸ë ¥, ì ê±°ì , ë™ë§¹êµ°
 
-                cmd.target_pos = dst_base.get_pos();  // ¸ñÇ¥´Â ÀüÅõÁßÀÎ °ÅÁ¡
+                cmd.target_pos = dst_base.get_pos();  // ëª©í‘œëŠ” ì „íˆ¬ì¤‘ì¸ ê±°ì 
                 
-                // ÃâÁø.
+                // ì¶œì§„.
                 int unit_id = pk::command(cmd);
                 pk::unit@ unit_cmd = pk::get_unit(unit_id);
                 if (pk::is_alive(unit_cmd))
                 {
                     unit_cmd.action_done = true;
                     
-                    if (µğ¹ö±×¸ğµå) 
+                    if (ë””ë²„ê·¸ëª¨ë“œ) 
                     {
                         string src_name  = pk::decode(pk::get_name(src_base));
                         string dst_name  = pk::decode(pk::get_name(dst_base));
                         string unit_name = pk::decode(pk::get_name(leader));
                         string order_str = get_order_info(unit_cmd.order);
-                        string cmd_info  = (pk::is_enemy(src_base, dst_base))? "°ÅÁ¡°ø·«" : "°ÅÁ¡¿ø±º";
-                        pk::info(pk::format("{}: {}´ë {}: {}¡æ{}", cmd_info, unit_name, order_str, src_name, dst_name));
+                        string cmd_info  = (pk::is_enemy(src_base, dst_base))? "ê±°ì ê³µëµ" : "ê±°ì ì›êµ°";
+                        pk::info(pk::format("{}: {}ëŒ€ {}: {}â†’{}", cmd_info, unit_name, order_str, src_name, dst_name));
                     }
                     return unit_id;
                 }
@@ -863,32 +863,32 @@ namespace °ÅÁ¡¿ø±º
         
         //----------------------------------------------------------------------------------
         
-        // ¹«±â ¼±ÅÃ ÇÔ¼ö
+        // ë¬´ê¸° ì„ íƒ í•¨ìˆ˜
         void get_ground_weapon(pk::building@ base, pk::person@ leader, int troops_max, int &out weapon_sel, int &out troops_sel)
         {
-            int troops_min = °ÅÁ¡¿ø±º_ÃÖ¼ÒÃâÁøº´·Â;
+            int troops_min = ê±°ì ì›êµ°_ìµœì†Œì¶œì§„ë³‘ë ¥;
             int weapon_max = 0;
-            int best_tekisei = Àû¼º_C;
+            int best_tekisei = ì ì„±_C;
             
-            weapon_sel = º´±â_°Ë;
+            weapon_sel = ë³‘ê¸°_ê²€;
             troops_sel = 0;
             
-            // ³ëº´ ¿ì´ë ÃâÁø
+            // ë…¸ë³‘ ìš°ëŒ€ ì¶œì§„
             if (cmd_archer)
             {
-                int tekisei = leader.tekisei[pk::equipment_id_to_heishu(º´Á¾_³ëº´)];
-                int weapon = pk::get_weapon_amount(base, º´±â_³ë);
-                if (troops_min <= weapon and Àû¼º_B <= tekisei)
+                int tekisei = leader.tekisei[pk::equipment_id_to_heishu(ë³‘ì¢…_ë…¸ë³‘)];
+                int weapon = pk::get_weapon_amount(base, ë³‘ê¸°_ë…¸);
+                if (troops_min <= weapon and ì ì„±_B <= tekisei)
                 {
-                    weapon_sel = º´±â_³ë;
+                    weapon_sel = ë³‘ê¸°_ë…¸;
                     troops_sel = pk::min(weapon, troops_max);
                 }
             }
-            // ÀÏ¹İ ÃâÁø
+            // ì¼ë°˜ ì¶œì§„
             else    
             {
-                // Ãâº´º´·Â ÀÌ»ó º¸À¯ÇÑ ¹«±â Áß ÃÖ°í Àû¼º È®ÀÎ
-                for (int id = º´±â_Ã¢; id <= º´±â_±º¸¶; id++)
+                // ì¶œë³‘ë³‘ë ¥ ì´ìƒ ë³´ìœ í•œ ë¬´ê¸° ì¤‘ ìµœê³  ì ì„± í™•ì¸
+                for (int id = ë³‘ê¸°_ì°½; id <= ë³‘ê¸°_êµ°ë§ˆ; id++)
                 {
                     int tekisei = leader.tekisei[pk::equipment_id_to_heishu(id)];
                     int weapon_t = pk::get_weapon_amount(base, id);
@@ -896,8 +896,8 @@ namespace °ÅÁ¡¿ø±º
                         best_tekisei = tekisei;
                 }
                 
-                // ÃÖ°í Àû¼º ÀÌ»óÀÇ º´°ú Áß ¹«±â °¡Àå ¸¹Àº º´°ú ¼±ÅÃ
-                for (int id = º´±â_Ã¢; id <= º´±â_±º¸¶; id++)
+                // ìµœê³  ì ì„± ì´ìƒì˜ ë³‘ê³¼ ì¤‘ ë¬´ê¸° ê°€ì¥ ë§ì€ ë³‘ê³¼ ì„ íƒ
+                for (int id = ë³‘ê¸°_ì°½; id <= ë³‘ê¸°_êµ°ë§ˆ; id++)
                 {
                     int tekisei = leader.tekisei[pk::equipment_id_to_heishu(id)];
                     int weapon_t = pk::get_weapon_amount(base, id);
@@ -919,7 +919,7 @@ namespace °ÅÁ¡¿ø±º
         
         bool is_siege_weapon(int weapon_id)
         {
-            if (º´±â_ÃæÂ÷ <= weapon_id and weapon_id <= º´±â_¸ñ¼ö) return true;
+            if (ë³‘ê¸°_ì¶©ì°¨ <= weapon_id and weapon_id <= ë³‘ê¸°_ëª©ìˆ˜) return true;
             return false;
         }
         
@@ -927,9 +927,9 @@ namespace °ÅÁ¡¿ø±º
         {
             bool has_port = false;
             int base_id = base.get_id();
-            if (°Ç¹°_Ç×±¸½ÃÀÛ <= base_id and base_id < °Ç¹°_Ç×±¸³¡) return true;
+            if (ê±´ë¬¼_í•­êµ¬ì‹œì‘ <= base_id and base_id < ê±´ë¬¼_í•­êµ¬ë) return true;
             
-            if (°Ç¹°_µµ½Ã½ÃÀÛ <= base_id and base_id < °Ç¹°_µµ½Ã³¡)
+            if (ê±´ë¬¼_ë„ì‹œì‹œì‘ <= base_id and base_id < ê±´ë¬¼_ë„ì‹œë)
             {
                 pk::city@ city = pk::building_to_city(base);
                 for (int i = 0; i < 5; i++)
@@ -938,7 +938,7 @@ namespace °ÅÁ¡¿ø±º
                     if (sub_id != -1)
                     {
                         pk::building@ sub_t = pk::get_building(sub_id);
-                        if (pk::is_alive(sub_t) and (°Ç¹°_Ç×±¸½ÃÀÛ <= sub_id and sub_id < °Ç¹°_Ç×±¸³¡)) return true;
+                        if (pk::is_alive(sub_t) and (ê±´ë¬¼_í•­êµ¬ì‹œì‘ <= sub_id and sub_id < ê±´ë¬¼_í•­êµ¬ë)) return true;
                     }
                 }
             }
@@ -947,10 +947,10 @@ namespace °ÅÁ¡¿ø±º
         
         
         //----------------------------------------------------------------------------------
-        /** ÃâÁø ´ë»ó °ÅÁ¡ Ä«¿îÆ® ÃÊ±âÈ­ **/
+        /** ì¶œì§„ ëŒ€ìƒ ê±°ì  ì¹´ìš´íŠ¸ ì´ˆê¸°í™” **/
         void clear_reinforce_info()
         {
-            for (int i = 0; i < °Ç¹°_°ÅÁ¡³¡; i++)
+            for (int i = 0; i < ê±´ë¬¼_ê±°ì ë; i++)
             {
                 arr_reinforce_count[i] = 0;
             }
@@ -959,16 +959,16 @@ namespace °ÅÁ¡¿ø±º
         
         
         //----------------------------------------------------------------------------------
-        //  ºó °ÅÁ¡ ¹«Àå Áö¿ø
+        //  ë¹ˆ ê±°ì  ë¬´ì¥ ì§€ì›
         //----------------------------------------------------------------------------------
         
-        /** ¹«ÀåÆÄ°ßÀÌ ÇÊ¿äÇÑÁö ÆÇ´Ü **/
+        /** ë¬´ì¥íŒŒê²¬ì´ í•„ìš”í•œì§€ íŒë‹¨ **/
         bool needPersonSupport(pk::building@ base)
 		{
             if (!pk::is_alive(base)) return false;
             
-            int enemy_troops = 0;   // ÁÖÀ§ÀÇ Àû±º ¼ö È®ÀÎ Ãß°¡
-            pk::array<pk::point> range = pk::range(base.pos, 1, ((base.facility == ½Ã¼³_µµ½Ã) ? 6 : 5));
+            int enemy_troops = 0;   // ì£¼ìœ„ì˜ ì êµ° ìˆ˜ í™•ì¸ ì¶”ê°€
+            pk::array<pk::point> range = pk::range(base.pos, 1, ((base.facility == ì‹œì„¤_ë„ì‹œ) ? 6 : 5));
 			for (int i = 0; i < int(range.length); i++)
 			{
 				pk::unit@ unit = pk::get_unit(range[i]);
@@ -976,47 +976,47 @@ namespace °ÅÁ¡¿ø±º
                     enemy_troops += unit.troops;
 			}
             
-            int count = pk::get_person_list(base, pk::mibun_flags(½ÅºĞ_±ºÁÖ, ½ÅºĞ_µµµ¶, ½ÅºĞ_ÅÂ¼ö, ½ÅºĞ_ÀÏ¹İ)).count;
+            int count = pk::get_person_list(base, pk::mibun_flags(ì‹ ë¶„_êµ°ì£¼, ì‹ ë¶„_ë„ë…, ì‹ ë¶„_íƒœìˆ˜, ì‹ ë¶„_ì¼ë°˜)).count;
             if (count == 0 and pk::get_troops(base) >= 1000 and (pk::enemies_around(base) or enemy_troops >= 4000)) 
                 return true;
             
             return false;
         }
         
-        // ***** ¹«Àå Áö¿ø ¸í·É ***** //
+        // ***** ë¬´ì¥ ì§€ì› ëª…ë ¹ ***** //
         bool PushPersonSupport(pk::building@ dst_base)
         {
-            // ¹«ÀåÀÌ ÀÖ´Â ÀÎ±Ù °ÅÁ¡ÀÌ ÀÖ´ÂÁö È®ÀÎ
+            // ë¬´ì¥ì´ ìˆëŠ” ì¸ê·¼ ê±°ì ì´ ìˆëŠ”ì§€ í™•ì¸
 			int target = getNearestPerson(dst_base);
 			if (target == -1) return false;
             
-            // Áö¿ø°¡´É ¹«Àå ¼Ò¼Ó°ÅÁ¡
+            // ì§€ì›ê°€ëŠ¥ ë¬´ì¥ ì†Œì†ê±°ì 
             pk::building@ src_base = pk::get_building(target);
             
-            int person_count = pk::get_person_list(src_base, pk::mibun_flags(½ÅºĞ_±ºÁÖ, ½ÅºĞ_µµµ¶, ½ÅºĞ_ÅÂ¼ö, ½ÅºĞ_ÀÏ¹İ)).count;
-            if (person_count <= pk::max(1, °ÅÁ¡¿ø±º_ÃâÁø°ÅÁ¡¹«Àå¼ö)) return false;   // ¹«Àå ºÎÁ·
+            int person_count = pk::get_person_list(src_base, pk::mibun_flags(ì‹ ë¶„_êµ°ì£¼, ì‹ ë¶„_ë„ë…, ì‹ ë¶„_íƒœìˆ˜, ì‹ ë¶„_ì¼ë°˜)).count;
+            if (person_count <= pk::max(1, ê±°ì ì›êµ°_ì¶œì§„ê±°ì ë¬´ì¥ìˆ˜)) return false;   // ë¬´ì¥ ë¶€ì¡±
             
-            // ¹ÌÇàµ¿ ¹«Àå¸®½ºÆ®
+            // ë¯¸í–‰ë™ ë¬´ì¥ë¦¬ìŠ¤íŠ¸
             auto person_list = pk::get_idle_person_list(src_base);
-            if (person_list.count == 0) return false;   // ¹«Àå ºÎÁ·
+            if (person_list.count == 0) return false;   // ë¬´ì¥ ë¶€ì¡±
             
-            // Åë¼Ö+¹«·Â ³ôÀº ¼øÀ¸·Î Á¤·Ä.
+            // í†µì†”+ë¬´ë ¥ ë†’ì€ ìˆœìœ¼ë¡œ ì •ë ¬.
 			person_list.sort(function(a, b)
 			{
-				return (a.stat[¹«Àå´É·Â_¹«·Â] + a.stat[¹«Àå´É·Â_Åë¼Ö]) > (b.stat[¹«Àå´É·Â_¹«·Â] + b.stat[¹«Àå´É·Â_Åë¼Ö]);
+				return (a.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] + a.stat[ë¬´ì¥ëŠ¥ë ¥_í†µì†”]) > (b.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] + b.stat[ë¬´ì¥ëŠ¥ë ¥_í†µì†”]);
 			});
             
-            // ¼ÒÈ¯ÇÒ ¹«Àå¼ö
+            // ì†Œí™˜í•  ë¬´ì¥ìˆ˜
             int max = pk::max(1, pk::min(5, (person_list.count / 4)));
             
-            // ¼ÒÈ¯ ´ë»ó ¹«Àå
+            // ì†Œí™˜ ëŒ€ìƒ ë¬´ì¥
             pk::list<pk::person@> actors;
             for (int i = 0; i < max; i++)
             {
                 actors.add(person_list[i]);
             }
             
-            // ¼ÒÈ¯ ¸í·É
+            // ì†Œí™˜ ëª…ë ¹
             pk::summon_cmd_info cmd_summon;
             @cmd_summon.base   = dst_base;
             cmd_summon.actors  = actors;
@@ -1025,14 +1025,14 @@ namespace °ÅÁ¡¿ø±º
             return true;
         }
         
-        /** ¹«ÀåÀÌ ÀÖ´Â °¡±î¿î ¾Æ±º °ÅÁ¡À» ¾òÀ½. */
+        /** ë¬´ì¥ì´ ìˆëŠ” ê°€ê¹Œìš´ ì•„êµ° ê±°ì ì„ ì–»ìŒ. */
         int getNearestPerson(pk::building@ dst)
 		{
 			int best_src = -1;
 			int best_distance = 0;
             
-			// °ÅÁ¡±îÁö È®ÀÎ.
-			for (int i = 0; i < °Ç¹°_°ÅÁ¡³¡; i++)
+			// ê±°ì ê¹Œì§€ í™•ì¸.
+			for (int i = 0; i < ê±´ë¬¼_ê±°ì ë; i++)
 			{
 				pk::building@ src = pk::get_building(i);
                 
@@ -1042,10 +1042,10 @@ namespace °ÅÁ¡¿ø±º
                     
                     auto person_list = pk::get_idle_person_list(src);
                     
-                    int max_distance = pk::max(1, pk::min(3, °ÅÁ¡¿ø±º_µµ½ÃÃâÁø°Å¸®));
+                    int max_distance = pk::max(1, pk::min(3, ê±°ì ì›êµ°_ë„ì‹œì¶œì§„ê±°ë¦¬));
                     if ((0 <= distance and distance < best_distance and distance <= max_distance) or best_src == -1)
                     {
-                        if (person_list.count > °ÅÁ¡¿ø±º_ÃâÁø°ÅÁ¡¹«Àå¼ö)
+                        if (person_list.count > ê±°ì ì›êµ°_ì¶œì§„ê±°ì ë¬´ì¥ìˆ˜)
                         {
                             best_src = i;
                             best_distance = distance;
@@ -1059,46 +1059,46 @@ namespace °ÅÁ¡¿ø±º
         
         
         //---------------------------------------------------------------------------------------
-        //  °ÅÁ¡°ø·«Áö¿ø ½ÇÇàÇÔ¼ö
+        //  ê±°ì ê³µëµì§€ì› ì‹¤í–‰í•¨ìˆ˜
         //---------------------------------------------------------------------------------------
         
-        pk::list<pk::building@> list_target_base;     // °ø·«±º ÇÊ¿äÇÑ ±³Àü°ÅÁ¡ ¸®½ºÆ®
-        pk::list<pk::building@> list_attack_base;     // °ø·«±º ÃâÁø°ÅÁ¡ ¸®½ºÆ®
+        pk::list<pk::building@> list_target_base;     // ê³µëµêµ° í•„ìš”í•œ êµì „ê±°ì  ë¦¬ìŠ¤íŠ¸
+        pk::list<pk::building@> list_attack_base;     // ê³µëµêµ° ì¶œì§„ê±°ì  ë¦¬ìŠ¤íŠ¸
         
         
         void func_attack_support(pk::force@ force)
         {
             int force_id = force.get_id();
             
-            // ÅÏ ¼¼·Â µµ½Ã ±¸¿ªº° : ±³ÀüÇÏ´Â º´·ÂÇÕ, ºÎ´ë¼ö ¾÷µ¥ÀÌÆ®
+            // í„´ ì„¸ë ¥ ë„ì‹œ êµ¬ì—­ë³„ : êµì „í•˜ëŠ” ë³‘ë ¥í•©, ë¶€ëŒ€ìˆ˜ ì—…ë°ì´íŠ¸
             clear_engage_info();
             update_engage_info();
             list_target_base.clear();
             list_attack_base.clear();
             
-            for (int i = (°Ç¹°_µµ½Ã³¡ - 1); i >= 0; i--)
+            for (int i = (ê±´ë¬¼_ë„ì‹œë - 1); i >= 0; i--)
             {
                 pk::building@ dst_base = pk::get_building(i);
                 int atk_force_id = get_force_invaded(dst_base);
-                if (pk::is_enemy(force, dst_base) and is_invaded_base(dst_base) and atk_force_id == force_id) // Å¸¼¼·Â ±³Àü ÁßÀÎ °ÅÁ¡
+                if (pk::is_enemy(force, dst_base) and is_invaded_base(dst_base) and atk_force_id == force_id) // íƒ€ì„¸ë ¥ êµì „ ì¤‘ì¸ ê±°ì 
                 {
-                    int src_target = getNearestReinforce(dst_base, force, /*has_person*/true);    // °ø·«Áö¿ø °¡´ÉÇÑ °ÅÁ¡ ¹İÈ¯
+                    int src_target = getNearestReinforce(dst_base, force, /*has_person*/true);    // ê³µëµì§€ì› ê°€ëŠ¥í•œ ê±°ì  ë°˜í™˜
                     pk::building@ src_base = pk::get_building(src_target);
                     if (pk::is_alive(src_base) and !list_target_base.contains(dst_base))
                         list_target_base.add(dst_base);
                 }
             }
             
-            // ±³Àü º´·ÂÂ÷¸¦ ±âÁØÀ¸·Î Á¤·Ä (¼öºñÃø ¿ì¼¼ Áö¿ª ¿ì¼± ÆÄº´)
+            // êµì „ ë³‘ë ¥ì°¨ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ì •ë ¬ (ìˆ˜ë¹„ì¸¡ ìš°ì„¸ ì§€ì—­ ìš°ì„  íŒŒë³‘)
             list_target_base.sort(function(a, b)
             {
-                if (a.get_id() < °Ç¹°_µµ½Ã³¡ and b.get_id() < °Ç¹°_µµ½Ã³¡)
+                if (a.get_id() < ê±´ë¬¼_ë„ì‹œë and b.get_id() < ê±´ë¬¼_ë„ì‹œë)
                     return (main.get_engage_status(a.get_id()) < main.get_engage_status(b.get_id()));
                 
                 return (a.get_id() > b.get_id());
             });
             
-            // °ø·« °ÅÁ¡À¸·Î ¼øÂ÷ÀûÀ¸·Î Áö¿ø±º Ãß°¡ ÆÄº´
+            // ê³µëµ ê±°ì ìœ¼ë¡œ ìˆœì°¨ì ìœ¼ë¡œ ì§€ì›êµ° ì¶”ê°€ íŒŒë³‘
             pk::array<pk::building@> arr_target_base = pk::list_to_array(list_target_base);
             for (int i = 0; i < int(arr_target_base.length); i++)
             {
@@ -1108,7 +1108,7 @@ namespace °ÅÁ¡¿ø±º
                 bool cmd = PushAttackSupport(dst_base, force);
             }
             
-            // ÅÏ ¼¼·Â µµ½Ã ±¸¿ªº° : ±³ÀüÇÏ´Â º´·ÂÇÕ, ºÎ´ë¼ö ¾÷µ¥ÀÌÆ®
+            // í„´ ì„¸ë ¥ ë„ì‹œ êµ¬ì—­ë³„ : êµì „í•˜ëŠ” ë³‘ë ¥í•©, ë¶€ëŒ€ìˆ˜ ì—…ë°ì´íŠ¸
             clear_engage_info();
             update_engage_info();
             list_target_base.clear();
@@ -1119,43 +1119,43 @@ namespace °ÅÁ¡¿ø±º
         
         //---------------------------------------------------------------------------------------
         
-        // °ø·«ÁßÀÎ °ÅÁ¡À¸·Î º¸³¾ ºÎ´ëÁ¾·ù ÁöÁ¤
+        // ê³µëµì¤‘ì¸ ê±°ì ìœ¼ë¡œ ë³´ë‚¼ ë¶€ëŒ€ì¢…ë¥˜ ì§€ì •
         bool PushAttackSupport(pk::building@ dst_base, pk::force@ force)
         {
-            // ¿ø±º ºÎ´ë°¡ ÃâÁøÇÒ ÀÎ±Ù °ÅÁ¡ÀÌ ÀÖ´ÂÁö È®ÀÎ
+            // ì›êµ° ë¶€ëŒ€ê°€ ì¶œì§„í•  ì¸ê·¼ ê±°ì ì´ ìˆëŠ”ì§€ í™•ì¸
             int src_target = getNearestReinforce(dst_base, force, /*has_person*/true);
 			if (src_target == -1) return false;
             
-            // °ø·«±º ÃâÁø °ÅÁ¡
+            // ê³µëµêµ° ì¶œì§„ ê±°ì 
             pk::building@ src_base = pk::get_building(src_target);
             
-            int city_id = pk::get_city_id(dst_base.pos);    // °ÅÁ¡ÀÇ ±¸¿ª µµ½Ã
-            int status  = get_engage_status(city_id);   // °ø-¹æ º´·ÂÂ÷ : °ø°İÃøÀÌ ¸¹À¸¸é ¾ç¼ö, ¼öºñÃøÀÌ ¸¹À¸¸é À½¼ö
+            int city_id = pk::get_city_id(dst_base.pos);    // ê±°ì ì˜ êµ¬ì—­ ë„ì‹œ
+            int status  = get_engage_status(city_id);   // ê³µ-ë°© ë³‘ë ¥ì°¨ : ê³µê²©ì¸¡ì´ ë§ìœ¼ë©´ ì–‘ìˆ˜, ìˆ˜ë¹„ì¸¡ì´ ë§ìœ¼ë©´ ìŒìˆ˜
             string status_info = "";
             
             bool cmd = false;
             if ((2*ref_status) <= status and status < (4*ref_status))
-            {   // °ø°İÃø ¿ì¼¼
-                status_info = "°ø°İÃø º´·Â ¿ì¼¼";
-                int num_atk_support_unit = count_atk_unit_type(src_base, dst_base, ºÎ´ëÁ¾·ù_¼ö¼Û, /*siege_weapon*/false);
-                int unit_type = (!°ÅÁ¡°ø·«_¼ö¼ÛºÎ´ëÇã¿ë or pk::enemies_around(src_base) or num_atk_support_unit > max_unit_supply)? ºÎ´ëÁ¾·ù_ÀüÅõ : ºÎ´ëÁ¾·ù_¼ö¼Û;
-                cmd = (PushAttackUnit(dst_base, src_base, unit_type, /*siege_weapon*/false, /*max_unit*/1) or cmd); // ÀüÅõ or ¼ö¼ÛºÎ´ë
+            {   // ê³µê²©ì¸¡ ìš°ì„¸
+                status_info = "ê³µê²©ì¸¡ ë³‘ë ¥ ìš°ì„¸";
+                int num_atk_support_unit = count_atk_unit_type(src_base, dst_base, ë¶€ëŒ€ì¢…ë¥˜_ìˆ˜ì†¡, /*siege_weapon*/false);
+                int unit_type = (!ê±°ì ê³µëµ_ìˆ˜ì†¡ë¶€ëŒ€í—ˆìš© or pk::enemies_around(src_base) or num_atk_support_unit > max_unit_supply)? ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬ : ë¶€ëŒ€ì¢…ë¥˜_ìˆ˜ì†¡;
+                cmd = (PushAttackUnit(dst_base, src_base, unit_type, /*siege_weapon*/false, /*max_unit*/1) or cmd); // ì „íˆ¬ or ìˆ˜ì†¡ë¶€ëŒ€
             }
             else if (0 <= status and status < (2*ref_status))
-            {   // °ø¹æ Ä¡¿­
-                status_info = "°ø¹æ Ä¡¿­";
-                int num_atk_support_unit = count_atk_unit_type(src_base, dst_base, ºÎ´ëÁ¾·ù_ÀüÅõ, /*siege_weapon*/true);
-                bool siege = (!°ÅÁ¡°ø·«_°ø¼ºº´±âÇã¿ë or pk::enemies_around(src_base) or num_atk_support_unit > max_unit_siege)? false : true;
-                cmd = (PushAttackUnit(dst_base, src_base, ºÎ´ëÁ¾·ù_ÀüÅõ, /*siege_weapon*/siege, /*max_unit*/1) or cmd); // ÀüÅõ or °ø¼ººÎ´ë
+            {   // ê³µë°© ì¹˜ì—´
+                status_info = "ê³µë°© ì¹˜ì—´";
+                int num_atk_support_unit = count_atk_unit_type(src_base, dst_base, ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬, /*siege_weapon*/true);
+                bool siege = (!ê±°ì ê³µëµ_ê³µì„±ë³‘ê¸°í—ˆìš© or pk::enemies_around(src_base) or num_atk_support_unit > max_unit_siege)? false : true;
+                cmd = (PushAttackUnit(dst_base, src_base, ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬, /*siege_weapon*/siege, /*max_unit*/1) or cmd); // ì „íˆ¬ or ê³µì„±ë¶€ëŒ€
             }
             else if ((-1*ref_status) <= status and status < 0)
-            {   // ¼öºñÃø ¿ì¼¼
-                status_info = "¼öºñÃø º´·Â ¿ì¼¼";
+            {   // ìˆ˜ë¹„ì¸¡ ìš°ì„¸
+                status_info = "ìˆ˜ë¹„ì¸¡ ë³‘ë ¥ ìš°ì„¸";
                 int max_unit = (pk::enemies_around(src_base))? 1 : max_unit_combat;
-                cmd = (PushAttackUnit(dst_base, src_base, ºÎ´ëÁ¾·ù_ÀüÅõ, /*siege_weapon*/false, /*max_unit*/max_unit) or cmd); // ÀüÅõºÎ´ë
+                cmd = (PushAttackUnit(dst_base, src_base, ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬, /*siege_weapon*/false, /*max_unit*/max_unit) or cmd); // ì „íˆ¬ë¶€ëŒ€
             }
         
-            if (µğ¹ö±×¸ğµå)
+            if (ë””ë²„ê·¸ëª¨ë“œ)
             {
                 pk::force@ def_force  = pk::get_force(dst_base.get_force_id());
                 pk::force@ atk_force  = force;
@@ -1165,61 +1165,61 @@ namespace °ÅÁ¡¿ø±º
                 string atk_force_name = pk::decode(pk::get_name(pk::get_person(atk_force.kunshu)));
                 
                 if (cmd)
-                    pk::info(pk::format("{}±º, {}±º {} °ø·« Áß, {} ({}¿¡¼­ ÆÄº´)", atk_force_name, def_force_name, dst_name, status_info, src_name));
+                    pk::info(pk::format("{}êµ°, {}êµ° {} ê³µëµ ì¤‘, {} ({}ì—ì„œ íŒŒë³‘)", atk_force_name, def_force_name, dst_name, status_info, src_name));
             }
             return true;
         }
         
-        int ref_status = 10000;    // °ø¹æ¿ìÀ§_±âÁØº´·Â
-        int max_unit_combat = pk::max(1, pk::min(3, °ÅÁ¡°ø·«_ÀüÅõºÎ´ë¼ö));
-        int max_unit_supply = pk::max(1, pk::min(3, °ÅÁ¡°ø·«_¼ö¼ÛºÎ´ë¼ö));
-        int max_unit_siege  = pk::max(1, pk::min(5, °ÅÁ¡°ø·«_°ø¼ººÎ´ë¼ö));
+        int ref_status = 10000;    // ê³µë°©ìš°ìœ„_ê¸°ì¤€ë³‘ë ¥
+        int max_unit_combat = pk::max(1, pk::min(3, ê±°ì ê³µëµ_ì „íˆ¬ë¶€ëŒ€ìˆ˜));
+        int max_unit_supply = pk::max(1, pk::min(3, ê±°ì ê³µëµ_ìˆ˜ì†¡ë¶€ëŒ€ìˆ˜));
+        int max_unit_siege  = pk::max(1, pk::min(5, ê±°ì ê³µëµ_ê³µì„±ë¶€ëŒ€ìˆ˜));
         
         
         bool PushAttackUnit(pk::building@ dst_base, pk::building@ src_base, int attack_type, bool siege_weapon=false, int max_unit=1)
         {
-            // ¿ø±º ÃâÁø °ÅÁ¡
+            // ì›êµ° ì¶œì§„ ê±°ì 
             int src_id = src_base.get_id();
             int dst_id = dst_base.get_id();
 
-            // ÃâÁø ¸í·É Á¶°Ç
+            // ì¶œì§„ ëª…ë ¹ ì¡°ê±´
             int unit_count = 0;
-            int push_count = 0;  // push È½¼ö È®ÀÎ º¯¼ö
+            int push_count = 0;  // push íšŸìˆ˜ í™•ì¸ ë³€ìˆ˜
             
-            if (dst_id >= °Ç¹°_µµ½Ã³¡)   // °ü¹®/°ÅÁ¡Àº ÇÑ °ÅÁ¡¿¡¼­ 1ºÎ´ë¸¸
+            if (dst_id >= ê±´ë¬¼_ë„ì‹œë)   // ê´€ë¬¸/ê±°ì ì€ í•œ ê±°ì ì—ì„œ 1ë¶€ëŒ€ë§Œ
                 max_unit = 1;
                 
-            // ÃâÁø°ÅÁ¡¿¡¼­ ¹İº¹ÀûÀ¸·Î ÃâÁø ¸í·É ¼öÇà
+            // ì¶œì§„ê±°ì ì—ì„œ ë°˜ë³µì ìœ¼ë¡œ ì¶œì§„ ëª…ë ¹ ìˆ˜í–‰
             while(unit_count < max_unit and push_count < max_unit)
             {
                 push_count += 1;
                 
-                if (attack_type == ºÎ´ëÁ¾·ù_¼ö¼Û)
+                if (attack_type == ë¶€ëŒ€ì¢…ë¥˜_ìˆ˜ì†¡)
                 {
-                    int unit_id = PushTransportUnit(src_base, dst_base, true);  // ¼ö¼ÛºÎ´ë ÃâÁø
+                    int unit_id = PushTransportUnit(src_base, dst_base, true);  // ìˆ˜ì†¡ë¶€ëŒ€ ì¶œì§„
                     if (unit_id != -1)
                     {
-                        unit_count += 1;     // ¼ö¼ÛºÎ´ë Ä«¿îÆ®
+                        unit_count += 1;     // ìˆ˜ì†¡ë¶€ëŒ€ ì¹´ìš´íŠ¸
                         if (!list_attack_base.contains(src_base))
                             list_attack_base.add(src_base);
                     }
                 }
-                else if (attack_type == ºÎ´ëÁ¾·ù_ÀüÅõ and !siege_weapon)
+                else if (attack_type == ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬ and !siege_weapon)
                 {
-                   int unit_id = PushCombatUnit(src_base, dst_base, true);     // ÀüÅõºÎ´ë ÃâÁø
+                   int unit_id = PushCombatUnit(src_base, dst_base, true);     // ì „íˆ¬ë¶€ëŒ€ ì¶œì§„
                     if (unit_id != -1)
                     {
-                        unit_count += 1;     // ÀüÅõºÎ´ë Ä«¿îÆ®
+                        unit_count += 1;     // ì „íˆ¬ë¶€ëŒ€ ì¹´ìš´íŠ¸
                         if (!list_attack_base.contains(src_base))
                             list_attack_base.add(src_base);
                     }
                 }
-                else if (attack_type == ºÎ´ëÁ¾·ù_ÀüÅõ and siege_weapon)
+                else if (attack_type == ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬ and siege_weapon)
                 {
-                    int unit_id = PushSiegeUnit(src_base, dst_base, true);     // °ø¼ººÎ´ë ÃâÁø
+                    int unit_id = PushSiegeUnit(src_base, dst_base, true);     // ê³µì„±ë¶€ëŒ€ ì¶œì§„
                     if (unit_id != -1)
                     {
-                        unit_count += 1;     // ÀüÅõºÎ´ë Ä«¿îÆ®
+                        unit_count += 1;     // ì „íˆ¬ë¶€ëŒ€ ì¹´ìš´íŠ¸
                         if (!list_attack_base.contains(src_base))
                             list_attack_base.add(src_base);
                     }
@@ -1230,7 +1230,7 @@ namespace °ÅÁ¡¿ø±º
 			return false;
         }
         
-        // ¸ñÇ¥ Àû °ÅÁ¡À¸·Î Áø±º ÁßÀÎ ºÎ´ë¼ö
+        // ëª©í‘œ ì  ê±°ì ìœ¼ë¡œ ì§„êµ° ì¤‘ì¸ ë¶€ëŒ€ìˆ˜
         int count_atk_unit_type(pk::building@ src_base, pk::building@ dst_base, int check_type, bool siege_weapon=false)
         {
             int count = 0;
@@ -1247,9 +1247,9 @@ namespace °ÅÁ¡¿ø±º
                 int service_id = pk::get_service(unit);
                 
                 bool is_valid_type = false;
-                if (check_type == ºÎ´ëÁ¾·ù_¼ö¼Û)
+                if (check_type == ë¶€ëŒ€ì¢…ë¥˜_ìˆ˜ì†¡)
                     is_valid_type = (unit.type == check_type);
-                else if (check_type == ºÎ´ëÁ¾·ù_ÀüÅõ)
+                else if (check_type == ë¶€ëŒ€ì¢…ë¥˜_ì „íˆ¬)
                 {
                     if (siege_weapon and is_siege_weapon(pk::get_ground_weapon_id(unit)))
                         is_valid_type = (unit.type == check_type);
@@ -1257,7 +1257,7 @@ namespace °ÅÁ¡¿ø±º
                         is_valid_type = (unit.type == check_type);
                 }
                 
-                if (is_valid_type and service_id == src_id and unit.target_type == ºÎ´ëÀÓ¹«´ë»ó_°ÅÁ¡)
+                if (is_valid_type and service_id == src_id and unit.target_type == ë¶€ëŒ€ì„ë¬´ëŒ€ìƒ_ê±°ì )
                 {
                     pk::building@ building_t = pk::get_building(unit.target);
                     if (pk::is_alive(building_t) and building_t.get_id() == dst_id and pk::is_enemy(unit, building_t))
@@ -1270,20 +1270,20 @@ namespace °ÅÁ¡¿ø±º
         
         
         //---------------------------------------------------------------------------------------
-        // °ÅÁ¡º° º´·Â ÇöÈ² ¾÷µ¥ÀÌÆ®
+        // ê±°ì ë³„ ë³‘ë ¥ í˜„í™© ì—…ë°ì´íŠ¸
         //---------------------------------------------------------------------------------------
         
-        // ¼öÁ¤±İÁö
-        array<int> def_troopsbase(°Ç¹°_µµ½Ã³¡, 0);   // ±¸¿ª ³» °ÅÁ¡º¡·Â
-        array<int> def_troops_sum(°Ç¹°_µµ½Ã³¡, 0);   // ±¸¿ª ³» ¼öºñ±º º¡·ÂÇÕ
-        array<int> def_unit_count(°Ç¹°_µµ½Ã³¡, 0);   // ±¸¿ª ³» ¼öºñ±º ºÎ´ë¼ö
-        array<int> atk_troops_sum(°Ç¹°_µµ½Ã³¡, 0);   // ±¸¿ª ³» °ø°İ±º º¡·ÂÇÕ
-        array<int> atk_unit_count(°Ç¹°_µµ½Ã³¡, 0);   // ±¸¿ª ³» °ø°İ±º ºÎ´ë¼ö
+        // ìˆ˜ì •ê¸ˆì§€
+        array<int> def_troopsbase(ê±´ë¬¼_ë„ì‹œë, 0);   // êµ¬ì—­ ë‚´ ê±°ì ë²™ë ¥
+        array<int> def_troops_sum(ê±´ë¬¼_ë„ì‹œë, 0);   // êµ¬ì—­ ë‚´ ìˆ˜ë¹„êµ° ë²™ë ¥í•©
+        array<int> def_unit_count(ê±´ë¬¼_ë„ì‹œë, 0);   // êµ¬ì—­ ë‚´ ìˆ˜ë¹„êµ° ë¶€ëŒ€ìˆ˜
+        array<int> atk_troops_sum(ê±´ë¬¼_ë„ì‹œë, 0);   // êµ¬ì—­ ë‚´ ê³µê²©êµ° ë²™ë ¥í•©
+        array<int> atk_unit_count(ê±´ë¬¼_ë„ì‹œë, 0);   // êµ¬ì—­ ë‚´ ê³µê²©êµ° ë¶€ëŒ€ìˆ˜
         
-        // ÅÏ ¼¼·Â °ÅÁ¡ ±¸¿ªº° : º´·ÂÁ¤º¸ ÃÊ±âÈ­
+        // í„´ ì„¸ë ¥ ê±°ì  êµ¬ì—­ë³„ : ë³‘ë ¥ì •ë³´ ì´ˆê¸°í™”
         void clear_engage_info()
         {
-            for (int city_id = 0; city_id < °Ç¹°_µµ½Ã³¡; city_id++)
+            for (int city_id = 0; city_id < ê±´ë¬¼_ë„ì‹œë; city_id++)
             {
                 def_troopsbase[city_id] = 0;
                 def_troops_sum[city_id] = 0;
@@ -1293,7 +1293,7 @@ namespace °ÅÁ¡¿ø±º
             }
         }
         
-        // ÅÏ ¼¼·Â °ÅÁ¡ ±¸¿ªº° : ±³ÀüÇÏ´Â º´·ÂÇÕ, ºÎ´ë¼ö ¾÷µ¥ÀÌÆ®
+        // í„´ ì„¸ë ¥ ê±°ì  êµ¬ì—­ë³„ : êµì „í•˜ëŠ” ë³‘ë ¥í•©, ë¶€ëŒ€ìˆ˜ ì—…ë°ì´íŠ¸
         void update_engage_info()
         {
             pk::array<pk::unit@> arr_unit = pk::list_to_array(pk::get_unit_list());
@@ -1301,30 +1301,30 @@ namespace °ÅÁ¡¿ø±º
             {
                 pk::unit@ unit = arr_unit[i];
                 int unit_id = unit.get_id();
-                int city_id = pk::get_city_id(unit.pos);    // ºÎ´ë°¡ À§Ä¡ÇÑ ÁÂÇ¥ ±¸¿ªÀÇ °ÅÁ¡
-                if (city_id >= 0 and city_id <= °Ç¹°_µµ½Ã³¡)
+                int city_id = pk::get_city_id(unit.pos);    // ë¶€ëŒ€ê°€ ìœ„ì¹˜í•œ ì¢Œí‘œ êµ¬ì—­ì˜ ê±°ì 
+                if (city_id >= 0 and city_id <= ê±´ë¬¼_ë„ì‹œë)
                 {
                     pk::city@ city = pk::get_city(city_id);
-                    if (unit.get_force_id() == city.get_force_id()) // ºÎ´ë¿Í °ÅÁ¡ÀÌ µ¿ÀÏ ¼¼·Â
+                    if (unit.get_force_id() == city.get_force_id()) // ë¶€ëŒ€ì™€ ê±°ì ì´ ë™ì¼ ì„¸ë ¥
                     {
-                        def_troops_sum[city_id] += unit.troops; // ±¸¿ª ¼öºñº´·ÂÇÕ
-                        def_unit_count[city_id] += 1;           // ±¸¿ª ¼öºñºÎ´ë¼ö
+                        def_troops_sum[city_id] += unit.troops; // êµ¬ì—­ ìˆ˜ë¹„ë³‘ë ¥í•©
+                        def_unit_count[city_id] += 1;           // êµ¬ì—­ ìˆ˜ë¹„ë¶€ëŒ€ìˆ˜
                     }
-                    else if (pk::is_enemy(unit, city))          // ºÎ´ë¿Í °ÅÁ¡ÀÌ Àû´ë¼¼·Â
+                    else if (pk::is_enemy(unit, city))          // ë¶€ëŒ€ì™€ ê±°ì ì´ ì ëŒ€ì„¸ë ¥
                     {
-                        atk_troops_sum[city_id] += unit.troops; // ±¸¿ª °ø°İº´·ÂÇÕ
-                        atk_unit_count[city_id] += 1;           // ±¸¿ª °ø°İºÎ´ë¼ö
+                        atk_troops_sum[city_id] += unit.troops; // êµ¬ì—­ ê³µê²©ë³‘ë ¥í•©
+                        atk_unit_count[city_id] += 1;           // êµ¬ì—­ ê³µê²©ë¶€ëŒ€ìˆ˜
                     }
                 }
             }
-            for (int city_id = 0; city_id < °Ç¹°_µµ½Ã³¡; city_id++)
+            for (int city_id = 0; city_id < ê±´ë¬¼_ë„ì‹œë; city_id++)
             {
                 pk::city@ city = pk::get_city(city_id);
                 def_troopsbase[city_id] = pk::get_troops(city);
             }
         }
         
-        // Ä§·«ÇÑ ÀûºÎ´ë º´·Â¼öÁØ È®ÀÎ
+        // ì¹¨ëµí•œ ì ë¶€ëŒ€ ë³‘ë ¥ìˆ˜ì¤€ í™•ì¸
         bool is_invaded_base(pk::building@ base)
         {
             if (!pk::is_alive(base)) return false;
@@ -1337,11 +1337,11 @@ namespace °ÅÁ¡¿ø±º
             return true;
         }
         
-        // Ä§·«ÇÑ ¼¼·Â È®ÀÎ
+        // ì¹¨ëµí•œ ì„¸ë ¥ í™•ì¸
         int get_force_invaded(pk::building@ base)
         {
-            // ¹üÀ§ ³» Àû ºÎ´ëµéÀÇ ¼Ò¼Ó ¼¼·Â Ä«¿îÆ®
-            pk::array<int> arr_force_unit_count(¼¼·Â_³¡, 0);
+            // ë²”ìœ„ ë‚´ ì  ë¶€ëŒ€ë“¤ì˜ ì†Œì† ì„¸ë ¥ ì¹´ìš´íŠ¸
+            pk::array<int> arr_force_unit_count(ì„¸ë ¥_ë, 0);
             pk::array<pk::point> range = pk::range(base.pos, 1, 6);
             for (int i = 0; i < int(range.length); i++)
             {
@@ -1349,10 +1349,10 @@ namespace °ÅÁ¡¿ø±º
                 if (pk::is_alive(unit) and pk::is_enemy(unit, base))
                     arr_force_unit_count[unit.get_force_id()]++;
             }
-            // °¡Àå ¸¹Àº ÀûºÎ´ëÀÇ ¼Ò¼Ó¼¼·Â ¹İÈ¯
+            // ê°€ì¥ ë§ì€ ì ë¶€ëŒ€ì˜ ì†Œì†ì„¸ë ¥ ë°˜í™˜
             int max_force_id    = -1;
             int max_force_count = -1;
-            for (int j = 0; j < ¼¼·Â_³¡; j++)
+            for (int j = 0; j < ì„¸ë ¥_ë; j++)
             {
                 int count = arr_force_unit_count[j];
                 if (max_force_count < count)
@@ -1368,17 +1368,17 @@ namespace °ÅÁ¡¿ø±º
             return max_force_id;
         }
         
-        // ±³Àü º´·Â ºñ±³ °á°ú
+        // êµì „ ë³‘ë ¥ ë¹„êµ ê²°ê³¼
         int get_engage_status(int city_id)
         {
-            if (city_id < 0 and city_id > °Ç¹°_µµ½Ã³¡) return 0;
+            if (city_id < 0 and city_id > ê±´ë¬¼_ë„ì‹œë) return 0;
             
             int def_base_troops = def_troopsbase[city_id];
             int def_unit_troops = def_troops_sum[city_id];
             int atk_unit_troops = atk_troops_sum[city_id];
             
             int status = atk_unit_troops - (def_base_troops + def_unit_troops);
-            return status;      // °ø°İÃøÀÌ ¸¹À¸¸é ¾ç¼ö, ¼öºñÃøÀÌ ¸¹À¸¸é À½¼ö
+            return status;      // ê³µê²©ì¸¡ì´ ë§ìœ¼ë©´ ì–‘ìˆ˜, ìˆ˜ë¹„ì¸¡ì´ ë§ìœ¼ë©´ ìŒìˆ˜
         }
         
         
@@ -1390,28 +1390,28 @@ namespace °ÅÁ¡¿ø±º
             string name;
             switch(order)
             {
-                case 0  : name = "ºÎ´ëÀÓ¹«_´ë±â"; break;
-                case 1  : name = "ºÎ´ëÀÓ¹«_ÀÌµ¿"; break;
-                case 2  : name = "ºÎ´ëÀÓ¹«_¼³Ä¡"; break;
-                case 3  : name = "ºÎ´ëÀÓ¹«_°ø°İ"; break;
-                case 4  : name = "ºÎ´ëÀÓ¹«_Åğ°¢"; break;
-                case 5  : name = "ºÎ´ëÀÓ¹«_¹°¸²"; break;
-                case 6  : name = "ºÎ´ëÀÓ¹«_È£À§"; break;
-                case 7  : name = "ºÎ´ëÀÓ¹«_°ø¼º"; break;
-                case 8  : name = "ºÎ´ëÀÓ¹«_¼öº¹"; break;
-                case 9  : name = "ºÎ´ëÀÓ¹«_Á¤º¹"; break;
-                case 10 : name = "ºÎ´ëÀÓ¹«_º¸±Ş"; break;
-                case 11 : name = "ºÎ´ëÀÓ¹«_¼¶¸ê"; break;
-                case 12 : name = "ºÎ´ëÀÓ¹«_ÃßÁ¾"; break;
-                case 13 : name = "ºÎ´ëÀÓ¹«_³¡" ; break;
-                default : name = "ºÎ´ëÀÓ¹«_¾øÀ½"; break;
+                case 0  : name = "ë¶€ëŒ€ì„ë¬´_ëŒ€ê¸°"; break;
+                case 1  : name = "ë¶€ëŒ€ì„ë¬´_ì´ë™"; break;
+                case 2  : name = "ë¶€ëŒ€ì„ë¬´_ì„¤ì¹˜"; break;
+                case 3  : name = "ë¶€ëŒ€ì„ë¬´_ê³µê²©"; break;
+                case 4  : name = "ë¶€ëŒ€ì„ë¬´_í‡´ê°"; break;
+                case 5  : name = "ë¶€ëŒ€ì„ë¬´_ë¬¼ë¦¼"; break;
+                case 6  : name = "ë¶€ëŒ€ì„ë¬´_í˜¸ìœ„"; break;
+                case 7  : name = "ë¶€ëŒ€ì„ë¬´_ê³µì„±"; break;
+                case 8  : name = "ë¶€ëŒ€ì„ë¬´_ìˆ˜ë³µ"; break;
+                case 9  : name = "ë¶€ëŒ€ì„ë¬´_ì •ë³µ"; break;
+                case 10 : name = "ë¶€ëŒ€ì„ë¬´_ë³´ê¸‰"; break;
+                case 11 : name = "ë¶€ëŒ€ì„ë¬´_ì„¬ë©¸"; break;
+                case 12 : name = "ë¶€ëŒ€ì„ë¬´_ì¶”ì¢…"; break;
+                case 13 : name = "ë¶€ëŒ€ì„ë¬´_ë" ; break;
+                default : name = "ë¶€ëŒ€ì„ë¬´_ì—†ìŒ"; break;
             }
             
             return name;
         }
         
         //---------------------------------------------------------------------------------------
-        bool µğ¹ö±×¸ğµå = false;
+        bool ë””ë²„ê·¸ëª¨ë“œ = false;
         
         
         

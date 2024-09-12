@@ -3,9 +3,14 @@
 @Update: 2023.9.8,최초배포
 @Update: 2023.9.9,소속이 없는경우에 잘못판단하는 버그수정
 @Update: 2023.9.10,인덱스에러수정
+@Update: 2023.9.13,주악에러수정
+@Update: 2023.9.15,v2,명성,미도,부호등 효과추가.
+@Update: 2023.9.18,유저세력에 있는 무장만 컬러표시.
+@Update: 2024.5.2, 전능0이하일때 처리
+@Update: 2024.5.17, 건물데미지도 방어력 적용
 */
 
-namespace 인연효과
+namespace 인연효과_Story
 {
 	const int 효과_주악_소_값 = 5;
 	const int 효과_주악_중_값 = 10;
@@ -49,6 +54,39 @@ namespace 인연효과
 	const int 효과_인접기력감소_값 = 5;
 	const int 효과_인접병사감소_값 = 3;
 
+	const float 효과_부호_소_값 = 1.2;
+	const float 효과_부호_중_값 = 1.35;
+	const float 효과_부호_대_값 = 1.5;
+
+	const float 효과_미도_소_값 = 1.2;
+	const float 효과_미도_중_값 = 1.35;
+	const float 효과_미도_대_값 = 1.5;
+
+	const float 효과_명성_소_값 = 1.2;
+	const float 효과_명성_중_값 = 1.35;
+	const float 효과_명성_대_값 = 1.5;
+
+	const float 효과_계략_기력_감소_값 = 0.5;
+
+	const int 효과_인접_교란_값 = 5;
+	const int 효과_인접_위보_값 = 5;
+	const int 효과_인접_화계_값 = 5;
+
+	const int 효과_통솔_상승_소_값 = 3;
+	const int 효과_통솔_상승_중_값 = 6;
+	const int 효과_통솔_상승_대_값 = 10;
+	const int 효과_무력_상승_소_값 = 3;
+	const int 효과_무력_상승_중_값 = 6;
+	const int 효과_무력_상승_대_값 = 10;
+	const int 효과_지력_상승_소_값 = 3;
+	const int 효과_지력_상승_중_값 = 6;
+	const int 효과_지력_상승_대_값 = 10;
+	const int 효과_정치_상승_소_값 = 3;
+	const int 효과_정치_상승_중_값 = 6;
+	const int 효과_정치_상승_대_값 = 10;
+	const int 효과_매력_상승_소_값 = 3;
+	const int 효과_매력_상승_중_값 = 6;
+	const int 효과_매력_상승_대_값 = 10;
 
 	const int 효과_전능상승_소 = 0;
 	const int 효과_전능상승_중 = 1;
@@ -88,6 +126,40 @@ namespace 인연효과
 	const int 효과_공적상승_소 = 35;
 	const int 효과_공적상승_중 = 36;
 	const int 효과_공적상승_대 = 37;
+	const int 효과_부호_소 = 38;
+	const int 효과_부호_중 = 39;
+	const int 효과_부호_대 = 40;
+	const int 효과_미도_소 = 41;
+	const int 효과_미도_중 = 42;
+	const int 효과_미도_대 = 43;
+	const int 효과_명성_소 = 44;
+	const int 효과_명성_중 = 45;
+	const int 효과_명성_대 = 46;
+	const int 효과_계략_기력_감소 = 47;
+	const int 효과_계략_크리티컬_항상성공 = 48;
+	const int 효과_공격_크리티컬_항상성공 = 49;
+	const int 효과_포박_불가 = 50;
+	const int 효과_기병_전법_사망_불가 = 51;
+	const int 효과_소병력_혼란_불가 = 52;
+	const int 효과_인접_교란 = 53;
+	const int 효과_인접_위보 = 54;
+	const int 효과_인접_화계 = 55;
+	const int 효과_통솔_상승_소 = 56;
+	const int 효과_통솔_상승_중 = 57;
+	const int 효과_통솔_상승_대 = 58;
+	const int 효과_무력_상승_소 = 59;
+	const int 효과_무력_상승_중 = 60;
+	const int 효과_무력_상승_대 = 61;
+	const int 효과_지력_상승_소 = 62;
+	const int 효과_지력_상승_중 = 63;
+	const int 효과_지력_상승_대 = 64;
+	const int 효과_정치_상승_소 = 65;
+	const int 효과_정치_상승_중 = 66;
+	const int 효과_정치_상승_대 = 67;
+	const int 효과_매력_상승_소 = 68;
+	const int 효과_매력_상승_중 = 69;
+	const int 효과_매력_상승_대 = 70;
+	const int 효과_끝 = 71;
 
 
 
@@ -98,7 +170,7 @@ namespace 인연효과
 		GroupInfo("관중십장",{효과_전능상승_소,효과_공격상승_소,효과_방어상승_소},{무장_마등,무장_한수,무장_양추,무장_마완,무장_성의,무장_정은,무장_장횡,무장_이감,무장_양흥,무장_후선}),
 		GroupInfo("강동십이호신",{효과_전능상승_중,효과_전적성상승},{무장_정보,무장_황개,무장_한당,무장_장흠,무장_주태,무장_진무,무장_동습,무장_감녕,무장_능통,무장_서성,무장_반장,무장_정봉}),
 		GroupInfo("강동이교",{효과_주악_대},{무장_소교, 무장_대교}),
-		GroupInfo("의형제",{효과_보좌_중},{무장_유비, 무장_관우,무장_장비}),
+		GroupInfo("도원결의",{효과_보좌_중},{무장_유비, 무장_관우,무장_장비}),
 		GroupInfo("황제의상",{효과_세력인정효과},{무장_유비, 무장_손권,무장_조비}),
 		GroupInfo("오대도독",{효과_전적성상승,효과_전법_공격_중,효과_전법_방어_중},{무장_주유, 무장_육손,무장_노숙,무장_육항,무장_여몽}),
 		GroupInfo("천하무쌍",{효과_인접기력감소,효과_인접병사감소},{무장_여포, 무장_항적}),
@@ -106,11 +178,29 @@ namespace 인연효과
 		GroupInfo("복룡봉추",{효과_계략_중,효과_계략방어_중},{무장_제갈량, 무장_방통}),
 		GroupInfo("수경문하",{효과_계략_소,효과_계략방어_소},{무장_제갈량, 무장_방통,무장_서서}),
 		GroupInfo("궁신",{효과_전법반드시성공},{무장_황충, 무장_하후연,무장_여포,무장_국의,무장_장흠}),
-		GroupInfo("원소쌍벽",{효과_공격상승_중},{무장_안량, 무장_문추}),
 		GroupInfo("왕좌지재",{효과_전능상승_대},{무장_순욱,무장_저수, 무장_장소 ,무장_장완}),
 		GroupInfo("묘령여인",{효과_경국,효과_전능상승_중},{무장_여영기,무장_마운,무장_황월영,무장_포삼랑}),
-		GroupInfo("이민족",{효과_전능상승_소,효과_공격상승_소,효과_방어상승_소},{무장_맹획,무장_축융,무장_사마가,무장_올돌골})
-		//GroupInfo("테스트",{효과_전능상승_대,효과_계략_대,효과_전적성상승,효과_공적상승_대},{무장_장료,무장_진궁})
+		GroupInfo("이민족",{효과_전능상승_소,효과_공격상승_소,효과_방어상승_소},{무장_맹획,무장_축융,무장_사마가,무장_올돌골}),
+		GroupInfo("의형제",{효과_보좌_중},{무장_손책, 무장_주유}),
+		GroupInfo("관장지용",{효과_인접기력감소,효과_인접병사감소},{무장_관우, 무장_장비}),
+		GroupInfo("수어지교",{효과_보좌_중,효과_매력_상승_중},{무장_유비, 무장_제갈량}),
+		GroupInfo("사마팔달",{효과_명성_중},{무장_사마랑,무장_사마의, 무장_사마부}),
+		GroupInfo("충렬일로",{효과_전법_공격_중,효과_무력_상승_소,효과_공격상승_소},{무장_유비, 무장_조운}),
+		GroupInfo("영천책사",{효과_계략_중,효과_계략방어_중,효과_통찰,효과_지력_상승_소},{무장_순욱, 무장_순유, 무장_곽가, 무장_정욱, 무장_유엽}),
+		GroupInfo("화북책사",{효과_계략_중,효과_계략방어_소,효과_지력_상승_소},{무장_전풍, 무장_저수, 무장_봉기, 무장_곽도, 무장_순심, 무장_신평, 무장_심배}),
+		GroupInfo("익주책사",{효과_계략_중,효과_계략방어_중,효과_지력_상승_소},{무장_황권, 무장_장송, 무장_법정}),
+		GroupInfo("촉한책사",{효과_계략_중,효과_계략방어_중,효과_계략_기력_감소},{무장_제갈량, 무장_방통, 무장_법정, 무장_서서, 무장_황권}),
+		GroupInfo("강동책사",{효과_계략_중,효과_계략방어_중,효과_지력_상승_소},{무장_장소, 무장_고옹, 무장_우번, 무장_보즐, 무장_감택}),
+		GroupInfo("담소자약",{효과_공격상승_중,효과_인접기력감소,효과_인접병사감소,효과_주악_중},{무장_손권,무장_감녕}),
+		GroupInfo("강동2통",{효과_공격상승_중,효과_인접기력감소,효과_인접병사감소,효과_주악_중},{무장_손책,무장_태사자}),
+		GroupInfo("마씨오상",{효과_명성_중,효과_정치_상승_중,효과_지력_상승_소},{무장_마량,무장_마속}),
+		GroupInfo("육출기산",{효과_전능상승_소,효과_전법_공격_중,효과_전법_방어_중,효과_계략_크리티컬_항상성공},{무장_유선,무장_제갈량}),
+		GroupInfo("촉과",{효과_부호_중,효과_미도_중,효과_지력_상승_소,효과_정치_상승_대},{무장_제갈량,무장_법정,무장_유파,무장_이엄,무장_이적}),
+		GroupInfo("호표기",{효과_전능상승_소,효과_전법_공격_소},{무장_조휴,무장_조진}),
+		GroupInfo("화북쌍벽",{효과_공격상승_중},{무장_안량, 무장_문추}),
+		GroupInfo("묘령여인",{효과_경국,효과_전능상승_중},{무장_여영기,무장_마운,무장_황월영,무장_포삼랑}),
+		GroupInfo("강동이장",{효과_정치_상승_대,효과_부호_중,효과_미도_중},{무장_장소,무장_장굉})
+		//GroupInfo("테스트",{효과_계략_기력_감소,효과_계략_크리티컬_항상성공,효과_인접_교란,효과_인접_위보,효과_인접_화계},{무장_장료,무장_진궁})
 	};
 	
 
@@ -140,14 +230,27 @@ namespace 인연효과
 	};
 
 	const int KEY = pk::hash("인연효과");
+	const int KEY_EXPORT = pk::hash("인연효과_Export");
 	
 	class Main
 	{
+		pk::func100_t@ prev_callback_100;
 		pk::func200_t@ prev_callback_200;
 		pk::func209_t@ prev_callback_209;
 		pk::func202_t@ prev_callback_202;
 		pk::func206_t@ prev_callback_206;
 		pk::func155_t@ prev_callback_155;
+		pk::func150_t@ prev_callback_150;
+		pk::func151_t@ prev_callback_151;
+		pk::func205_t@ prev_callback_205;
+		pk::func207_t@ prev_callback_207;
+		pk::func201_t@ prev_callback_201;
+		pk::func222_t@ prev_callback_222;
+		pk::func220_t@ prev_callback_220;
+		pk::func203_t@ prev_callback_203;
+		pk::func164_t@ prev_callback_164;
+		pk::func211_t@ prev_callback_211;
+
 
 
 		Main()
@@ -172,6 +275,49 @@ namespace 인연효과
 			pk::reset_func(155);
 			pk::set_func(155, pk::func155_t(callback155월별충성도));                // 202 전법 성공 확률
 
+			@prev_callback_150 = cast<pk::func150_t@>(pk::get_func(150));
+			pk::reset_func(150);
+			pk::set_func(150, pk::func150_t(callback150금수입));                // 150 금 수입
+
+			@prev_callback_151 = cast<pk::func151_t@>(pk::get_func(151));
+			pk::reset_func(151);
+			pk::set_func(151, pk::func151_t(callback151병량수입));                // 151 병량 수입
+
+			@prev_callback_100 = cast<pk::func100_t@>(pk::get_func(100));
+			pk::reset_func(100);
+			pk::set_func(100, pk::func100_t(callback100징병));                // 150 금 수입
+
+			@prev_callback_205 = cast<pk::func205_t@>(pk::get_func(205));
+			pk::reset_func(205);
+			pk::set_func(205, pk::func205_t(callback205계략소비기력));                
+
+			@prev_callback_207 = cast<pk::func207_t@>(pk::get_func(207));
+			pk::reset_func(207);
+			pk::set_func(207, pk::func207_t(callback207계략크리티컬));
+
+			@prev_callback_201 = cast<pk::func201_t@>(pk::get_func(201));
+			pk::reset_func(201);
+			pk::set_func(201, pk::func201_t(callback201공격크리티컬));
+
+			//@prev_callback_222 = cast<pk::func222_t@>(pk::get_func(222));
+			//pk::reset_func(222);
+			//pk::set_func(222, pk::func222_t(callback222질주혼란확률));
+
+			@prev_callback_220 = cast<pk::func220_t@>(pk::get_func(220));
+			pk::reset_func(220);
+			pk::set_func(220, pk::func220_t(callback220포박확률));
+
+			@prev_callback_203 = cast<pk::func203_t@>(pk::get_func(203));
+			pk::reset_func(203);
+			pk::set_func(203, pk::func203_t(callback203기병전법사망));
+
+			@prev_callback_164 = cast<pk::func164_t@>(pk::get_func(164));
+			pk::reset_func(164);
+			pk::set_func(164, pk::func164_t(callback164부대혼란효과));
+
+			@prev_callback_211 = cast<pk::func211_t@>(pk::get_func(211));
+			pk::reset_func(211);
+			pk::set_func(211, pk::func211_t(callback211));
 
 
 			
@@ -209,6 +355,8 @@ namespace 인연효과
 			}
 			if (!b)
 				onNewDay();
+
+			exportData();
 		}
 
 		void LoadData()
@@ -267,6 +415,28 @@ namespace 인연효과
 				}
 			}
 		}
+		void exportData()
+		{
+			pk::store(KEY_EXPORT, 0, 인연리스트.length);
+			int si = 1;
+			for (int i = 0; i < 인연리스트.length; i++)
+			{
+				GroupInfo@ gi = 인연리스트[i];
+				pk::store(KEY_EXPORT, si++, gi.b ? 1 : 0);
+				pk::store(KEY_EXPORT, si++, gi.force != null ? gi.force.get_id() : -1);
+				pk::store(KEY_EXPORT, si++, gi.idsApply.length);
+				for (int k = 0; k < gi.idsApply.length; k++)
+				{
+					pk::store(KEY_EXPORT, si++, gi.idsApply[k]);
+				}
+				pk::store(KEY_EXPORT, si++, gi.membersApply.count);
+				for (int k = 0; k < gi.membersApply.count; k++)
+				{
+					pk::store(KEY_EXPORT, si++, gi.membersApply[k].get_id());
+				}
+			}
+
+		}
 
 		bool Is인연효과Enabled()
 		{
@@ -282,6 +452,7 @@ namespace 인연효과
 		}
 		bool 인연효과Handler()
 		{
+			pk::force@ force = pk::get_force(pk::get_current_turn_force_id());
 			int si = 0;
 			GroupInfo@ selected = null;
 			while (true)
@@ -296,11 +467,13 @@ namespace 인연효과
 				for (int i = si; i < count; i++)
 				{
 					GroupInfo@ gi = 인연리스트[i];
-					string str = gi.name + ",";
-					str = str + (gi.force != null ? getNameForce(gi.force) : "없음");
+					string str2 = gi.b ? "\x1b[1x{}\x1b[0x" : "{}";
+					string str = pk::format(str2, gi.name) + ",";
+					str = str + (gi.force != null ? (getNameForce(gi.force) + "군") : "없음");
 					for (int k = 0; k < gi.members.count; k++)
 					{
-						if(gi.b)
+						bool b = gi.members[k].get_force_id() == force.id;
+						if(b)
 							str = str + ","+pk::format("\x1b[1x{}\x1b[0x", getName(gi.members[k]));
 						else
 							str = str + "," + pk::format("{}", getName(gi.members[k]));
@@ -356,7 +529,146 @@ namespace 인연효과
 			return pk::decode(pk::get_name(p));
 		}
 
+		int callback150금수입(pk::city@ city)
+		{
+			int gold = prev_callback_150(city);
+			pk::force@ force = pk::get_force(city.get_force_id());
+			if (force == null)
+				return gold;
 
+			float maxRatio = 1.0;
+			pk::list<pk::person@> persons = pk::get_person_list(pk::city_to_building(city),pk::mibun_flags(신분_군주,신분_태수,신분_도독,신분_일반));
+			for (int i = 0; i < persons.count; i++)
+			{
+				pk::person@ p = persons[i];
+				if (checkGroup(p, 효과_부호_소))
+					maxRatio = 효과_부호_소_값;
+				if (checkGroup(p, 효과_부호_중))
+					maxRatio = 효과_부호_중_값;
+				if (checkGroup(p, 효과_부호_대))
+					maxRatio = 효과_부호_대_값;
+			}
+			return maxRatio * gold;
+		}
+		int callback151병량수입(pk::city@ city)
+		{
+			int food = prev_callback_151(city);
+			pk::force@ force = pk::get_force(city.get_force_id());
+			if (force == null)
+				return food;
+
+			float maxRatio = 1.0;
+			pk::list<pk::person@> persons = pk::get_person_list(pk::city_to_building(city), pk::mibun_flags(신분_군주, 신분_태수, 신분_도독, 신분_일반));
+			for (int i = 0; i < persons.count; i++)
+			{
+				pk::person@ p = persons[i];
+				if (checkGroup(p, 효과_미도_소))
+					maxRatio = 효과_미도_소_값;
+				if (checkGroup(p, 효과_미도_중))
+					maxRatio = 효과_미도_중_값;
+				if (checkGroup(p, 효과_미도_대))
+					maxRatio = 효과_미도_대_값;
+			}
+			return maxRatio * food;
+
+		}
+		int callback100징병(pk::building@ building, const pk::detail::arrayptr<pk::person@>& in actors)
+		{
+			int amount = prev_callback_100(building, actors);
+			pk::force@ force = pk::get_force(building.get_force_id());
+			if (force == null)
+				return amount;
+
+			
+			float maxRatio = 1.0;
+			for (int i = 0; i < actors.length; i++)
+			{
+				pk::person@ p = actors[i];
+				if (checkGroup(p, 효과_명성_소))
+					maxRatio = 효과_명성_소_값;
+				if (checkGroup(p, 효과_명성_중))
+					maxRatio = 효과_명성_중_값;
+				if (checkGroup(p, 효과_명성_대))
+					maxRatio = 효과_명성_대_값;
+			}
+			return maxRatio * amount;
+		}
+
+		int callback205계략소비기력(pk::unit@ src, int strategy_id)
+		{
+			int n = prev_callback_205(src, strategy_id);
+			if (checkGroup(src, 효과_계략_기력_감소))
+				n = n * 효과_계략_기력_감소_값;
+			return n;
+		}
+		int callback207계략크리티컬(pk::unit@ src, const pk::point& in src_pos, const pk::point& in dst_pos, int strategy_id)
+		{
+			int n = prev_callback_207(src, src_pos, dst_pos, strategy_id);
+			if (checkGroup(src, 효과_계략_크리티컬_항상성공))
+				n = 100;
+			return n;
+		}
+		bool callback201공격크리티컬(pk::unit@ attacker, pk::hex_object@ target, int tactics_id, bool ranged)
+		{
+			bool b=prev_callback_201(attacker,target,tactics_id,ranged);
+			if (checkGroup(attacker, 효과_공격_크리티컬_항상성공))
+				b = true;
+			return b;
+		}
+		int callback222질주혼란확률(pk::unit@ attacker, pk::unit@ target)
+		{
+			int n = prev_callback_222(attacker, target);
+			if (n > 0)
+				return n;
+
+			//if (checkGroup(attacker, 효과_질주_대) && pk::rand_bool(효과_질주_대_값))
+			//	return 2;
+			//if (checkGroup(attacker, 효과_질주_중) && pk::rand_bool(효과_질주_중_값))
+			//	return 2;
+			//if (checkGroup(attacker, 효과_질주_소) && pk::rand_bool(효과_질주_소_값))
+			//	return 2;
+
+			return 0;
+		}
+
+		void callback220포박확률(const pk::destroy_info& in info, pk::list<pk::person@>& captured, pk::list<pk::person@>& escaped, bool tactics_bonus)
+		{
+			prev_callback_220(info, captured, escaped, tactics_bonus);
+			if (captured.count == 0)
+				return;
+			if (!info.releasable)
+				return;
+
+
+			int index = -1;
+			for (int i = 0; i < captured.count; i++)
+			{
+				pk::person@ p = captured[i];
+				if (!checkGroup(p, 효과_포박_불가))
+					continue;
+
+				index = i;
+				break;
+			}
+			if (index != -1)
+				captured.remove_at(index);
+		}
+		int callback203기병전법사망(pk::person@ attacker, pk::person@ target, int tactics_id, bool critical)
+		{
+			int n = prev_callback_203(attacker, target, tactics_id, critical);
+			if (checkGroup(target, 효과_기병_전법_사망_불가))
+				n = 0;
+			return n;
+		}
+		int callback164부대혼란효과(pk::unit@ unit)
+		{
+			int n = prev_callback_164(unit);
+			if (checkGroup(unit, 효과_소병력_혼란_불가))
+			{
+				n = 0;
+			}
+			return n;
+		}
 		int callback155월별충성도(pk::building@ building, pk::person@ person)
 		{
 			int n = prev_callback_155(building, person);
@@ -371,8 +683,6 @@ namespace 인연효과
 
 			return n;
 		}
-
-
 		int callback200지원공격확률(pk::unit@ assister, pk::unit@ attacker, pk::unit@ target)
 		{
 			int n = prev_callback_200(assister,attacker,target);
@@ -425,7 +735,6 @@ namespace 인연효과
 			return re;
 
 		}
-
 		int callback202전법성공확률(pk::unit@ attacker, const pk::point& in pos, pk::hex_object@ target, int tactics_id)
 		{
 			int n = prev_callback_202(attacker, pos, target, tactics_id);
@@ -472,6 +781,24 @@ namespace 인연효과
 
 		}
 
+		void callback211(pk::damage_info& info, pk::building@ attacker, pk::hex_object@ target)
+		{
+			prev_callback_211(info, attacker, target);
+			pk::unit@ u = pk::is_valid_pos(target.get_pos()) ? pk::get_unit(target.get_pos()) : null;
+			if (u != null)
+			{
+				if (checkGroup(u, 효과_방어상승_대))
+					info.troops_damage = info.troops_damage - info.troops_damage * 효과_방어상승_대_값 / 100.0;
+				else if (checkGroup(u, 효과_방어상승_중))
+					info.troops_damage = info.troops_damage - info.troops_damage * 효과_방어상승_중_값 / 100.0;
+				else if (checkGroup(u, 효과_방어상승_소))
+					info.troops_damage = info.troops_damage - info.troops_damage * 효과_방어상승_소_값 / 100.0;
+			}
+		}
+
+
+
+
 		void 부대행동완료(pk::unit@ unit)
 		{
 			if (unit == null)
@@ -504,12 +831,63 @@ namespace 인연효과
 
 				}
 			}
+			if (checkGroup(unit, 효과_인접_교란) && pk::rand_bool(효과_인접_교란_값))
+			{
+				for (int i = 0; i < 방향_끝; i++)
+				{
+					pk::point pt = pk::get_neighbor_pos(unit.get_pos(), i, 1);
+					pk::unit@ u = pk::get_unit(pt);
+					if (u == null || !pk::is_enemy(unit, u))
+						continue;
+					if(u.status != 부대상태_통상)
+						continue;
+
+					pk::set_status(u, unit,부대상태_혼란,pk::rand(3)+1);
+					break;
+				}
+			}
+			if (checkGroup(unit, 효과_인접_위보) && pk::rand_bool(효과_인접_위보_값))
+			{
+				for (int i = 0; i < 방향_끝; i++)
+				{
+					pk::point pt = pk::get_neighbor_pos(unit.get_pos(), i, 1);
+					pk::unit@ u = pk::get_unit(pt);
+					if (u == null || !pk::is_enemy(unit, u))
+						continue;
+					if (u.status != 부대상태_통상)
+						continue;
+
+					pk::set_status(u, unit, 부대상태_위보, pk::rand(3) + 1);
+					break;
+				}
+			}
+			if (checkGroup(unit, 효과_인접_화계))
+			{
+				for (int i = 0; i < 방향_끝; i++)
+				{
+					pk::point pt = pk::get_neighbor_pos(unit.get_pos(), i, 1);
+					pk::unit@ u = pk::get_unit(pt);
+					if (u == null || !pk::is_enemy(unit, u))
+						continue;
+					if(!pk::rand_bool(효과_인접_화계_값))
+						continue;
+					if(pk::is_on_fire(pt))
+						continue;
+					pk::create_fire(pt, pk::rand(3) + 1, unit);
+				}
+			}
+
 		}
 
 		bool checkGroup(pk::unit@ u, int id)
 		{
 			return getGroup(u, id) != null;
 		}
+		bool checkGroup(pk::person@ p, int id)
+		{
+			return getGroup(p, id) != null;
+		}
+
 
 		GroupInfo@ getGroup(pk::unit@ u, int id)
 		{
@@ -545,6 +923,16 @@ namespace 인연효과
 						return gi;
 				}
 
+			}
+			return null;
+		}
+		GroupInfo@ getGroup(string name)
+		{
+			for (int i = 0; i < 인연리스트.length; i++)
+			{
+				GroupInfo@ gi = 인연리스트[i];
+				if (gi.name == name)
+					return gi;
 			}
 			return null;
 		}
@@ -622,15 +1010,27 @@ namespace 인연효과
 				pk::person@ p = persons[i];
 				for (int k = 0; k < 무장능력_끝; k++)
 				{
-					//p.stat[k] = p.stat[k] + value;
-					p.stat_exp[k] = p.stat_exp[k] + value * int(pk::core["무장.능력상승필요경험치"]);
-					//pk::add_stat_exp(p, k, value * int(pk::core["무장.능력상승필요경험치"]));
-					//pk::add_base_stat(p, k, value);
-					
+					int a = p.stat_exp[k] + value * int(pk::core["무장.능력상승필요경험치"]);
+					if (a < 0)
+						a = 0;
+					p.stat_exp[k] = a;
 				}
 				p.update();
 			}
 		}
+		void apply무장능력(pk::list<pk::person@> persons, int type,int value)
+		{
+			for (int i = 0; i < persons.count; i++)
+			{
+				pk::person@ p = persons[i];
+				int a = p.stat_exp[type] + value * int(pk::core["무장.능력상승필요경험치"]);
+				if (a < 0)
+					a = 0;
+				p.stat_exp[type] = a;
+				p.update();
+			}
+		}
+
 		void apply공적(pk::list<pk::person@> persons, int value)
 		{
 			for (int i = 0; i < persons.count; i++)
@@ -688,7 +1088,21 @@ namespace 인연효과
 						case 효과_공적상승_중:apply공적(gi.membersApply, -효과_공적상승_중_값); break;
 						case 효과_공적상승_대:apply공적(gi.membersApply, -효과_공적상승_대_값); break;
 						case 효과_전적성상승:apply적성(gi.membersApply, -1); break;
-
+						case 효과_통솔_상승_소:apply무장능력(gi.membersApply, 무장능력_통솔, -효과_통솔_상승_소_값); break;
+						case 효과_통솔_상승_중:apply무장능력(gi.membersApply, 무장능력_통솔, -효과_통솔_상승_중_값); break;
+						case 효과_통솔_상승_대:apply무장능력(gi.membersApply, 무장능력_통솔, -효과_통솔_상승_대_값); break;
+						case 효과_무력_상승_소:apply무장능력(gi.membersApply, 무장능력_무력, -효과_무력_상승_소_값); break;
+						case 효과_무력_상승_중:apply무장능력(gi.membersApply, 무장능력_무력, -효과_무력_상승_중_값); break;
+						case 효과_무력_상승_대:apply무장능력(gi.membersApply, 무장능력_무력, -효과_무력_상승_대_값); break;
+						case 효과_지력_상승_소:apply무장능력(gi.membersApply, 무장능력_지력, -효과_지력_상승_소_값); break;
+						case 효과_지력_상승_중:apply무장능력(gi.membersApply, 무장능력_지력, -효과_지력_상승_중_값); break;
+						case 효과_지력_상승_대:apply무장능력(gi.membersApply, 무장능력_지력, -효과_지력_상승_대_값); break;
+						case 효과_정치_상승_소:apply무장능력(gi.membersApply, 무장능력_정치, -효과_정치_상승_소_값); break;
+						case 효과_정치_상승_중:apply무장능력(gi.membersApply, 무장능력_정치, -효과_정치_상승_중_값); break;
+						case 효과_정치_상승_대:apply무장능력(gi.membersApply, 무장능력_정치, -효과_정치_상승_대_값); break;
+						case 효과_매력_상승_소:apply무장능력(gi.membersApply, 무장능력_매력, -효과_매력_상승_소_값); break;
+						case 효과_매력_상승_중:apply무장능력(gi.membersApply, 무장능력_매력, -효과_매력_상승_중_값); break;
+						case 효과_매력_상승_대:apply무장능력(gi.membersApply, 무장능력_매력, -효과_매력_상승_대_값); break;
 						default:
 							break;
 						}
@@ -716,7 +1130,21 @@ namespace 인연효과
 						case 효과_공적상승_중:apply공적(gi.members, 효과_공적상승_중_값); break;
 						case 효과_공적상승_대:apply공적(gi.members, 효과_공적상승_대_값); break;
 						case 효과_전적성상승:apply적성(gi.members, 1); break;
-
+						case 효과_통솔_상승_소:apply무장능력(gi.members, 무장능력_통솔, 효과_통솔_상승_소_값); break;
+						case 효과_통솔_상승_중:apply무장능력(gi.members, 무장능력_통솔, 효과_통솔_상승_중_값); break;
+						case 효과_통솔_상승_대:apply무장능력(gi.members, 무장능력_통솔, 효과_통솔_상승_대_값); break;
+						case 효과_무력_상승_소:apply무장능력(gi.members, 무장능력_무력, 효과_무력_상승_소_값); break;
+						case 효과_무력_상승_중:apply무장능력(gi.members, 무장능력_무력, 효과_무력_상승_중_값); break;
+						case 효과_무력_상승_대:apply무장능력(gi.members, 무장능력_무력, 효과_무력_상승_대_값); break;
+						case 효과_지력_상승_소:apply무장능력(gi.members, 무장능력_지력, 효과_지력_상승_소_값); break;
+						case 효과_지력_상승_중:apply무장능력(gi.members, 무장능력_지력, 효과_지력_상승_중_값); break;
+						case 효과_지력_상승_대:apply무장능력(gi.members, 무장능력_지력, 효과_지력_상승_대_값); break;
+						case 효과_정치_상승_소:apply무장능력(gi.members, 무장능력_정치, 효과_정치_상승_소_값); break;
+						case 효과_정치_상승_중:apply무장능력(gi.members, 무장능력_정치, 효과_정치_상승_중_값); break;
+						case 효과_정치_상승_대:apply무장능력(gi.members, 무장능력_정치, 효과_정치_상승_대_값); break;
+						case 효과_매력_상승_소:apply무장능력(gi.members, 무장능력_매력, 효과_매력_상승_소_값); break;
+						case 효과_매력_상승_중:apply무장능력(gi.members, 무장능력_매력, 효과_매력_상승_중_값); break;
+						case 효과_매력_상승_대:apply무장능력(gi.members, 무장능력_매력, 효과_매력_상승_대_값); break;
 						default:
 							break;
 						}
@@ -736,6 +1164,8 @@ namespace 인연효과
 				gi.b = force != null;
 
 			}
+
+			exportData();
 		}
 		void onTurnStart(pk::force@ force)
 		{
@@ -749,7 +1179,7 @@ namespace 인연효과
 				array<pk::unit@> units;
 				for (int k = 0; k < gi.members.count; k++)
 				{
-					pk::person@ p = gi.members[i];
+					pk::person@ p = gi.members[k];
 					pk::unit@ u = pk::get_unit(p.get_pos());
 					if(u==null)
 						continue;

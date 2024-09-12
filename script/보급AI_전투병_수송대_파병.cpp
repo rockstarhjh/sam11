@@ -20,7 +20,7 @@ namespace 전투병_수송대_파병
 
     const bool  위임군단_수송관할_지정여부  = true;    //플레이어 위임군단이 수송을 보낼 수 있는 군단 구분해줄 것인지 여부, false면 모든 군단 상대로 수송대 보냄
 
-    const bool 대사표시_설정 = false;  
+    const bool 대사표시_설정 = true;  
     
     //---------------------------------------------------------------------------------------
 
@@ -1520,13 +1520,20 @@ return true;
 
 		bool Push4thtroops(pk::building@ base)
 		{
+			/** 내가 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
+			if ( int(pk::get_gold(base)) < 10000) return false;
+			if ( int(pk::get_food(base)) < 30000) return false; 
+			if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
+			int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.15f) );
+			if ( reinforce_troops  < 5000) return false;
 			// 수송할 인접 거접이 있는지 확인.
 			int target = getBackup4thBase(base);
 			if (target == -1) return false;
 
             pk::building@ src = pk::get_building(target);			
 
-            int reinforce_troops = pk::min(5000, int (pk::get_troops(src) * 0.15f));
+            /** int reinforce_troops = pk::min(5000, int (pk::get_troops(src) * 0.15f)); */
+			
 			// 명령 가능한 무장이 있는지 확인.
 			auto person_list = pk::get_idle_person_list(src);
 			if (person_list.count == 0) return false;

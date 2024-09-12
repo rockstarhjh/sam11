@@ -18,7 +18,7 @@ namespace 병기반송
 
     const bool  위임군단_수송관할_지정여부  = true;    //플레이어 위임군단이 수송을 보낼 수 있는 군단 구분해줄 것인지 여부, false면 모든 군단 상대로 수송대 보냄
 
-    const bool 대사표시_설정 = false;   
+    const bool 대사표시_설정 = true;   
     
     //---------------------------------------------------------------------------------------
 
@@ -204,11 +204,14 @@ and pk::get_troops(src) >= 5000 and 건물_파양항 != src_id and 건물_노릉
 			for (int weapon_id = 0; weapon_id < 병기_끝; weapon_id++)
 			{
                 int weapon_amount = 0;
-                if (weapon_id < 병기_충차)
-                    weapon_amount = pk::min(int(pk::get_weapon_amount(base, weapon_id) * 0.25f), 15000);
-                else
-                    weapon_amount = pk::min(int(pk::get_weapon_amount(base, weapon_id)), 2);
-                
+				if (weapon_id < 병기_충차)
+					weapon_amount = pk::max(int(pk::get_weapon_amount(base, weapon_id) * 0.35f), 5000);
+					if(weapon_amount < 5500) return false;
+						
+				else
+					weapon_amount = pk::max(int(pk::get_weapon_amount(base, weapon_id)), 3);
+					if(weapon_amount < 3) return false;
+						
 				if (weapon_amount > 0)
 				{
 					cmd.weapon_id[i] = weapon_id;
@@ -216,6 +219,10 @@ and pk::get_troops(src) >= 5000 and 건물_파양항 != src_id and 건물_노릉
 					i++;
 				}
 			}
+
+				
+				
+			
 			cmd.order = 부대임무_공격;
 			cmd.target_pos = pk::get_building(target).get_pos();
 

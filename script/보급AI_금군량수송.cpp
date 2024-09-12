@@ -18,7 +18,7 @@ namespace 금군량수송
 
     const bool  위임군단_수송관할_지정여부  = true;    //플레이어 위임군단이 수송을 보낼 수 있는 군단 구분해줄 것인지 여부, false면 모든 군단 상대로 수송대 보냄
 
-    const bool 대사표시_설정 = false;  
+    const bool 대사표시_설정 = true;  
     
     //---------------------------------------------------------------------------------------
 
@@ -183,10 +183,8 @@ if (건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 an
 		/** 군량 병력 2배분 남기고 보급 명령 (나머지 5%)  */
 
 		bool PushGEXfood(pk::building@ base)
-		{	/** 내가 수정함 - 너무 잦은 수송에 의해 병력의 10%가 3000 미만이면 실행안함  */
-			/** if ( pk::get_troops(base) * 0.10f < 3000) return false;  */
+		{
             int reinforce_troops = pk::min(1000,  int (pk::get_troops(base) * 0.15f) );
-
 			// 명령 가능한 무장이 있는지 확인.
 			auto person_list = pk::get_idle_person_list(base);
 			if (person_list.count == 0) return false;
@@ -503,16 +501,16 @@ if (건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 an
 
                         int enemy_weight = countNeighborEnemyBase(base);
             pk::city@ city_a = pk::get_city(pk::get_city_id(base.pos));
-			/** 내가 수정함 - 너무 잦은 수송에 의해 병력의 10%가 3000 미만이면 실행안함  */
-			if (int (pk::get_troops(base)) * 0.10f < 3000 ) return false;
+
 	//  금 5천 이상 있고 , 적 침공에서 안전한 병력 2천 이상 관문, 항구에서 보급 보내라
-if ( 5000 <= pk::get_gold(base) and pk::get_troops(base) * 0.1f <= pk::get_gold(base) and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and 10000 <= pk::get_troops(base)  )
+
+if ( 5000 <= pk::get_gold(base) and pk::get_troops(base) * 0.1f <= pk::get_gold(base) and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and 2000 <= pk::get_troops(base)  )
 				return true;
 
 
 
 	// 금 1만 5천 이상 있고, 적 침공에서 안전한 병력 4천 이상 도시에서 보급 보내라
-if ( 15000 <= pk::get_gold(base) and pk::get_troops(base) * 0.1f <= pk::get_gold(base) and 건물_도시시작 <= base.get_id() and base.get_id() < 건물_도시끝 and 20000 <= pk::get_troops(base) and 91 <= city_a.public_order )
+if ( 15000 <= pk::get_gold(base) and pk::get_troops(base) * 0.1f <= pk::get_gold(base) and 건물_도시시작 <= base.get_id() and base.get_id() < 건물_도시끝 and 4000 <= pk::get_troops(base) and 91 <= city_a.public_order )
 				return true;
 
             
@@ -529,11 +527,12 @@ if ( 15000 <= pk::get_gold(base) and pk::get_troops(base) * 0.1f <= pk::get_gold
 
 		bool PushPeacetimegold(pk::building@ base)
 		{
-			/** 내가 수정함 - 너무 잦은 수송에 의해 병력의 10%가 3000 미만이면 실행안함  */
-			/** 내가 수정함 - 너무 잦은 수송에 의해 총 병력이 2만 미만이면 실행안함  */
+			/** 내가 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
+			if ( int(pk::get_gold(base)) < 10000) return false;
+			if ( int(pk::get_food(base)) < 30000) return false; 
 			if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
-			if ( int (pk::get_food(base))  < 20000) return false;
-            int reinforce_troops = pk::min(3000,  int (pk::get_troops(base) * 0.10f) );
+            int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
+			if ( reinforce_troops  < 3000) return false;
 			// 명령 가능한 무장이 있는지 확인.
 			auto person_list = pk::get_idle_person_list(base);
 			if (person_list.count == 0) return false;
@@ -566,10 +565,7 @@ if ( 15000 <= pk::get_gold(base) and pk::get_troops(base) * 0.1f <= pk::get_gold
             }
 
        if (actors.count == 0 ) return false;
-			/** 여기도 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
-			if ( int(pk::get_gold(base)) < 10000) return false;
-			if ( int(pk::get_food(base)) < 30000) return false; 
-			if ( reinforce_troops  < 3000) return false;
+
 			// 무력 통솔 낮은 순으로 정렬.
 			actors.sort(function(a, b)
 			{
@@ -590,7 +586,7 @@ if ( 15000 <= pk::get_gold(base) and pk::get_troops(base) * 0.1f <= pk::get_gold
 
             int unit_food = int(pk::min( 0.3f * pk::get_food(base), 2.0f * reinforce_troops));
             if (unit_food < int(1.0f * reinforce_troops)) return false;   // 병량 부족            
-			
+
             float supply_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
             float weapon_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
             
@@ -599,16 +595,12 @@ if ( 15000 <= pk::get_gold(base) and pk::get_troops(base) * 0.1f <= pk::get_gold
 			@cmd.base = @base;
 			cmd.type = 부대종류_수송;
 			cmd.member[0] = leader.get_id();
-			
-
-			/** 여기도 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
-			cmd.gold = pk::min(int(pk::get_gold(base) * 0.2f), 10000);
-			cmd.food = pk::min(pk::max (5000 , unit_food), 25000);
+			cmd.gold = pk::min(int(pk::get_gold(base) * 0.20f), 10000);
+			cmd.food = pk::min(pk::max (3000 , unit_food), 25000);
 			cmd.troops = reinforce_troops;
-			/** 여기도 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
-			if ( cmd.gold  < 5000) return false;
-			if ( cmd.food  < 10000) return false;
-			if ( cmd.troops < 3000) return false;
+			/** 내가 수정 */
+			if (cmd.gold < 1000) return false;
+			if (cmd.food < 5000) return false;
 			int i = 0;
 			for (int weapon_id = 0; weapon_id < 병기_끝; weapon_id++)
 			{
@@ -819,17 +811,16 @@ else if (건물_관문시작 <= dst_id and dst_id < 건물_항구끝 and ( pk::g
 
                         int enemy_weight = countNeighborEnemyBase(base);
             pk::city@ city_a = pk::get_city(pk::get_city_id(base.pos));
-			/** 내가 수정함 - 너무 잦은 수송에 의해 병력의 10%가 3000 미만이면 실행안함  */
-			if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
+
 
 	//  병량 1만 이상에 병력 대비 3.5배 이상 있고, 적 침공에서 안전한 병력 2천 이상 관문, 항구에서 보급 보내라
 
-if ( 10000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) * 3.5f and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and 5000 <= pk::get_troops(base) )
+if ( 10000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) * 3.5f and 건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and 2000 <= pk::get_troops(base) )
 				return true;
 
 
 	// 병량 7만 이상에 병력 대비 3.5배 이상 있고, 적 침공에서 안전한 병력 4천 이상 도시에서 보급 보내라
-if ( 70000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) * 3.5f and 건물_도시시작 <= base.get_id() and base.get_id() < 건물_도시끝 and 10000 <= pk::get_troops(base) and 91 <= city_a.public_order )
+if ( 70000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) * 3.5f and 건물_도시시작 <= base.get_id() and base.get_id() < 건물_도시끝 and 4000 <= pk::get_troops(base) and 91 <= city_a.public_order )
 				return true;
 
             
@@ -846,10 +837,12 @@ if ( 70000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) 
 
 		bool PushPeacetimefood(pk::building@ base)
 		{
-			/** 내가 수정함 - 너무 잦은 수송에 의해 병력의 10%가 3000 미만이면 실행안함  */
+			/** 내가 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
+			if ( int(pk::get_gold(base)) < 10000) return false;
+			if ( int(pk::get_food(base)) < 30000) return false; 
 			if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
-            int reinforce_troops = pk::min(3000,  int(int (pk::get_troops(base)) * 0.10f));
-
+            int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
+			if ( reinforce_troops  < 3000) return false;
 			// 명령 가능한 무장이 있는지 확인.
 			auto person_list = pk::get_idle_person_list(base);
 			if (person_list.count == 0) return false;
@@ -906,10 +899,6 @@ if ( 70000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) 
                 if (건물_관문시작 <= base.get_id() and base.get_id() < 건물_항구끝 and 건물_도시시작 <= target and target < 건물_도시끝)	
                    unit_food = pk::get_food(base) - (pk::get_troops(base) * 2.5f);				
             if (unit_food < int(1.0f * reinforce_troops)) return false;   // 병량 부족     
-			/** 여기도 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
-			if ( int(pk::get_gold(base)) < 10000) return false;
-			if ( unit_food  < 30000) return false;
-			if ( reinforce_troops  < 3000) return false;
 
             float supply_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
             float weapon_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
@@ -919,15 +908,12 @@ if ( 70000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) 
 			@cmd.base = @base;
 			cmd.type = 부대종류_수송;
 			cmd.member[0] = leader.get_id();
-			
-			/** 여기도 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
-			cmd.gold = pk::min(int(pk::get_gold(base) * 0.2f), 10000);
+			cmd.gold = pk::min(int(pk::get_gold(base) * 0.05f), 10000);
 			cmd.food = pk::min(pk::max (int(pk::get_food(base) * 0.20f) , unit_food), 60000);
 			cmd.troops = reinforce_troops;
-			/** 여기도 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
-			/** if ( cmd.gold  < 5000) return false;  */
-			if ( cmd.food  < 10000) return false;
-			if ( cmd.troops < 3000) return false;
+			/** 내가 수정 */
+			if (cmd.gold < 1000) return false;
+			if (cmd.food < 5000) return false;
 			int i = 0;
 			for (int weapon_id = 0; weapon_id < 병기_끝; weapon_id++)
 			{
@@ -1170,10 +1156,10 @@ if ( 70000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) 
 
 		bool PushXERgold(pk::building@ base)
 		{
-			/** 내가 수정함 - 너무 잦은 수송에 의해 병력의 10%가 3000 미만이면 실행안함  */
-			if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
-            int reinforce_troops = pk::min(3000,  int (pk::get_troops(base) * 0.10f) );
-
+			/** 내가 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
+			if ( int(pk::get_gold(base)) < 10000) return false;
+			if ( int(pk::get_food(base)) < 30000) return false; 
+			int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
 			// 명령 가능한 무장이 있는지 확인.
 			auto person_list = pk::get_idle_person_list(base);
 			if (person_list.count == 0) return false;
@@ -1226,9 +1212,6 @@ if ( 70000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) 
             }
             int unit_food = int(pk::min( 0.3f * pk::get_food(base), 2.0f * reinforce_troops));
             if (unit_food < int(1.0f * reinforce_troops)) return false;   // 병량 부족            
-			/** 여기도 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
-			if ( int(pk::get_gold(base)) < 5000) return false;
-			if ( unit_food  < 10000) return false;
 
             float supply_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
             float weapon_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
@@ -1238,15 +1221,9 @@ if ( 70000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) 
 			@cmd.base = @base;
 			cmd.type = 부대종류_수송;
 			cmd.member[0] = leader.get_id();
-			
-			
 			cmd.gold = pk::min(int(pk::get_gold(base) * 0.20f), 3000);
-			cmd.food = pk::min(pk::max (5000 , unit_food), 25000);
+			cmd.food = pk::min(pk::max (1000 , unit_food), 25000);
 			cmd.troops = reinforce_troops;
-			/** 여기도 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
-			if ( cmd.gold  < 3500) return false;
-			if ( cmd.food  < 11000) return false;
-			if ( cmd.troops < 3000) return false;
 			int i = 0;
 			for (int weapon_id = 0; weapon_id < 병기_끝; weapon_id++)
 			{
@@ -1546,7 +1523,13 @@ else if (건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and (pk::ge
 
 		bool PushXERgold1(pk::building@ base)
 		{
-            int reinforce_troops = pk::min(1000,  int (pk::get_troops(base) * 0.15f) );
+			/** 내가 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
+			if ( int(pk::get_gold(base)) < 10000) return false;
+			if ( int(pk::get_food(base)) < 30000) return false; 
+			if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
+            int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
+			if ( reinforce_troops  < 3000) return false;
+
 			// 명령 가능한 무장이 있는지 확인.
 			auto person_list = pk::get_idle_person_list(base);
 			if (person_list.count == 0) return false;
@@ -1599,9 +1582,6 @@ else if (건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and (pk::ge
             }
             int unit_food = int(pk::min( 0.3f * pk::get_food(base), 2.0f * reinforce_troops));
             if (unit_food < int(1.0f * reinforce_troops)) return false;   // 병량 부족            
-			/** 여기도 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
-			if ( int(pk::get_gold(base)) < 10000) return false;
-			if ( unit_food  < 10000) return false;
 
             float supply_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
             float weapon_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
@@ -1611,15 +1591,9 @@ else if (건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and (pk::ge
 			@cmd.base = @base;
 			cmd.type = 부대종류_수송;
 			cmd.member[0] = leader.get_id();
-			
-
 			cmd.gold = pk::min(int(pk::get_gold(base) * 0.20f), 3000);
 			cmd.food = pk::min(pk::max (1000 , unit_food), 25000);
 			cmd.troops = reinforce_troops;
-			/** 여기도 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
-			if ( cmd.gold  < 5000) return false;
-			if ( cmd.food  < 10000) return false;
-			if ( cmd.troops < 3000) return false;
 			int i = 0;
 			for (int weapon_id = 0; weapon_id < 병기_끝; weapon_id++)
 			{
@@ -1938,7 +1912,12 @@ if ( 5000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) *
 
 		bool PushXERfood(pk::building@ base)
 		{
-            int reinforce_troops = pk::min(1000,  int (pk::get_troops(base) * 0.15f) );
+			/** 내가 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
+			if ( int(pk::get_gold(base)) < 10000) return false;
+			if ( int(pk::get_food(base)) < 30000) return false; 
+			if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
+            int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
+			if ( reinforce_troops  < 3000) return false;
 			// 명령 가능한 무장이 있는지 확인.
 			auto person_list = pk::get_idle_person_list(base);
 			if (person_list.count == 0) return false;
@@ -1992,9 +1971,7 @@ if ( 5000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) *
             
             int unit_food = int(pk::min( 0.3f * pk::get_food(base), 5.0f * reinforce_troops));
             if (unit_food < int(1.0f * reinforce_troops)) return false;   // 병량 부족      
-			/** 여기도 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
-			if ( int(pk::get_gold(base)) < 5000) return false;
-			if ( unit_food  < 10000) return false;
+
 
             float supply_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
             float weapon_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
@@ -2004,13 +1981,9 @@ if ( 5000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) *
 			@cmd.base = @base;
 			cmd.type = 부대종류_수송;
 			cmd.member[0] = leader.get_id();
-			
 			cmd.gold = pk::min(int(pk::get_gold(base) * 0.01f), 10000);
 			cmd.food = pk::min(pk::max (int(pk::get_food(base) * 0.20f) , unit_food), 60000);
 			cmd.troops = reinforce_troops;
-			/** 여기도 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
-			if ( cmd.troops < 3000) return false;
-
 			int i = 0;
 			for (int weapon_id = 0; weapon_id < 병기_끝; weapon_id++)
 			{
@@ -2305,7 +2278,14 @@ if ( 10000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) 
 
 		bool PushXERfood1(pk::building@ base)
 		{
-            int reinforce_troops = pk::min(1000,  int (pk::get_troops(base) * 0.15f) );
+            /** 내가 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
+			if ( int(pk::get_gold(base)) < 10000) return false;
+			if ( int(pk::get_food(base)) < 30000) return false; 
+			if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
+            int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
+			if ( reinforce_troops  < 3000) return false;
+
+            /**int reinforce_troops = pk::min(1000,  int (pk::get_troops(base) * 0.15f) );  */
 			// 명령 가능한 무장이 있는지 확인.
 			auto person_list = pk::get_idle_person_list(base);
 			if (person_list.count == 0) return false;
@@ -2359,9 +2339,7 @@ if ( 10000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) 
             
             int unit_food = int(pk::min( 0.3f * pk::get_food(base), 5.0f * reinforce_troops));
             if (unit_food < int(1.0f * reinforce_troops)) return false;   // 병량 부족      
-			/** 여기도 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
-			if ( int(pk::get_gold(base)) < 6000) return false;
-			if ( unit_food  < 15000) return false;
+
 
             float supply_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
             float weapon_rate = pk::min(1.0f, pk::max(0.0f, 0.9f));
@@ -2371,14 +2349,9 @@ if ( 10000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) 
 			@cmd.base = @base;
 			cmd.type = 부대종류_수송;
 			cmd.member[0] = leader.get_id();
-			
-
 			cmd.gold = pk::min(int(pk::get_gold(base) * 0.01f), 10000);
 			cmd.food = pk::min(pk::max (int(pk::get_food(base) * 0.20f) , unit_food), 60000);
 			cmd.troops = reinforce_troops;
-			/** 여기도 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
-			if ( cmd.troops < 3000) return false;
-
 			int i = 0;
 			for (int weapon_id = 0; weapon_id < 병기_끝; weapon_id++)
 			{

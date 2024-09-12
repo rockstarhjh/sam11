@@ -1,22 +1,22 @@
 /*
-// Á¦ÀÛÀÚ: »ïµµÄ«Æä ±â¸¶Ã¥»ç
-// Update: '20.10.21   / ÃÖÃÊÀû¿ë: °ÅÁ¡ AI ¸í·É¼³Á¤, [255 °ÅÁ¡ AI Çàµ¿ ¼ø¼­.cpp] ¿¡ ÀÇÇÑ ¸í·É ½ÇÇà ½Ã ½ºÅ©¸³Æ® µ¿ÀÛ
+// ì œìž‘ìž: ì‚¼ë„ì¹´íŽ˜ ê¸°ë§ˆì±…ì‚¬
+// Update: '20.10.21   / ìµœì´ˆì ìš©: ê±°ì  AI ëª…ë ¹ì„¤ì •, [255 ê±°ì  AI í–‰ë™ ìˆœì„œ.cpp] ì— ì˜í•œ ëª…ë ¹ ì‹¤í–‰ ì‹œ ìŠ¤í¬ë¦½íŠ¸ ë™ìž‘
 */
 
-namespace °ÅÁ¡AI_¸í·É¼³Á¤
+namespace ê±°ì AI_ëª…ë ¹ì„¤ì •
 {
     //---------------------------------------------------------------------------------------
-    // À¯Àú ¼³Á¤ (true = on, false = off)
-    const bool ÇÃ·¹ÀÌ¾î_À§ÀÓ±º´Ü_¹«ÀåÀÌµ¿_ÀÎÀç¼³Á¤¿¬µ¿ = true;   // À§ÀÓ±º´Ü ¼³Á¤ ¸Þ´ºÀÇ ÀÎÀç Çã°¡/±ÝÁö¿¡ µû¶ó ÀÌµ¿/¼ÒÈ¯ ¸í·É ¿¬µ¿ÇÏ±â
-    const bool ÇÃ·¹ÀÌ¾î_À§ÀÓ±º´Ü_¹«ÀåÀÌµ¿_Ç×»ó±ÝÁö¼³Á¤ = true;   // ÀÎÀç¼³Á¤¿¬µ¿=false ÀÏ °æ¿ì¿¡¸¸ µ¿ÀÛ, À§ÀÓ±º´ÜÀÇ ÀÌµ¿/¼ÒÈ¯ ¸í·É »ç¿ë±ÝÁö ¼³Á¤
+    // ìœ ì € ì„¤ì • (true = on, false = off)
+    const bool í”Œë ˆì´ì–´_ìœ„ìž„êµ°ë‹¨_ë¬´ìž¥ì´ë™_ì¸ìž¬ì„¤ì •ì—°ë™ = true;   // ìœ„ìž„êµ°ë‹¨ ì„¤ì • ë©”ë‰´ì˜ ì¸ìž¬ í—ˆê°€/ê¸ˆì§€ì— ë”°ë¼ ì´ë™/ì†Œí™˜ ëª…ë ¹ ì—°ë™í•˜ê¸°
+    const bool í”Œë ˆì´ì–´_ìœ„ìž„êµ°ë‹¨_ë¬´ìž¥ì´ë™_í•­ìƒê¸ˆì§€ì„¤ì • = true;   // ì¸ìž¬ì„¤ì •ì—°ë™=false ì¼ ê²½ìš°ì—ë§Œ ë™ìž‘, ìœ„ìž„êµ°ë‹¨ì˜ ì´ë™/ì†Œí™˜ ëª…ë ¹ ì‚¬ìš©ê¸ˆì§€ ì„¤ì •
     
-    const bool AI°ÅÁ¡_¹æ¾îÃâÁø±ÝÁö_º´·Â±âÁØ¼³Á¤ = true;        // °ÅÁ¡ º´·ÂÀÌ ±âÁØº´·Â ¹Ì¸¸ÀÌ µÉ °æ¿ì ÀüÅõºÎ´ë ¹æ¾î ÃâÁø±ÝÁö
-    const int  AI°ÅÁ¡_¹æ¾îÃâÁø±ÝÁö_º´·Â±âÁØ°ª_µµ½Ã°ÅÁ¡ = 5000;  // °ÅÁ¡º´·Â ¼³Á¤µÈ ±âÁØ°ª ¹Ì¸¸ÀÌ µÉ °æ¿ì ¹æ¾î ÃâÁø±ÝÁöµÊ
-    const int  AI°ÅÁ¡_¹æ¾îÃâÁø±ÝÁö_º´·Â±âÁØ°ª_°ü¹®Ç×±¸ = 3000;  // °ÅÁ¡º´·Â ¼³Á¤µÈ ±âÁØ°ª ¹Ì¸¸ÀÌ µÉ °æ¿ì ¹æ¾î ÃâÁø±ÝÁöµÊ
+    const bool AIê±°ì _ë°©ì–´ì¶œì§„ê¸ˆì§€_ë³‘ë ¥ê¸°ì¤€ì„¤ì • = true;        // ê±°ì  ë³‘ë ¥ì´ ê¸°ì¤€ë³‘ë ¥ ë¯¸ë§Œì´ ë  ê²½ìš° ì „íˆ¬ë¶€ëŒ€ ë°©ì–´ ì¶œì§„ê¸ˆì§€
+    const int  AIê±°ì _ë°©ì–´ì¶œì§„ê¸ˆì§€_ë³‘ë ¥ê¸°ì¤€ê°’_ë„ì‹œê±°ì  = 5000;  // ê±°ì ë³‘ë ¥ ì„¤ì •ëœ ê¸°ì¤€ê°’ ë¯¸ë§Œì´ ë  ê²½ìš° ë°©ì–´ ì¶œì§„ê¸ˆì§€ë¨
+    const int  AIê±°ì _ë°©ì–´ì¶œì§„ê¸ˆì§€_ë³‘ë ¥ê¸°ì¤€ê°’_ê´€ë¬¸í•­êµ¬ = 3000;  // ê±°ì ë³‘ë ¥ ì„¤ì •ëœ ê¸°ì¤€ê°’ ë¯¸ë§Œì´ ë  ê²½ìš° ë°©ì–´ ì¶œì§„ê¸ˆì§€ë¨
     
-    const bool AI°ÅÁ¡_°ø·«ÃâÁø±ÝÁö_º´·Â±âÁØ¼³Á¤ = true;        // °ÅÁ¡ º´·ÂÀÌ ±âÁØº´·Â ¹Ì¸¸ÀÌ µÉ °æ¿ì ÀüÅõºÎ´ë °ø·« ÃâÁø±ÝÁö
-    const int  AI°ÅÁ¡_°ø·«ÃâÁø±ÝÁö_º´·Â±âÁØ°ª_µµ½Ã°ÅÁ¡ = 5000;  // °ÅÁ¡º´·Â ¼³Á¤µÈ ±âÁØ°ª ¹Ì¸¸ÀÌ µÉ °æ¿ì °ø·« ÃâÁø±ÝÁöµÊ
-    const int  AI°ÅÁ¡_°ø·«ÃâÁø±ÝÁö_º´·Â±âÁØ°ª_°ü¹®Ç×±¸ = 3000;  // °ÅÁ¡º´·Â ¼³Á¤µÈ ±âÁØ°ª ¹Ì¸¸ÀÌ µÉ °æ¿ì °ø·« ÃâÁø±ÝÁöµÊ
+    const bool AIê±°ì _ê³µëžµì¶œì§„ê¸ˆì§€_ë³‘ë ¥ê¸°ì¤€ì„¤ì • = true;        // ê±°ì  ë³‘ë ¥ì´ ê¸°ì¤€ë³‘ë ¥ ë¯¸ë§Œì´ ë  ê²½ìš° ì „íˆ¬ë¶€ëŒ€ ê³µëžµ ì¶œì§„ê¸ˆì§€
+    const int  AIê±°ì _ê³µëžµì¶œì§„ê¸ˆì§€_ë³‘ë ¥ê¸°ì¤€ê°’_ë„ì‹œê±°ì  = 5000;  // ê±°ì ë³‘ë ¥ ì„¤ì •ëœ ê¸°ì¤€ê°’ ë¯¸ë§Œì´ ë  ê²½ìš° ê³µëžµ ì¶œì§„ê¸ˆì§€ë¨
+    const int  AIê±°ì _ê³µëžµì¶œì§„ê¸ˆì§€_ë³‘ë ¥ê¸°ì¤€ê°’_ê´€ë¬¸í•­êµ¬ = 3000;  // ê±°ì ë³‘ë ¥ ì„¤ì •ëœ ê¸°ì¤€ê°’ ë¯¸ë§Œì´ ë  ê²½ìš° ê³µëžµ ì¶œì§„ê¸ˆì§€ë¨
     
     //---------------------------------------------------------------------------------------
     
@@ -40,56 +40,56 @@ namespace °ÅÁ¡AI_¸í·É¼³Á¤
         pk::func257_t@ prev_callback_257;
         int temp_ap;
         
-        array<array<bool>> arr_cmd_canceled(°Ç¹°_°ÅÁ¡³¡, array<bool>(28, false));
-        array<int> arr_building_ap(°Ç¹°_°ÅÁ¡³¡, 0);
+        array<array<bool>> arr_cmd_canceled(ê±´ë¬¼_ê±°ì ë, array<bool>(28, false));
+        array<int> arr_building_ap(ê±´ë¬¼_ê±°ì ë, 0);
         
         //---------------------------------------------------------------------------------------
         
-        // 256ÇÔ¼ö : AI ¸í·É½ÇÇà Àü ¼³Á¤º¯°æ
+        // 256í•¨ìˆ˜ : AI ëª…ë ¹ì‹¤í–‰ ì „ ì„¤ì •ë³€ê²½
 		void callback_256(pk::ai_context@ context, pk::building@ building, int cmd)
 		{
-            if (!pk::is_campaign() and building !is null and building.get_id() < °Ç¹°_°ÅÁ¡³¡)
+            if (!pk::is_campaign() and building !is null and building.get_id() < ê±´ë¬¼_ê±°ì ë)
             {
                 int base_id = building.get_id();
                 pk::district@ district = pk::get_district(building.get_district_id());
-                arr_building_ap[base_id] = context.ap;  // Çàµ¿·Â ÀúÀå
+                arr_building_ap[base_id] = context.ap;  // í–‰ë™ë ¥ ì €ìž¥
                 
-                // ÇÃ·¹ÀÌ¾î À§ÀÓ±º´Ü ¹«ÀåÀÌµ¿±ÝÁö ¼³Á¤
-                if ((cmd == °ÅÁ¡AI_ÀÌµ¿ or cmd == °ÅÁ¡AI_¼ÒÈ¯) and !arr_cmd_canceled[base_id][cmd])
+                // í”Œë ˆì´ì–´ ìœ„ìž„êµ°ë‹¨ ë¬´ìž¥ì´ë™ê¸ˆì§€ ì„¤ì •
+                if ((cmd == ê±°ì AI_ì´ë™ or cmd == ê±°ì AI_ì†Œí™˜) and !arr_cmd_canceled[base_id][cmd])
                 {
                     if (building.is_player() and !pk::is_player_controlled(building))
                     {
-                        if (ÇÃ·¹ÀÌ¾î_À§ÀÓ±º´Ü_¹«ÀåÀÌµ¿_ÀÎÀç¼³Á¤¿¬µ¿ and !district.personnel)
-                            cancel_cmd_256(context, building, cmd);   // À§ÀÓ±º´Ü ÀÎÀç±ÝÁö ½Ã ¹«ÀåÀÌµ¿/¼ÒÈ¯ Ãë¼Ò
-                        else if (ÇÃ·¹ÀÌ¾î_À§ÀÓ±º´Ü_¹«ÀåÀÌµ¿_Ç×»ó±ÝÁö¼³Á¤) 
+                        if (í”Œë ˆì´ì–´_ìœ„ìž„êµ°ë‹¨_ë¬´ìž¥ì´ë™_ì¸ìž¬ì„¤ì •ì—°ë™ and !district.personnel)
+                            cancel_cmd_256(context, building, cmd);   // ìœ„ìž„êµ°ë‹¨ ì¸ìž¬ê¸ˆì§€ ì‹œ ë¬´ìž¥ì´ë™/ì†Œí™˜ ì·¨ì†Œ
+                        else if (í”Œë ˆì´ì–´_ìœ„ìž„êµ°ë‹¨_ë¬´ìž¥ì´ë™_í•­ìƒê¸ˆì§€ì„¤ì •) 
                             cancel_cmd_256(context, building, cmd);
                     }
                 }
-                // °ÅÁ¡ ¹æ¾î ÃâÁø ±ÝÁö¼³Á¤
-                if (cmd == °ÅÁ¡AI_¹æ¾î and !arr_cmd_canceled[base_id][cmd])
+                // ê±°ì  ë°©ì–´ ì¶œì§„ ê¸ˆì§€ì„¤ì •
+                if (cmd == ê±°ì AI_ë°©ì–´ and !arr_cmd_canceled[base_id][cmd])
                 {
-                    if (AI°ÅÁ¡_¹æ¾îÃâÁø±ÝÁö_º´·Â±âÁØ¼³Á¤)
+                    if (AIê±°ì _ë°©ì–´ì¶œì§„ê¸ˆì§€_ë³‘ë ¥ê¸°ì¤€ì„¤ì •)
                     {
                         int min_troops;
-                        if (base_id < °Ç¹°_µµ½Ã³¡)
-                            min_troops = pk::max(0, AI°ÅÁ¡_¹æ¾îÃâÁø±ÝÁö_º´·Â±âÁØ°ª_µµ½Ã°ÅÁ¡);
-                        else if (°Ç¹°_°ü¹®½ÃÀÛ <= base_id and base_id < °Ç¹°_Ç×±¸³¡)
-                            min_troops = pk::max(0, AI°ÅÁ¡_¹æ¾îÃâÁø±ÝÁö_º´·Â±âÁØ°ª_°ü¹®Ç×±¸);
+                        if (base_id < ê±´ë¬¼_ë„ì‹œë)
+                            min_troops = pk::max(0, AIê±°ì _ë°©ì–´ì¶œì§„ê¸ˆì§€_ë³‘ë ¥ê¸°ì¤€ê°’_ë„ì‹œê±°ì );
+                        else if (ê±´ë¬¼_ê´€ë¬¸ì‹œìž‘ <= base_id and base_id < ê±´ë¬¼_í•­êµ¬ë)
+                            min_troops = pk::max(0, AIê±°ì _ë°©ì–´ì¶œì§„ê¸ˆì§€_ë³‘ë ¥ê¸°ì¤€ê°’_ê´€ë¬¸í•­êµ¬);
                         
                         if (pk::get_troops(building) < min_troops) 
                             cancel_cmd_256(context, building, cmd);
                     }
                 }
-                // °ÅÁ¡ °ø·« ÃâÁø ±ÝÁö¼³Á¤
-                if (cmd == °ÅÁ¡AI_°ø°Ý and !arr_cmd_canceled[base_id][cmd])
+                // ê±°ì  ê³µëžµ ì¶œì§„ ê¸ˆì§€ì„¤ì •
+                if (cmd == ê±°ì AI_ê³µê²© and !arr_cmd_canceled[base_id][cmd])
                 {
-                    if (AI°ÅÁ¡_°ø·«ÃâÁø±ÝÁö_º´·Â±âÁØ¼³Á¤)
+                    if (AIê±°ì _ê³µëžµì¶œì§„ê¸ˆì§€_ë³‘ë ¥ê¸°ì¤€ì„¤ì •)
                     {
                         int min_troops;
-                        if (base_id < °Ç¹°_µµ½Ã³¡)
-                            min_troops = pk::max(0, AI°ÅÁ¡_°ø·«ÃâÁø±ÝÁö_º´·Â±âÁØ°ª_µµ½Ã°ÅÁ¡);
-                        else if (°Ç¹°_°ü¹®½ÃÀÛ <= base_id and base_id < °Ç¹°_Ç×±¸³¡)
-                            min_troops = pk::max(0, AI°ÅÁ¡_°ø·«ÃâÁø±ÝÁö_º´·Â±âÁØ°ª_°ü¹®Ç×±¸);
+                        if (base_id < ê±´ë¬¼_ë„ì‹œë)
+                            min_troops = pk::max(0, AIê±°ì _ê³µëžµì¶œì§„ê¸ˆì§€_ë³‘ë ¥ê¸°ì¤€ê°’_ë„ì‹œê±°ì );
+                        else if (ê±´ë¬¼_ê´€ë¬¸ì‹œìž‘ <= base_id and base_id < ê±´ë¬¼_í•­êµ¬ë)
+                            min_troops = pk::max(0, AIê±°ì _ê³µëžµì¶œì§„ê¸ˆì§€_ë³‘ë ¥ê¸°ì¤€ê°’_ê´€ë¬¸í•­êµ¬);
                         
                         if (pk::get_troops(building) < min_troops) 
                             cancel_cmd_256(context, building, cmd);
@@ -103,24 +103,24 @@ namespace °ÅÁ¡AI_¸í·É¼³Á¤
 
         //---------------------------------------------------------------------------------------
         
-        // 257ÇÔ¼ö : AI ¸í·É½ÇÇà ÈÄ ¼³Á¤º¯°æ
+        // 257í•¨ìˆ˜ : AI ëª…ë ¹ì‹¤í–‰ í›„ ì„¤ì •ë³€ê²½
 		void callback_257(pk::ai_context@ context, pk::building@ building, int cmd)
 		{
             int base_id = building.get_id();
             
-            // ¸í·É Ãë¼Ò¿Ï·á ÈÄ Çàµ¿·Â º¹¿øÃ³¸®
+            // ëª…ë ¹ ì·¨ì†Œì™„ë£Œ í›„ í–‰ë™ë ¥ ë³µì›ì²˜ë¦¬
             if (arr_cmd_canceled[base_id][cmd] and context.ap == 0)
             {
-                context.ap = temp_ap;   // Çàµ¿·Â º¹¿ø
+                context.ap = temp_ap;   // í–‰ë™ë ¥ ë³µì›
                 arr_cmd_canceled[base_id][cmd] = false;
                 
-                if (µð¹ö±×¸ðµå) pk::info(pk::format("---°ÅÁ¡AI: {}, Çàµ¿·Â({}), {} Ãë¼Ò¿Ï·á", pk::decode(pk::get_name(building)), context.ap, get_cmd_info(cmd) ));
+                if (ë””ë²„ê·¸ëª¨ë“œ) pk::info(pk::format("---ê±°ì AI: {}, í–‰ë™ë ¥({}), {} ì·¨ì†Œì™„ë£Œ", pk::decode(pk::get_name(building)), context.ap, get_cmd_info(cmd) ));
             }
             
-            // Çàµ¿·Â °¨¼ÒÇÑ °æ¿ì, ¸í·É½ÇÇàÇÑ °ÍÀ¸·Î °£ÁÖ
+            // í–‰ë™ë ¥ ê°ì†Œí•œ ê²½ìš°, ëª…ë ¹ì‹¤í–‰í•œ ê²ƒìœ¼ë¡œ ê°„ì£¼
             if (context.ap < arr_building_ap[base_id])
             {
-                if (µð¹ö±×¸ðµå) pk::info(pk::format("---°ÅÁ¡AI: {}, Çàµ¿·Â({}¡æ{}), {} ½ÇÇà¿Ï·á", pk::decode(pk::get_name(building)), arr_building_ap[base_id], context.ap , get_cmd_info(cmd) ));
+                if (ë””ë²„ê·¸ëª¨ë“œ) pk::info(pk::format("---ê±°ì AI: {}, í–‰ë™ë ¥({}â†’{}), {} ì‹¤í–‰ì™„ë£Œ", pk::decode(pk::get_name(building)), arr_building_ap[base_id], context.ap , get_cmd_info(cmd) ));
             }
             
 			if (prev_callback_257 !is null)
@@ -128,24 +128,24 @@ namespace °ÅÁ¡AI_¸í·É¼³Á¤
 		}
         
         
-        // ¸í·É Ãë¼Ò¸¦ À§ÇÑ Çàµ¿·Â °­Á¦º¯°æ ÇÔ¼ö
+        // ëª…ë ¹ ì·¨ì†Œë¥¼ ìœ„í•œ í–‰ë™ë ¥ ê°•ì œë³€ê²½ í•¨ìˆ˜
         void cancel_cmd_256(pk::ai_context@ context, pk::building@ building, int cmd)
         {
             temp_ap = context.ap;
-            context.ap = 0;     // Çàµ¿·Â ¹é¾÷ ÈÄ 0 À¸·Î Ã³¸®
+            context.ap = 0;     // í–‰ë™ë ¥ ë°±ì—… í›„ 0 ìœ¼ë¡œ ì²˜ë¦¬
             
             int base_id = building.get_id();
             arr_cmd_canceled[base_id][cmd] = true;
             
-            if (µð¹ö±×¸ðµå) pk::info(pk::format("---°ÅÁ¡AI: {}, Çàµ¿·Â({}), {} Ãë¼Ò¼³Á¤", pk::decode(pk::get_name(building)), temp_ap, get_cmd_info(cmd) ));
+            if (ë””ë²„ê·¸ëª¨ë“œ) pk::info(pk::format("---ê±°ì AI: {}, í–‰ë™ë ¥({}), {} ì·¨ì†Œì„¤ì •", pk::decode(pk::get_name(building)), temp_ap, get_cmd_info(cmd) ));
         }
         
-        // ÅÏ½ÃÀÛ ½Ã ¸í·É±ÝÁö¼³Á¤ Á¤º¸ ÃÊ±âÈ­
+        // í„´ì‹œìž‘ ì‹œ ëª…ë ¹ê¸ˆì§€ì„¤ì • ì •ë³´ ì´ˆê¸°í™”
         void onTurnStart(pk::force@ force)
         {
             if (pk::is_campaign()) return;
             
-            for (int i = 0; i < °Ç¹°_°ÅÁ¡³¡; i++)
+            for (int i = 0; i < ê±´ë¬¼_ê±°ì ë; i++)
             {
                 for (int j = 0; j < 28; j++)
                     arr_cmd_canceled[i][j] = false;
@@ -160,40 +160,40 @@ namespace °ÅÁ¡AI_¸í·É¼³Á¤
             string str_cmd;
             switch(cmd)
             {
-                case 1  : str_cmd = "°³¹ß"          ; break;
-                case 2  : str_cmd = "Â¡º´"          ; break;
-                case 3  : str_cmd = "»ý»ê"          ; break;
-                case 4  : str_cmd = "¼øÂû"          ; break;
-                case 5  : str_cmd = "°Å·¡"          ; break;
-                case 6  : str_cmd = "ÈÆ·Ã"          ; break;
-                case 7  : str_cmd = "¹æ¾î"          ; break;
-                case 8  : str_cmd = "°ø°Ý"          ; break;
-                case 9  : str_cmd = "¼³Ä¡"          ; break;
-                case 10 : str_cmd = "°ü¹®¼ö¼Û"       ; break;
-                case 11 : str_cmd = "µµ½Ã¼ö¼Û"       ; break;
-                case 12 : str_cmd = "ÀÌµ¿"          ; break;
-                case 13 : str_cmd = "¼ÒÈ¯"          ; break;
-                case 14 : str_cmd = "ÀÎÀçÅ½»ö"       ; break;
-                case 15 : str_cmd = "¹«Àåµî¿ë"       ; break;
-                case 16 : str_cmd = "Æ÷»ó"          ; break;
-                case 17 : str_cmd = "ÀÌÈ£°æ½Ä"       ; break;
-                case 18 : str_cmd = "±¸È£Åº¶û"       ; break;
-                case 19 : str_cmd = "À¯¾ðºñ¾î"       ; break;
-                case 20 : str_cmd = "Å¸¼¼·Â¹«Àåµî¿ë"   ; break;
-                case 21 : str_cmd = "Ã¶°Å"          ; break;
-                case 22 : str_cmd = "°è·«"          ; break;
-                case 23 : str_cmd = "ÃÖ¼ÒÀÎÀçÅ½»ö"    ; break;
-                case 24 : str_cmd = "ÃÖ¼Ò¹«Àåµî¿ë"    ; break;
-                case 25 : str_cmd = "ÃÖ¼ÒÅ¸¼¼·Â¹«Àåµî¿ë"; break;
-                case 26 : str_cmd = "°Å·¡2"         ; break;
-                case 27 : str_cmd = "Èí¼öÇÕº´"       ; break;
+                case 1  : str_cmd = "ê°œë°œ"          ; break;
+                case 2  : str_cmd = "ì§•ë³‘"          ; break;
+                case 3  : str_cmd = "ìƒì‚°"          ; break;
+                case 4  : str_cmd = "ìˆœì°°"          ; break;
+                case 5  : str_cmd = "ê±°ëž˜"          ; break;
+                case 6  : str_cmd = "í›ˆë ¨"          ; break;
+                case 7  : str_cmd = "ë°©ì–´"          ; break;
+                case 8  : str_cmd = "ê³µê²©"          ; break;
+                case 9  : str_cmd = "ì„¤ì¹˜"          ; break;
+                case 10 : str_cmd = "ê´€ë¬¸ìˆ˜ì†¡"       ; break;
+                case 11 : str_cmd = "ë„ì‹œìˆ˜ì†¡"       ; break;
+                case 12 : str_cmd = "ì´ë™"          ; break;
+                case 13 : str_cmd = "ì†Œí™˜"          ; break;
+                case 14 : str_cmd = "ì¸ìž¬íƒìƒ‰"       ; break;
+                case 15 : str_cmd = "ë¬´ìž¥ë“±ìš©"       ; break;
+                case 16 : str_cmd = "í¬ìƒ"          ; break;
+                case 17 : str_cmd = "ì´í˜¸ê²½ì‹"       ; break;
+                case 18 : str_cmd = "êµ¬í˜¸íƒ„ëž‘"       ; break;
+                case 19 : str_cmd = "ìœ ì–¸ë¹„ì–´"       ; break;
+                case 20 : str_cmd = "íƒ€ì„¸ë ¥ë¬´ìž¥ë“±ìš©"   ; break;
+                case 21 : str_cmd = "ì² ê±°"          ; break;
+                case 22 : str_cmd = "ê³„ëžµ"          ; break;
+                case 23 : str_cmd = "ìµœì†Œì¸ìž¬íƒìƒ‰"    ; break;
+                case 24 : str_cmd = "ìµœì†Œë¬´ìž¥ë“±ìš©"    ; break;
+                case 25 : str_cmd = "ìµœì†Œíƒ€ì„¸ë ¥ë¬´ìž¥ë“±ìš©"; break;
+                case 26 : str_cmd = "ê±°ëž˜2"         ; break;
+                case 27 : str_cmd = "í¡ìˆ˜í•©ë³‘"       ; break;
             }
             return str_cmd;
         }
         
         //---------------------------------------------------------------------------------------
 
-        bool µð¹ö±×¸ðµå = false;
+        bool ë””ë²„ê·¸ëª¨ë“œ = false;
 
 	}
 

@@ -467,9 +467,18 @@ namespace 무장가챠
                 
                 else
  				{
-			        new_face_.face = random(2100, 2164);	                 // 여성 초상화 에보니패치 기준
-				    new_face_.tone = random(말투_고대만족, 말투_보통녀);
-			        new_face_.voice = random(음성_냉정녀, 음성_대담녀);
+				if (random(1,2) == 1)
+					{
+			        			new_face_.face = random(2100, 2164);	                 // 여성 초상화 에보니패치 기준
+				    		new_face_.tone = random(말투_고대만족, 말투_보통녀);
+			        			new_face_.voice = random(음성_냉정녀, 음성_대담녀);
+					}
+					else
+					{
+						new_face_.face = random(2071, 2085);	                 // 여성 초상화 에보니패치 기준
+						new_face_.tone = random(말투_고대만족, 말투_보통녀);
+						new_face_.voice = random(음성_냉정녀, 음성_대담녀);
+					}
 				}
 				
 				// 친애무장, 혐오무장 초기화 ======================================================================================================
@@ -2535,7 +2544,7 @@ namespace 무장가챠
 			
 			if (slot_신무장)
 			{
-				for (int i = 963; i < 1000; i++)
+				for (int i = 961; i < 1000; i++)
 				{
 					pk::person@ new_face_ = pk::get_person(i);
 					switch (new_face_.mibun)

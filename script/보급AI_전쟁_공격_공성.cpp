@@ -15,7 +15,7 @@ namespace 전쟁_공격_공성
 
         const bool  거점수송_원거리이동  = true;     // 공성부대 이동 1회 추가 (추천기능 : 보너스이동으로 탈출)	
 		
-		const bool 대사표시_설정 = false;   
+		const bool 대사표시_설정 = true;   
 	
 	// =============================================
 
@@ -117,9 +117,11 @@ namespace 전쟁_공격_공성
             //도시 정복 가능 여부 
             if (10000 + pk::max((func_enemy_city_count(city_a, 1) - 1) * 10000 , 0) <= base_troops and (EnemyBase_troops(base) * 0.4f) + ((3 - a) * 7000) - (Friendly_base(base) * 0.2f) <= base_troops and !front_base(base) and person_list.count > (base_troops - (pk::get_max_troops(base) * 0.1f)) / 6000.f )
 	        return true;
+			/** 내가 수정 */
+			if (pk::max((func_enemy_city_count(city_a, 1) - 1) * 5000 , 0) <= base_troops and (EnemyBase_troops(base) * 0.25f) + ((3 - a) * 6000) - (Friendly_base(base) * 0.4f) <= base_troops and !front_base(base) and person_list.count > (base_troops - (pk::get_max_troops(base) * 0.1f)) / 6000.f ) return true;
 
             //공성 가능 여부
-            else if (14000 <= base_troops and !front_base(base))
+            else if (18000 <= base_troops and !front_base(base))
 		    {				
 			   if ( count_War_Zone(base) > 0 )
 		       {				   
@@ -309,7 +311,8 @@ namespace 전쟁_공격_공성
             }		
 
             // 적국의 전력이 상당해서 아군도 전체적으로 준비가 좀 필요하냐?
-            if (5 < pk::get_city_list(enemy_force).count and preparation(force) < pk::get_city_list(force).count * 0.7f) return false; 
+			/** 내가 수정 0.7f -> 0.5f로 */
+            if (5 < pk::get_city_list(enemy_force).count and preparation(force) < pk::get_city_list(force).count * 0.5f) return false; 
 
             pk::list<pk::person@> actors;
             actors.clear();				
