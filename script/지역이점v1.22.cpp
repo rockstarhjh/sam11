@@ -27,7 +27,7 @@
     const int 연주 = 6;       // YanZhou
     const int 예주 = 7;       // YuZhou
     const int 사예 = 8;       // SiLi
-    const int 경조 = 9;       // JingZhao
+    const int 경조 = 9;       // JingZhaoe
     const int 량주 = 10;      // LiangZhou
     const int 양주 = 11;      // YangZhou
     const int 형북 = 12;      // JingBei

@@ -32,23 +32,33 @@
 					// 플레이어가 공격중일 때만 방어 강화
 					if (base.num_player_units > 0)
 					{
+			          if (base.enemies_around5)							
 						context.push_cmd(거점AI_징병);
+			          if (base.enemies_around5)							
 						context.push_cmd(거점AI_생산);							
 						context.push_cmd(거점AI_순찰);
+			          if (base.enemies_around5)								
 						context.push_cmd(거점AI_징병);
 						context.push_cmd(거점AI_순찰);
+			          if (base.enemies_around5)								
 						context.push_cmd(거점AI_징병);
 						context.push_cmd(거점AI_순찰);
+			          if (base.enemies_around5)								
 						context.push_cmd(거점AI_생산);
+			          if (base.enemies_around5)								
 						context.push_cmd(거점AI_생산);
 						
 					}
 					else
 					{
+			          if (base.enemies_around5)								
 						context.push_cmd(거점AI_징병);
+			          if (base.enemies_around5)								
 						context.push_cmd(거점AI_생산);	
+			          if (base.enemies_around5)								
 						context.push_cmd(거점AI_징병);						
 						context.push_cmd(거점AI_순찰);
+			          if (base.enemies_around5)								
 						context.push_cmd(거점AI_생산);
 						
 					}
@@ -85,8 +95,9 @@
 				
 			    }					
 
-
+			          if (base.enemies_around5)		
 						context.push_cmd(거점AI_징병);
+			          if (base.enemies_around5)							
 						context.push_cmd(거점AI_생산);						  
 					context.push_cmd(거점AI_순찰);
 					context.push_cmd(거점AI_포상);
@@ -99,8 +110,10 @@
 					context.push_cmd(거점AI_포상);
 					context.push_cmd(거점AI_거래);
 					context.push_cmd(거점AI_계략);
+			          if (base.enemies_around5)							
 					context.push_cmd(거점AI_생산);
 					context.push_cmd(거점AI_거래2);
+			          if (base.enemies_around5)							
 					context.push_cmd(거점AI_징병);
 					context.push_cmd(거점AI_훈련);
 
@@ -127,13 +140,15 @@
 				
 			    }	
 
-	
+			          if (base.enemies_around5)			
 						context.push_cmd(거점AI_징병);
+			          if (base.enemies_around5)							
 						context.push_cmd(거점AI_생산);										   
 					context.push_cmd(거점AI_최소인재탐색);
 					context.push_cmd(거점AI_최소무장등용);
 					context.push_cmd(거점AI_최소타세력무장등용);
 					context.push_cmd(거점AI_포상);
+			          if (base.enemies_around5)							
 					context.push_cmd(거점AI_징병);
 					context.push_cmd(거점AI_순찰);
 
@@ -142,6 +157,7 @@
 					context.push_cmd(거점AI_계략);
 					context.push_cmd(거점AI_거래2);
 					context.push_cmd(거점AI_거래);
+			          if (base.enemies_around5)							
 					context.push_cmd(거점AI_생산);
 					context.push_cmd(거점AI_훈련);
 					
@@ -170,8 +186,9 @@
 				
 			    }	
 
-
+			          if (base.enemies_around5)		
 						context.push_cmd(거점AI_징병);
+			          if (base.enemies_around5)							
 						context.push_cmd(거점AI_생산);						
 					context.push_cmd(거점AI_설치);
 
@@ -187,13 +204,15 @@
 					if (base.num_officers >= officers_needed and gold > 1500)
 						context.push_cmd(거점AI_개발);
 					// 병기가 병력보다 모자르다면 병기생산 우선
-					if (total_weapons < pk::get_troops(building) - 5000)
+					if (base.enemies_around5 and total_weapons < pk::get_troops(building) - 5000)
 						context.push_cmd(거점AI_생산);
+			          if (base.enemies_around5)							
 					context.push_cmd(거점AI_징병);
 					context.push_cmd(거점AI_순찰);
 					context.push_cmd(거점AI_훈련);
 					context.push_cmd(거점AI_거래2);
 					context.push_cmd(거점AI_거래);
+			          if (base.enemies_around5 and total_weapons < pk::get_troops(building) - 5000)							
 					context.push_cmd(거점AI_생산);
 
 					context.push_cmd(거점AI_인재탐색);
@@ -233,14 +252,18 @@
 						}
 					}
 					// 병기가 병력보다 모자르다면 병기생산 우선
-					if (total_weapons < pk::get_troops(building) - 5000)
+					if (base.enemies_around5 and total_weapons < pk::get_troops(building) - 5000)
 						context.push_cmd(거점AI_생산);
+			       if (base.enemies_around5)					
 					context.push_cmd(거점AI_징병);
+			       if (base.enemies_around5)				
 						context.push_cmd(거점AI_징병);
+					if (base.enemies_around5 and total_weapons < pk::get_troops(building) - 5000)					
 						context.push_cmd(거점AI_생산);						
 					context.push_cmd(거점AI_훈련);
 					context.push_cmd(거점AI_거래);
 					context.push_cmd(거점AI_순찰);
+					if (base.enemies_around5 and total_weapons < pk::get_troops(building) - 5000)					
 					context.push_cmd(거점AI_생산);
 					context.push_cmd(거점AI_거래2);
 					context.push_cmd(거점AI_포상);
@@ -282,14 +305,18 @@
 						}
 					}
 					// 병기가 병력보다 모자르다면 병기생산 우선
-					if (total_weapons < pk::get_troops(building) - 5000)
+					if (base.enemies_around5 and total_weapons < pk::get_troops(building) - 5000)
 						context.push_cmd(거점AI_생산);
+			       if (base.enemies_around5)					
 					context.push_cmd(거점AI_징병);
+			       if (base.enemies_around5)				
 						context.push_cmd(거점AI_징병);
+					if (base.enemies_around5 and total_weapons < pk::get_troops(building) - 5000)					
 						context.push_cmd(거점AI_생산);						
 					context.push_cmd(거점AI_훈련);
 					context.push_cmd(거점AI_거래);
 					context.push_cmd(거점AI_순찰);
+					if (base.enemies_around5 and total_weapons < pk::get_troops(building) - 5000)					
 					context.push_cmd(거점AI_생산);
 					context.push_cmd(거점AI_거래2);
 					context.push_cmd(거점AI_포상);

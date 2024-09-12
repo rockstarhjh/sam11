@@ -1,48 +1,48 @@
 /*
-@¸¸µçÀÌ: Å©·¡ÇÈ½º
-@Update: 2023.8.14,ÃÖÃÊ¹èÆ÷
-@Update: 2023.8.24,ÀüÀï½Ã¿¡´Â ÀÎÀçÅ½»ö°ú Àç¾ßµî¿ëÀ»ÇÏÁö ¾ÊÀ½.
-@Update: 2023.9.10, ÀÎÀçÅ½»ö, Àç¾ßµî¿ë ÁÖ±â¿É¼Ç Ãß°¡.
-@Update: 2024.5.27 »ç°üµî¿ë, Æ÷·ÎÀÚµ¿µî¿ë, Àç¾ßÀÚµ¿Å½»ö, ÀÎÀçµî¿ë_AIÀ¯¸®, AI°£ÀÇ¼¼·Â¸ê¸Á½Ã¸ğµç¹«ÀåÆ÷¹Ú ±â´É Ãß°¡.
+@ë§Œë“ ì´: í¬ë˜í”½ìŠ¤
+@Update: 2023.8.14,ìµœì´ˆë°°í¬
+@Update: 2023.8.24,ì „ìŸì‹œì—ëŠ” ì¸ì¬íƒìƒ‰ê³¼ ì¬ì•¼ë“±ìš©ì„í•˜ì§€ ì•ŠìŒ.
+@Update: 2023.9.10, ì¸ì¬íƒìƒ‰, ì¬ì•¼ë“±ìš© ì£¼ê¸°ì˜µì…˜ ì¶”ê°€.
+@Update: 2024.5.27 ì‚¬ê´€ë“±ìš©, í¬ë¡œìë™ë“±ìš©, ì¬ì•¼ìë™íƒìƒ‰, ì¸ì¬ë“±ìš©_AIìœ ë¦¬, AIê°„ì˜ì„¸ë ¥ë©¸ë§ì‹œëª¨ë“ ë¬´ì¥í¬ë°• ê¸°ëŠ¥ ì¶”ê°€.
 */
-namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
+namespace AIì¸ì¬ë“±ìš©_AI_Recuite_v2
 {
-	const bool AI_ÀÎÀçÅ½»ö = true;//¹«ÀåÇàµ¿À» ¼Ò¸ğÇØ¼­, ÀÎÀçÅ½»öÀ» ÇÕ´Ï´Ù.
-	const int AI_ÀÎÀçÅ½»ö_ÁÖ±â = 30; //10´ÜÀ§·Î ÀÔ·ÂÇÏ¼¼¿ä. 20ÀÏ¿¡ ÇÑ¹ø
+	const bool AI_ì¸ì¬íƒìƒ‰ = true;//ë¬´ì¥í–‰ë™ì„ ì†Œëª¨í•´ì„œ, ì¸ì¬íƒìƒ‰ì„ í•©ë‹ˆë‹¤.
+	const int AI_ì¸ì¬íƒìƒ‰_ì£¼ê¸° = 30; //10ë‹¨ìœ„ë¡œ ì…ë ¥í•˜ì„¸ìš”. 20ì¼ì— í•œë²ˆ
 	
-	const bool AI_Àç¾ßµî¿ë = true;//¹«ÀåÇàµ¿À» ¼Ò¸ğÇØ¼­, Àç¾ß¹«Àå¸¦ µî¿ëÇÕ´Ï´Ù.
-	const int AI_Àç¾ßµî¿ë_ÁÖ±â = 10; //10ÀÏ¿¡ ÇÑ¹ø
+	const bool AI_ì¬ì•¼ë“±ìš© = true;//ë¬´ì¥í–‰ë™ì„ ì†Œëª¨í•´ì„œ, ì¬ì•¼ë¬´ì¥ë¥¼ ë“±ìš©í•©ë‹ˆë‹¤.
+	const int AI_ì¬ì•¼ë“±ìš©_ì£¼ê¸° = 20; //10ì¼ì— í•œë²ˆ
 
-	const bool AI_»ç°üµî¿ë = false;// 2´Ş¿¬¼ÓÀ¸·Î °°Àºµµ½Ã¿¡ ÀÖ´Â°æ¿ì, ÀÚµ¿À¸·Î ÇØ´çµµ½Ã¿¡ µî¿ëµÊ.(¹«ÀåÇàµ¿ ¼Ò¸ğ ¾øÀ½)
-	const int AI_»ç°üµî¿ë_±İÁö±â°£ = 360; //½ÃÀÛÈÄ 1³âµ¿¾È »ç°üµî¿ëÀ» ÇÏÁö ¾Ê½À´Ï´Ù.
+	const bool AI_ì‚¬ê´€ë“±ìš© = false;// 2ë‹¬ì—°ì†ìœ¼ë¡œ ê°™ì€ë„ì‹œì— ìˆëŠ”ê²½ìš°, ìë™ìœ¼ë¡œ í•´ë‹¹ë„ì‹œì— ë“±ìš©ë¨.(ë¬´ì¥í–‰ë™ ì†Œëª¨ ì—†ìŒ)
+	const int AI_ì‚¬ê´€ë“±ìš©_ê¸ˆì§€ê¸°ê°„ = 360; //ì‹œì‘í›„ 1ë…„ë™ì•ˆ ì‚¬ê´€ë“±ìš©ì„ í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
 
-	const bool AI_Æ÷·ÎÀÚµ¿µî¿ë = true;//Æ÷·Î°¡ Ãæ¼ºµµ°¡ 90¹Ì¸¸ÀÌ µÇ¸é ÀÚµ¿À¸·Î µî¿ëµË´Ï´Ù.(¹«ÀåÇàµ¿ ¼Ò¸ğ ¾øÀ½)
-	const int AI_Æ÷·ÎÀÚµ¿µî¿ë_Ãæ¼ºµµ = 80;//AI°£ÀÇ Æ÷·ÎÀÏ¶§,80¹Ì¸¸ÀÎ°æ¿ì ÀÚµ¿µî¿ëµÊ.
-	const int AI_Æ÷·ÎÀÚµ¿µî¿ë_Ãæ¼ºµµ_À¯Àú = 90;//À¯Àú¹«ÀåÀÌ AIÀÇ Æ÷·ÎÀÏ¶§, 90¹Ì¸¸ÀÎ°æ¿ì ÀÚµ¿µî¿ëµÊ.
-	const int AI_Æ÷·ÎÀÚµ¿µî¿ë_È®·ü = 20;//¸ê¸Á¼¼·ÂÀÇ AI°£ Æ÷·Îµî¿ë È®·üÀÔ´Ï´Ù.(20%ÀÌ´Ï±ñ 5ÅÏÀÌ¸é ´ëÃæ ¸ğµç ¸ê¸Á¼¼·Â Æ÷·Î°¡ µî¿ëµÇ´Â¼À)
+	const bool AI_í¬ë¡œìë™ë“±ìš© = true;//í¬ë¡œê°€ ì¶©ì„±ë„ê°€ 90ë¯¸ë§Œì´ ë˜ë©´ ìë™ìœ¼ë¡œ ë“±ìš©ë©ë‹ˆë‹¤.(ë¬´ì¥í–‰ë™ ì†Œëª¨ ì—†ìŒ)
+	const int AI_í¬ë¡œìë™ë“±ìš©_ì¶©ì„±ë„ = 80;//AIê°„ì˜ í¬ë¡œì¼ë•Œ,80ë¯¸ë§Œì¸ê²½ìš° ìë™ë“±ìš©ë¨.
+	const int AI_í¬ë¡œìë™ë“±ìš©_ì¶©ì„±ë„_ìœ ì € = 85;//ìœ ì €ë¬´ì¥ì´ AIì˜ í¬ë¡œì¼ë•Œ, 90ë¯¸ë§Œì¸ê²½ìš° ìë™ë“±ìš©ë¨.
+	const int AI_í¬ë¡œìë™ë“±ìš©_í™•ë¥  = 20;//ë©¸ë§ì„¸ë ¥ì˜ AIê°„ í¬ë¡œë“±ìš© í™•ë¥ ì…ë‹ˆë‹¤.(20%ì´ë‹ˆê¹ 5í„´ì´ë©´ ëŒ€ì¶© ëª¨ë“  ë©¸ë§ì„¸ë ¥ í¬ë¡œê°€ ë“±ìš©ë˜ëŠ”ì…ˆ)
 
-	const bool AI_Æ÷·ÎÀÚµ¿µî¿ë_ÀÇÇüÁ¦ = false; //ÀÇÇüÁ¦°¡ °°Àº¼¼·Â¿¡ ÀÖ´Â°æ¿ì Æ÷·ÎÀÚµ¿µî¿ëÇÏÁö ¾Ê½À´Ï´Ù.
-	const bool AI_Æ÷·ÎÀÚµ¿µî¿ë_ºÎºÎ = false; //ºÎºÎ°¡ °°Àº ¼¼·Â¿¡ ÀÖ´Â°æ¿ì Æ÷·ÎÀÚµ¿µî¿ëÇÏÁö ¾Ê½À´Ï´Ù.
-	const bool AI_Æ÷·ÎÀÚµ¿µî¿ë_ºÎÄ£ = false;//ºÎÄ£ÀÌ °°Àº ¼¼·Â¿¡ ÀÖ´Â°æ¿ì Æ÷·ÎÀÚµ¿µî¿ëÇÏÁö ¾Ê½À´Ï´Ù.
-	const bool AI_Æ÷·ÎÀÚµ¿µî¿ë_¸ğÄ£ = false;//¸ğÄ£ÀÌ °°Àº ¼¼·Â¿¡ ÀÖ´Â°æ¿ì Æ÷·ÎÀÚµ¿µî¿ëÇÏÁö ¾Ê½À´Ï´Ù.
+	const bool AI_í¬ë¡œìë™ë“±ìš©_ì˜í˜•ì œ = false; //ì˜í˜•ì œê°€ ê°™ì€ì„¸ë ¥ì— ìˆëŠ”ê²½ìš° í¬ë¡œìë™ë“±ìš©í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
+	const bool AI_í¬ë¡œìë™ë“±ìš©_ë¶€ë¶€ = false; //ë¶€ë¶€ê°€ ê°™ì€ ì„¸ë ¥ì— ìˆëŠ”ê²½ìš° í¬ë¡œìë™ë“±ìš©í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
+	const bool AI_í¬ë¡œìë™ë“±ìš©_ë¶€ì¹œ = false;//ë¶€ì¹œì´ ê°™ì€ ì„¸ë ¥ì— ìˆëŠ”ê²½ìš° í¬ë¡œìë™ë“±ìš©í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
+	const bool AI_í¬ë¡œìë™ë“±ìš©_ëª¨ì¹œ = false;//ëª¨ì¹œì´ ê°™ì€ ì„¸ë ¥ì— ìˆëŠ”ê²½ìš° í¬ë¡œìë™ë“±ìš©í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
 
-	const bool AI_Àç¾ßÀÚµ¿Å½»ö = true;//AIÀç¾ßÅ½»öÀ» ÇÏÁö ¾Ê¾Æµµ ·£´ıÀ¸·Î Å½»öµË´Ï´Ù.(¹«ÀåÇàµ¿ ¼Ò¸ğ ¾øÀ½)
-	const int AI_Àç¾ßÀÚµ¿Å½»ö_È®·ü = 20;
-	const int AI_Àç¾ßÀÚµ¿Å½»ö_±İÁö±â°£ = 360;//½ÃÀÛÈÄ 1³âµ¿¾È Àç¾ßÀÚµ¿Å½»öÀ» ÇÏÁö ¾Ê½À´Ï´Ù.
-
-
-	//Àç¾ßÀÎÀç¿¡´Â Àû¿ëµÇÁö ¾ÊÀ½, À¯Àú°¡ AI¼¼·Â µî¿ë½Ã¿¡´Â ´õ ¾î·Æ°Ô, AI°¡ À¯Àú¼¼·Á µî¿ë½Ã¿¡´Â ´õ½±°Ô
-	//40ÀÏ¶§ 80Á¤µµ¿¡ Æ÷·Îµî¿ëÇÒ¼ö ÀÖ¾ğ´ø ¼­È²ÀÌ 66¿¡ µî¿ë°¡´É, »ó¼ºÀÌ ¸Â°Å³ª ±×·¯¸é 80´ë¿¡µµ µî¿ë°¡´ÉÇÏ±äÇÕ´Ï´Ù.
-	const bool ÀÎÀçµî¿ë_AIÀ¯¸® = true;
-	const int À¯Àú_ÀÎÀçµî¿ë_ºÎ°¡¼öÄ¡ = -15;//À¯Àú°¡ AI¹«Àå µî¿ëÇÒ¶§,30%È®·üÀ» ´õ »­(¾î·Æ°Ô) 
-	const int AI_ÀÎÀçµî¿ë_ºÎ°¡¼öÄ¡ = 15;//AI°¡ À¯Àú ¹«Àå µî¿ëÇÒ¶§ 30%È®·üÀ» ´õÇÔ(½±°Ô)
+	const bool AI_ì¬ì•¼ìë™íƒìƒ‰ = true;//AIì¬ì•¼íƒìƒ‰ì„ í•˜ì§€ ì•Šì•„ë„ ëœë¤ìœ¼ë¡œ íƒìƒ‰ë©ë‹ˆë‹¤.(ë¬´ì¥í–‰ë™ ì†Œëª¨ ì—†ìŒ)
+	const int AI_ì¬ì•¼ìë™íƒìƒ‰_í™•ë¥  = 20;
+	const int AI_ì¬ì•¼ìë™íƒìƒ‰_ê¸ˆì§€ê¸°ê°„ = 360;//ì‹œì‘í›„ 1ë…„ë™ì•ˆ ì¬ì•¼ìë™íƒìƒ‰ì„ í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
 
 
-	//Áö¿ªÀÌÁ¡ Àû¿ë½Ã, ±âº»¼³Á¤À¸·Î ¼¼·Â¸ê¸Á½Ã È®·üÀûÀ¸·Î Àå¼ö¸¦ Æ÷¹ÚÇÏ´Âµ¥, AI°£ÀÇ ¼¼·Â¸ê¸Á½Ã¿¡´Â È®·üÀÌ ¾Æ´Ñ 100%·Î Æ÷¹ÚÇÏµµ·Ï
-	//À¯ÀúÀÇ °æ¿ì Áö¿ªÀÌÁ¡ Æ÷¹Ú¼³Á¤ ±×´ë·Î Àû¿ë, ±âº»ÀûÀ¸·Î È®·üÀûÀ¸·Î Æ÷¹Ú
-	const bool AI°£ÀÇ_¼¼·Â¸ê¸Á½Ã_¸ğµç¹«ÀåÆ÷¹Ú = true;
+	//ì¬ì•¼ì¸ì¬ì—ëŠ” ì ìš©ë˜ì§€ ì•ŠìŒ, ìœ ì €ê°€ AIì„¸ë ¥ ë“±ìš©ì‹œì—ëŠ” ë” ì–´ë µê²Œ, AIê°€ ìœ ì €ì„¸ë ¤ ë“±ìš©ì‹œì—ëŠ” ë”ì‰½ê²Œ
+	//40ì¼ë•Œ 80ì •ë„ì— í¬ë¡œë“±ìš©í• ìˆ˜ ìˆì–¸ë˜ ì„œí™©ì´ 66ì— ë“±ìš©ê°€ëŠ¥, ìƒì„±ì´ ë§ê±°ë‚˜ ê·¸ëŸ¬ë©´ 80ëŒ€ì—ë„ ë“±ìš©ê°€ëŠ¥í•˜ê¸´í•©ë‹ˆë‹¤.
+	const bool ì¸ì¬ë“±ìš©_AIìœ ë¦¬ = false;
+	const int ìœ ì €_ì¸ì¬ë“±ìš©_ë¶€ê°€ìˆ˜ì¹˜ = -5;//ìœ ì €ê°€ AIë¬´ì¥ ë“±ìš©í• ë•Œ,30%í™•ë¥ ì„ ë” ëºŒ(ì–´ë µê²Œ) 
+	const int AI_ì¸ì¬ë“±ìš©_ë¶€ê°€ìˆ˜ì¹˜ = 5;//AIê°€ ìœ ì € ë¬´ì¥ ë“±ìš©í• ë•Œ 30%í™•ë¥ ì„ ë”í•¨(ì‰½ê²Œ)
 
-	const bool AI°£ÀÇ_¼¼·Â¸ê¸Á½Ã_Æ÷·ÎÃ³¿ì_Æ÷·Î = true;//AI°¡ ¼¼·Â¸ê¸Á½Ã Æ÷·Î¸¦ Ç®¾îÁÖ´Â°æ¿ì¸¦ Á¦ÇÑÇÕ´Ï´Ù.
+
+	//ì§€ì—­ì´ì  ì ìš©ì‹œ, ê¸°ë³¸ì„¤ì •ìœ¼ë¡œ ì„¸ë ¥ë©¸ë§ì‹œ í™•ë¥ ì ìœ¼ë¡œ ì¥ìˆ˜ë¥¼ í¬ë°•í•˜ëŠ”ë°, AIê°„ì˜ ì„¸ë ¥ë©¸ë§ì‹œì—ëŠ” í™•ë¥ ì´ ì•„ë‹Œ 100%ë¡œ í¬ë°•í•˜ë„ë¡
+	//ìœ ì €ì˜ ê²½ìš° ì§€ì—­ì´ì  í¬ë°•ì„¤ì • ê·¸ëŒ€ë¡œ ì ìš©, ê¸°ë³¸ì ìœ¼ë¡œ í™•ë¥ ì ìœ¼ë¡œ í¬ë°•
+	const bool AIê°„ì˜_ì„¸ë ¥ë©¸ë§ì‹œ_ëª¨ë“ ë¬´ì¥í¬ë°• = true;
+
+	const bool AIê°„ì˜_ì„¸ë ¥ë©¸ë§ì‹œ_í¬ë¡œì²˜ìš°_í¬ë¡œ = true;//AIê°€ ì„¸ë ¥ë©¸ë§ì‹œ í¬ë¡œë¥¼ í’€ì–´ì£¼ëŠ”ê²½ìš°ë¥¼ ì œí•œí•©ë‹ˆë‹¤.
 
 
 	class Info
@@ -69,10 +69,10 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 		int callback258(pk::person@ prisoner, const pk::prisoner_info& in info)
 		{
 			int n = prev_callback_258(prisoner, info);
-			if (n != Æ÷·ÎÃ³¿ì_ÇØ¹æ || !AI°£ÀÇ_¼¼·Â¸ê¸Á½Ã_Æ÷·ÎÃ³¿ì_Æ÷·Î)
+			if (n != í¬ë¡œì²˜ìš°_í•´ë°© || !AIê°„ì˜_ì„¸ë ¥ë©¸ë§ì‹œ_í¬ë¡œì²˜ìš°_í¬ë¡œ)
 				return n;
-			if (prisoner.mibun == ½ÅºĞ_±ºÁÖ)
-				return Æ÷·ÎÃ³¿ì_ÇØ¹æ;
+			if (prisoner.mibun == ì‹ ë¶„_êµ°ì£¼)
+				return í¬ë¡œì²˜ìš°_í•´ë°©;
 
 
 			pk::person@ attacker;
@@ -87,26 +87,26 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 			if (pk::is_alive(attacker))
 				@service = pk::get_building(attacker.service);
 
-			// Æ÷·Î¸¦ ÀâÀº ¹«ÀåÀÇ ¼Ò¼ÓÀÌ ¾ø´Ù¸é ÇØ¹æ
-			if (!pk::is_alive(service)) return Æ÷·ÎÃ³¿ì_ÇØ¹æ;
+			// í¬ë¡œë¥¼ ì¡ì€ ë¬´ì¥ì˜ ì†Œì†ì´ ì—†ë‹¤ë©´ í•´ë°©
+			if (!pk::is_alive(service)) return í¬ë¡œì²˜ìš°_í•´ë°©;
 
 
-			pk::printf("Æ÷·ÎÃ³¿ì ÇØ¹æ -> Æ÷·Î:{}\n",getName(prisoner));
-			return Æ÷·ÎÃ³¿ì_Æ÷·Î;
+			pk::printf("í¬ë¡œì²˜ìš° í•´ë°© -> í¬ë¡œ:{}\n",getName(prisoner));
+			return í¬ë¡œì²˜ìš°_í¬ë¡œ;
 		}
 
 		void onInit()
 		{
-			_Àç¾ß¸®½ºÆ® = {};
+			_ì¬ì•¼ë¦¬ìŠ¤íŠ¸ = {};
 
-			pk::list<pk::person@> ps = getÀç¾ß¸®½ºÆ®();
+			pk::list<pk::person@> ps = getì¬ì•¼ë¦¬ìŠ¤íŠ¸();
 			for (int i = 0; i < ps.count; i++)
 			{
 				pk::person@ p = ps[i];
 				Info ifo;
 				@ifo.p = p;
 				@ifo.city = pk::get_city(p.location);
-				_Àç¾ß¸®½ºÆ®.insertLast(ifo);
+				_ì¬ì•¼ë¦¬ìŠ¤íŠ¸.insertLast(ifo);
 			}
 
 			if (prev_callback_111 == null)
@@ -128,32 +128,32 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 		{
 
 
-			update»ç°üµî¿ë();
-			updateÀÎÀçÅ½»ö();
-			updateÀç¾ßµî¿ë();
-			updateÆ÷·Îµî¿ë();
-			updateÀç¾ßÀÚµ¿Å½»ö();
+			updateì‚¬ê´€ë“±ìš©();
+			updateì¸ì¬íƒìƒ‰();
+			updateì¬ì•¼ë“±ìš©();
+			updateí¬ë¡œë“±ìš©();
+			updateì¬ì•¼ìë™íƒìƒ‰();
 
-			_Àç¾ß¸®½ºÆ® = {};
+			_ì¬ì•¼ë¦¬ìŠ¤íŠ¸ = {};
 
-			pk::list<pk::person@> ps = getÀç¾ß¸®½ºÆ®();
+			pk::list<pk::person@> ps = getì¬ì•¼ë¦¬ìŠ¤íŠ¸();
 			for (int i = 0; i < ps.count; i++)
 			{
 				pk::person@ p = ps[i];
 				Info ifo;
 				@ifo.p = p;
 				@ifo.city = pk::get_city(p.location);
-				_Àç¾ß¸®½ºÆ®.insertLast(ifo);
+				_ì¬ì•¼ë¦¬ìŠ¤íŠ¸.insertLast(ifo);
 			}
 		}
 		
-		int ¹Ì¹ß°ß¹«Àå¼ö¹İÈ¯(pk::list<pk::person@> targets)
+		int ë¯¸ë°œê²¬ë¬´ì¥ìˆ˜ë°˜í™˜(pk::list<pk::person@> targets)
 		{
 			int count=0;
 			for(int iPerson=0;iPerson < targets.count;iPerson++)
 			{
 				pk::person@ person = targets[iPerson];
-				if(person.mibun == ½ÅºĞ_¹Ì¹ß°ß)
+				if(person.mibun == ì‹ ë¶„_ë¯¸ë°œê²¬)
 					count++;
 			}
 			return count;
@@ -162,7 +162,7 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 		pk::list<pk::item@> getKunshuItem(pk::force@ force)
 		{	
 			pk::list<pk::item@> items;
-			for(int iItem=0;iItem<º¸¹°_³¡;iItem++)
+			for(int iItem=0;iItem<ë³´ë¬¼_ë;iItem++)
 			{
 				pk::item@ item = pk::get_item(iItem);
 				if(item == null)
@@ -195,25 +195,25 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 			return null;
 		}
 		
-		void updateÀÎÀçÅ½»ö()
+		void updateì¸ì¬íƒìƒ‰()
 		{
-			if (!AI_ÀÎÀçÅ½»ö)
+			if (!AI_ì¸ì¬íƒìƒ‰)
 				return;
-			//ÀÎÀçÅ½»öÀº 2¹øÀÇ ÇÑ¹ø¸¸ , idle ÀÎ ¹«Àåµé·Î, Àç¾ßµî¿ëÀ» ÇØ¾ßµÇ±â¶§¹®¿¡
-			if((pk::get_elapsed_days() % AI_ÀÎÀçÅ½»ö_ÁÖ±â)!=0)
+			//ì¸ì¬íƒìƒ‰ì€ 2ë²ˆì˜ í•œë²ˆë§Œ , idle ì¸ ë¬´ì¥ë“¤ë¡œ, ì¬ì•¼ë“±ìš©ì„ í•´ì•¼ë˜ê¸°ë•Œë¬¸ì—
+			if((pk::get_elapsed_days() % AI_ì¸ì¬íƒìƒ‰_ì£¼ê¸°)!=0)
 			{
 				//pk::u8printf("search days return{}\n",pk::get_elapsed_days());
 				return;
 			}
 				
 			
-			pk::list<pk::person@> ¹Ì¹ß°ß¸®½ºÆ®;
-			for(int i=0;i<¹«Àå_³¡;i++)
+			pk::list<pk::person@> ë¯¸ë°œê²¬ë¦¬ìŠ¤íŠ¸;
+			for(int i=0;i<ë¬´ì¥_ë;i++)
 			{
 				pk::person@ person = pk::get_person(i);
-				if(person.mibun != ½ÅºĞ_¹Ì¹ß°ß)
+				if(person.mibun != ì‹ ë¶„_ë¯¸ë°œê²¬)
 					continue;
-				¹Ì¹ß°ß¸®½ºÆ®.add(person);
+				ë¯¸ë°œê²¬ë¦¬ìŠ¤íŠ¸.add(person);
 			}
 			
 			for(int i=0;i<50;i++)
@@ -234,9 +234,9 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 					pk::list<pk::person@> plist = pk::get_idle_person_list(building);
 					
 					pk::list<pk::person@> targets;
-					for(int iPerson=0;iPerson < ¹Ì¹ß°ß¸®½ºÆ®.count;iPerson++)
+					for(int iPerson=0;iPerson < ë¯¸ë°œê²¬ë¦¬ìŠ¤íŠ¸.count;iPerson++)
 					{
-						pk::person@ person = ¹Ì¹ß°ß¸®½ºÆ®[iPerson];
+						pk::person@ person = ë¯¸ë°œê²¬ë¦¬ìŠ¤íŠ¸[iPerson];
 						if(person.location != building.get_id())
 							continue;
 						
@@ -257,25 +257,25 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 						@ei.actor = person;
 						if(pk::command(ei))
 						{
-							//ÇÑ¸í ¹ß°ßÇÏ¸é ±×¸¸ÇÑ´Ù, idle ¹«ÀåÀ» µî¿ë¿¡ »ç¿ëÇØ¾ßµÇ±â ¶§¹®.
-							if(preCount == ¹Ì¹ß°ß¹«Àå¼ö¹İÈ¯(targets))
+							//í•œëª… ë°œê²¬í•˜ë©´ ê·¸ë§Œí•œë‹¤, idle ë¬´ì¥ì„ ë“±ìš©ì— ì‚¬ìš©í•´ì•¼ë˜ê¸° ë•Œë¬¸.
+							if(preCount == ë¯¸ë°œê²¬ë¬´ì¥ìˆ˜ë°˜í™˜(targets))
 							{
 								//test
 								//pk::person@ kunshu = pk::get_person(force.kunshu);
-								//string s = pk::format("\x1b[2x{}±º\x1b[0x,ÀÎÀç¹ß°ß",pk::decode(pk::get_name(kunshu)));
+								//string s = pk::format("\x1b[2x{}êµ°\x1b[0x,ì¸ì¬ë°œê²¬",pk::decode(pk::get_name(kunshu)));
 								//pk::history_log(kunshu.pos, force.color, pk::encode(s));
 								break;
 							}
 							else
 							{
 								pk::list<pk::item@> items = getKunshuItem(force);
-								if(items0.count != items.count) //¾ÆÀÌÅÛ ¹ß°ß.
+								if(items0.count != items.count) //ì•„ì´í…œ ë°œê²¬.
 								{
 									pk::item@ item=getNewItem(items0, items);
 									if(item!=null) 
 									{	
 										pk::person@ kunshu = pk::get_person(force.kunshu);
-										string s = pk::format("\x1b[2x{}±º\x1b[0x,º¸¹° \x1b[2x{}\x1b[0x ¹ß°ß",pk::decode(pk::get_name(kunshu)),pk::decode(item.name));
+										string s = pk::format("\x1b[2x{}êµ°\x1b[0x,ë³´ë¬¼ \x1b[2x{}\x1b[0x ë°œê²¬",pk::decode(pk::get_name(kunshu)),pk::decode(item.name));
 										pk::history_log(kunshu.pos, force.color, pk::encode(s));
 										items0 = items;
 									}
@@ -287,17 +287,17 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 			}//iForce			
 		}
 		
-		void updateÀç¾ßµî¿ë()
+		void updateì¬ì•¼ë“±ìš©()
 		{
-			if (!AI_Àç¾ßµî¿ë)
+			if (!AI_ì¬ì•¼ë“±ìš©)
 				return;
-			if ((pk::get_elapsed_days() % AI_Àç¾ßµî¿ë_ÁÖ±â) != 0)
+			if ((pk::get_elapsed_days() % AI_ì¬ì•¼ë“±ìš©_ì£¼ê¸°) != 0)
 			{
 				//pk::u8printf("join day return{}\n",pk::get_elapsed_days());
 				return;
 			}
 
-			pk::list<pk::person@> Àç¾ß¸®½ºÆ® = getÀç¾ß¸®½ºÆ®();
+			pk::list<pk::person@> ì¬ì•¼ë¦¬ìŠ¤íŠ¸ = getì¬ì•¼ë¦¬ìŠ¤íŠ¸();
 			for(int i=0;i<50;i++)
 			{
 				pk::force@ force = pk::get_force(i);
@@ -314,11 +314,11 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 
 					pk::list<pk::person@> plist = pk::get_idle_person_list(building);
 					
-					//½ºÅÈÃÑÇÕÀÌ °¡Àå³ôÀº¼øÀ¸·Î µî¿ë½Ãµµ
+					//ìŠ¤íƒ¯ì´í•©ì´ ê°€ì¥ë†’ì€ìˆœìœ¼ë¡œ ë“±ìš©ì‹œë„
 					pk::list<pk::person@> targets;
-					for(int iPerson=0;iPerson < Àç¾ß¸®½ºÆ®.count;iPerson++)
+					for(int iPerson=0;iPerson < ì¬ì•¼ë¦¬ìŠ¤íŠ¸.count;iPerson++)
 					{
-						pk::person@ person = Àç¾ß¸®½ºÆ®[iPerson];
+						pk::person@ person = ì¬ì•¼ë¦¬ìŠ¤íŠ¸[iPerson];
 						if(person.location != building.get_id())
 							continue;
 						
@@ -338,10 +338,10 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 						@ei.target = targets[0];
 						if(pk::command(ei))
 						{
-							if(targets[0].mibun != ½ÅºĞ_Àç¾ß)
+							if(targets[0].mibun != ì‹ ë¶„_ì¬ì•¼)
 							{
 								pk::person@ kunshu = pk::get_person(force.kunshu);
-								string s = pk::format("\x1b[2x{}±º\x1b[0x,\x1b[2x{}\x1b[0x µî¿ë",pk::decode(pk::get_name(kunshu)),pk::decode(pk::get_name(targets[0])));
+								string s = pk::format("\x1b[2x{}êµ°\x1b[0x,\x1b[2x{}\x1b[0x ë“±ìš©",pk::decode(pk::get_name(kunshu)),pk::decode(pk::get_name(targets[0])));
 								pk::history_log(kunshu.pos, force.color, pk::encode(s));
 								
 								targets.remove_at(0);
@@ -352,22 +352,22 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 					}
 				}//icity
 			}//iForce
-		}//Àç¾ßµî¿ë
+		}//ì¬ì•¼ë“±ìš©
 
-		void update»ç°üµî¿ë()
+		void updateì‚¬ê´€ë“±ìš©()
 		{
-			if (!AI_»ç°üµî¿ë)
+			if (!AI_ì‚¬ê´€ë“±ìš©)
 				return;
 			if (pk::get_day() != 1)
 				return;
-			if (pk::get_elapsed_days() < AI_»ç°üµî¿ë_±İÁö±â°£)
+			if (pk::get_elapsed_days() < AI_ì‚¬ê´€ë“±ìš©_ê¸ˆì§€ê¸°ê°„)
 				return;
 
-			pk::list<pk::person@> ps = getÀç¾ß¸®½ºÆ®();
+			pk::list<pk::person@> ps = getì¬ì•¼ë¦¬ìŠ¤íŠ¸();
 			for (int i = 0; i < ps.count; i++)
 			{
 				pk::person@ p = ps[i];
-				Info@ ifo = getÀç¾ßInfo(p);
+				Info@ ifo = getì¬ì•¼Info(p);
 				if(ifo==null)
 					continue;
 				if(ifo.city==null || p.location != ifo.city.get_id())
@@ -379,84 +379,84 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 				if(f.is_player())
 					continue;
 
-				p.mibun = ½ÅºĞ_ÀÏ¹İ;
+				p.mibun = ì‹ ë¶„_ì¼ë°˜;
 				p.location = ifo.city.get_id();
 				p.service = ifo.city.get_id();
 				p.district = pk::city_to_building(ifo.city).get_district_id();
 				p.loyalty = 100;
 				p.update();
 
-				string str = pk::format("\x1b[2x{}±º\x1b[0x,\x1b[1x{}\x1b[0x,\x1b[24x{}\x1b[0x ¿¡¼­ »ç°üµî¿ë", getName(f), getName(ifo.p), getName(pk::get_building(ifo.p.service)));
+				string str = pk::format("\x1b[2x{}êµ°\x1b[0x,\x1b[1x{}\x1b[0x,\x1b[24x{}\x1b[0x ì—ì„œ ì‚¬ê´€ë“±ìš©", getName(f), getName(ifo.p), getName(pk::get_building(ifo.p.service)));
 				pk::history_log(ifo.p.get_pos(), f != null ? f.color : 0, pk::encode(str));
 			}
 		}
 
-		void updateÆ÷·Îµî¿ë()
+		void updateí¬ë¡œë“±ìš©()
 		{
-			if (!AI_Æ÷·ÎÀÚµ¿µî¿ë)
+			if (!AI_í¬ë¡œìë™ë“±ìš©)
 				return;
-			for (int i = 0; i < ¹«Àå_³¡; i++)
+			for (int i = 0; i < ë¬´ì¥_ë; i++)
 			{
 				pk::person@ person = pk::get_person(i);
-				if (person.mibun != ½ÅºĞ_Æ÷·Î)
+				if (person.mibun != ì‹ ë¶„_í¬ë¡œ)
 					continue;
-				//¸ê¸Á¼¼·Â Æ÷·Î´Â È®·ü·Î
-				if(person.get_force_id() == -1 && !pk::rand_bool(AI_Æ÷·ÎÀÚµ¿µî¿ë_È®·ü))
+				//ë©¸ë§ì„¸ë ¥ í¬ë¡œëŠ” í™•ë¥ ë¡œ
+				if(person.get_force_id() == -1 && !pk::rand_bool(AI_í¬ë¡œìë™ë“±ìš©_í™•ë¥ ))
 					continue;
-				if (person.loyalty >= (person.is_player() ? AI_Æ÷·ÎÀÚµ¿µî¿ë_Ãæ¼ºµµ_À¯Àú : AI_Æ÷·ÎÀÚµ¿µî¿ë_Ãæ¼ºµµ))
+				if (person.loyalty >= (person.is_player() ? AI_í¬ë¡œìë™ë“±ìš©_ì¶©ì„±ë„_ìœ ì € : AI_í¬ë¡œìë™ë“±ìš©_ì¶©ì„±ë„))
 					continue;
 
-				bool bÀÇÇüÁ¦ = false;
-				pk::list<pk::person@> ÀÇÇüÁ¦ = pk::get_gikyoudai_list(person);
-				if (ÀÇÇüÁ¦.count > 0)
+				bool bì˜í˜•ì œ = false;
+				pk::list<pk::person@> ì˜í˜•ì œ = pk::get_gikyoudai_list(person);
+				if (ì˜í˜•ì œ.count > 0)
 				{
-					for (int j = 0; j < ÀÇÇüÁ¦.count; j++)
+					for (int j = 0; j < ì˜í˜•ì œ.count; j++)
 					{
-						pk::person@ p = ÀÇÇüÁ¦[j];
+						pk::person@ p = ì˜í˜•ì œ[j];
 						if(p.get_id() == person.get_id())
 							continue;
 						if(p.get_force_id() != person.get_force_id())
 							continue;
-						bÀÇÇüÁ¦ = true;
+						bì˜í˜•ì œ = true;
 						break;
 					}
 				}
-				if(!AI_Æ÷·ÎÀÚµ¿µî¿ë_ÀÇÇüÁ¦ && bÀÇÇüÁ¦)
+				if(!AI_í¬ë¡œìë™ë“±ìš©_ì˜í˜•ì œ && bì˜í˜•ì œ)
 					continue;
 
-				bool bºÎºÎ = false;
+				bool bë¶€ë¶€ = false;
 				if (person.spouse >= 0)
 				{
 					pk::person@ p = pk::get_person(person.spouse);
 					if (p != null && p.get_force_id() == person.get_force_id())
-						bºÎºÎ = true;
+						bë¶€ë¶€ = true;
 				}
-				if(!AI_Æ÷·ÎÀÚµ¿µî¿ë_ºÎºÎ && bºÎºÎ)
+				if(!AI_í¬ë¡œìë™ë“±ìš©_ë¶€ë¶€ && bë¶€ë¶€)
 					continue;
 
-				bool b¾Æ¹öÁö = false;
+				bool bì•„ë²„ì§€ = false;
 				if (person.father >= 0)
 				{
 					pk::person@ p = pk::get_person(person.father);
 					if (p != null && p.get_force_id() == person.get_force_id())
-						b¾Æ¹öÁö = true;
+						bì•„ë²„ì§€ = true;
 				}
-				if (!AI_Æ÷·ÎÀÚµ¿µî¿ë_ºÎÄ£ && b¾Æ¹öÁö)
+				if (!AI_í¬ë¡œìë™ë“±ìš©_ë¶€ì¹œ && bì•„ë²„ì§€)
 					continue;
 
-				bool b¾î¸Ó´Ï = false;
+				bool bì–´ë¨¸ë‹ˆ = false;
 				if (person.mother >= 0)
 				{
 					pk::person@ p = pk::get_person(person.mother);
 					if (p != null && p.get_force_id() == person.get_force_id())
-						b¾î¸Ó´Ï = true;
+						bì–´ë¨¸ë‹ˆ = true;
 				}
-				if (!AI_Æ÷·ÎÀÚµ¿µî¿ë_¸ğÄ£ && b¾î¸Ó´Ï)
+				if (!AI_í¬ë¡œìë™ë“±ìš©_ëª¨ì¹œ && bì–´ë¨¸ë‹ˆ)
 					continue;
 
 
 				pk::building@ b = null;
-				if (person.location < °Ç¹°_°ÅÁ¡³¡)
+				if (person.location < ê±´ë¬¼_ê±°ì ë)
 				{
 					@b = pk::get_building(person.location);
 				}
@@ -464,9 +464,9 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 				{
 					pk::unit@ u = pk::get_unit(person.get_pos());
 					@b = u!=null ? pk::get_building(pk::get_person(u.leader).service) : null;
-					//pk::printf("Æ÷·Î:{},{},{}\n", getName(person), getNameLeader(u),getName(b));
+					//pk::printf("í¬ë¡œ:{},{},{}\n", getName(person), getNameLeader(u),getName(b));
 				}
-				if (b == null || (b.facility != ½Ã¼³_µµ½Ã && b.facility != ½Ã¼³_°ü¹® && b.facility != ½Ã¼³_Ç×±¸))
+				if (b == null || (b.facility != ì‹œì„¤_ë„ì‹œ && b.facility != ì‹œì„¤_ê´€ë¬¸ && b.facility != ì‹œì„¤_í•­êµ¬))
 					continue;
 				if(b.is_player())
 					continue;
@@ -477,92 +477,92 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 
 				bool bPlayer = person.is_player();
 
-				person.mibun = ½ÅºĞ_ÀÏ¹İ;
+				person.mibun = ì‹ ë¶„_ì¼ë°˜;
 				person.service = b.get_id();
 				person.location = b.get_id();
 				person.district = b.get_district_id();
 				person.loyalty = 100;
 				person.update();
 
-				string str = pk::format("\x1b[2x{}±º\x1b[0x,\x1b[1x{}\x1b[0x,\x1b[24x{}\x1b[0x ¿¡¼­ Æ÷·Îµî¿ë", getName(f), getName(person), getName(b));
+				string str = pk::format("\x1b[2x{}êµ°\x1b[0x,\x1b[1x{}\x1b[0x,\x1b[24x{}\x1b[0x ì—ì„œ í¬ë¡œë“±ìš©", getName(f), getName(person), getName(b));
 				pk::history_log(person.get_pos(), f != null ? f.color : 0, pk::encode(str));
 				if (bPlayer)
 				{
-					str = pk::format("\x1b[1x{}\x1b[0x°¡ \x1b[2x{}±º\x1b[0xÀ¸·Î ¹è¹İÇß½À´Ï´Ù.",getName(person),getName(f));
-					pk::message_box(pk::encode(str),pk::get_person(¹«Àå_¹®°ü));
+					str = pk::format("\x1b[1x{}\x1b[0xê°€ \x1b[2x{}êµ°\x1b[0xìœ¼ë¡œ ë°°ë°˜í–ˆìŠµë‹ˆë‹¤.",getName(person),getName(f));
+					pk::message_box(pk::encode(str),pk::get_person(ë¬´ì¥_ë¬¸ê´€));
 				}
 			}
 		}
 
-		void updateÀç¾ßÀÚµ¿Å½»ö()
+		void updateì¬ì•¼ìë™íƒìƒ‰()
 		{
-			if (!AI_Àç¾ßÀÚµ¿Å½»ö)
+			if (!AI_ì¬ì•¼ìë™íƒìƒ‰)
 				return;
-			if (pk::get_elapsed_days() < AI_Àç¾ßÀÚµ¿Å½»ö_±İÁö±â°£)
+			if (pk::get_elapsed_days() < AI_ì¬ì•¼ìë™íƒìƒ‰_ê¸ˆì§€ê¸°ê°„)
 				return;
 
-			for (int i = 0; i < ¹«Àå_³¡; i++)
+			for (int i = 0; i < ë¬´ì¥_ë; i++)
 			{
 				pk::person@ person = pk::get_person(i);
-				if (person.mibun != ½ÅºĞ_¹Ì¹ß°ß)
+				if (person.mibun != ì‹ ë¶„_ë¯¸ë°œê²¬)
 					continue;
 
 				pk::building@ b = pk::get_building(person.location);
 				if(b == null || b.is_player())
 					continue;
-				if(!pk::rand_bool(AI_Àç¾ßÀÚµ¿Å½»ö_È®·ü))
+				if(!pk::rand_bool(AI_ì¬ì•¼ìë™íƒìƒ‰_í™•ë¥ ))
 					continue;
 
-				person.mibun = ½ÅºĞ_Àç¾ß;
+				person.mibun = ì‹ ë¶„_ì¬ì•¼;
 				person.update();
 
 
-				string str = pk::format("\x1b[1x{}\x1b[0x,\x1b[24x{}\x1b[0x ¿¡¼­ ½º½º·Î µîÀå", getName(person), getName(b));
+				string str = pk::format("\x1b[1x{}\x1b[0x,\x1b[24x{}\x1b[0x ì—ì„œ ìŠ¤ìŠ¤ë¡œ ë“±ì¥", getName(person), getName(b));
 				pk::history_log(person.get_pos(), 0, pk::encode(str));
 			}
 		}
 
-		Info@ getÀç¾ßInfo(pk::person@ p)
+		Info@ getì¬ì•¼Info(pk::person@ p)
 		{
-			for (int i = 0; i < _Àç¾ß¸®½ºÆ®.length; i++)
+			for (int i = 0; i < _ì¬ì•¼ë¦¬ìŠ¤íŠ¸.length; i++)
 			{
-				Info@ ifo = _Àç¾ß¸®½ºÆ®[i];
+				Info@ ifo = _ì¬ì•¼ë¦¬ìŠ¤íŠ¸[i];
 				if (ifo.p.get_id() == p.get_id())
 					return ifo;
 			}
 			return null;
 		}
 
-		array<Info> _Àç¾ß¸®½ºÆ®;
-		pk::list<pk::person@> getÀç¾ß¸®½ºÆ®()
+		array<Info> _ì¬ì•¼ë¦¬ìŠ¤íŠ¸;
+		pk::list<pk::person@> getì¬ì•¼ë¦¬ìŠ¤íŠ¸()
 		{
-			pk::list<pk::person@> Àç¾ß¸®½ºÆ®;
-			for (int i = 0; i < ¹«Àå_³¡; i++)
+			pk::list<pk::person@> ì¬ì•¼ë¦¬ìŠ¤íŠ¸;
+			for (int i = 0; i < ë¬´ì¥_ë; i++)
 			{
 				pk::person@ person = pk::get_person(i);
-				if (person.mibun != ½ÅºĞ_Àç¾ß)
+				if (person.mibun != ì‹ ë¶„_ì¬ì•¼)
 					continue;
-				Àç¾ß¸®½ºÆ®.add(person);
+				ì¬ì•¼ë¦¬ìŠ¤íŠ¸.add(person);
 			}
-			Àç¾ß¸®½ºÆ®.sort(function(a, b) {
+			ì¬ì•¼ë¦¬ìŠ¤íŠ¸.sort(function(a, b) {
 				int sumA = 0;
-				for (int i = 0; i < ¹«Àå´É·Â_³¡; i++)
+				for (int i = 0; i < ë¬´ì¥ëŠ¥ë ¥_ë; i++)
 					sumA += a.base_stat[i];
 				int sumB = 0;
-				for (int i = 0; i < ¹«Àå´É·Â_³¡; i++)
+				for (int i = 0; i < ë¬´ì¥ëŠ¥ë ¥_ë; i++)
 					sumB += b.base_stat[i];
 
 				return sumA > sumB;
 			});
 
-			return Àç¾ß¸®½ºÆ®;
+			return ì¬ì•¼ë¦¬ìŠ¤íŠ¸;
 		}
 
 
 		void callback220(const pk::destroy_info& in info, pk::list<pk::person@>& captured, pk::list<pk::person@>& escaped, bool tactics_bonus)
 		{
 			prev_callback_220(info, captured, escaped, tactics_bonus);
-			if (!AI°£ÀÇ_¼¼·Â¸ê¸Á½Ã_¸ğµç¹«ÀåÆ÷¹Ú)
+			if (!AIê°„ì˜_ì„¸ë ¥ë©¸ë§ì‹œ_ëª¨ë“ ë¬´ì¥í¬ë°•)
 				return;
 
 			pk::hex_object@ attacker = info.attacker;
@@ -574,12 +574,12 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 			pk::unit@ attacker_unit = attacker.get_type_id() == pk::unit::type_id ? attacker : null;
 			pk::building@ target_building = target.get_type_id() == pk::building::type_id ? target : null;
 			pk::unit@ target_unit = target.get_type_id() == pk::unit::type_id ? target : null;
-			int target_border_radius = pk::is_alive(target_building) and target_building.facility == ½Ã¼³_µµ½Ã ? 2 : 1;
+			int target_border_radius = pk::is_alive(target_building) and target_building.facility == ì‹œì„¤_ë„ì‹œ ? 2 : 1;
 			pk::point attacker_pos = attacker.get_pos();
 			pk::point target_pos = target.get_pos();
 			bool in_border = pk::is_in_range(target_pos, target_border_radius, attacker_pos);
 			bool cant_capture = !pk::is_valid_normal_force_id(attacker_force_id) or !pk::is_valid_normal_force_id(target_force_id);
-			bool penalty = pk::get_scenario().difficulty == ³­ÀÌµµ_Æ¯±Ş and attacker.is_player() and not target.is_player();
+			bool penalty = pk::get_scenario().difficulty == ë‚œì´ë„_íŠ¹ê¸‰ and attacker.is_player() and not target.is_player();
 			bool has_hobaku_skill = false;
 			int hobaku_chance = 0;
 
@@ -587,12 +587,12 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 			{
 				pk::printf("escaped:{},captured:{}\n",escaped.count,captured.count);
 
-				pk::list<pk::person@> ps = pk::get_person_list(target_building, pk::mibun_flags(½ÅºĞ_±ºÁÖ, ½ÅºĞ_µµµ¶, ½ÅºĞ_ÅÂ¼ö, ½ÅºĞ_ÀÏ¹İ));
+				pk::list<pk::person@> ps = pk::get_person_list(target_building, pk::mibun_flags(ì‹ ë¶„_êµ°ì£¼, ì‹ ë¶„_ë„ë…, ì‹ ë¶„_íƒœìˆ˜, ì‹ ë¶„_ì¼ë°˜));
 				captured.clear();
 				for (int i = 0; i < ps.count; i++)
 				{
 					pk::person@ p = ps[i];
-					pk::printf("µµ¸Á -> Æ÷¹Ú:{}\n", getName(p));
+					pk::printf("ë„ë§ -> í¬ë°•:{}\n", getName(p));
 					captured.add(p);
 				}
 				escaped.clear();
@@ -603,34 +603,34 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 		bool callback111(pk::person@ target, pk::person@ actor, int type, int seed)
 		{
 			bool b = prev_callback_111(target, actor, type, seed);
-			if (!ÀÎÀçµî¿ë_AIÀ¯¸®)
+			if (!ì¸ì¬ë“±ìš©_AIìœ ë¦¬)
 				return b;
 
 			bool bPlayer0 = actor != null && actor.is_player();
 			bool bPlayer1 = target != null && target.is_player();
 			if (!bPlayer0 && !bPlayer1)
 				return b;
-			if (target != null && target.mibun == ½ÅºĞ_Àç¾ß)
+			if (target != null && target.mibun == ì‹ ë¶„_ì¬ì•¼)
 				return b;
-			if (target.mibun == ½ÅºĞ_Æ÷·Î && target.get_force_id() == -1)
+			if (target.mibun == ì‹ ë¶„_í¬ë¡œ && target.get_force_id() == -1)
 				return b;
 
-			if (bPlayer0 && !bPlayer1) //À¯Àú°¡ µî¿ë
+			if (bPlayer0 && !bPlayer1) //ìœ ì €ê°€ ë“±ìš©
 			{
-				//½ÇÆĞÇßÀ¸¸é ÁøÇà
+				//ì‹¤íŒ¨í–ˆìœ¼ë©´ ì§„í–‰
 				if (!b)
 					return b;
 
-				//¾î·Æ°ÔÇØ¼­ µî¿ë
-				return _callback111(target, actor, type, seed, À¯Àú_ÀÎÀçµî¿ë_ºÎ°¡¼öÄ¡);
+				//ì–´ë µê²Œí•´ì„œ ë“±ìš©
+				return _callback111(target, actor, type, seed, ìœ ì €_ì¸ì¬ë“±ìš©_ë¶€ê°€ìˆ˜ì¹˜);
 			}
-			else if (!bPlayer0 && bPlayer1) //AI°¡ µî¿ë
+			else if (!bPlayer0 && bPlayer1) //AIê°€ ë“±ìš©
 			{
-				//¼º°øÇßÀ¸¸é ÁøÇà
+				//ì„±ê³µí–ˆìœ¼ë©´ ì§„í–‰
 				if (b)
 					return b;
-				//½±°ÔÇØ¼­ µî¿ë
-				return _callback111(target, actor, type, seed, AI_ÀÎÀçµî¿ë_ºÎ°¡¼öÄ¡);
+				//ì‰½ê²Œí•´ì„œ ë“±ìš©
+				return _callback111(target, actor, type, seed, AI_ì¸ì¬ë“±ìš©_ë¶€ê°€ìˆ˜ì¹˜);
 			}
 
 			return b;
@@ -642,11 +642,11 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 		{
 			if (!pk::is_alive(target) or !pk::is_alive(actor)) return false;
 
-			// ½ÇÇà ¹«ÀåÀÇ ±ºÁÖ°¡ ¾ø´Ù¸é Ç×»ó ½ÇÆĞ
+			// ì‹¤í–‰ ë¬´ì¥ì˜ êµ°ì£¼ê°€ ì—†ë‹¤ë©´ í•­ìƒ ì‹¤íŒ¨
 			pk::person@ actor_kunshu = pk::get_person(pk::get_kunshu_id(actor));
 			if (!pk::is_alive(actor_kunshu)) return false;
 
-			// Æ¯º°ÇÑ °ü°è°¡ ÀÖ´ÂÁö È®ÀÎ
+			// íŠ¹ë³„í•œ ê´€ê³„ê°€ ìˆëŠ”ì§€ í™•ì¸
 			pk::bool_bool tuple = func_4b0040(target, actor, type);
 			if (tuple.first) return tuple.second;
 
@@ -654,23 +654,23 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 			if (type != 0) giri = pk::min(15 - target.giri * 2, 10);
 			int n = pk::min(func_5c6030(target, actor, type, seed) * giri / 10, 100);
 
-			// Æ÷·ÎÃ³¿ìÀÎ °æ¿ì
+			// í¬ë¡œì²˜ìš°ì¸ ê²½ìš°
 			if (type != 0) return pk::rand_bool(n);
 
-			return (n + off)> pk::rand(100, seed, target.get_id(), actor.get_id(), target.loyalty, actor.stat[¹«Àå´É·Â_¸Å·Â], pk::get_aishou_distance(actor, target.get_id()), 0);
+			return (n + off)> pk::rand(100, seed, target.get_id(), actor.get_id(), target.loyalty, actor.stat[ë¬´ì¥ëŠ¥ë ¥_ë§¤ë ¥], pk::get_aishou_distance(actor, target.get_id()), 0);
 		}
 
 		/**
-			¸ñÇ¥ ¹«Àå°ú ½ÇÇà ¹«Àå »çÀÌ¿¡ Æ¯º°ÇÑ °ü°è°¡ ÀÖ´ÂÁö ÆÇ´ÜÇÕ´Ï´Ù.
-			@return Æ¯º°ÇÑ °ü°è ¿©ºÎ, µî¿ë ¼º°ø ¿©ºÎ
+			ëª©í‘œ ë¬´ì¥ê³¼ ì‹¤í–‰ ë¬´ì¥ ì‚¬ì´ì— íŠ¹ë³„í•œ ê´€ê³„ê°€ ìˆëŠ”ì§€ íŒë‹¨í•©ë‹ˆë‹¤.
+			@return íŠ¹ë³„í•œ ê´€ê³„ ì—¬ë¶€, ë“±ìš© ì„±ê³µ ì—¬ë¶€
 		*/
 		pk::bool_bool func_4b0040(pk::person@ target, pk::person@ actor, int type)
 		{
 			int target_force_id = target.get_force_id();
-			// ±ÍÈ¯ °¡´ÉÇÔÀ» ³ªÅ¸³¿
+			// ê·€í™˜ ê°€ëŠ¥í•¨ì„ ë‚˜íƒ€ëƒ„
 			bool is_valid_target_force_id = pk::is_valid_force_id(target_force_id);
 
-			// ¸ñÇ¥ ¹«ÀåÀÇ ¼¼·ÂÀÌ ¸ê¸Á
+			// ëª©í‘œ ë¬´ì¥ì˜ ì„¸ë ¥ì´ ë©¸ë§
 			if (type == 2) is_valid_target_force_id = false;
 
 			if (!pk::is_alive(target) or !pk::is_alive(actor)) return pk::bool_bool(true, false);
@@ -678,29 +678,29 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 			int actor_kunshu_id = pk::get_kunshu_id(actor);
 			pk::person@ actor_kunshu = pk::get_person(actor_kunshu_id);
 
-			// ½ÇÇà ¹«ÀåÀÇ ¼¼·Â¿¡ ±ºÁÖ°¡ ¾ø´Â °æ¿ì Ç×»ó ½ÇÆĞ
+			// ì‹¤í–‰ ë¬´ì¥ì˜ ì„¸ë ¥ì— êµ°ì£¼ê°€ ì—†ëŠ” ê²½ìš° í•­ìƒ ì‹¤íŒ¨
 			if (!pk::is_alive(actor_kunshu)) return pk::bool_bool(true, false);
 
-			// ¸ñÇ¥ ¹«ÀåÀÇ »ç°ü ±İÁö ±ºÁÖ°¡ ½ÇÇà ¹«ÀåÀÇ ±ºÁÖÀÎ °æ¿ì Ç×»ó ½ÇÆĞ
+			// ëª©í‘œ ë¬´ì¥ì˜ ì‚¬ê´€ ê¸ˆì§€ êµ°ì£¼ê°€ ì‹¤í–‰ ë¬´ì¥ì˜ êµ°ì£¼ì¸ ê²½ìš° í•­ìƒ ì‹¤íŒ¨
 			if (target.banned_kunshu == actor_kunshu_id) return pk::bool_bool(true, false);
 
-			// ¸ñÇ¥ ¹«ÀåÀÌ ±ºÁÖÀÎ °æ¿ì Ç×»ó ½ÇÆĞ
-			if (target.mibun == ½ÅºĞ_±ºÁÖ and is_valid_target_force_id) return pk::bool_bool(true, false);
+			// ëª©í‘œ ë¬´ì¥ì´ êµ°ì£¼ì¸ ê²½ìš° í•­ìƒ ì‹¤íŒ¨
+			if (target.mibun == ì‹ ë¶„_êµ°ì£¼ and is_valid_target_force_id) return pk::bool_bool(true, false);
 
 			pk::person@ target_gikyoudai = pk::get_person(target.gikyoudai);
 
-			// ¸ñÇ¥ ¹«ÀåÀÌ ÀÇÇüÁ¦ ÀÖÀ½(2ÀÎ)
+			// ëª©í‘œ ë¬´ì¥ì´ ì˜í˜•ì œ ìˆìŒ(2ì¸)
 			if (pk::is_alive(target_gikyoudai) and @target_gikyoudai != @target)
 			{
-				// ¸ñÇ¥ ¹«ÀåÀÌ ÀÇÇüÁ¦¿Í °°Àº ¼¼·ÂÀÎ °æ¿ì Ç×»ó ½ÇÆĞ
+				// ëª©í‘œ ë¬´ì¥ì´ ì˜í˜•ì œì™€ ê°™ì€ ì„¸ë ¥ì¸ ê²½ìš° í•­ìƒ ì‹¤íŒ¨
 				if (is_valid_target_force_id and pk::is_valid_force_id(target_force_id) and target_gikyoudai.get_force_id() == target_force_id) return pk::bool_bool(true, false);
-				// ¸ñÇ¥ ¹«ÀåÀÌ ½ÇÇà ¹«Àå ¼¼·ÂÀÇ ±ºÁÖ³ª ½ÇÇà ¹«Àå°ú ÀÇÇüÁ¦ÀÎ °æ¿ì Ç×»ó ¼º°ø
+				// ëª©í‘œ ë¬´ì¥ì´ ì‹¤í–‰ ë¬´ì¥ ì„¸ë ¥ì˜ êµ°ì£¼ë‚˜ ì‹¤í–‰ ë¬´ì¥ê³¼ ì˜í˜•ì œì¸ ê²½ìš° í•­ìƒ ì„±ê³µ
 				if (@target_gikyoudai == @actor_kunshu or @target_gikyoudai == @actor) return pk::bool_bool(true, true);
 			}
 
 			pk::person@ target_spouse = pk::get_person(target.spouse);
 
-			// ¸ñÇ¥ ¹«ÀåÀÌ ¹è¿ìÀÚ¿Í °°Àº ¼¼·ÂÀÎ °æ¿ì Ç×»ó ½ÇÆĞ
+			// ëª©í‘œ ë¬´ì¥ì´ ë°°ìš°ìì™€ ê°™ì€ ì„¸ë ¥ì¸ ê²½ìš° í•­ìƒ ì‹¤íŒ¨
 			if (pk::is_alive(target_spouse))
 			{
 				if (is_valid_target_force_id and pk::is_valid_force_id(target_force_id) and target_spouse.get_force_id() == target_force_id)
@@ -709,7 +709,7 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 
 			pk::list<pk::person@> target_gikyoudai_list = pk::get_gikyoudai_list(target);
 
-			// ¸ñÇ¥ ¹«ÀåÀÌ ÀÇÇüÁ¦¿Í °°Àº ¼¼·ÂÀÎ °æ¿ì Ç×»ó ½ÇÆĞ
+			// ëª©í‘œ ë¬´ì¥ì´ ì˜í˜•ì œì™€ ê°™ì€ ì„¸ë ¥ì¸ ê²½ìš° í•­ìƒ ì‹¤íŒ¨
 			if (is_valid_target_force_id and pk::is_alive(target_gikyoudai) and pk::is_valid_force_id(target_force_id))
 			{
 				for (int i = 0; i < target_gikyoudai_list.size; i++)
@@ -719,7 +719,7 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 				}
 			}
 
-			// ¸ñÇ¥ ¹«ÀåÀÇ ÀÇÇüÁ¦°¡ ´Ù¸¥ ¼¼·Â¿¡ ¼Ò¼ÓµÇ¾î ÀÖ´Ù¸é Ç×»ó ½ÇÆĞ
+			// ëª©í‘œ ë¬´ì¥ì˜ ì˜í˜•ì œê°€ ë‹¤ë¥¸ ì„¸ë ¥ì— ì†Œì†ë˜ì–´ ìˆë‹¤ë©´ í•­ìƒ ì‹¤íŒ¨
 			if (pk::is_alive(target_gikyoudai) and @target_gikyoudai != @target)
 			{
 				int gikyoudai_force_id = target_gikyoudai.get_force_id();
@@ -730,7 +730,7 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 				}
 			}
 
-			// ¸ñÇ¥ ¹«ÀåÀÇ ¹è¿ìÀÚ°¡ ´Ù¸¥ ¼¼·Â¿¡ ¼Ò¼ÓµÇ¾î ÀÖ´Ù¸é Ç×»ó ½ÇÆĞ
+			// ëª©í‘œ ë¬´ì¥ì˜ ë°°ìš°ìê°€ ë‹¤ë¥¸ ì„¸ë ¥ì— ì†Œì†ë˜ì–´ ìˆë‹¤ë©´ í•­ìƒ ì‹¤íŒ¨
 			if (pk::is_alive(target_spouse))
 			{
 				int spouse_force_id = target_spouse.get_force_id();
@@ -741,19 +741,19 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 				}
 			}
 
-			// ¸ñÇ¥ ¹«ÀåÀÇ ¹è¿ìÀÚ°¡ ½ÇÇà ¹«ÀåÀÌ°Å³ª ½ÇÇà ¹«ÀåÀÇ ±ºÁÖÀÎ °æ¿ì Ç×»ó ¼º°ø
+			// ëª©í‘œ ë¬´ì¥ì˜ ë°°ìš°ìê°€ ì‹¤í–‰ ë¬´ì¥ì´ê±°ë‚˜ ì‹¤í–‰ ë¬´ì¥ì˜ êµ°ì£¼ì¸ ê²½ìš° í•­ìƒ ì„±ê³µ
 			if (pk::is_alive(target_spouse))
 			{
 				if (@target_spouse == @actor_kunshu or @target_spouse == @actor)
 					return pk::bool_bool(true, true);
 			}
 
-			// ¸ñÇ¥ ¹«ÀåÀÌ ½ÇÇà ¹«ÀåÀÇ ±ºÁÖ¸¦ Çø¿ÀÇÏ´Â °æ¿ì Ç×»ó ½ÇÆĞ
+			// ëª©í‘œ ë¬´ì¥ì´ ì‹¤í–‰ ë¬´ì¥ì˜ êµ°ì£¼ë¥¼ í˜ì˜¤í•˜ëŠ” ê²½ìš° í•­ìƒ ì‹¤íŒ¨
 			if (pk::is_dislike(target, actor_kunshu_id)) return pk::bool_bool(true, false);
 
 			int actor_id = actor.get_id();
 
-			// ¸ñÇ¥ ¹«ÀåÀÌ ½ÇÇà ¹«ÀåÀ» Çø¿ÀÇÏ´Â °æ¿ì Ç×»ó ½ÇÆĞ
+			// ëª©í‘œ ë¬´ì¥ì´ ì‹¤í–‰ ë¬´ì¥ì„ í˜ì˜¤í•˜ëŠ” ê²½ìš° í•­ìƒ ì‹¤íŒ¨
 			if (pk::is_dislike(target, actor_id)) return pk::bool_bool(true, false);
 
 			int actor_force_id = actor.get_force_id();
@@ -761,40 +761,40 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 
 			if (type == 0)
 			{
-				// ¸ñÇ¥ ¹«ÀåÀÌ ½ÇÇà ¹«Àå°ú ÀÇÇüÁ¦³ª ºÎºÎÀÌ°Å³ª, ½ÇÇà ¹«ÀåÀÇ ±ºÁÖ¿Í ÀÇÇüÁ¦³ª ºÎºÎÀÎ°æ¿ì Ç×»ó ¼º°ø
+				// ëª©í‘œ ë¬´ì¥ì´ ì‹¤í–‰ ë¬´ì¥ê³¼ ì˜í˜•ì œë‚˜ ë¶€ë¶€ì´ê±°ë‚˜, ì‹¤í–‰ ë¬´ì¥ì˜ êµ°ì£¼ì™€ ì˜í˜•ì œë‚˜ ë¶€ë¶€ì¸ê²½ìš° í•­ìƒ ì„±ê³µ
 				if (pk::is_gikyoudai(target, actor_id) or pk::is_gikyoudai(target, actor_kunshu_id) or pk::is_fuufu(target, actor_id) or pk::is_fuufu(target, actor_kunshu_id)) return pk::bool_bool(true, true);
 
-				// ¸ñÇ¥ ¹«ÀåÀÇ Ãæ¼ºµµ, ÀÇ¸® ÇÕÀÌ 96 ÀÌ»óÀÎ °æ¿ì Ç×»ó ½ÇÆĞ
+				// ëª©í‘œ ë¬´ì¥ì˜ ì¶©ì„±ë„, ì˜ë¦¬ í•©ì´ 96 ì´ìƒì¸ ê²½ìš° í•­ìƒ ì‹¤íŒ¨
 				if (target.loyalty + target.giri >= 96) return pk::bool_bool(true, false);
 
-				// ¸ñÇ¥ ¹«ÀåÀÇ ÀÇÇüÁ¦°¡ ½ÇÇà ¹«ÀåÀÇ ¼¼·Â¿¡ ¼Ò¼ÓµÇ¾î ÀÖ´Ù¸é Ç×»ó ¼º°ø
+				// ëª©í‘œ ë¬´ì¥ì˜ ì˜í˜•ì œê°€ ì‹¤í–‰ ë¬´ì¥ì˜ ì„¸ë ¥ì— ì†Œì†ë˜ì–´ ìˆë‹¤ë©´ í•­ìƒ ì„±ê³µ
 				if (pk::is_alive(target_gikyoudai) and target_gikyoudai.get_force_id() == actor_force_id) return pk::bool_bool(true, true);
 
-				// ¸ñÇ¥ ¹«ÀåÀÇ ¹è¿ìÀÚ°¡ ½ÇÇà ¹«ÀåÀÇ ¼¼·Â¿¡ ¼Ò¼ÓµÇ¾î ÀÖ´Ù¸é Ç×»ó ¼º°ø
+				// ëª©í‘œ ë¬´ì¥ì˜ ë°°ìš°ìê°€ ì‹¤í–‰ ë¬´ì¥ì˜ ì„¸ë ¥ì— ì†Œì†ë˜ì–´ ìˆë‹¤ë©´ í•­ìƒ ì„±ê³µ
 				if (pk::is_alive(target_spouse) and target_spouse.get_force_id() == actor_force_id) return pk::bool_bool(true, true);
 
-				// ¸ñÇ¥ ¹«ÀåÀÌ ¸ñÇ¥ ¹«ÀåÀÇ ±ºÁÖ¸¦ Ä£¾ÖÇÑ´Ù¸é Ç×»ó ½ÇÆĞ
-				if (target.mibun != ½ÅºĞ_±ºÁÖ and pk::is_valid_person_id(target_kunshu_id) and pk::is_like(target, target_kunshu_id)) return pk::bool_bool(true, false);
+				// ëª©í‘œ ë¬´ì¥ì´ ëª©í‘œ ë¬´ì¥ì˜ êµ°ì£¼ë¥¼ ì¹œì• í•œë‹¤ë©´ í•­ìƒ ì‹¤íŒ¨
+				if (target.mibun != ì‹ ë¶„_êµ°ì£¼ and pk::is_valid_person_id(target_kunshu_id) and pk::is_like(target, target_kunshu_id)) return pk::bool_bool(true, false);
 
-				// ¸ñÇ¥ ¹«ÀåÀÌ ½ÇÇà ¹«ÀåÀÌ³ª ½ÇÇà ¹«ÀåÀÇ ±ºÁÖ¸¦ Ä£¾ÖÇÑ´Ù¸é Ç×»ó ¼º°ø
+				// ëª©í‘œ ë¬´ì¥ì´ ì‹¤í–‰ ë¬´ì¥ì´ë‚˜ ì‹¤í–‰ ë¬´ì¥ì˜ êµ°ì£¼ë¥¼ ì¹œì• í•œë‹¤ë©´ í•­ìƒ ì„±ê³µ
 				if (pk::is_like(target, actor_id) or pk::is_like(target, actor_kunshu_id)) return pk::bool_bool(true, true);
 			}
 			else
 			{
-				// ¸ñÇ¥ ¹«ÀåÀÇ ÀÇÇüÁ¦°¡ ½ÇÇà ¹«ÀåÀÇ ¼¼·Â¿¡ ¼Ò¼ÓµÇ¾î ÀÖ´Ù¸é Ç×»ó ¼º°ø
+				// ëª©í‘œ ë¬´ì¥ì˜ ì˜í˜•ì œê°€ ì‹¤í–‰ ë¬´ì¥ì˜ ì„¸ë ¥ì— ì†Œì†ë˜ì–´ ìˆë‹¤ë©´ í•­ìƒ ì„±ê³µ
 				for (int i = 0; i < target_gikyoudai_list.size; i++)
 				{
 					if (target_gikyoudai_list[i].get_force_id() == actor_force_id)
 						return pk::bool_bool(true, true);
 				}
 
-				// ¸ñÇ¥ ¹«ÀåÀÇ ¹è¿ìÀÚ°¡ ½ÇÇà ¹«ÀåÀÇ ¼¼·Â¿¡ ¼Ò¼ÓµÇ¾î ÀÖ´Ù¸é Ç×»ó ¼º°ø
+				// ëª©í‘œ ë¬´ì¥ì˜ ë°°ìš°ìê°€ ì‹¤í–‰ ë¬´ì¥ì˜ ì„¸ë ¥ì— ì†Œì†ë˜ì–´ ìˆë‹¤ë©´ í•­ìƒ ì„±ê³µ
 				if (pk::is_alive(target_spouse) and target_spouse.get_force_id() == actor_force_id) return pk::bool_bool(true, true);
 
-				// ¸ñÇ¥ ¹«ÀåÀÌ ¸ñÇ¥ ¹«ÀåÀÇ ±ºÁÖ¸¦ Ä£¾ÖÇÑ´Ù¸é Ç×»ó ½ÇÆĞ
-				if (is_valid_target_force_id and target.mibun != ½ÅºĞ_±ºÁÖ and pk::is_valid_person_id(target_kunshu_id) and pk::is_like(target, target_kunshu_id)) return pk::bool_bool(true, false);
+				// ëª©í‘œ ë¬´ì¥ì´ ëª©í‘œ ë¬´ì¥ì˜ êµ°ì£¼ë¥¼ ì¹œì• í•œë‹¤ë©´ í•­ìƒ ì‹¤íŒ¨
+				if (is_valid_target_force_id and target.mibun != ì‹ ë¶„_êµ°ì£¼ and pk::is_valid_person_id(target_kunshu_id) and pk::is_like(target, target_kunshu_id)) return pk::bool_bool(true, false);
 
-				// ¸ñÇ¥ ¹«ÀåÀÌ ½ÇÇà ¹«ÀåÀÇ ±ºÁÖ¸¦ Ä£¾ÖÇÑ´Ù¸é Ç×»ó ¼º°ø
+				// ëª©í‘œ ë¬´ì¥ì´ ì‹¤í–‰ ë¬´ì¥ì˜ êµ°ì£¼ë¥¼ ì¹œì• í•œë‹¤ë©´ í•­ìƒ ì„±ê³µ
 				if (pk::is_like(target, actor_kunshu_id)) return pk::bool_bool(true, true);
 			}
 
@@ -816,24 +816,24 @@ namespace AIÀÎÀçµî¿ë_AI_Recuite_v2
 			if (type == 2)
 				loyalty = pk::min(loyalty, 70);
 
-			// ¸ñÇ¥ ¹«ÀåÀÌ Àç¾ßÀÌ°Å³ª ¸ê¸ÁÇÑ ¼¼·ÂÀÇ Æ÷·ÎÀÎ °æ¿ì
-			if (target.mibun == ½ÅºĞ_Àç¾ß or (target.mibun == ½ÅºĞ_Æ÷·Î and !pk::is_valid_force_id(target.get_force_id())))
-				loyalty = pk::get_scenario().difficulty == ³­ÀÌµµ_ÃÊ±Ş ? 60 : 70;
+			// ëª©í‘œ ë¬´ì¥ì´ ì¬ì•¼ì´ê±°ë‚˜ ë©¸ë§í•œ ì„¸ë ¥ì˜ í¬ë¡œì¸ ê²½ìš°
+			if (target.mibun == ì‹ ë¶„_ì¬ì•¼ or (target.mibun == ì‹ ë¶„_í¬ë¡œ and !pk::is_valid_force_id(target.get_force_id())))
+				loyalty = pk::get_scenario().difficulty == ë‚œì´ë„_ì´ˆê¸‰ ? 60 : 70;
 
 			if (pk::is_valid_person_id(target_kunshu_id))
 				aishou = pk::get_aishou_distance(target, target_kunshu_id);
 
-			if (target.mibun == ½ÅºĞ_Àç¾ß)
-				giri = ÀÇ¸®_º¸Åë;
+			if (target.mibun == ì‹ ë¶„_ì¬ì•¼)
+				giri = ì˜ë¦¬_ë³´í†µ;
 
 			n = (aishou - pk::get_aishou_distance(target, actor_kunshu_id)) / 5;
 			n -= (giri + 18) * loyalty * 5 / 100;
-			n += pk::max(actor.stat[¹«Àå´É·Â_¸Å·Â], 30) * 3 / 5;
+			n += pk::max(actor.stat[ë¬´ì¥ëŠ¥ë ¥_ë§¤ë ¥], 30) * 3 / 5;
 			n -= pk::is_like(target, target_kunshu_id) ? 15 : 0;
 			n -= pk::is_oyako(target, target_kunshu_id) ? 15 : 0;
 			n += pk::is_dislike(target, target_kunshu_id) ? 15 : 0;
-			n += pk::rand(ÀÇ¸®_³¡ - giri, actor.get_id(), target.get_id(), actor.stat[¹«Àå´É·Â_¸Å·Â], seed, actor_kunshu_id, 0, 0);
-			n += target.mibun == ½ÅºĞ_Æ÷·Î ? 15 : 0;
+			n += pk::rand(ì˜ë¦¬_ë - giri, actor.get_id(), target.get_id(), actor.stat[ë¬´ì¥ëŠ¥ë ¥_ë§¤ë ¥], seed, actor_kunshu_id, 0, 0);
+			n += target.mibun == ì‹ ë¶„_í¬ë¡œ ? 15 : 0;
 			n += 45;
 
 			return pk::max(n, 0);

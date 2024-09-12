@@ -1,4 +1,4 @@
-namespace ºÎ´ë_È¥¶õ_È®·ü
+namespace ë¶€ëŒ€_í˜¼ë€_í™•ë¥ 
 {
 	class Main
 	{
@@ -11,20 +11,20 @@ namespace ºÎ´ë_È¥¶õ_È®·ü
 		{
 			int troops = unit.troops;
 
-			// º´·Â ¼ö°¡ 1000 ÀÌ»óÀÏ °æ¿ì È¸ÇÇ
+			// ë³‘ë ¥ ìˆ˜ê°€ 1000 ì´ìƒì¼ ê²½ìš° íšŒí”¼
 			if (troops >= 1000)
 				return 0;
 
-			// ºÎ´ë°¡ Åë»ó »óÅÂ°¡ ¾Æ´Ò °æ¿ì È¸ÇÇ
-			if (unit.status != ºÎ´ë»óÅÂ_Åë»ó)
+			// ë¶€ëŒ€ê°€ í†µìƒ ìƒíƒœê°€ ì•„ë‹ ê²½ìš° íšŒí”¼
+			if (unit.status != ë¶€ëŒ€ìƒíƒœ_í†µìƒ)
 				return 0;
 
-			// º´·Â ¼ö 8% + 10 È®·ü·Î È¸ÇÇ
+			// ë³‘ë ¥ ìˆ˜ 8% + 10 í™•ë¥ ë¡œ íšŒí”¼
 			if (pk::rand_bool(pk::min(90, pk::max(10, troops * 8 / 100 + 10))))
 				return 0;
 
-			// Åë¼Ö 20% + 20 È®·ü·Î È¸ÇÇ
-			if (pk::rand_bool(unit.attr.stat[ºÎ´ë´É·Â_Åë¼Ö] / 5 + 20))
+			// í†µì†” 20% + 20 í™•ë¥ ë¡œ íšŒí”¼
+			if (pk::rand_bool(unit.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_í†µì†”] / 5 + 20))
 				return 0;
 
 			pk::int_int_int tuple = func_59b130(unit);
@@ -32,24 +32,24 @@ namespace ºÎ´ë_È¥¶õ_È®·ü
 			int sum_enemy_troops = tuple.second;
 			int max_enemy_troops = tuple.third;
 
-			// Àû ºÎ´ë Áß ÃÖ´ë º´·Â ¼ö°¡ 500 ¹Ì¸¸ÀÏ °æ¿ì È¸ÇÇ
+			// ì  ë¶€ëŒ€ ì¤‘ ìµœëŒ€ ë³‘ë ¥ ìˆ˜ê°€ 500 ë¯¸ë§Œì¼ ê²½ìš° íšŒí”¼
 			if (max_enemy_troops < 500)
 				return 0;
 
-			// Àû ºÎ´ë º´·Â ÇÕÀÌ ÀÚ¼¼·Â ºÎ´ë º´·Â ¼öÀÇ 20% ¹Ì¸¸ÀÏ °æ¿ì 60% È®·ü·Î È¸ÇÇ
+			// ì  ë¶€ëŒ€ ë³‘ë ¥ í•©ì´ ìì„¸ë ¥ ë¶€ëŒ€ ë³‘ë ¥ ìˆ˜ì˜ 20% ë¯¸ë§Œì¼ ê²½ìš° 60% í™•ë¥ ë¡œ íšŒí”¼
 			if (sum_enemy_troops < sum_own_troops / 5)
 			{
 				if (pk::rand_bool(60))
 					return 0;
 			}
-			// Àû ºÎ´ë º´·Â ÇÕÀÌ ÀÚ¼¼·Â ºÎ´ë º´·Â ¼öÀÇ 50% ¹Ì¸¸ÀÏ °æ¿ì 40% È®·ü·Î È¸ÇÇ
+			// ì  ë¶€ëŒ€ ë³‘ë ¥ í•©ì´ ìì„¸ë ¥ ë¶€ëŒ€ ë³‘ë ¥ ìˆ˜ì˜ 50% ë¯¸ë§Œì¼ ê²½ìš° 40% í™•ë¥ ë¡œ íšŒí”¼
 			else if (sum_enemy_troops < sum_own_troops / 2)
 			{
 				if (pk::rand_bool(40))
 					return 0;
 			}
 
-			// º´·Â ¼ö¸¦ 20¹èÇÑ °ªÀÌ Àû ºÎ´ë Áß ÃÖ´ë º´·Â ¼öº¸´Ù ³ô°í, º´·Â ¼ö¸¦ 40¹èÇÑ °ªÀÌ Àû ºÎ´ë º´·Â ÇÕº¸´Ù ³ô´Ù¸é È¸ÇÇ
+			// ë³‘ë ¥ ìˆ˜ë¥¼ 20ë°°í•œ ê°’ì´ ì  ë¶€ëŒ€ ì¤‘ ìµœëŒ€ ë³‘ë ¥ ìˆ˜ë³´ë‹¤ ë†’ê³ , ë³‘ë ¥ ìˆ˜ë¥¼ 40ë°°í•œ ê°’ì´ ì  ë¶€ëŒ€ ë³‘ë ¥ í•©ë³´ë‹¤ ë†’ë‹¤ë©´ íšŒí”¼
 			if (troops * 20 >= max_enemy_troops and troops * 40 >= sum_enemy_troops)
 				return 0;
 
@@ -58,18 +58,18 @@ namespace ºÎ´ë_È¥¶õ_È®·ü
 
 		pk::int_int_int func_59b130(pk::unit@ src)
 		{
-			// ÀÎÁ¢ ÀÚ¼¼·Â ºÎ´ë º´·Â ÇÕ
+			// ì¸ì ‘ ìì„¸ë ¥ ë¶€ëŒ€ ë³‘ë ¥ í•©
 			int sum_own_troops = 0;
-			// 3Ä­ ÀÌÇÏ Àû ºÎ´ë º´·Â ÇÕ
+			// 3ì¹¸ ì´í•˜ ì  ë¶€ëŒ€ ë³‘ë ¥ í•©
 			int sum_enemy_troops = 0;
-			// 3Ä­ ÀÌÇÏ Àû ºÎ´ë Áß ÃÖ´ë º´·Â
+			// 3ì¹¸ ì´í•˜ ì  ë¶€ëŒ€ ì¤‘ ìµœëŒ€ ë³‘ë ¥
 			int max_enemy_troops = 0;
 
 			array<pk::point> arr = pk::range(src.get_pos(), 1, 3);
 			for (int i = 0; i < int(arr.length); i++)
 			{
 				pk::unit@ dst = pk::get_unit(arr[i]);
-				if (dst is null or dst.status != ºÎ´ë»óÅÂ_Åë»ó)
+				if (dst is null or dst.status != ë¶€ëŒ€ìƒíƒœ_í†µìƒ)
 					continue;
 
 				if (pk::is_enemy(src, dst))

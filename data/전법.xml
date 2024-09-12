@@ -25,7 +25,7 @@
 		<대상 일반="true" 병기="true"/>
 		<지형 초원="true" 땅="true" 습지="true" 독천="true" 숲="true" 황무지="true" 대로="true" 벼랑길="true" 다리="true" 여울="true" 샛길="true"/>
 		<필요적성 값="A"/>
-		<일기토 값="false"/>
+		<일기토 값="true"/>
 		-->
 	</전법>
 	<전법 번호="2">
@@ -53,7 +53,7 @@
 		<대상 일반="true" 병기="true"/>
 		<지형 초원="true" 땅="true" 모래="true" 습지="true" 독천="true" 숲="true" 황무지="true" 대로="true" 벼랑길="true" 다리="true" 여울="true" 샛길="true"/>
 		<필요적성 값="B"/>
-		<일기토 값="false"/>
+		<일기토 값="true"/>
 		-->
 	</전법>
 	<전법 번호="4">
@@ -67,7 +67,7 @@
 		<대상 일반="true" 병기="true"/>
 		<지형 초원="true" 땅="true" 모래="true" 습지="true" 독천="true" 숲="true" 황무지="true" 대로="true" 벼랑길="true" 다리="true" 여울="true" 샛길="true"/>
 		<필요적성 값="A"/>
-		<일기토 값="false"/>
+		<일기토 값="true"/>
 		-->
 	</전법>
 	<전법 번호="5">

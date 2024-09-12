@@ -1,4 +1,4 @@
-namespace ÅÏº°_º´·Â_°¨¼Ò
+namespace í„´ë³„_ë³‘ë ¥_ê°ì†Œ
 {
 	class Main
 	{
@@ -13,11 +13,11 @@ namespace ÅÏº°_º´·Â_°¨¼Ò
 			n = pk::rand(50) - sqrt(n / 100) * -30;
             
             
-            //ÁÖº¯¿¡ ÀûÀÌ ÀÖÀ» ½Ã º´·Â °¨¼Ò 2¹è Áõ°¡ ('18.10.12)
+            //ì£¼ë³€ì— ì ì´ ìˆì„ ì‹œ ë³‘ë ¥ ê°ì†Œ 2ë°° ì¦ê°€ ('18.10.12)
             if (pk::enemies_around(building))
             {
                 n *= 2;  
-                pk::add_energy(building, -3);               // Àü½ÃÈ¿°ú·Î ±â·Â 3 °¨¼Ò
+                pk::add_energy(building, -3);               // ì „ì‹œíš¨ê³¼ë¡œ ê¸°ë ¥ 3 ê°ì†Œ
             }
             
 			return -n;

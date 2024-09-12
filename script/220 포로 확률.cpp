@@ -122,7 +122,7 @@
 				int n = 0;
 
 				// 능력 기준값을 원본처럼 유지
-				n += pk::max(20, 120 - pk::max(person.stat[무장능력_무력], person.stat[무장능력_지력]));
+				n += pk::max(20, 125 - pk::max(person.stat[무장능력_무력], person.stat[무장능력_지력]));
 				n /= 3;
 
 				// 포위 계수 감소
