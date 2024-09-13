@@ -20,7 +20,7 @@ namespace AI강제전법사용_AIForceAttack
 	const int 연전_딜레이 = 1000;//ms
 	const int 전법_일기토_확률 = 5;
 
-	const int 자동공격_확률 = 60; //20%는 기존 AI한테 맡깁니다. 
+	const int 자동공격_확률 = 70; //20%는 기존 AI한테 맡깁니다. 
 
 	const int 자동공격_나선첨_확률 = 50;
 	const int 자동공격_이단첨_확률 = 50; //실제 25%

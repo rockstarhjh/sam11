@@ -103,7 +103,7 @@
 				n = n + 2;
 			if (kunshu.giri == 의리_매우낮음 and kunshu.ambition == 야망_매우높음)
 				n = n + (의리_매우높음 - person.giri) / 2;
-			n = n + pk::rand(4);
+			n = n + pk::rand(5);
 			return -n;
 		}
 	}
