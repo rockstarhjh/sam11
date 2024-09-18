@@ -363,7 +363,11 @@ namespace 전쟁_공격_공성
 
             pk::person@ leader = pk::get_person(actors[0].get_id());
 	//내가 수정
-            if ((leader.tekisei[병종_병기] == 적성_C) and (int(leader.stat[무장능력_무력]) >80) and (int(leader.stat[무장능력_무력]) >80)) return false; 
+            if ((leader.tekisei[병종_병기] == 적성_C) and (int(leader.stat[무장능력_통솔]) >81) and (int(leader.stat[무장능력_무력]) >81)) return false; 
+		if(((leader.tekisei[병종_창병] == 적성_S) or (leader.tekisei[병종_극병] == 적성_S) or (leader.tekisei[병종_기병] == 적성_S) or (leader.tekisei[병종_노병] == 적성_S)) and (leader.tekisei[병종_병기] != 적성_S)) return false;
+
+		//if((int(leader.stat[무장능력_무력]) >85) and (int(leader.stat[무장능력_통솔]) >85)) return false;
+
            
             // 원군 병력 산정 : 기준 병력 초과분, 지휘가능병력 확인
             int reinforce_troops = pk::min(pk::get_command(leader), pk::max(1000 , pk::get_troops(base) - 10000));

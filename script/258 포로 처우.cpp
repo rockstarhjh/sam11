@@ -1,4 +1,4 @@
-namespace Æ÷·Î_Ã³¿ì
+ï»¿namespace í¬ë¡œ_ì²˜ìš°
 {
 	class Main
 	{
@@ -9,105 +9,24 @@ namespace Æ÷·Î_Ã³¿ì
 
 		int callback(pk::person@ prisoner, const pk::prisoner_info &in info)
 		{
-			pk::person@ judge = pk::get_person(pk::get_kunshu_id(info.taken_by));
-			pk::district@ district = pk::get_district(prisoner.district);
-			pk::force@ force = pk::get_force(district.force);	
-			pk::force@ judge_force = pk::get_force(judge.get_force_id());			
+			pk::person@ judge = pk::get_person(pk::get_kunshu_id(info.attacker));
 
 			if (func_4ae3a0(prisoner, judge))
-			{
-				if(force.player < 0)
-				{
-					if(prisoner.mibun == ½ÅºĞ_±ºÁÖ)
-					{
-						pk::play_se(5);
-						pk::message_box(pk::get_msg(pk::msg_param(5929, prisoner, judge)), prisoner);
-					}	
+				return í¬ë¡œì²˜ìš°_ì²˜ë‹¨;
 
-					if(prisoner.mibun != ½ÅºĞ_±ºÁÖ)
-						pk::play_se(3);
-				
-					pk::history_log(pk::get_current_turn_force_id(), force.color, pk::encode(pk::format("Æ÷È¹´çÇÑ \x1b[1x{}\x1b[0x, \x1b[2x{}\x1b[0x¿¡°Ô Ã³ÇüµÊ" , pk::decode(pk::get_name(prisoner)) , pk::decode(pk::get_name(judge) ) ) ) );
-				}
-				
-				return Æ÷·ÎÃ³¿ì_Ã³´Ü;
-			}
-
-			if (cast<pk::func111_t>(pk::get_func(111))(prisoner, judge, info.returnable ? 1 : 2, 0))
-			{
-				if (prisoner.mibun == ½ÅºĞ_±ºÁÖ && force.player < 0)
-				{
-					pk::play_se(2);
-					pk::message_box(pk::get_msg(pk::msg_param(5881, prisoner, judge)), prisoner);
-					pk::history_log(pk::get_current_turn_force_id(), force.color, pk::encode(pk::format("Æ÷È¹´çÇÑ \x1b[1x{}\x1b[0x¡£\x1b[2x{}\x1b[0xÀÇ ºÎÇÏ°¡ µÊ" , pk::decode(pk::get_name(prisoner)) , pk::decode(pk::get_name(judge) ) ) ) );	
-				}
-				return Æ÷·ÎÃ³¿ì_µî¿ë;
-			}
+			if (cast<pk::func111_t>(pk::get_func(111))(prisoner, judge, info.releasable ? 1 : 2, 0))
+				return í¬ë¡œì²˜ìš°_ë“±ìš©;
 
 			if (func_4af5b0(prisoner, judge))
-			{	
-				if(force.player < 0)
-				{
-					if(prisoner.mibun == ½ÅºĞ_±ºÁÖ)
-					{
-						pk::play_se(5);
-						pk::message_box(pk::get_msg(pk::msg_param(5929, prisoner, judge)), prisoner);
-					}
-												
-					if(prisoner.mibun != ½ÅºĞ_±ºÁÖ)
-						pk::play_se(3);
+				return í¬ë¡œì²˜ìš°_ì²˜ë‹¨;
 
-					pk::history_log(pk::get_current_turn_force_id(), force.color, pk::encode(pk::format("Æ÷È¹´çÇÑ \x1b[1x{}\x1b[0x¡£\x1b[2x{}\x1b[0x¿¡°Ô Ã³ÇüµÊ" , pk::decode(pk::get_name(prisoner)) , pk::decode(pk::get_name(judge) ) ) ) );
-				}
+			if (prisoner.mibun == ì‹ ë¶„_êµ°ì£¼)
+				return í¬ë¡œì²˜ìš°_í•´ë°©;
 
-				return Æ÷·ÎÃ³¿ì_Ã³´Ü;
-			}
-				
-			if (prisoner.mibun == ½ÅºĞ_±ºÁÖ)
-			{
-				if(force.player < 0)
-				{	
-					pk::play_se(6);
-					pk::message_box(pk::get_msg(pk::msg_param(5917, prisoner, judge)), prisoner);
-					pk::history_log(pk::get_current_turn_force_id(), force.color, pk::encode(pk::format("Æ÷È¹´çÇÑ \x1b[1x{}\x1b[0x¡£\x1b[2x{}\x1b[0x±ºÀÌ ¼®¹æ" , pk::decode(pk::get_name(prisoner)) , pk::decode(pk::get_name(judge) ) ) ) );
-					
-					if(force.relations[judge.get_force_id()] < 50)
-						pk::add_relations(force, judge.get_force_id(), 50);
-					else	
-						pk::set_relations(force, judge.get_force_id(), 99);
-				}
-
-				int random = pk::rand(10);
-				if(pk::get_aishou_distance(prisoner, judge.get_id()) <= 5 && random < prisoner.giri)
-				{
-					pk::add_like(prisoner, judge.get_id());
-				}
-
-				if(random < prisoner.giri * 2 && pk::get_aishou_distance(prisoner, judge.get_id()) <= 5)
-				{
-					if( pk::get_troops(force) > pk::get_troops(judge_force) && pk::get_city_count(force) > pk::get_city_count(judge_force)  && pk::get_force_list().count >= 4  )
-					{
-						int random = pk::rand (36);
-						pk::set_ceasefire_timer(force, judge.get_force_id(), 36 + random);
-						pk::history_log(pk::get_current_turn_force_id(), force.color, pk::encode(pk::format("\x1b[1x{}\x1b[0x±º°ú \x1b[2x{}\x1b[0x±ºÀÌ Á¤Àü" , pk::decode(pk::get_name(prisoner)) , pk::decode(pk::get_name(judge) ) ) ) );
-					}
-				}
-
-				return Æ÷·ÎÃ³¿ì_ÇØ¹æ;
-			}
-				
 			if (!func_4b0740(info))
-			{
-				int random = pk::rand(5);
-				if(pk::get_aishou_distance(prisoner, judge.get_id()) <= 5 && random < prisoner.giri)
-				{
-					pk::add_like(prisoner, judge.get_id());
-				}
-				
-				return Æ÷·ÎÃ³¿ì_ÇØ¹æ;
-			}
+				return í¬ë¡œì²˜ìš°_í•´ë°©;
 
-			return Æ÷·ÎÃ³¿ì_Æ÷·Î;
+			return í¬ë¡œì²˜ìš°_í¬ë¡œ;
 		}
 
 		/***/
@@ -115,49 +34,12 @@ namespace Æ÷·Î_Ã³¿ì
 		{
 			if (!pk::is_alive(prisoner) or !pk::is_alive(judge))
 				return false;
-			//if (pk::get_person(prisoner).sex == ¼ºº°_¿©)
-				//return false;
-			if (prisoner.sex == ¼ºº°_¿©) return false;
-			// Æ¯Á¤ ¹«ÀåÀÎ °æ¿ì Ã³´ÜÇÏÁö ¾ÊÀ½
-			if (prisoner.get_id() == 660) return false;
-			if (prisoner.get_id() == 18) return false;
-			if (prisoner.get_id() == 343) return false;
-			if (prisoner.get_id() == 635) return false;
-			if (prisoner.get_id() == 98) return false;
-			if (prisoner.get_id() == 395) return false;
-			if (prisoner.get_id() == 432) return false;
-			if (prisoner.get_id() == 515) return false;
-			if (prisoner.get_id() == 185) return false;
 
-			// Æ÷·Î¸¦ Çø¿ÀÇÏ´Â °æ¿ì
+			// í¬ë¡œë¥¼ í˜ì˜¤í•˜ëŠ” ê²½ìš° ì²˜ë‹¨
 			if (pk::is_dislike(judge, prisoner.get_id()))
-			{
-				int d_aishou = pk::get_aishou_distance(prisoner, judge.get_id());
-				int n = 100;
+				return true;
 
-				if(d_aishou > 70) 
-					n += 20;
-				else if(d_aishou > 50) 
-					n += 10;
-				else if(d_aishou > 30) 
-					n += 5;
-				else if(d_aishou > 10) 
-					n -= 5;
-				else if(d_aishou > 5) 
-					n -= 10;
-				else 
-					n -= 20;
-
-				n += judge.stat[1] > judge.stat[2] + 10 ? (judge.stat[1] - judge.stat[2]) : 0;
-				n -= (judge.giri - 2) * 20; 
-				n -= (prisoner.giri * 2) * (judge.promotion == ±â¿ë_ÀÇ¸® ? 5 : 1);
-				n += pk::rand(20);
-				n = pk::max(n, 0);
-
-				return pk::rand_bool(n);
-			}
-				
-			if (prisoner.mibun == ½ÅºĞ_±ºÁÖ)
+			if (prisoner.mibun == ì‹ ë¶„_êµ°ì£¼)
 			{
 				pk::force@ judge_force = pk::get_force(judge.get_force_id());
 				pk::force@ prisoner_force = pk::get_force(prisoner.get_force_id());
@@ -165,14 +47,12 @@ namespace Æ÷·Î_Ã³¿ì
 				if (!pk::is_alive(judge_force) or !pk::is_alive(prisoner_force))
 					return false;
 
-				int random = pk::rand(10);
-
-				// Æ÷·Î°¡ È²Á¦ÀÌ°í ³»°¡ ÈÄÇÑ È²Á¦¸¦ º¸È£ÁßÀÏ °æ¿ì Ã³´Ü
-				if (prisoner_force.title == ÀÛÀ§_È²Á¦ and pk::is_protecting_the_emperor(judge_force) and judge.giri <= random)
+				// í¬ë¡œê°€ í™©ì œì´ê³  ë‚´ê°€ í›„í•œ í™©ì œë¥¼ ë³´í˜¸ì¤‘ì¼ ê²½ìš° ì²˜ë‹¨
+				if (prisoner_force.title == ì‘ìœ„_í™©ì œ and pk::is_protecting_the_emperor(judge_force))
 					return true;
 
-				// ³»°¡ È²Á¦ÀÌ°í Æ÷·Î°¡ ÈÄÇÑ È²Á¦¸¦ º¸È£ÁßÀÏ °æ¿ì Ã³´Ü
-				if (pk::is_protecting_the_emperor(prisoner_force) and judge_force.title == ÀÛÀ§_È²Á¦ and judge.giri <= random)
+				// ë‚´ê°€ í™©ì œì´ê³  í¬ë¡œê°€ í›„í•œ í™©ì œë¥¼ ë³´í˜¸ì¤‘ì¼ ê²½ìš° ì²˜ë‹¨
+				if (pk::is_protecting_the_emperor(prisoner_force) and judge_force.title == ì‘ìœ„_í™©ì œ)
 					return true;
 			}
 
@@ -184,106 +64,54 @@ namespace Æ÷·Î_Ã³¿ì
 		{
 			int prisoner_id = prisoner.get_id();
 
-			// ÀÇÇüÁ¦ÀÎ °æ¿ì Ã³´ÜÇÏÁö ¾ÊÀ½(pk::is_gikyoudai ÇÔ¼ö¸¦ »ç¿ëÇÏ´Â °ÍÀÌ ¸Â´Ù°í »ı°¢ÇÔ)
-			//if (prisoner.gikyoudai == judge.gikyoudai) return false;
-			if(pk::is_gikyoudai(prisoner, judge.get_id())) return false;				
+			// ì˜í˜•ì œì¸ ê²½ìš° ì²˜ë‹¨í•˜ì§€ ì•ŠìŒ(pk::is_gikyoudai í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ëŠ” ê²ƒì´ ë§ë‹¤ê³  ìƒê°í•¨)
+			if (prisoner.gikyoudai == judge.gikyoudai) return false;
 
-			// ºÎºÎÀÎ °æ¿ì Ã³´ÜÇÏÁö ¾ÊÀ½
+			// ë¶€ë¶€ì¸ ê²½ìš° ì²˜ë‹¨í•˜ì§€ ì•ŠìŒ
 			if (pk::is_fuufu(judge, prisoner_id)) return false;
 
-			// Æ÷·Î¸¦ Ä£¾ÖÇÏ´Â °æ¿ì Ã³´ÜÇÏÁö ¾ÊÀ½
+			// í¬ë¡œë¥¼ ì¹œì• í•˜ëŠ” ê²½ìš° ì²˜ë‹¨í•˜ì§€ ì•ŠìŒ
 			if (pk::is_like(judge, prisoner_id)) return false;
-			// ¿©ÀÚÀÎ °æ¿ì Ã³´ÜÇÏÁö ¾ÊÀ½
-			if (prisoner.sex == ¼ºº°_¿©) return false;
-			// Æ¯Á¤ ¹«ÀåÀÎ °æ¿ì Ã³´ÜÇÏÁö ¾ÊÀ½
-			if (prisoner.get_id() == 660) return false;
-			if (prisoner.get_id() == 18) return false;
-			if (prisoner.get_id() == 343) return false;
-			if (prisoner.get_id() == 635) return false;
-			if (prisoner.get_id() == 98) return false;
-			if (prisoner.get_id() == 395) return false;
-			if (prisoner.get_id() == 432) return false;
-			if (prisoner.get_id() == 515) return false;
-			if (prisoner.get_id() == 185) return false;
-			
 
 			int max_stat = 0;
 			int avg_stat = 0;
 			int death = 10;
 
-			for (int i = 0; i < ¹«Àå´É·Â_³¡; i++)
+			for (int i = 0; i < ë¬´ì¥ëŠ¥ë ¥_ë; i++)
 			{
 				int s = prisoner.stat[i];
 				max_stat = pk::max(max_stat, s);
 				avg_stat = avg_stat + s;
 			}
-			avg_stat = avg_stat / ¹«Àå´É·Â_³¡;
+			avg_stat = avg_stat / ë¬´ì¥ëŠ¥ë ¥_ë;
 
 			switch (pk::get_scenario().battle_death)
 			{
-				case Àü»ç_¾øÀ½: death = 20; break;
-				case Àü»ç_Ç¥ÁØ: death = 20; break;
-				case Àü»ç_¸¹À½: death = 0; break;
+			case ì „ì‚¬_ì—†ìŒ: death = 20; break;
+			case ì „ì‚¬_í‘œì¤€: death = 10; break;
+			case ì „ì‚¬_ë§ìŒ: death = 0; break;
 			}
-			
-			int d_aishou = pk::get_aishou_distance(prisoner, judge.get_id());
-					
+
 			int n = 0;
 
-			if (prisoner.mibun == ½ÅºĞ_±ºÁÖ)
+			if (prisoner.mibun == ì‹ ë¶„_êµ°ì£¼)
 			{
-				if(d_aishou > 70) 
-					n += 15;
-				else if(d_aishou > 50) 
-					n += 10;
-				else if(d_aishou > 30) 
-					n += 5;
-				else if(d_aishou > 10) 
-					n -= 5;
-				else if(d_aishou > 5) 
-					n -= 10;
-				else 
-					n -= 20;
-				
-				n += (judge.ambition + (prisoner.ambition*1.5f) ) * 8;
+				n += (judge.ambition + prisoner.ambition) * 2;
 				n -= (pk::max(max_stat, 50) + pk::max(avg_stat, 50)) / 2;
-				n += (20 - (judge.giri * 4) ) * 5;
-				n -= (judge.promotion == ±â¿ë_ÀÇ¸® ? prisoner.giri * 4 : prisoner.giri * -4);
+				n += (16 - judge.giri) * 5;
 				n -= death;
-				n -= pk::rand(20 + (judge.giri * 5));
-				n += judge.stat[1] > judge.stat[2] + 10 ? (judge.stat[1] - judge.stat[2]) : 0;
+				n -= pk::rand(20);
 				n = pk::max(n, 0);
 			}
 			else
 			{
-				if(d_aishou > 70) 
-					n += 20;
-				else if(d_aishou > 50) 
-					n += 10;
-				else if(d_aishou > 30) 
-					n += 5;
-				else if(d_aishou > 10) 
-					n -= 5;
-				else if(d_aishou > 5) 
-					n -= 10;
-				else 
-					n -= 20;
-
-				n += 120 - (pk::max(max_stat, 50) + pk::max(avg_stat, 50)) / 2;
-				n -= pk::max(prisoner.kouseki, 20000) / 2000 * (judge.promotion == ±â¿ë_½ÇÀû ? 1.5f : 1);
-				n -= (prisoner.giri) * (judge.promotion == ±â¿ë_ÀÇ¸® ? 5 : 1);
-				n -= pk::rand(25) * (judge.promotion == ±â¿ë_ÀÓÀÇ ? 1.5f : 1);
-				n -= judge.giri * (10 + pk::rand(5));
+				n += 100 - (pk::max(max_stat, 50) + pk::max(avg_stat, 50)) / 2;
+				n -= pk::max(prisoner.kouseki, 20000) / 2000 * (judge.promotion == ê¸°ìš©_ì‹¤ì  ? 1.5f : 1);
+				n -= prisoner.ambition * (judge.promotion == ê¸°ìš©_ì˜ë¦¬ ? 5 : 1);
+				n -= pk::rand(25) * (judge.promotion == ê¸°ìš©_ì„ì˜ ? 1.5f : 1);
 				n -= death;
-				n -= pk::rand(10 + (judge.giri * 2));
 				n = pk::max(n, 0);
 			}
-
-			// Æ÷·Î°¡ ±ºÁÖ¸¦ Çø¿ÀÇÏ´Â °æ¿ì
-			if (pk::is_dislike(prisoner, judge.get_id()))
-				 n = n + n;
-
-
 
 			return pk::rand_bool(n);
 		}
@@ -291,24 +119,24 @@ namespace Æ÷·Î_Ã³¿ì
 		/***/
 		bool func_4b0740(const pk::prisoner_info &in info)
 		{
-			// ¸ê¸Á½ÃÅ²°æ¿ì ¸ğµÎ ÇØ¹æ
-			if (!info.returnable) return false;
+			// ë©¸ë§ì‹œí‚¨ê²½ìš° ëª¨ë‘ í•´ë°©
+			if (!info.releasable) return false;
 
-			// °ÅÁ¡À» °ø°İÇØ Æ÷·Î¸¦ ÀâÀº °æ¿ì
-			if (info.object.is_instance(pk::building::type_id))
+			// ê±°ì ì„ ê³µê²©í•´ í¬ë¡œë¥¼ ì¡ì€ ê²½ìš°
+			if (info.target.is_instance(pk::building::type_id))
 			{
-				// ºÎ´ë°¡ ÀâÀº°Ô ¾Æ´Ï¶ó¸é ÇØ¹æ
-				if (!info.taken_by.is_instance(pk::unit::type_id)) return false;
+				// ë¶€ëŒ€ê°€ ì¡ì€ê²Œ ì•„ë‹ˆë¼ë©´ í•´ë°©
+				if (!info.attacker.is_instance(pk::unit::type_id)) return false;
 
-				pk::building@ building = pk::hex_object_to_building(info.object);
-				pk::unit@ unit = pk::hex_object_to_unit(info.taken_by);
+				pk::building@ building = pk::hex_object_to_building(info.target);
+				pk::unit@ unit = pk::hex_object_to_unit(info.attacker);
 				int pay = 0;
 
-				// ºÎ´ë ¹«ÀåµéÀÇ ºÀ·Ï ÇÕ
+				// ë¶€ëŒ€ ë¬´ì¥ë“¤ì˜ ë´‰ë¡ í•©
 				for (int i = 0; i < 3; i++)
 				{
 					pk::person@ member = pk::get_person(unit.member[i]);
-					if (pk::is_alive(member) and member.mibun >= ½ÅºĞ_µµµ¶ and member.mibun <= ½ÅºĞ_ÀÏ¹İ)
+					if (pk::is_alive(member) and member.mibun >= ì‹ ë¶„_ë„ë… and member.mibun <= ì‹ ë¶„_ì¼ë°˜)
 					{
 						pk::rank@ rank = pk::get_rank(member.rank);
 						if (pk::is_alive(rank))
@@ -316,49 +144,49 @@ namespace Æ÷·Î_Ã³¿ì
 					}
 				}
 
-				// ºÎ´ë°¡ Àâ°í ÀÖ´Â Æ÷·Î ºñ¿ë ÇÕ
-				pay += (pk::get_person_list(pk::get_hex_object_id(unit), pk::mibun_flags(½ÅºĞ_Æ÷·Î)).count + 2) * 50;
+				// ë¶€ëŒ€ê°€ ì¡ê³  ìˆëŠ” í¬ë¡œ ë¹„ìš© í•©
+				pay += (pk::get_person_list(pk::get_hex_object_id(unit), pk::mibun_flags(ì‹ ë¶„_í¬ë¡œ)).size + 2) * 50;
 
 				pay *= 2;
 
-				// ±İÀÌ ºÎÁ·ÇÏ´Ù¸é ÇØ¹æ
+				// ê¸ˆì´ ë¶€ì¡±í•˜ë‹¤ë©´ í•´ë°©
 				if (unit.gold + pk::get_gold(building) < pay) return false;
 			}
-			// ºÎ´ë¸¦ °ø°İÇØ Æ÷·Î¸¦ ÀâÀº °æ¿ì
+			// ë¶€ëŒ€ë¥¼ ê³µê²©í•´ í¬ë¡œë¥¼ ì¡ì€ ê²½ìš°
 			else
 			{
-				pk::person@ taken_by;
+				pk::person@ attacker;
 				pk::building@ service;
 				int pay = 0;
 
-				if (info.taken_by.is_instance(pk::unit::type_id))
-					@taken_by = pk::get_person(pk::hex_object_to_unit(info.taken_by).leader);
-				else if (info.taken_by.is_instance(pk::building::type_id))
-					@taken_by = pk::get_person(pk::get_taishu_id(pk::hex_object_to_building(info.taken_by)));
+				if (info.attacker.is_instance(pk::unit::type_id))
+					@attacker = pk::get_person(pk::hex_object_to_unit(info.attacker).leader);
+				else if (info.attacker.is_instance(pk::building::type_id))
+					@attacker = pk::get_person(pk::get_taishu_id(pk::hex_object_to_building(info.attacker)));
 				else
-					@taken_by = pk::get_person(pk::get_kunshu_id(info.taken_by));
+					@attacker = pk::get_person(pk::get_kunshu_id(info.attacker));
 
-				if (pk::is_alive(taken_by))
-					@service = pk::get_building(taken_by.service);
+				if (pk::is_alive(attacker))
+					@service = pk::get_building(attacker.service);
 
-				// Æ÷·Î¸¦ ÀâÀº ¹«ÀåÀÇ ¼Ò¼ÓÀÌ ¾ø´Ù¸é ÇØ¹æ
+				// í¬ë¡œë¥¼ ì¡ì€ ë¬´ì¥ì˜ ì†Œì†ì´ ì—†ë‹¤ë©´ í•´ë°©
 				if (!pk::is_alive(service)) return false;
 
-				// ¼Ò¼Ó °ÅÁ¡ ¹«ÀåµéÀÇ ºÀ·Ï ÇÕ
-				pk::list<pk::person@> list = pk::get_person_list(service, pk::mibun_flags(½ÅºĞ_µµµ¶, ½ÅºĞ_ÅÂ¼ö, ½ÅºĞ_ÀÏ¹İ));
-				for (int i = 0; i < list.count; i++)
+				// ì†Œì† ê±°ì  ë¬´ì¥ë“¤ì˜ ë´‰ë¡ í•©
+				pk::list<pk::person@> list = pk::get_person_list(service, pk::mibun_flags(ì‹ ë¶„_ë„ë…, ì‹ ë¶„_íƒœìˆ˜, ì‹ ë¶„_ì¼ë°˜));
+				for (int i = 0; i < list.size; i++)
 				{
 					pk::rank@ rank = pk::get_rank(list[i].rank);
 					if (pk::is_alive(rank))
 						pay += rank.pay;
 				}
 
-				// ¼Ò¼Ó °ÅÁ¡ Æ÷·Î ºñ¿ë ÇÕ
-				pay += (pk::get_person_list(pk::get_hex_object_id(service), pk::mibun_flags(½ÅºĞ_Æ÷·Î)).count + 2) * 50;
+				// ì†Œì† ê±°ì  í¬ë¡œ ë¹„ìš© í•©
+				pay += (pk::get_person_list(pk::get_hex_object_id(service), pk::mibun_flags(ì‹ ë¶„_í¬ë¡œ)).size + 2) * 50;
 
 				pay *= 2;
 
-				// ¼Ò¼Ó °ÅÁ¡À¸·Î ±ÍÈ¯ÇßÀ» ¶§ Æ÷·Î¸¦ À¯ÁöÇÒ ¼ö ÀÖ´Â ºñ¿ëÀÌ ºÎÁ·ÇÏ´Ù¸é ÇØ¹æ
+				// ì†Œì† ê±°ì ìœ¼ë¡œ ê·€í™˜í–ˆì„ ë•Œ í¬ë¡œë¥¼ ìœ ì§€í•  ìˆ˜ ìˆëŠ” ë¹„ìš©ì´ ë¶€ì¡±í•˜ë‹¤ë©´ í•´ë°©
 				if (pk::get_gold(service) < pay) return false;
 			}
 

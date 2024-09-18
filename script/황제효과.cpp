@@ -4,15 +4,24 @@
 @Update: 2023.8.27,항구에서 훈련시 기력올라가지 않는문제 수정
 @Update: 2023.8.31,AI가 일정확률로 관짐을 구매, AI가 관직공격명령을 내림, 
 @Update: 2023.9.1,AI출진시 군주가 우선순위가 낮아지는 버그를 수정.
+@Update: 2024.1.31,작위공격명령시 정전시간을 1로 수정
+@Update: 2024.3.6,작위구매, 작위공격명령 옵션 추가.
+@Update: 2024.5.13,IsAlready 버그수정
+@Update: 2024.5.22, 무장편성순서 잘못되는 버그수정
+@Update: 2024.5.27, 돈없어도 작위 구매되는 버그수정
+@Update: 2024.6.6, 작위 공격명령 행동력 감소
 */
 
-namespace 황제효과
+namespace 황제효과_Emperor
 {
 	
 
 	const int 행동력 = 20;
 	const bool 황제_구매_가능 = false;
 	const bool 왕_구매_가능 = false;
+
+	const bool 작위구매 = true;
+	const bool 작위공격명령 = true;
 
 	const float AI_작위_구매_금_비율 = 0.3; //AI금의 30% 이하로 작위를 구매할수 있을때 구매함.
 	const int 유저_작위공격명령_기간 = 360; //1년
@@ -137,25 +146,31 @@ namespace 황제효과
 
 		Main()
 		{
-			pk::menu_item item;
-			item.menu = 105;
-			item.pos = 13;
-			item.init = pk::building_menu_item_init_t(BuyTitleInit);
-			item.is_enabled = pk::menu_item_is_enabled_t(IsBuyTitleEnabled);
-			item.get_text = pk::menu_item_get_text_t(GetBuyTitleText);
-			item.get_desc = pk::menu_item_get_desc_t(GetBuyTitleDesc);
-			item.handler = pk::menu_item_handler_t(BuyTitleHandler);
-			pk::add_menu_item(item);
+			if (작위구매)
+			{
+				pk::menu_item item;
+				item.menu = 105;
+				item.pos = 13;
+				item.init = pk::building_menu_item_init_t(BuyTitleInit);
+				item.is_enabled = pk::menu_item_is_enabled_t(IsBuyTitleEnabled);
+				item.get_text = pk::menu_item_get_text_t(GetBuyTitleText);
+				item.get_desc = pk::menu_item_get_desc_t(GetBuyTitleDesc);
+				item.handler = pk::menu_item_handler_t(BuyTitleHandler);
+				pk::add_menu_item(item);
+			}
 
-			pk::menu_item item관직공격명령;
-			item관직공격명령.menu = 103;
-			item관직공격명령.pos = 13;
-			item관직공격명령.init = pk::building_menu_item_init_t(TitleAttackCommandInit);
-			item관직공격명령.is_enabled = pk::menu_item_is_enabled_t(IsTitleAttackCommandEnabled);
-			item관직공격명령.get_text = pk::menu_item_get_text_t(GetTitleAttackCommandText);
-			item관직공격명령.get_desc = pk::menu_item_get_desc_t(GetTitleAttackCommandDesc);
-			item관직공격명령.handler = pk::menu_item_handler_t(TitleAttackCommandHandler);
-			pk::add_menu_item(item관직공격명령);
+			if (작위공격명령)
+			{
+				pk::menu_item item관직공격명령;
+				item관직공격명령.menu = 103;
+				item관직공격명령.pos = 13;
+				item관직공격명령.init = pk::building_menu_item_init_t(TitleAttackCommandInit);
+				item관직공격명령.is_enabled = pk::menu_item_is_enabled_t(IsTitleAttackCommandEnabled);
+				item관직공격명령.get_text = pk::menu_item_get_text_t(GetTitleAttackCommandText);
+				item관직공격명령.get_desc = pk::menu_item_get_desc_t(GetTitleAttackCommandDesc);
+				item관직공격명령.handler = pk::menu_item_handler_t(TitleAttackCommandHandler);
+				pk::add_menu_item(item관직공격명령);
+			}
 
 
 
@@ -308,6 +323,8 @@ namespace 황제효과
 		}
 		void AI작위구매()
 		{
+			if (!작위구매)
+				return;
 			pk::list<pk::force@> forces = pk::get_force_list();
 			for (int i = 0; i < forces.count; i++)
 			{
@@ -389,8 +406,8 @@ namespace 황제효과
 		{
 			for (int i = 0; i < _fis.length; i++)
 			{
-				pk::force@ force = _fis[i].force;
-				if (force.get_id() == force.get_id())
+				pk::force@ force2 = _fis[i].force;
+				if (force2.get_id() == force.get_id())
 					return true;
 			}
 			return false;
@@ -437,14 +454,18 @@ namespace 황제효과
 		{
 			force0.ally[force1.get_id()] = false;
 			force0.relations[force1.get_id()] = 0;
+			force0.ceasefire_timer[force1.get_id()] = 1;
 			force1.ally[force0.get_id()] = false;
 			force1.relations[force0.get_id()] = 0;
+			force1.ceasefire_timer[force0.get_id()] = 1;
 			force0.update();
 			force1.update();
 		}
 
 		void AI공격명령()
 		{
+			if (!작위공격명령)
+				return;
 			pk::list<pk::force@> forces = pk::get_force_list();
 			for (int i = 0; i < forces.count; i++)
 			{
@@ -1123,9 +1144,9 @@ namespace 황제효과
 					return false;
 				if (a.rank != b.rank)
 					return a.rank < b.rank;
-				if (a.stat[무장능력_통솔] != b.stat[무장능력_통솔])
-					return a.stat[무장능력_통솔] > b.stat[무장능력_통솔];
-				return a.stat[무장능력_무력] >= b.stat[무장능력_무력];
+				if (a.max_stat[무장능력_통솔] != b.max_stat[무장능력_통솔])
+					return a.max_stat[무장능력_통솔] > b.max_stat[무장능력_통솔];
+				return a.max_stat[무장능력_무력] >= b.max_stat[무장능력_무력];
 			});
 
 			int minFood = AI_출진_후_최소병량;
@@ -1474,6 +1495,8 @@ namespace 황제효과
 			@_scene_attacker = forceAttack[0];
 			@_scene_target = forceTarget[0];
 
+			_district.ap = pk::max(_district.ap - 행동력, 0);
+
 			pk::scene(pk::scene_t(Scene외교));
 			if (_scene_result)
 			{
@@ -1488,7 +1511,7 @@ namespace 황제효과
 
 				Attack(forceAttack[0], forceTarget[0]);
 
-				string str = pk::format("\x1b[2x{}\x1b[0x 와 \x1b[2x{}\x1b[0x가 동맹이 파기되었습니다.", pk::decode(pk::get_name(pk::get_person(forceAttack[0].kunshu))), pk::decode(pk::get_name(pk::get_person(forceTarget[0].kunshu))));
+				string str22 = pk::format("\x1b[2x{}\x1b[0x 와 \x1b[2x{}\x1b[0x가 동맹이 파기되었습니다.", pk::decode(pk::get_name(pk::get_person(forceAttack[0].kunshu))), pk::decode(pk::get_name(pk::get_person(forceTarget[0].kunshu))));
 				pk::message_box(pk::encode(str));
 				pk::play_se(10);
 				return true;
@@ -1679,8 +1702,12 @@ namespace 황제효과
 				if(!pk::yes_no(pk::encode(str)))
 					continue;
 
-				BuyTitle(_force, title_index);
-				_force.title = title_index;
+				if (BuyTitle(_force, title_index))
+				{
+					_force.title = title_index;
+					pk::play_se(10);
+				}
+				
 			}
 
 

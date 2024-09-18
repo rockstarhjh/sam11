@@ -21,10 +21,10 @@ namespace 야전부대효과
     const bool 대화표시설정 = true;   // 야전부대 효과의 대화 표시 여부 설정
     const int  대화표시확률 = 30;     // 야전부대 효과의 상시대화 확률 설정
     
-    const bool 야전포위효과 = false;   // 포위당한 부대는 매턴 기력 감소
+    const bool 야전포위효과 = true;   // 포위당한 부대는 매턴 기력 감소
     const bool 야전계절효과 = true;   // 계절에 따라 부대기력 감소
     const bool 야전지형설정 = true;   // 지형에 따라 부대기력 감소
-    const bool 야전탈영설정 = false;   // 기력 저조 부대 병력 감소 적용
+    const bool 야전탈영설정 = true;   // 기력 저조 부대 병력 감소 적용
     
     const bool 화계확산효과 = true;    // 매턴 바람방향에 따른 화계 확산 효과
     const int  화계확산확률 = 50;

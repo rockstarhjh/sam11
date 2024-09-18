@@ -32,13 +32,13 @@
     const array<int> 달성보상_기교_중급 = { 1000, 2500 };
     const array<int> 달성보상_기교_고급 = { 2000, 4000 };
 
-    const array<int> 달성보상_능력경험치_초급 = { 10, 30 };
-    const array<int> 달성보상_능력경험치_중급 = { 25, 60 };
+    const array<int> 달성보상_능력경험치_초급 = { 20, 40 };
+    const array<int> 달성보상_능력경험치_중급 = { 35, 60 };
     const array<int> 달성보상_능력경험치_고급 = { 50, 100 };
 
-    const array<int> 달성보상_병과경험치_초급 = { 5, 20 };
-    const array<int> 달성보상_병과경험치_중급 = { 15, 30 };
-    const array<int> 달성보상_병과경험치_고급 = { 25, 50 };
+    const array<int> 달성보상_병과경험치_초급 = { 25, 40 };
+    const array<int> 달성보상_병과경험치_중급 = { 35, 60 };
+    const array<int> 달성보상_병과경험치_고급 = { 45, 70 };
 
     const array<int> 달성보상_수명_초급 = { 1, 3 };
     const array<int> 달성보상_수명_중급 = { 2, 6 };

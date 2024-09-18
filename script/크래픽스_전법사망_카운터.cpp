@@ -1,6 +1,7 @@
 /*
 @만든이: 크래픽스
 @Update:2023.9.9 정확도개선, 적장궤멸시 사망처리되는 버그수정
+@Update:2023.9.13 정확도개선
 */
 
 namespace 기병전법사망_일기토_카운터
@@ -500,6 +501,8 @@ namespace 기병전법사망_일기토_카운터
 				if(p.hp < 10)
 					continue;
 
+				//pk::printf("new dead {},hp{}\n", getName(p),p.hp);
+
 				bool bFound = false;
 				for (int k = 0; k < 사망자리스트.count; k++)
 				{
@@ -640,6 +643,10 @@ namespace 기병전법사망_일기토_카운터
 		{
 			if (type == 1)
 				return;
+			if (type == 95)
+				return;
+
+			//pk::printf("exp {},{}\n", getNameLeader(unit),type);
 			
 			for(int i=0;i<_attackers.length;i++)
 			{
@@ -651,6 +658,9 @@ namespace 기병전법사망_일기토_카운터
 						if (unit2 != null && unit2.troops == 0)
 							return;
 					}
+					if (_defenders[i].hp < 10)
+						return;
+
 					if(_defenders[i].mibun == 신분_사망)
 					{
 						UpdateDead(_attackers[i],_defenders[i]);
@@ -664,6 +674,16 @@ namespace 기병전법사망_일기토_카운터
 		{
 			return obj != null ? pk::decode(pk::get_name(obj)) : "null";
 		}
+		string getNameLeader(pk::unit@ obj)
+		{
+			if (obj == null)
+				return "null";
+			pk::person@ p = pk::get_person(obj.leader);
+			if (p == null)
+				return "null";
+			return pk::decode(pk::get_name(p));
+		}
+
 		
 	}
 	Main main;

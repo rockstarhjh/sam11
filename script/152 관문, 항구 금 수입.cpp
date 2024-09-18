@@ -1,69 +1,180 @@
-ï»¿namespace ê´€ë¬¸_ê¸ˆ_ìˆ˜ì…
+/*
+@¼öÁ¤ÀÚ: ±â¸¶Ã¥»ç
+@Update: '18.12.22  / º¯°æ³»¿ë: º´±âÂ÷°¨ ½ºÅ©¸³Æ® ºĞ¸®
+@Update: '19.2.23   / º¯°æ³»¿ë: °ÔÀÓ ³»¿¡¼­ x0.2 ÀÚµ¿Àû¿ëµÇ¾î¼­ ½ºÅ©¸³Æ®¿¡¼­ Á¦¿Ü
+@Update: '20.8.25   / º¯°æ³»¿ë: º´±âÀ¯Áöºñ¼³Á¤°ú º´±âÂ÷°¨¼³Á¤ ¿É¼ÇºĞ¸®
+@Update: '20.8.29   / º¯°æ³»¿ë: À¯Àú µµ½Ã¼ö ÆĞ³ÎÆ¼ Ãß°¡, Ä·ÆäÀÎ¿¡¼­´Â Ä¿½ºÅÒ ¼³Á¤ »ç¿ë ºÒ°¡
+*/
+
+
+namespace °ü¹®_±İ_¼öÀÔ
 {
-	
-    //=======================================================================================
-
-    const int  ì»´í“¨í„°ì„¸ë ¥_ë³‘ë ¥ìœ ì§€ë¹„_ë¹„ìœ¨ = 0.9f;  // ë†’ì„ ìˆ˜ë¡ ë¹„ìš© ì¦ê°€, ìœ ì € ì„¸ë ¥ê³¼ ë˜‘ê°™ì´ í•˜ë ¤ë©´ 1.0f.
-
-    const int  ê±°ì _ë³‘ë ¥ìœ ì§€ë¹„_ë¹„ìœ¨ = 0.02f;  // ê±°ì  ë‚´ ë³‘ë ¥ë“¤ ìœ ì§€ë¹„ìš© ë¹„ìœ¨. ë†’ì„ ìˆ˜ë¡ ë¹„ìš© ì¦ê°€   
-    const int  ë¶€ëŒ€_ë³‘ë ¥ìœ ì§€ë¹„_ë¹„ìœ¨ = 0.03f;  // ì¶œì§„í•œ ë¶€ëŒ€ ë³‘ë ¥ë“¤ ìœ ì§€ë¹„ìš© ë¹„ìœ¨. ë†’ì„ ìˆ˜ë¡ ë¹„ìš© ì¦ê°€    
     
-    //=======================================================================================		
-	
+    
+    //---------------------------------------------------------------------------------------
+    // À¯Àú ¼³Á¤ (true = on, false = off)
+    const bool  º´±âÀ¯Áöºñ¼³Á¤ = false;         // º´±â º¸À¯·®¿¡ ºñ·ÊÇÏ¿© ±İ ¼Òºñ, ±İ ¾øÀ» ½Ã º´±â Â÷°¨
+    const int   º´±âÂ÷°¨½Ã±â = 1;               // º´±âÂ÷°¨¸ğµå1 ¶Ç´Â ¸ğµå2 »ç¿ë ½Ã (0: ¸ÅÅÏ,  1: ¸Å¿ù 1ÀÏ )
+    
+    const bool  ºñ¿ë´ë½Å_º´±âÂ÷°¨_¸ğµå = true;    // º´±âÂ÷°¨¸ğµå1 (À¯Áöºñ true ¸ğµå ½Ã È°¼ºÈ­ : ±İºÎÁ· ½Ã º´±â¸¦ ´ë½Å Â÷°¨)
+    const float ºñ¿ë´ë½Å_º´±âÂ÷°¨_ºñÀ² = 2.5f;    // º´±âÂ÷°¨¸ğµå1 È°¼ºÈ­ ½Ã º´±â Â÷°¨ºñÀ²
+    
+    const bool  º´·ÂÃÊ°ú_º´±âÂ÷°¨_¸ğµå = true;    // º´±âÂ÷°¨¸ğµå2 (À¯Áöºñ false ¸ğµå ½Ã È°¼ºÈ­ : ±İ ¼Òºñ ¾øÀÌ º´·Âº¸´Ù ¸¹Àº º´±â¿¡ ´ëÇØ¼­ ÀÏÁ¤ ºñÀ² Â÷°¨)
+    const float º´·ÂÃÊ°ú_º´±âÂ÷°¨_ºñÀ² = 0.01f;   // º´±âÂ÷°¨¸ğµå2 È°¼ºÈ­ ½Ã º´±â Â÷°¨ºñÀ²
+    
+    const bool  À¯Àú_µµ½Ã¼ö_ÆĞ³ÎÆ¼ = true;     // À¯Àú¼¼·Â¿¡ ´ëÇØ¼­ µµ½Ã¼ö¿¡ ºñ·ÊÇÏ¿© ¼öÀÔ µğ¹öÇÁ (µµ½Ã´ç 5% °¨¼Ò)
+    
+    //---------------------------------------------------------------------------------------
+    
+    
 	class Main
 	{
 		Main()
 		{
 			pk::set_func(152, pk::func152_t(callback));
+            
+            
+            pk::bind(111, pk::trigger111_t(onTurnStart));
 		}
-
-
-        // ë³‘ë ¥ìœ ì§€ë¹„ í•¨ìˆ˜ (ì¸êµ¬ ê°œë…)
-        int func_troops_pay(pk::building@ building)
-        {
-          int sum_unit_troops = 0;
-          pk::force@ force = pk::get_force(building.get_force_id()); // ê±°ì ì˜ ì„¸ë ¥
-          array<pk::unit@> unit_arr = pk::list_to_array(pk::get_unit_list(force)); // ê±°ì  ì„¸ë ¥ì˜ ë¶€ëŒ€ ëª©ë¡
-          for (int i = 0; i < int(unit_arr.length); i++)
-          {
-           pk::unit@ unit = unit_arr[i];
-           if (building.get_id() == pk::get_service(unit)) // ê±°ì  ì„¸ë ¥ ë¶€ëŒ€ì˜ ì†Œì†ì´ í•´ë‹¹ ê±°ì ì´ë¼ë©´
-           sum_unit_troops += int(unit.troops); // í•´ë‹¹ ë¶€ëŒ€ì˜ ë³‘ì‚¬ìˆ˜ ë”í•¨
-           }
-
-            // ê±°ì  ë³‘ë ¥ ìœ ì§€ë¹„ + ë¶€ëŒ€ ë³‘ë ¥ ìœ ì§€ë¹„
-           return int(pk::get_troops(building) * ê±°ì _ë³‘ë ¥ìœ ì§€ë¹„_ë¹„ìœ¨ + sum_unit_troops * ë¶€ëŒ€_ë³‘ë ¥ìœ ì§€ë¹„_ë¹„ìœ¨ ); // ìµœì¢…ì ìœ¼ë¡œ ì›í•˜ëŠ” ë¹„ìš©ì˜ ë¹„ìœ¨ì„ ê³±í•´ ë°˜í™˜
-           }
-
 
 		int callback(pk::building@ building, int city_revenue)
 		{
-			
-
-       // ë³‘ë ¥ ìœ ì§€ë¹„ ì°¨ê°ëœ ê¸ˆ ìˆ˜ì… ì˜ˆìƒ (ì¸êµ¬ ê°œë…) 
-          
-          
-	 if (!building.is_player())                        
-              {
-
-                    if ( pk::get_gold(building) >= 300 ) 
-                      {
-                       city_revenue = pk::max ( city_revenue - (func_troops_pay(building) * ì»´í“¨í„°ì„¸ë ¥_ë³‘ë ¥ìœ ì§€ë¹„_ë¹„ìœ¨) , - 150);        //  ì»´í“¨í„° ì„¸ë ¥ì€ ë‹¤ìŒ ê¸ˆ ìˆ˜ì…ì´ ë§ˆì´ë„ˆìŠ¤ 150 ì´í•˜ë¡œ ì•ˆë–¨ì–´ì§  
-                      }
-
-                    else if ( pk::get_gold(building) < 300 ) 
-                      {
-                       city_revenue = pk::max ( city_revenue - (func_troops_pay(building) * ì»´í“¨í„°ì„¸ë ¥_ë³‘ë ¥ìœ ì§€ë¹„_ë¹„ìœ¨) ,  500);        // ì»´í“¨í„° ì„¸ë ¥ í˜„ì¬ ë³´ìœ ê¸ˆì´ 300 ë¯¸ë§Œì´ë©´ ë‹¤ìŒ ë‹¬ ê¸ˆ ìˆ˜ì…ì€ ìµœì†Œ 500 ì´ìƒ ë³´ì¥
-                      }             
-
-              }
-              else
-              {
-                  city_revenue = city_revenue - func_troops_pay(building);     // í”Œë ˆì´ì–´ëŠ” ì •ìƒì 
-              }  			
-			
-			return city_revenue * 0.50f;
+            // int n = int(city_revenue * 0.2f);
+            int n = int(city_revenue);      // °ÔÀÓ ³»¿¡¼­ x0.2 ÀÚµ¿Àû¿ëµÇ¾î¼­ ½ºÅ©¸³Æ®¿¡¼­ Á¦¿Ü ('19.2.23)
+            
+            
+            
+            // Ç×±¸ÀÎ °æ¿ì ±İ¼öÀÔ 1.5¹è Àû¿ë ('18.10.15)
+            if ( (pk::get_hex_object_id(building) >= °Ç¹°_Ç×±¸½ÃÀÛ) and (pk::get_hex_object_id(building) < °Ç¹°_Ç×±¸³¡) )
+                n = int(n * 1.5f);
+            
+            
+            // À¯Àú_µµ½Ã¼ö_ÆĞ³ÎÆ¼ ('20.8.29)
+            if (À¯Àú_µµ½Ã¼ö_ÆĞ³ÎÆ¼ and building.is_player() and !pk::is_campaign())
+            {
+                pk::force@ force = pk::get_force(building.get_force_id());
+                float force_city_count = float(pk::get_city_list(force).count);
+                n = int(n * (1.f - (force_city_count * 0.05f)));
+            }
+            
+            // ------------------------------------------------------------------
+            // µµ½Ã ³» º´±â º¸À¯·®¿¡ µû¸¥ ±İ¼öÀÔ °¨¼Ò Àû¿ë : º´±â À¯Áöºñ °³³ä ('18.10.14)
+            
+            if (º´±âÀ¯Áöºñ¼³Á¤ and !pk::is_campaign())
+            {
+            
+                n = int(n * 1.5f); // º´±â º¸À¯·®¿¡ ÀÇÇÑ ¼öÀÔ °¨¼Ò¸¦ °¨¾ÈÇÏ¿© ±âº» ¼öÀÔ 50% »óÇâ Á¶Á¤ : µµ½Ã¼öÀÔÀÇ 20%¿¡¼­ 30%·Î º¯°æ
+                
+                float rich_rate = pk::is_valid_person_id(building.who_has_skill(Æ¯±â_ºÎÈ£))? 1.5f : 1.0f;  // ÀÏ¹İ=1.0  Æ¯±âºÎÈ£=1.5 ¹İÈ¯
+                
+                // ÀÏ¹İº´±â À¯Áöºñ Â÷°¨, º´±â ºÎÁ· ½Ã ¼öÀÔ ´ë½Å º´±â º¸À¯·® °¨¼Ò
+                int weapon_qty1 = pk::get_weapon_amount(building, º´±â_Ã¢);
+                int weapon_qty2 = pk::get_weapon_amount(building, º´±â_±Ø);
+                int weapon_qty3 = pk::get_weapon_amount(building, º´±â_³ë);
+                int weapon_qty4 = pk::get_weapon_amount(building, º´±â_±º¸¶);
+                int weapon_sum = pk::max(1, weapon_qty1 + weapon_qty2 + weapon_qty3 + weapon_qty4);   // º´±â 0 ÀÏ °æ¿ì error ¹ß»ı ¹æÁö¿ë ('18.10.21)
+                
+                int weapon_pay = int(0.010f * weapon_sum / rich_rate);
+                int gold_estimate = pk::get_gold(building) + n;
+                
+                n = n - weapon_pay;
+                
+                /*
+                if (gold_estimate > weapon_pay) // º¸À¯±İ + ¼öÀÔ ¿©À¯ ½Ã À¯Áöºñ ÁöÃâ
+                    n = n - weapon_pay;
+                else                            // º¸À¯±İ + ¼öÀÔ ºÎÁ· ½Ã ºÎÁ· Â÷¾×¿¡ ºñ·ÊÇÏ¿© º¸À¯ º´±â ±Õµî °¨¼Ò
+                {
+                    n = -pk::get_gold(building);
+                    
+                    pk::add_weapon_amount(building, º´±â_Ã¢,  int((gold_estimate - weapon_pay)* 2.5f * weapon_qty1 / weapon_sum), true);
+                    pk::add_weapon_amount(building, º´±â_±Ø,  int((gold_estimate - weapon_pay)* 2.5f * weapon_qty2 / weapon_sum), true);
+                    pk::add_weapon_amount(building, º´±â_³ë,  int((gold_estimate - weapon_pay)* 2.5f * weapon_qty3 / weapon_sum), true);
+                    pk::add_weapon_amount(building, º´±â_±º¸¶, int((gold_estimate - weapon_pay)* 2.5f * weapon_qty4 / weapon_sum), true);
+                }
+                */
+                
+                // °ø¼ºº´±â ¹× ÀüÇÔÀº À¯Áöºñ Â÷°¨¸¸ Àû¿ë 
+                n = n - int(15.f*(pk::get_weapon_amount(building, º´±â_ÃæÂ÷)));
+                n = n - int(15.f*(pk::get_weapon_amount(building, º´±â_Á¤¶õ)));
+                n = n - int(20.f*(pk::get_weapon_amount(building, º´±â_¸ñ¼ö)));
+                n = n - int(25.f*(pk::get_weapon_amount(building, º´±â_Åõ¼®)));
+                n = n - int(20.f*(pk::get_weapon_amount(building, º´±â_´©¼±)));
+                n = n - int(25.f*(pk::get_weapon_amount(building, º´±â_ÅõÇÔ)));
+            
+                // ------------------------------------------------------------------
+            
+            }
+            
+            
+            
+			return n;
 		}
+        
+        
+        //---------------------------------------------------------------------------------------
+        
+        void onTurnStart(pk::force@ force)
+		{
+            if(pk::is_campaign()) return;
+            
+            float maintenance_period = -1.0f;
+            if (º´±âÂ÷°¨½Ã±â == 0)   
+                maintenance_period = 1/3.f;  // ¸ÅÅÏ
+            else if (º´±âÂ÷°¨½Ã±â == 1 and (pk::get_day() == 1))    
+                maintenance_period = 1.0f;   // ¸Å¿ù 1ÀÏ
+            
+            
+            if ((ºñ¿ë´ë½Å_º´±âÂ÷°¨_¸ğµå or º´·ÂÃÊ°ú_º´±âÂ÷°¨_¸ğµå) and maintenance_period > 0.f)
+            {
+                for (int i = °Ç¹°_µµ½Ã½ÃÀÛ; i < °Ç¹°_µµ½Ã³¡; i++)
+                {
+                    pk::building@ building = pk::get_building(i);
+                    
+                    if (force.get_id() == building.get_force_id())
+                    {
+                        weapon_maintenance(building, maintenance_period);
+                    }
+                }
+            }
+            
+        }
+        
+        void weapon_maintenance(pk::building@ building, float ratio)
+        {
+            int rich_rate = 1;
+            
+            // ÀÏ¹İº´±â À¯Áöºñ Â÷°¨, º´±â ºÎÁ· ½Ã ¼öÀÔ ´ë½Å º´±â º¸À¯·® °¨¼Ò
+            int weapon_qty1 = pk::get_weapon_amount(building, º´±â_Ã¢);
+            int weapon_qty2 = pk::get_weapon_amount(building, º´±â_±Ø);
+            int weapon_qty3 = pk::get_weapon_amount(building, º´±â_³ë);
+            int weapon_qty4 = pk::get_weapon_amount(building, º´±â_±º¸¶);
+            int weapon_sum = pk::max(1, weapon_qty1 + weapon_qty2 + weapon_qty3 + weapon_qty4);
+            
+            int weapon_pay = int(0.010f * weapon_sum / rich_rate);
+            int gold_estimate = pk::get_gold(building);
+            int troops = pk::get_troops(building);
+            
+            if ((º´±âÀ¯Áöºñ¼³Á¤ and ºñ¿ë´ë½Å_º´±âÂ÷°¨_¸ğµå) and gold_estimate <= weapon_pay) // º¸À¯±İ + ¼öÀÔ ¿©À¯ ½Ã À¯Áöºñ ÁöÃâ
+            {
+                pk::add_weapon_amount(building, º´±â_Ã¢,  int((gold_estimate - weapon_pay)* ºñ¿ë´ë½Å_º´±âÂ÷°¨_ºñÀ² * weapon_qty1 / weapon_sum * ratio), true );
+                pk::add_weapon_amount(building, º´±â_±Ø,  int((gold_estimate - weapon_pay)* ºñ¿ë´ë½Å_º´±âÂ÷°¨_ºñÀ² * weapon_qty2 / weapon_sum * ratio), true );
+                pk::add_weapon_amount(building, º´±â_³ë,  int((gold_estimate - weapon_pay)* ºñ¿ë´ë½Å_º´±âÂ÷°¨_ºñÀ² * weapon_qty3 / weapon_sum * ratio), true );
+                pk::add_weapon_amount(building, º´±â_±º¸¶, int((gold_estimate - weapon_pay)* ºñ¿ë´ë½Å_º´±âÂ÷°¨_ºñÀ² * weapon_qty4 / weapon_sum * ratio), true );
+            }
+            else if ((!º´±âÀ¯Áöºñ¼³Á¤ and º´·ÂÃÊ°ú_º´±âÂ÷°¨_¸ğµå) and troops <= weapon_sum) // º´·Âº¸´Ù ¸¹Àº ¹«±â¿¡ ´ëÇØ¼­ ÀÏÁ¤ºñÀ² º´±â Â÷°¨
+            {
+                pk::add_weapon_amount(building, º´±â_Ã¢,  int((troops - weapon_sum)* º´·ÂÃÊ°ú_º´±âÂ÷°¨_ºñÀ² * weapon_qty1 / weapon_sum * ratio), true );
+                pk::add_weapon_amount(building, º´±â_±Ø,  int((troops - weapon_sum)* º´·ÂÃÊ°ú_º´±âÂ÷°¨_ºñÀ² * weapon_qty2 / weapon_sum * ratio), true );
+                pk::add_weapon_amount(building, º´±â_³ë,  int((troops - weapon_sum)* º´·ÂÃÊ°ú_º´±âÂ÷°¨_ºñÀ² * weapon_qty3 / weapon_sum * ratio), true );
+                pk::add_weapon_amount(building, º´±â_±º¸¶, int((troops - weapon_sum)* º´·ÂÃÊ°ú_º´±âÂ÷°¨_ºñÀ² * weapon_qty4 / weapon_sum * ratio), true );
+            }
+              
+                
+            return ;
+        }
+        
+        
+        
 	}
 
 	Main main;

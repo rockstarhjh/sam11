@@ -1,87 +1,87 @@
 /*
-@ë§Œë“ ì´: í¬ë˜í”½ìŠ¤
-@Update: 2024.5.25ìµœì´ˆë°°í¬
-@Update: 2024.5.28 ìœ„ì„ê´€ë ¨ë²„ê·¸ìˆ˜ì •
-@Update: 2024.6.1 ë¶ˆì§€í˜• ê´€ë ¨ ì˜ˆì™¸ì²˜ë¦¬
-@Update: 2024.6.17 ì—ëŸ¬ìˆ˜ì •
-@Update: 2024.8.17 ê³µì„íˆ¬ì„ ë°ë¯¸ì§€ ì˜µì…˜ ì¶”ê°€.
-@Update: 2024.8.19 ê³µì„íˆ¬ì„ ê±°ì ë‚´êµ¬ë„ ì¤‘ì²© ë°©ì§€,ê¸°êµ_ë²½ë ¥ì²˜ë¦¬
+@¸¸µçÀÌ: Å©·¡ÇÈ½º
+@Update: 2024.5.25ÃÖÃÊ¹èÆ÷
+@Update: 2024.5.28 À§ÀÓ°ü·Ã¹ö±×¼öÁ¤
+@Update: 2024.6.1 ºÒÁöÇü °ü·Ã ¿¹¿ÜÃ³¸®
+@Update: 2024.6.17 ¿¡·¯¼öÁ¤
+@Update: 2024.8.17 °ø¼®Åõ¼® µ¥¹ÌÁö ¿É¼Ç Ãß°¡.
+@Update: 2024.8.19 °ø¼®Åõ¼® °ÅÁ¡³»±¸µµ ÁßÃ¸ ¹æÁö,±â±³_º®·ÂÃ³¸®
 */
-namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
+namespace AI°­Á¦Àü¹ı»ç¿ë_AIForceAttack
 {
-	const int ì „ë²•ì‹¤íŒ¨ì‹œ_ì¼ë°˜ê³µê²©_í™•ë¥  = 30;
-	const int ì „ë²•ì‹¤íŒ¨ì‹œ_ì¼ë°˜ê³µê²©_ë¬´ë°ë¯¸ì§€_í™•ë¥  = 30;
-	const int ì „ë²•ì‹¤íŒ¨ì‹œ_ë°˜ê²©ë§Œ_í™•ë¥  = 40;
+	const int Àü¹ı½ÇÆĞ½Ã_ÀÏ¹İ°ø°İ_È®·ü = 30;
+	const int Àü¹ı½ÇÆĞ½Ã_ÀÏ¹İ°ø°İ_¹«µ¥¹ÌÁö_È®·ü = 30;
+	const int Àü¹ı½ÇÆĞ½Ã_¹İ°İ¸¸_È®·ü = 40;
 
 
-	const int ìë™ê³µê²©_í™”ì‹œ_ë¶€ìƒí™•ë¥  = 5;
-	const bool ìë™ê³µê²©_ì „ë²•êµì°¨ì‚¬ìš© = true; //ê¸°ë§ˆì±…ì‚¬ë‹˜ ì•¼ì „ë¶€ëŒ€ì „ë²•í™•ì¥ ì—°ê³„
-	const bool ì‚¬ê±°ë¦¬_íŒ¨ì¹˜ = true;
-	const int ì—°ì „_ë”œë ˆì´ = 1000;//ms
-	const int ì „ë²•_ì¼ê¸°í† _í™•ë¥  = 5;
+	const int ÀÚµ¿°ø°İ_È­½Ã_ºÎ»óÈ®·ü = 5;
+	const bool ÀÚµ¿°ø°İ_Àü¹ı±³Â÷»ç¿ë = true; //±â¸¶Ã¥»ç´Ô ¾ßÀüºÎ´ëÀü¹ıÈ®Àå ¿¬°è
+	const bool »ç°Å¸®_ÆĞÄ¡ = true;
+	const int ¿¬Àü_µô·¹ÀÌ = 1000;//ms
+	const int Àü¹ı_ÀÏ±âÅä_È®·ü = 5;
 
-	const int ìë™ê³µê²©_í™•ë¥  = 70; //20%ëŠ” ê¸°ì¡´ AIí•œí…Œ ë§¡ê¹ë‹ˆë‹¤. 
+	const int ÀÚµ¿°ø°İ_È®·ü = 80; //20%´Â ±âÁ¸ AIÇÑÅ× ¸Ã±é´Ï´Ù. 
 
-	const int ìë™ê³µê²©_ë‚˜ì„ ì²¨_í™•ë¥  = 50;
-	const int ìë™ê³µê²©_ì´ë‹¨ì²¨_í™•ë¥  = 50; //ì‹¤ì œ 25%
+	const int ÀÚµ¿°ø°İ_³ª¼±Ã·_È®·ü = 50;
+	const int ÀÚµ¿°ø°İ_ÀÌ´ÜÃ·_È®·ü = 50; //½ÇÁ¦ 25%
 
-	const int ìë™ê³µê²©_ëŒê²©_í™•ë¥  = 50; 
-	const int ìë™ê³µê²©_ëŒíŒŒ_í™•ë¥  = 50; //ì‹¤ì œ 25%
-	const int ìë™ê³µê²©_ëŒì§„_í™•ë¥  = 50; //ì‹¤ì œ 12.5%
+	const int ÀÚµ¿°ø°İ_µ¹°İ_È®·ü = 50; 
+	const int ÀÚµ¿°ø°İ_µ¹ÆÄ_È®·ü = 50; //½ÇÁ¦ 25%
+	const int ÀÚµ¿°ø°İ_µ¹Áø_È®·ü = 50; //½ÇÁ¦ 12.5%
 
-	const int ìë™ê³µê²©_í•¨ì„ _í™”ì‹œ = 70;
+	const int ÀÚµ¿°ø°İ_ÇÔ¼±_È­½Ã = 70;
 
-	const float ê³µì„±íˆ¬ì„_ë‚´êµ¬ë„_ë°ë¯¸ì§€_ë¹„ìœ¨ = 1.5;
-	const float ê³µì„íˆ¬ì„_ë³‘ë ¥_ë°ë¯¸ì§€_ë¹„ìœ¨ = 1.5;
+	const float °ø¼ºÅõ¼®_³»±¸µµ_µ¥¹ÌÁö_ºñÀ² = 1.5;
+	const float °ø¼®Åõ¼®_º´·Â_µ¥¹ÌÁö_ºñÀ² = 1.5;
 
-	const bool ì½˜ì†”_ë¡œê·¸_í‘œì‹œ = true; //ë¬¸ì œ ëŒ€ì‘ì‹œ ëŒ€ì‘í•  ìˆ˜ ìˆê²Œ ì¼œë‘ì„¸ìš”.
+	const bool ÄÜ¼Ö_·Î±×_Ç¥½Ã = true; //¹®Á¦ ´ëÀÀ½Ã ´ëÀÀÇÒ ¼ö ÀÖ°Ô ÄÑµÎ¼¼¿ä.
 
 
 
-	//ìˆ˜ì •í•˜ì§€ ë§ˆì„¸ìš” //////////////////////////////////////////////////////
+	//¼öÁ¤ÇÏÁö ¸¶¼¼¿ä //////////////////////////////////////////////////////
 
-	const int ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²© = 0;
-	const int ìœ ë‹›_ì „ë²•_í™œê³µê²© = 1;
-	const int ìœ ë‹›_ì „ë²•_ëŒì¶œ = 2;
-	const int ìœ ë‹›_ì „ë²•_ë‚˜ì„ ì²¨ = 3;
-	const int ìœ ë‹›_ì „ë²•_ì´ë‹¨ì²¨ = 4;
-	const int ìœ ë‹›_ì „ë²•_ê°ˆí€´ = 5;
-	const int ìœ ë‹›_ì „ë²•_íš¡ì¹˜ = 6;
-	const int ìœ ë‹›_ì „ë²•_ì„ í’ = 7;
-	const int ìœ ë‹›_ì „ë²•_í™”ì‹œ = 8;
-	const int ìœ ë‹›_ì „ë²•_ê´€ì‹œ = 9;
-	const int ìœ ë‹›_ì „ë²•_ë‚œì‚¬ = 10;
-	const int ìœ ë‹›_ì „ë²•_ëŒê²© = 11;
-	const int ìœ ë‹›_ì „ë²•_ëŒíŒŒ = 12;
-	const int ìœ ë‹›_ì „ë²•_ëŒì§„ = 13;
-	const int ìœ ë‹›_ì „ë²•_í™”ì‹œ_ë³‘ê¸° = 14;
-	const int ìœ ë‹›_ì „ë²•_íŒŒì‡„_ë³‘ê¸° = 15;
-	const int ìœ ë‹›_ì „ë²•_ë°©ì‚¬_ë³‘ê¸° = 16;
-	const int ìœ ë‹›_ì „ë²•_íˆ¬ì„_ë³‘ê¸° = 17;
-	const int ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©_í•¨ì„  = 18;
-	const int ìœ ë‹›_ì „ë²•_í™œê³µê²©_í•¨ì„  = 19;
-	const int ìœ ë‹›_ì „ë²•_í™”ì‹œ_í•¨ì„  = 20;
-	const int ìœ ë‹›_ì „ë²•_íˆ¬ì„_í•¨ì„  = 21;
-	const int ìœ ë‹›_ì „ë²•_ê²©ëŒ_í•¨ì„  = 22;
-	const int ìœ ë‹›_ì „ë²•_ë‚˜ì„ ì²¨ë‹¹í•¨ = 23;
-	const int ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©ë‹¹í•¨ = 24;
-	const int ìœ ë‹›_ì „ë²•_ì¼ì œê³µê²©ë‹¹í•¨ = 25;
-	const int ìœ ë‹›_ì „ë²•_í™œê³µê²©ë‹¹í•¨ = 26;
-	const int ìœ ë‹›_ì „ë²•_ëŒì¶œ_ì´ë‹¨ì²¨ë‹¹í•¨ = 27;
-	const int ìœ ë‹›_ì „ë²•_ëŒê²©_ëŒì§„ë‹¹í•¨ = 28;
-	const int ìœ ë‹›_ì „ë²•_ëŒê²©_ëŒì¶œë‹¹í•¨_1íƒ€ê²Ÿ = 29;
-	const int ìœ ë‹›_ì „ë²•_ëŒê²©_ê°ˆí€´ë‹¹í•¨ = 30;
-	const int ìœ ë‹›_ì „ë²•_ëŒê²©_ëŒíŒŒë‹¹í•¨ = 31;
-	const int ìœ ë‹›_ì „ë²•_ëŒê²©_íˆ¬ì„ë‹¹í•¨ = 32;
+	const int À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ = 0;
+	const int À¯´Ö_Àü¹ı_È°°ø°İ = 1;
+	const int À¯´Ö_Àü¹ı_µ¹Ãâ = 2;
+	const int À¯´Ö_Àü¹ı_³ª¼±Ã· = 3;
+	const int À¯´Ö_Àü¹ı_ÀÌ´ÜÃ· = 4;
+	const int À¯´Ö_Àü¹ı_°¥Äû = 5;
+	const int À¯´Ö_Àü¹ı_È¾Ä¡ = 6;
+	const int À¯´Ö_Àü¹ı_¼±Ç³ = 7;
+	const int À¯´Ö_Àü¹ı_È­½Ã = 8;
+	const int À¯´Ö_Àü¹ı_°ü½Ã = 9;
+	const int À¯´Ö_Àü¹ı_³­»ç = 10;
+	const int À¯´Ö_Àü¹ı_µ¹°İ = 11;
+	const int À¯´Ö_Àü¹ı_µ¹ÆÄ = 12;
+	const int À¯´Ö_Àü¹ı_µ¹Áø = 13;
+	const int À¯´Ö_Àü¹ı_È­½Ã_º´±â = 14;
+	const int À¯´Ö_Àü¹ı_ÆÄ¼â_º´±â = 15;
+	const int À¯´Ö_Àü¹ı_¹æ»ç_º´±â = 16;
+	const int À¯´Ö_Àü¹ı_Åõ¼®_º´±â = 17;
+	const int À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ_ÇÔ¼± = 18;
+	const int À¯´Ö_Àü¹ı_È°°ø°İ_ÇÔ¼± = 19;
+	const int À¯´Ö_Àü¹ı_È­½Ã_ÇÔ¼± = 20;
+	const int À¯´Ö_Àü¹ı_Åõ¼®_ÇÔ¼± = 21;
+	const int À¯´Ö_Àü¹ı_°İµ¹_ÇÔ¼± = 22;
+	const int À¯´Ö_Àü¹ı_³ª¼±Ã·´çÇÔ = 23;
+	const int À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ´çÇÔ = 24;
+	const int À¯´Ö_Àü¹ı_ÀÏÁ¦°ø°İ´çÇÔ = 25;
+	const int À¯´Ö_Àü¹ı_È°°ø°İ´çÇÔ = 26;
+	const int À¯´Ö_Àü¹ı_µ¹Ãâ_ÀÌ´ÜÃ·´çÇÔ = 27;
+	const int À¯´Ö_Àü¹ı_µ¹°İ_µ¹Áø´çÇÔ = 28;
+	const int À¯´Ö_Àü¹ı_µ¹°İ_µ¹Ãâ´çÇÔ_1Å¸°Ù = 29;
+	const int À¯´Ö_Àü¹ı_µ¹°İ_°¥Äû´çÇÔ = 30;
+	const int À¯´Ö_Àü¹ı_µ¹°İ_µ¹ÆÄ´çÇÔ = 31;
+	const int À¯´Ö_Àü¹ı_µ¹°İ_Åõ¼®´çÇÔ = 32;
 
-	const bool í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬ = true;
-	const bool í¬ë¦¬í‹°ì»¬_ê·¼ì ‘ = false;
+	const bool Å©¸®Æ¼ÄÃ_¿ø°Å¸® = true;
+	const bool Å©¸®Æ¼ÄÃ_±ÙÁ¢ = false;
 
 
 	class Main
 	{
 
-		pk::func203_t@ prev_callback_203ê¸°ë³‘ì „ë²•ì‚¬ë§;
+		pk::func203_t@ prev_callback_203±âº´Àü¹ı»ç¸Á;
 		pk::func210_t@ prev_callback_210;
 		pk::func202_t@ callback202;
 		pk::func201_t@ callback201;
@@ -99,7 +99,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			pk::bind(112, pk::trigger112_t(onTurnEnd));
 
 
-			@prev_callback_203ê¸°ë³‘ì „ë²•ì‚¬ë§ = cast<pk::func203_t@>(pk::get_func(203));
+			@prev_callback_203±âº´Àü¹ı»ç¸Á = cast<pk::func203_t@>(pk::get_func(203));
 			@prev_callback_210 = cast<pk::func210_t@>(pk::get_func(210));
 			@callback202 = cast<pk::func202_t@>(pk::get_func(202));
 			@callback201 = cast<pk::func201_t@>(pk::get_func(201));
@@ -109,24 +109,24 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			@prev_callback_221 = cast<pk::func221_t@>(pk::get_func(221));
 
 
-			//pk::menu_item itemìë™ê³µê²©;
-			//itemìë™ê³µê²©.menu = 1;
-			//itemìë™ê³µê²©.pos = 10;
-			//itemìë™ê³µê²©.init = pk::unit_menu_item_init_t(init);
-			//itemìë™ê³µê²©.get_text = pk::menu_item_get_text_t(Getìë™ê³µê²©Text);
-			//itemìë™ê³µê²©.get_desc = pk::menu_item_get_desc_t(Getìë™ê³µê²©Desc);
-			//itemìë™ê³µê²©.is_visible = pk::menu_item_is_visible_t(IsVisibleìë™ê³µê²©);
-			//itemìë™ê³µê²©.get_targets = pk::unit_menu_item_get_targets_t(GetTargetsìë™ê³µê²©);
-			//itemìë™ê³µê²©.get_chance = pk::unit_menu_item_get_chance_t(GetChanceìë™ê³µê²©);
-			//itemìë™ê³µê²©.handler = pk::unit_menu_item_handler_t(ìë™ê³µê²©Handler);
-			//pk::add_menu_item(itemìë™ê³µê²©);
+			//pk::menu_item itemÀÚµ¿°ø°İ;
+			//itemÀÚµ¿°ø°İ.menu = 1;
+			//itemÀÚµ¿°ø°İ.pos = 10;
+			//itemÀÚµ¿°ø°İ.init = pk::unit_menu_item_init_t(init);
+			//itemÀÚµ¿°ø°İ.get_text = pk::menu_item_get_text_t(GetÀÚµ¿°ø°İText);
+			//itemÀÚµ¿°ø°İ.get_desc = pk::menu_item_get_desc_t(GetÀÚµ¿°ø°İDesc);
+			//itemÀÚµ¿°ø°İ.is_visible = pk::menu_item_is_visible_t(IsVisibleÀÚµ¿°ø°İ);
+			//itemÀÚµ¿°ø°İ.get_targets = pk::unit_menu_item_get_targets_t(GetTargetsÀÚµ¿°ø°İ);
+			//itemÀÚµ¿°ø°İ.get_chance = pk::unit_menu_item_get_chance_t(GetChanceÀÚµ¿°ø°İ);
+			//itemÀÚµ¿°ø°İ.handler = pk::unit_menu_item_handler_t(ÀÚµ¿°ø°İHandler);
+			//pk::add_menu_item(itemÀÚµ¿°ø°İ);
 
 		}
 
 		int _count = 0;
 		bool callback262(pk::unit@ u)
 		{
-			if (!pk::is_player_controlled(u) && ìë™ê³µê²©Handler(u)) 
+			if (!pk::is_player_controlled(u) && ÀÚµ¿°ø°İHandler(u)) 
 			{
 				_count++;
 				return true;
@@ -146,12 +146,12 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			pk::list<pk::unit@> us = pk::get_unit_list(force);
 			for (int i = 0; i < us.count; i++)
 			{
-				if(!us[i].action_done && us[i].status == ë¶€ëŒ€ìƒíƒœ_í†µìƒ)
+				if(!us[i].action_done && us[i].status == ºÎ´ë»óÅÂ_Åë»ó)
 					pk::run_order(us[i]);
-				//if (ìë™ê³µê²©Handler(us[i]))
+				//if (ÀÚµ¿°ø°İHandler(us[i]))
 				//{
 				//	count++;
-				//	_ì™„ë£Œë¦¬ìŠ¤íŠ¸.add(us[i]);
+				//	_¿Ï·á¸®½ºÆ®.add(us[i]);
 				//}
 			}
 
@@ -160,8 +160,8 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				pk::set_func(262, prev_callback_262);
 
 
-			if(ì½˜ì†”_ë¡œê·¸_í‘œì‹œ && us.count > 0)
-				pk::printf("ìë™:{},{}/{}\n", getName(force != null ? pk::get_person(force.kunshu) : null), _count, us.count);
+			if(ÄÜ¼Ö_·Î±×_Ç¥½Ã && us.count > 0)
+				pk::printf("ÀÚµ¿:{},{}/{}\n", getName(force != null ? pk::get_person(force.kunshu) : null), _count, us.count);
 		}
 
 		void onTurnEnd(pk::force@ force)
@@ -179,10 +179,10 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				{
 					if (force.is_player())
 					{
-						pk::message_box(pk::encode("ì ì¥ì„ ì°¾ì•˜ë‹¤"), _scene_attacker);
-						pk::message_box(pk::encode("ì¢‹ë‹¤ í›„íšŒí•˜ê²Œ ë ê²ƒì´ë‹¤"), _scene_target);
+						pk::message_box(pk::encode("ÀûÀåÀ» Ã£¾Ò´Ù"), _scene_attacker);
+						pk::message_box(pk::encode("ÁÁ´Ù ÈÄÈ¸ÇÏ°Ô µÉ°ÍÀÌ´Ù"), _scene_target);
 					}
-					pk::scene(pk::scene_t(scene_ì¼ê¸°í† ));
+					pk::scene(pk::scene_t(scene_ÀÏ±âÅä));
 					@_scene_attackerUnit = null;
 					@_scene_targetUnit = null;
 					@_scene_attacker = null;
@@ -211,19 +211,19 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			@_force = pk::get_force(_unit.get_force_id());
 		}
 
-		bool IsVisibleìë™ê³µê²©()
+		bool IsVisibleÀÚµ¿°ø°İ()
 		{
 			return true;
 		}
-		string Getìë™ê³µê²©Text()
+		string GetÀÚµ¿°ø°İText()
 		{
-			return pk::encode("ìë™ê³µê²© í…ŒìŠ¤íŠ¸");
+			return pk::encode("ÀÚµ¿°ø°İ Å×½ºÆ®");
 		}
-		string Getìë™ê³µê²©Desc()
+		string GetÀÚµ¿°ø°İDesc()
 		{
-			return pk::encode("ìë™ìœ¼ë¡œ ê³µê²©í•©ë‹ˆë‹¤.");
+			return pk::encode("ÀÚµ¿À¸·Î °ø°İÇÕ´Ï´Ù.");
 		}
-		pk::array<pk::point_int> GetTargetsìë™ê³µê²©()
+		pk::array<pk::point_int> GetTargetsÀÚµ¿°ø°İ()
 		{
 			pk::array<pk::point_int> targets;
 
@@ -242,21 +242,21 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			}
 			return targets;
 		}
-		int GetChanceìë™ê³µê²©(pk::point dst_pos)
+		int GetChanceÀÚµ¿°ø°İ(pk::point dst_pos)
 		{
 			return 100;
 		}
-		bool ìë™ê³µê²©Handler(pk::point dst_pos)
+		bool ÀÚµ¿°ø°İHandler(pk::point dst_pos)
 		{
-			//ìë™ê³µê²©_í•¨ì„ í™”ì‹œ(_unit);
-			//ìë™ê³µê²©_í•¨ì„ ê²©ëŒ(_unit);
-			ìë™ê³µê²©Handler_ê³µì„±(_unit);
+			//ÀÚµ¿°ø°İ_ÇÔ¼±È­½Ã(_unit);
+			//ÀÚµ¿°ø°İ_ÇÔ¼±°İµ¹(_unit);
+			ÀÚµ¿°ø°İHandler_°ø¼º(_unit);
 			return true;
 		}
 
 
 
-		void executeëŒíŒŒ(pk::unit@ unit0, pk::point dst_pos)
+		void executeµ¹ÆÄ(pk::unit@ unit0, pk::point dst_pos)
 		{
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
@@ -264,15 +264,15 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 
 			pk::point dst_pos2 = dst_pos;
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_ëŒíŒŒ);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_µ¹ÆÄ);
 
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_ëŒíŒŒ, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_µ¹ÆÄ, Å©¸®Æ¼ÄÃ_±ÙÁ¢);
 
 
 			if (!bTactics)
 			{
-				attackFail(unit0, target, dst_pos, ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©, bCri);
+				attackFail(unit0, target, dst_pos, À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ, bCri);
 			}
 			else
 			{
@@ -280,15 +280,15 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				pk::damage_info di;
 				di.src_pos = unit0.get_pos();
 				di.dst_pos = dst_pos;
-				callback209(di, unit0, ì „ë²•_ëŒíŒŒ, dst_pos, 0, bCri ? 1 : 0, false);
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				callback209(di, unit0, Àü¹ı_µ¹ÆÄ, dst_pos, 0, bCri ? 1 : 0, false);
+				if (!±İ°­ºÒ±¼(di, target))
 				{
 					int dir = pk::get_direction(unit0.get_pos(), dst_pos);
 					pk::point ptA = pk::get_neighbor_pos(unit0.get_pos(), dir, 2);
 					pk::point ptT = pk::get_neighbor_pos(dst_pos, dir, 2);
 					di.src_move_pos = MoveThrough(unit0.get_pos(), ptA);
 
-					anim(unit0, ìœ ë‹›_ì „ë²•_ëŒíŒŒ, { di }, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_µ¹ÆÄ, { di }, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 
@@ -296,7 +296,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 					pk::unit@ u = getUnit(di.dst_pos);
 					if (u != null)
 					{
-						if (unit0.has_skill(íŠ¹ê¸°_ì§ˆì£¼) && prev_callback_222(unit0, u) > 0)
+						if (unit0.has_skill(Æ¯±â_ÁúÁÖ) && prev_callback_222(unit0, u) > 0)
 							updateChaos(u, unit0);
 					}
 
@@ -305,11 +305,11 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 					addTroops(target, di);
 					updateAfter(unit0, target);
-					bool re = update(unit0, dst_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+					bool re = update(unit0, dst_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 
 
 					//dst_pos2 = di.dst_move_pos;
-					if (re && ì—°ì „(unit0))
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
 						dir = pk::get_direction(unit0.get_pos(), dst_pos);
@@ -317,7 +317,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						pk::point ptT2 = pk::get_neighbor_pos(dst_pos, dir, 2);
 						di.src_move_pos = MoveThrough(unit0.get_pos(), ptA2);
 						di.src_pos = unit0.get_pos();
-						anim(unit0, ìœ ë‹›_ì „ë²•_ëŒíŒŒ, { di }, dst_pos, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_µ¹ÆÄ, { di }, dst_pos, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 
@@ -325,7 +325,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						if (u2 != null)
 						{
 							//pk::move(u, { MovePoint(dst_pos, ptT) });
-							if (unit0.has_skill(íŠ¹ê¸°_ì§ˆì£¼) && prev_callback_222(unit0, u2) > 0)
+							if (unit0.has_skill(Æ¯±â_ÁúÁÖ) && prev_callback_222(unit0, u2) > 0)
 								updateChaos(u2, unit0);
 						}
 
@@ -333,38 +333,38 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 						addTroops(target, di);
 						updateAfter(unit0, target);
-						update(unit0, dst_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+						update(unit0, dst_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 					}
 				}
 			}
 
-			update(unit0, target, dst_pos, dst_pos2, pk::get_tactics(ì „ë²•_ëŒíŒŒ).energy_cost);
+			update(unit0, target, dst_pos, dst_pos2, pk::get_tactics(Àü¹ı_µ¹ÆÄ).energy_cost);
 		}
 
-		void executeëŒê²©(pk::unit@ unit0, pk::point dst_pos)
+		void executeµ¹°İ(pk::unit@ unit0, pk::point dst_pos)
 		{
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
 				return;
 
 			pk::point dst_pos2 = dst_pos;
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_ëŒê²©);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_µ¹°İ);
 
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_ëŒê²©, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_µ¹°İ, Å©¸®Æ¼ÄÃ_±ÙÁ¢);
 
 
 			if (!bTactics)
 			{
-				attackFail(unit0, target, dst_pos, ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©, bCri);
+				attackFail(unit0, target, dst_pos, À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ, bCri);
 			}
 			else 
 			{
 				pk::damage_info di;
 				di.src_pos = unit0.get_pos();
 				di.dst_pos = dst_pos;
-				callback209(di, unit0, ì „ë²•_ëŒê²©, dst_pos, 0, bCri ? 1 : 0, false);
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				callback209(di, unit0, Àü¹ı_µ¹°İ, dst_pos, 0, bCri ? 1 : 0, false);
+				if (!±İ°­ºÒ±¼(di, target))
 				{
 					int dir = pk::get_direction(unit0.get_pos(), dst_pos);
 					pk::point ptA = pk::get_neighbor_pos(dst_pos, dir, 1);
@@ -373,14 +373,14 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 					if (di.dst_move_pos.x != dst_pos.x || di.dst_move_pos.y != dst_pos.y)
 						di.src_move_pos = dst_pos;
 
-					anim(unit0, ìœ ë‹›_ì „ë²•_ëŒê²©, { di }, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_µ¹°İ, { di }, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 
 					pk::unit@ u = getUnit(di.dst_pos);
 					if (u != null)
 					{
-						if (unit0.has_skill(íŠ¹ê¸°_ì§ˆì£¼) && prev_callback_222(unit0, u) > 0)
+						if (unit0.has_skill(Æ¯±â_ÁúÁÖ) && prev_callback_222(unit0, u) > 0)
 							updateChaos(u, unit0);
 						
 						int dir2 = u.direction;
@@ -392,10 +392,10 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 					addTroops(target, di);
 					updateAfter(unit0, target);
-					bool re = update(unit0, di.dst_move_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+					bool re = update(unit0, di.dst_move_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 
 					dst_pos2 = di.dst_move_pos;
-					if (re && ì—°ì „(unit0))
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
 						dir = pk::get_direction(unit0.get_pos(), dst_pos2);
@@ -407,14 +407,14 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						if (di.dst_move_pos.x != dst_pos.x || di.dst_move_pos.y != dst_pos.y)
 							di.src_move_pos = dst_pos2;
 
-						anim(unit0, ìœ ë‹›_ì „ë²•_ëŒê²©, { di }, dst_pos2, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_µ¹°İ, { di }, dst_pos2, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 
 						@u = getUnit(di.dst_pos);
 						if (u != null)
 						{
-							if (unit0.has_skill(íŠ¹ê¸°_ì§ˆì£¼) && prev_callback_222(unit0, u) > 0)
+							if (unit0.has_skill(Æ¯±â_ÁúÁÖ) && prev_callback_222(unit0, u) > 0)
 								updateChaos(u, unit0);
 
 							int dir2 = u.direction;
@@ -426,38 +426,38 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 						addTroops(target, di);
 						updateAfter(unit0, target);
-						update(unit0, di.dst_move_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+						update(unit0, di.dst_move_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 						dst_pos2 = di.dst_move_pos;
 					}
 				}
 			}
-			update(unit0, target, dst_pos, dst_pos2, pk::get_tactics(ì „ë²•_ëŒê²©).energy_cost);
+			update(unit0, target, dst_pos, dst_pos2, pk::get_tactics(Àü¹ı_µ¹°İ).energy_cost);
 		}
 
-		void executeëŒì§„(pk::unit@ unit0, pk::point dst_pos)
+		void executeµ¹Áø(pk::unit@ unit0, pk::point dst_pos)
 		{
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
 				return;
 
 			pk::point dst_pos2 = dst_pos;
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_ëŒì§„);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_µ¹Áø);
 
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_ëŒì§„, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_µ¹Áø, Å©¸®Æ¼ÄÃ_±ÙÁ¢);
 
 
 			if (!bTactics)
 			{
-				attackFail(unit0, target, dst_pos, ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©, bCri);
+				attackFail(unit0, target, dst_pos, À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ, bCri);
 			}
 			else 
 			{
 				pk::damage_info di;
 				di.src_pos = unit0.get_pos();
 				di.dst_pos = dst_pos;
-				callback209(di, unit0, ì „ë²•_ëŒì§„, dst_pos, 0, bCri ? 1 : 0, false);
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				callback209(di, unit0, Àü¹ı_µ¹Áø, dst_pos, 0, bCri ? 1 : 0, false);
+				if (!±İ°­ºÒ±¼(di, target))
 				{
 					int dir = pk::get_direction(unit0.get_pos(), dst_pos);
 					int dir2 = pk::get_direction(dst_pos, unit0.get_pos());
@@ -465,14 +465,14 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 					pk::point ptA = pk::get_neighbor_pos(dst_pos, dir, 2);
 					di.dst_move_pos = MovePoint(dst_pos, ptA);
 					di.src_move_pos = pk::get_neighbor_pos(di.dst_move_pos, dir2, 1);
-					anim(unit0, ìœ ë‹›_ì „ë²•_ëŒì§„, { di }, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_µ¹Áø, { di }, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 
 					pk::unit@ u = getUnit(di.dst_pos);
 					if (u != null)
 					{
-						if (unit0.has_skill(íŠ¹ê¸°_ì§ˆì£¼) && prev_callback_222(unit0, u) > 0)
+						if (unit0.has_skill(Æ¯±â_ÁúÁÖ) && prev_callback_222(unit0, u) > 0)
 							updateChaos(u, unit0);
 						int dir2 = u.direction;
 						move(u, di.dst_move_pos);
@@ -482,10 +482,10 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 					addTroops(target, di);
 					updateAfter(unit0, target);
-					bool re = update(unit0, di.dst_move_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+					bool re = update(unit0, di.dst_move_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 
 					dst_pos2 = di.dst_move_pos;
-					if (re && ì—°ì „(unit0))
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
 						dir = pk::get_direction(unit0.get_pos(), dst_pos2);
@@ -497,14 +497,14 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						di.dst_move_pos = MovePoint(dst_pos2, ptA);
 						di.src_move_pos = pk::get_neighbor_pos(di.dst_move_pos, dir2, 1);
 
-						anim(unit0, ìœ ë‹›_ì „ë²•_ëŒì§„, { di }, dst_pos2, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_µ¹Áø, { di }, dst_pos2, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 
 						@u = getUnit(di.dst_pos);
 						if (u != null)
 						{
-							if (unit0.has_skill(íŠ¹ê¸°_ì§ˆì£¼) && prev_callback_222(unit0, u) > 0)
+							if (unit0.has_skill(Æ¯±â_ÁúÁÖ) && prev_callback_222(unit0, u) > 0)
 								updateChaos(u, unit0);
 							int dir2 = u.direction;
 							move(u, di.dst_move_pos);
@@ -514,37 +514,37 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 						addTroops(target, di);
 						updateAfter(unit0, target);
-						update(unit0, di.dst_move_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+						update(unit0, di.dst_move_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 						dst_pos2 = di.dst_move_pos;
 					}
 				}
 			}
-			update(unit0, target, dst_pos, dst_pos2, pk::get_tactics(ì „ë²•_ëŒì§„).energy_cost);
+			update(unit0, target, dst_pos, dst_pos2, pk::get_tactics(Àü¹ı_µ¹Áø).energy_cost);
 		}
 
 
-		void executeê°ˆí€´(pk::unit@ unit0, pk::point dst_pos)
+		void execute°¥Äû(pk::unit@ unit0, pk::point dst_pos)
 		{
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
 				return;
 
 			pk::point dst_pos2 = dst_pos;
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_ê°ˆí€´);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_°¥Äû);
 
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_ê°ˆí€´, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_°¥Äû, Å©¸®Æ¼ÄÃ_±ÙÁ¢);
 			if (!bTactics)
 			{
-				attackFail(unit0, target, dst_pos, ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©, bCri);
+				attackFail(unit0, target, dst_pos, À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ, bCri);
 			}
 			else
 			{
 				pk::damage_info di;
 				di.src_pos = unit0.get_pos();
 				di.dst_pos = dst_pos;
-				callback209(di, unit0, ì „ë²•_ê°ˆí€´, dst_pos, 0, bCri ? 1 : 0, false);
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				callback209(di, unit0, Àü¹ı_°¥Äû, dst_pos, 0, bCri ? 1 : 0, false);
+				if (!±İ°­ºÒ±¼(di, target))
 				{
 					int dir = pk::get_direction(dst_pos, unit0.get_pos());
 					pk::point ptA = pk::get_neighbor_pos(dst_pos, dir, 2);
@@ -552,7 +552,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 					di.src_move_pos = MovePoint(unit0.get_pos(), ptA);
 					di.dst_move_pos = di.src_move_pos.x == ptA.x && di.src_move_pos.y == ptA.y ? unit0.get_pos() : dst_pos;
 
-					anim(unit0, ìœ ë‹›_ì „ë²•_ê°ˆí€´, { di }, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_°¥Äû, { di }, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 
@@ -565,8 +565,8 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 					addTroops(target, di);
 					updateAfter(unit0, target);
-					bool re = update(unit0, di.dst_move_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
-					if (re && ì—°ì „(unit0))
+					bool re = update(unit0, di.dst_move_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
 						dst_pos = di.dst_move_pos;
@@ -576,7 +576,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						di.dst_move_pos = di.src_move_pos.x == ptA2.x && di.src_move_pos.y == ptA2.y ? unit0.get_pos() : dst_pos;
 
 
-						anim(unit0, ìœ ë‹›_ì „ë²•_ê°ˆí€´, { di }, dst_pos, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_°¥Äû, { di }, dst_pos, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 
@@ -586,28 +586,28 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 							move(u, MovePoint(dst_pos, bpt));
 						addTroops(target, di);
 						updateAfter(unit0, target);
-						update(unit0, di.dst_move_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+						update(unit0, di.dst_move_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 						dst_pos2 = MovePoint(dst_pos, bpt);
 					}
 
 				}
 
 			}
-			update(unit0, target, dst_pos, dst_pos2, pk::get_tactics(ì „ë²•_ê°ˆí€´).energy_cost);
+			update(unit0, target, dst_pos, dst_pos2, pk::get_tactics(Àü¹ı_°¥Äû).energy_cost);
 		}
-		void executeì„ í’(pk::unit@ unit0, pk::point dst_pos)
+		void execute¼±Ç³(pk::unit@ unit0, pk::point dst_pos)
 		{
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
 				return;
 
 
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_ì„ í’);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_¼±Ç³);
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_ì„ í’, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_¼±Ç³, Å©¸®Æ¼ÄÃ_±ÙÁ¢);
 			if (!bTactics)
 			{
-				attackFail(unit0, target, dst_pos, ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©, bCri);
+				attackFail(unit0, target, dst_pos, À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ, bCri);
 			}
 			else
 			{
@@ -615,8 +615,8 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				pk::damage_info di0;
 				di0.src_pos = unit0.get_pos();
 				di0.dst_pos = dst_pos;
-				callback209(di0, unit0, ì „ë²•_ì„ í’, dst_pos, 0, bCri ? 1 : 0, false);
-				if (!ê¸ˆê°•ë¶ˆêµ´(di0, target))
+				callback209(di0, unit0, Àü¹ı_¼±Ç³, dst_pos, 0, bCri ? 1 : 0, false);
+				if (!±İ°­ºÒ±¼(di0, target))
 				{
 					array<pk::damage_info> dis;
 					for (int i = 0; i < 6; i++)
@@ -625,17 +625,17 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						pk::unit@ uuu = getUnit(pt);
 						if (uuu == null)
 							continue;
-						if (!pk::is_enemy(unit0, uuu) || !checkHexê·¹ë³‘(pt))
+						if (!pk::is_enemy(unit0, uuu) || !checkHex±Øº´(pt))
 							continue;
 
 						pk::damage_info di2;
 						di2.src_pos = unit0.get_pos();
 						di2.dst_pos = pt;
 
-						callback209(di2, unit0, ì „ë²•_ì„ í’, pt, 0, bCri ? 1 : 0, false);
+						callback209(di2, unit0, Àü¹ı_¼±Ç³, pt, 0, bCri ? 1 : 0, false);
 						dis.insertLast(di2);
 					}
-					anim(unit0, ìœ ë‹›_ì „ë²•_ì„ í’, dis, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_¼±Ç³, dis, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 
@@ -648,11 +648,11 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						addTroops(uuu, di);
 						updateAfter(unit0, uuu);
 					}
-					bool re = update(unit0, dst_pos, dis, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
-					if (re && ì—°ì „(unit0))
+					bool re = update(unit0, dst_pos, dis, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
-						anim(unit0, ìœ ë‹›_ì „ë²•_ì„ í’, dis, dst_pos, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_¼±Ç³, dis, dst_pos, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 
@@ -665,92 +665,92 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 							addTroops(uuu, di);
 							updateAfter(unit0, uuu);
 						}
-						update(unit0, dst_pos, dis, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+						update(unit0, dst_pos, dis, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 					}
 				}
 			}
 
-			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(ì „ë²•_ì„ í’).energy_cost);
+			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(Àü¹ı_¼±Ç³).energy_cost);
 		}
-		void executeí™”ì‹œ(pk::unit@ unit0, pk::point dst_pos)
+		void executeÈ­½Ã(pk::unit@ unit0, pk::point dst_pos)
 		{
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
 				return;
 
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_í™”ì‹œ);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_È­½Ã);
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_í™”ì‹œ, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_È­½Ã, Å©¸®Æ¼ÄÃ_¿ø°Å¸®);
 
 			//bTactics = false;
 			if (!bTactics)
 			{
-				attackFail(unit0, target, dst_pos, ìœ ë‹›_ì „ë²•_í™œê³µê²©, bCri);
+				attackFail(unit0, target, dst_pos, À¯´Ö_Àü¹ı_È°°ø°İ, bCri);
 			}
 			else
 			{
 				pk::damage_info di;
 				di.src_pos = unit0.get_pos();
 				di.dst_pos = dst_pos;
-				callback209(di, unit0, ì „ë²•_í™”ì‹œ, dst_pos, 0, bCri ? 1 : 0, false);
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				callback209(di, unit0, Àü¹ı_È­½Ã, dst_pos, 0, bCri ? 1 : 0, false);
+				if (!±İ°­ºÒ±¼(di, target))
 				{
-					anim(unit0, ìœ ë‹›_ì „ë²•_í™”ì‹œ, { di }, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_È­½Ã, { di }, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 					addTroops(target, di);
 
 					pk::unit@ u = getUnit(di.dst_pos);
-					if (u != null && !u.has_skill(íŠ¹ê¸°_í˜¸ìœ„))
+					if (u != null && !u.has_skill(Æ¯±â_È£À§))
 					{
-						if (u.member[0] >= 0 && u.member[0] < ë¬´ì¥_ë && pk::rand_bool(ìë™ê³µê²©_í™”ì‹œ_ë¶€ìƒí™•ë¥ ))
+						if (u.member[0] >= 0 && u.member[0] < ¹«Àå_³¡ && pk::rand_bool(ÀÚµ¿°ø°İ_È­½Ã_ºÎ»óÈ®·ü))
 							injury(pk::get_person(u.member[0]));
-						if (u.member[1] >= 0 && u.member[1] < ë¬´ì¥_ë && pk::rand_bool(ìë™ê³µê²©_í™”ì‹œ_ë¶€ìƒí™•ë¥ ))
+						if (u.member[1] >= 0 && u.member[1] < ¹«Àå_³¡ && pk::rand_bool(ÀÚµ¿°ø°İ_È­½Ã_ºÎ»óÈ®·ü))
 							injury(pk::get_person(u.member[1]));
-						if (u.member[2] >= 0 && u.member[2] < ë¬´ì¥_ë && pk::rand_bool(ìë™ê³µê²©_í™”ì‹œ_ë¶€ìƒí™•ë¥ ))
+						if (u.member[2] >= 0 && u.member[2] < ¹«Àå_³¡ && pk::rand_bool(ÀÚµ¿°ø°İ_È­½Ã_ºÎ»óÈ®·ü))
 							injury(pk::get_person(u.member[2]));
 					}
-					bool re = update(unit0, dst_pos, { di }, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬, bCri);
+					bool re = update(unit0, dst_pos, { di }, Å©¸®Æ¼ÄÃ_¿ø°Å¸®, bCri);
 					re = updateAfter(unit0, target);
-					if (re && ì—°ì „(unit0))
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
-						anim(unit0, ìœ ë‹›_ì „ë²•_í™”ì‹œ, { di }, dst_pos, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_È­½Ã, { di }, dst_pos, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 						addTroops(target, di);
 
 						@u = getUnit(di.dst_pos);
-						if (u != null && !u.has_skill(íŠ¹ê¸°_í˜¸ìœ„))
+						if (u != null && !u.has_skill(Æ¯±â_È£À§))
 						{
-							if (u.member[0] >= 0 && u.member[0] < ë¬´ì¥_ë && pk::rand_bool(ìë™ê³µê²©_í™”ì‹œ_ë¶€ìƒí™•ë¥ ))
+							if (u.member[0] >= 0 && u.member[0] < ¹«Àå_³¡ && pk::rand_bool(ÀÚµ¿°ø°İ_È­½Ã_ºÎ»óÈ®·ü))
 								injury(pk::get_person(u.member[0]));
-							if (u.member[1] >= 0 && u.member[1] < ë¬´ì¥_ë && pk::rand_bool(ìë™ê³µê²©_í™”ì‹œ_ë¶€ìƒí™•ë¥ ))
+							if (u.member[1] >= 0 && u.member[1] < ¹«Àå_³¡ && pk::rand_bool(ÀÚµ¿°ø°İ_È­½Ã_ºÎ»óÈ®·ü))
 								injury(pk::get_person(u.member[1]));
-							if (u.member[2] >= 0 && u.member[2] < ë¬´ì¥_ë && pk::rand_bool(ìë™ê³µê²©_í™”ì‹œ_ë¶€ìƒí™•ë¥ ))
+							if (u.member[2] >= 0 && u.member[2] < ¹«Àå_³¡ && pk::rand_bool(ÀÚµ¿°ø°İ_È­½Ã_ºÎ»óÈ®·ü))
 								injury(pk::get_person(u.member[2]));
 						}
-						update(unit0, dst_pos, { di }, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬, bCri);
+						update(unit0, dst_pos, { di }, Å©¸®Æ¼ÄÃ_¿ø°Å¸®, bCri);
 						updateAfter(unit0, target);
 					}
 				}
 			}
-			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(ì „ë²•_í™”ì‹œ).energy_cost);
+			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(Àü¹ı_È­½Ã).energy_cost);
 		}
-		void executeíš¡ì¹˜(pk::unit@ unit0, pk::point dst_pos)
+		void executeÈ¾Ä¡(pk::unit@ unit0, pk::point dst_pos)
 		{
 
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
 				return;
 
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_íš¡ì¹˜);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_È¾Ä¡);
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_íš¡ì¹˜, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_È¾Ä¡, Å©¸®Æ¼ÄÃ_±ÙÁ¢);
 
 			if (!bTactics)
 			{
-				attackFail(unit0, target, dst_pos, ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©, bCri);
+				attackFail(unit0, target, dst_pos, À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ, bCri);
 			}
 			else
 			{
@@ -758,32 +758,32 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				pk::damage_info di;
 				di.src_pos = unit0.get_pos();
 				di.dst_pos = dst_pos;
-				callback209(di, unit0, ì „ë²•_íš¡ì¹˜, dst_pos, 0, bCri ? 1 : 0, false);
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				callback209(di, unit0, Àü¹ı_È¾Ä¡, dst_pos, 0, bCri ? 1 : 0, false);
+				if (!±İ°­ºÒ±¼(di, target))
 				{
 					dis.insertLast(di);
 
-					array<pk::point> arr = getíš¡ì¹˜pos(unit0.get_pos(), dst_pos);
+					array<pk::point> arr = getÈ¾Ä¡pos(unit0.get_pos(), dst_pos);
 					pk::unit@ u0 = getUnit(arr[0]);
-					if (u0 != null && pk::is_enemy(unit0, u0) && checkHexê·¹ë³‘(arr[0]))
+					if (u0 != null && pk::is_enemy(unit0, u0) && checkHex±Øº´(arr[0]))
 					{
 						pk::damage_info di1;
 						di1.src_pos = unit0.get_pos();
 						di1.dst_pos = arr[0];
-						callback209(di1, unit0, ì „ë²•_íš¡ì¹˜, arr[0], 0, bCri ? 1 : 0, false);
+						callback209(di1, unit0, Àü¹ı_È¾Ä¡, arr[0], 0, bCri ? 1 : 0, false);
 						dis.insertLast(di1);
 					}
 					pk::unit@ u1 = getUnit(arr[1]);
-					if (u1 != null && pk::is_enemy(unit0, u1) && checkHexê·¹ë³‘(arr[1]))
+					if (u1 != null && pk::is_enemy(unit0, u1) && checkHex±Øº´(arr[1]))
 					{
 						pk::damage_info di1;
 						di1.src_pos = unit0.get_pos();
 						di1.dst_pos = arr[1];
-						callback209(di1, unit0, ì „ë²•_íš¡ì¹˜, arr[1], 0, bCri ? 1 : 0, false);
+						callback209(di1, unit0, Àü¹ı_È¾Ä¡, arr[1], 0, bCri ? 1 : 0, false);
 						dis.insertLast(di1);
 					}
 
-					anim(unit0, ìœ ë‹›_ì „ë²•_íš¡ì¹˜, { di }, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_È¾Ä¡, { di }, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 
@@ -797,11 +797,11 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						addTroops(u, ddi);
 						updateAfter(unit0, u);
 					}
-					bool re = update(unit0, dst_pos, dis, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
-					if (re && ì—°ì „(unit0))
+					bool re = update(unit0, dst_pos, dis, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
-						anim(unit0, ìœ ë‹›_ì „ë²•_íš¡ì¹˜, { di }, dst_pos, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_È¾Ä¡, { di }, dst_pos, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 
@@ -816,35 +816,35 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 							updateAfter(unit0, u);
 						}
 					}
-					update(unit0, dst_pos, dis, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+					update(unit0, dst_pos, dis, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 				}
 			}
-			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(ì „ë²•_íš¡ì¹˜).energy_cost);
+			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(Àü¹ı_È¾Ä¡).energy_cost);
 		}
-		void executeë‚˜ì„ ì²¨(pk::unit@ unit0, pk::point dst_pos)
+		void execute³ª¼±Ã·(pk::unit@ unit0, pk::point dst_pos)
 		{
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
 				return;
 
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_ë‚˜ì„ ì²¨);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_³ª¼±Ã·);
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_ë‚˜ì„ ì²¨, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_³ª¼±Ã·, Å©¸®Æ¼ÄÃ_±ÙÁ¢);
 
 
 			if (!bTactics)
 			{
-				attackFail(unit0, target, dst_pos, ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©, bCri);
+				attackFail(unit0, target, dst_pos, À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ, bCri);
 			}
 			else
 			{
 				pk::damage_info di;
 				di.src_pos = unit0.get_pos();
 				di.dst_pos = dst_pos;
-				callback209(di, unit0, ì „ë²•_í™”ì‹œ, dst_pos, 0, bCri ? 1 : 0, false);
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				callback209(di, unit0, Àü¹ı_È­½Ã, dst_pos, 0, bCri ? 1 : 0, false);
+				if (!±İ°­ºÒ±¼(di, target))
 				{
-					anim(unit0, ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©, { di }, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ, { di }, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 
@@ -854,11 +854,11 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 					if (u != null && prev_callback_221(unit0, u, bCri) > 0)
 						updateChaos(u, unit0);
 
-					bool re = update(unit0, dst_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
-					if (re && ì—°ì „(unit0))
+					bool re = update(unit0, dst_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
-						anim(unit0, ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©, { di }, dst_pos, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ, { di }, dst_pos, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 
@@ -868,15 +868,15 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						if (u2 != null && prev_callback_221(unit0, u2, bCri) > 0)
 							updateChaos(u2, unit0);
 
-						update(unit0, dst_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+						update(unit0, dst_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 					}
 				}
 			}
 
-			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(ì „ë²•_ë‚˜ì„ ì²¨).energy_cost);
+			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(Àü¹ı_³ª¼±Ã·).energy_cost);
 			return;
 		}
-		void executeì´ë‹¨ì²¨(pk::unit@ unit0, pk::point dst_pos)
+		void executeÀÌ´ÜÃ·(pk::unit@ unit0, pk::point dst_pos)
 		{
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
@@ -884,9 +884,9 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 			pk::point dst_pos0 = dst_pos;
 
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_ì´ë‹¨ì²¨);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_ÀÌ´ÜÃ·);
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_ì´ë‹¨ì²¨, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_ÀÌ´ÜÃ·, Å©¸®Æ¼ÄÃ_±ÙÁ¢);
 			if (!bTactics)
 			{
 				attackFail(unit0, target, dst_pos, 1, bCri);
@@ -896,14 +896,14 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				pk::damage_info di;
 				di.src_pos = unit0.get_pos();
 				di.dst_pos = dst_pos;
-				callback209(di, unit0, ì „ë²•_ì´ë‹¨ì²¨, dst_pos, 0, bCri ? 1 : 0, false);
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				callback209(di, unit0, Àü¹ı_ÀÌ´ÜÃ·, dst_pos, 0, bCri ? 1 : 0, false);
+				if (!±İ°­ºÒ±¼(di, target))
 				{
 					int dir = pk::get_direction(unit0.get_pos(), dst_pos);
 					pk::point ptA = pk::get_neighbor_pos(dst_pos, dir, 2);
 					di.src_move_pos = unit0.get_pos();
 					di.dst_move_pos = MovePoint(dst_pos, ptA);
-					anim(unit0, ìœ ë‹›_ì „ë²•_ì´ë‹¨ì²¨, { di }, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_ÀÌ´ÜÃ·, { di }, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 					pk::unit@ u = getUnit(di.dst_pos);
@@ -917,10 +917,10 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 					addTroops(target, di);
 					updateAfter(unit0, target);
-					bool re = update(unit0, di.dst_move_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+					bool re = update(unit0, di.dst_move_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 					pk::point dst_pos2 = di.dst_move_pos;
 					dst_pos0 = dst_pos2;
-					if (re && ì—°ì „(unit0))
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
 						pk::point ptA2 = pk::get_neighbor_pos(dst_pos2, dir, 2);
@@ -928,7 +928,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						di.dst_pos = dst_pos2;
 						di.src_move_pos = unit0.get_pos();
 						di.dst_move_pos = MovePoint(dst_pos2, ptA2);
-						anim(unit0, ìœ ë‹›_ì „ë²•_ì´ë‹¨ì²¨, { di }, dst_pos2, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_ÀÌ´ÜÃ·, { di }, dst_pos2, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 
@@ -944,15 +944,15 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 						addTroops(target, di);
 						updateAfter(unit0, target);
-						update(unit0, di.dst_move_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+						update(unit0, di.dst_move_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 						dst_pos0 = di.dst_move_pos;
 					}
 				}
 
 			}//bTatics
-			update(unit0, target, dst_pos, dst_pos0, pk::get_tactics(ì „ë²•_ì´ë‹¨ì²¨).energy_cost);
+			update(unit0, target, dst_pos, dst_pos0, pk::get_tactics(Àü¹ı_ÀÌ´ÜÃ·).energy_cost);
 		}
-		void executeëŒì¶œ(pk::unit@ unit0, pk::point dst_pos)
+		void executeµ¹Ãâ(pk::unit@ unit0, pk::point dst_pos)
 		{
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
@@ -960,26 +960,26 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 			pk::point dst_pos0 = dst_pos;
 
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_ëŒì¶œ);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_µ¹Ãâ);
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_ëŒì¶œ, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_µ¹Ãâ, Å©¸®Æ¼ÄÃ_±ÙÁ¢);
 			if (!bTactics)
 			{
-				attackFail(unit0, target, dst_pos, ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©, bCri);
+				attackFail(unit0, target, dst_pos, À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ, bCri);
 			}
 			else
 			{
 				pk::damage_info di;
 				di.src_pos = unit0.get_pos();
 				di.dst_pos = dst_pos;
-				callback209(di, unit0, ì „ë²•_ëŒì¶œ, dst_pos, 0, bCri ? 1 : 0, false);
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				callback209(di, unit0, Àü¹ı_µ¹Ãâ, dst_pos, 0, bCri ? 1 : 0, false);
+				if (!±İ°­ºÒ±¼(di, target))
 				{
 					int dir = pk::get_direction(unit0.get_pos(), dst_pos);
 					pk::point ptA = pk::get_neighbor_pos(dst_pos, dir, 1);
 					di.src_move_pos = unit0.get_pos();
 					di.dst_move_pos = MovePoint(dst_pos, ptA);
-					anim(unit0, ìœ ë‹›_ì „ë²•_ëŒì¶œ, { di }, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_µ¹Ãâ, { di }, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 					pk::unit@ u = getUnit(di.dst_pos);
@@ -994,10 +994,10 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 					addTroops(target, di);
 					updateAfter(unit0, target);
-					bool re = update(unit0, di.dst_move_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+					bool re = update(unit0, di.dst_move_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 					pk::point dst_pos2 = di.dst_move_pos;
 					dst_pos0 = di.dst_move_pos;
-					if (re && ì—°ì „(unit0))
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
 						pk::point ptA2 = pk::get_neighbor_pos(dst_pos2, dir, 1);
@@ -1005,7 +1005,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						di.dst_pos = dst_pos2;
 						di.src_move_pos = unit0.get_pos();
 						di.dst_move_pos = MovePoint(dst_pos2, ptA2);
-						anim(unit0, ìœ ë‹›_ì „ë²•_ëŒì¶œ, { di }, dst_pos2, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_µ¹Ãâ, { di }, dst_pos2, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 
@@ -1020,33 +1020,33 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 						addTroops(target, di);
 						updateAfter(unit0, target);
-						update(unit0, di.dst_move_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+						update(unit0, di.dst_move_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 						dst_pos0 = di.dst_move_pos;
 					}
 				}
 
 			}//bTatics
-			update(unit0, target, dst_pos, dst_pos0, pk::get_tactics(ì „ë²•_ëŒì¶œ).energy_cost);
+			update(unit0, target, dst_pos, dst_pos0, pk::get_tactics(Àü¹ı_µ¹Ãâ).energy_cost);
 		}
-		void executeë‚œì‚¬(pk::unit@ unit0, pk::point dst_pos)
+		void execute³­»ç(pk::unit@ unit0, pk::point dst_pos)
 		{
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
 				return;
 
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_ë‚œì‚¬);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_³­»ç);
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_ë‚œì‚¬, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_³­»ç, Å©¸®Æ¼ÄÃ_¿ø°Å¸®);
 			if (!bTactics)
 			{
-				attackFail(unit0, target, dst_pos, ìœ ë‹›_ì „ë²•_í™œê³µê²©, bCri);
+				attackFail(unit0, target, dst_pos, À¯´Ö_Àü¹ı_È°°ø°İ, bCri);
 			}
 			else
 			{
-				pk::tactics@ tactics_t = pk::get_tactics(ì „ë²•_ë‚œì‚¬);
+				pk::tactics@ tactics_t = pk::get_tactics(Àü¹ı_³­»ç);
 				int  max_range = tactics_t.max_range;
 				int  min_range = tactics_t.min_range;
-				if (ì‚¬ê±°ë¦¬_íŒ¨ì¹˜)
+				if (»ç°Å¸®_ÆĞÄ¡)
 				{
 					tactics_t.min_range = 1;
 					tactics_t.max_range = 5;
@@ -1058,15 +1058,15 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				pk::damage_info di;
 				di.src_pos = unit0.get_pos();
 				di.dst_pos = dst_pos;
-				callback209(di, unit0, ì „ë²•_ë‚œì‚¬, dst_pos, 0, bCri ? 1 : 0, false);
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				callback209(di, unit0, Àü¹ı_³­»ç, dst_pos, 0, bCri ? 1 : 0, false);
+				if (!±İ°­ºÒ±¼(di, target))
 				{
 					pk::building@ b = pk::get_building(dst_pos);
-					bool bê±°ì  = false;
-					if (b != null && (b.facility == ì‹œì„¤_ë„ì‹œ || b.facility == ì‹œì„¤_ê´€ë¬¸ || b.facility == ì‹œì„¤_í•­êµ¬))
+					bool b°ÅÁ¡ = false;
+					if (b != null && (b.facility == ½Ã¼³_µµ½Ã || b.facility == ½Ã¼³_°ü¹® || b.facility == ½Ã¼³_Ç×±¸))
 					{
 						di.troops_damage *= 1.5;
-						bê±°ì  = true;
+						b°ÅÁ¡ = true;
 					}
 					dis.insertLast(di);
 
@@ -1076,17 +1076,17 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						pk::hex_object@ obj = pk::get_hex_object(pt);
 						if (obj == null)
 							continue;
-						if (unit0.has_skill(íŠ¹ê¸°_ê¶ì‹ ) && !pk::is_enemy(unit0, obj))
+						if (unit0.has_skill(Æ¯±â_±Ã½Å) && !pk::is_enemy(unit0, obj))
 							continue;
-						if (!checkHexë…¸ë³‘(unit0, pt))
+						if (!checkHex³ëº´(unit0, pt))
 							continue;
 
 						pk::damage_info di2;
 						di2.src_pos = unit0.get_pos();
 						di2.dst_pos = pt;
 
-						callback209(di2, unit0, ì „ë²•_ë‚œì‚¬, pt, 0, bCri ? 1 : 0, false);
-						if (bê±°ì ) 
+						callback209(di2, unit0, Àü¹ı_³­»ç, pt, 0, bCri ? 1 : 0, false);
+						if (b°ÅÁ¡) 
 						{
 							di2.troops_damage = 1;
 							di2.hp_damage = 0;
@@ -1094,7 +1094,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 							
 						dis.insertLast(di2);
 					}
-					anim(unit0, ìœ ë‹›_ì „ë²•_ë‚œì‚¬, dis, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_³­»ç, dis, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 
@@ -1107,11 +1107,11 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						addTroops(u, di2);
 						updateAfter(unit0, u);
 					}
-					bool re = update(unit0, dst_pos, dis, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬, bCri);
-					if (re && ì—°ì „(unit0))
+					bool re = update(unit0, dst_pos, dis, Å©¸®Æ¼ÄÃ_¿ø°Å¸®, bCri);
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
-						anim(unit0, ìœ ë‹›_ì „ë²•_ë‚œì‚¬, dis, dst_pos, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_³­»ç, dis, dst_pos, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 
@@ -1124,36 +1124,36 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 							addTroops(u, di2);
 							updateAfter(unit0, u);
 						}
-						update(unit0, dst_pos, dis, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬, bCri);
+						update(unit0, dst_pos, dis, Å©¸®Æ¼ÄÃ_¿ø°Å¸®, bCri);
 					}
 				}
-				if (ì‚¬ê±°ë¦¬_íŒ¨ì¹˜)
+				if (»ç°Å¸®_ÆĞÄ¡)
 				{
 					tactics_t.min_range = min_range;
 					tactics_t.max_range = max_range;
 				}
 			}
-			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(ì „ë²•_ë‚œì‚¬).energy_cost);
+			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(Àü¹ı_³­»ç).energy_cost);
 		}
-		void executeê´€ì‹œ(pk::unit@ unit0, pk::point dst_pos)
+		void execute°ü½Ã(pk::unit@ unit0, pk::point dst_pos)
 		{
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
 				return;
 
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_ê´€ì‹œ);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_°ü½Ã);
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_ê´€ì‹œ, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_°ü½Ã, Å©¸®Æ¼ÄÃ_¿ø°Å¸®);
 			if (!bTactics)
 			{
-				attackFail(unit0, target, dst_pos, ìœ ë‹›_ì „ë²•_í™œê³µê²©, bCri);
+				attackFail(unit0, target, dst_pos, À¯´Ö_Àü¹ı_È°°ø°İ, bCri);
 			}
 			else
 			{
-				pk::tactics@ tactics_t = pk::get_tactics(ì „ë²•_ê´€ì‹œ);
+				pk::tactics@ tactics_t = pk::get_tactics(Àü¹ı_°ü½Ã);
 				int  max_range = tactics_t.max_range;
 				int  min_range = tactics_t.min_range;
-				if (ì‚¬ê±°ë¦¬_íŒ¨ì¹˜)
+				if (»ç°Å¸®_ÆĞÄ¡)
 				{
 					tactics_t.min_range = 1;
 					tactics_t.max_range = 5;
@@ -1163,8 +1163,8 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				pk::damage_info di;
 				di.src_pos = unit0.get_pos();
 				di.dst_pos = dst_pos;
-				callback209(di, unit0, ì „ë²•_ê´€ì‹œ, dst_pos, 0, bCri ? 1 : 0, false);
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				callback209(di, unit0, Àü¹ı_°ü½Ã, dst_pos, 0, bCri ? 1 : 0, false);
+				if (!±İ°­ºÒ±¼(di, target))
 				{
 					dis.insertLast(di);
 					int diff = pk::get_distance(di.dst_pos, di.src_pos);
@@ -1176,17 +1176,17 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						pk::hex_object@ obj = pk::get_hex_object(pt);
 						if (obj == null || !pk::is_enemy(unit0,obj))
 							continue;
-						if (!checkHexë…¸ë³‘(unit0, pt))
+						if (!checkHex³ëº´(unit0, pt))
 							continue;
 
 						pk::damage_info di2;
 						di2.src_pos = unit0.get_pos();
 						di2.dst_pos = pt;
 
-						callback209(di2, unit0, ì „ë²•_ê´€ì‹œ, pt, 0, bCri ? 1 : 0, false);
+						callback209(di2, unit0, Àü¹ı_°ü½Ã, pt, 0, bCri ? 1 : 0, false);
 						dis.insertLast(di2);
 					}
-					anim(unit0, ìœ ë‹›_ì „ë²•_ê´€ì‹œ, dis, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_°ü½Ã, dis, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 
@@ -1199,11 +1199,11 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						addTroops(u, di2);
 						updateAfter(unit0, u);
 					}
-					bool re = update(unit0, dst_pos, dis, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬, bCri);
-					if (re && ì—°ì „(unit0))
+					bool re = update(unit0, dst_pos, dis, Å©¸®Æ¼ÄÃ_¿ø°Å¸®, bCri);
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
-						anim(unit0, ìœ ë‹›_ì „ë²•_ê´€ì‹œ, dis, dst_pos, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_°ü½Ã, dis, dst_pos, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 						for (int i = 0; i < dis.length; i++)
@@ -1216,85 +1216,85 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 							updateAfter(unit0, u);
 						}
 					}
-					update(unit0, dst_pos, dis, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬, bCri);
+					update(unit0, dst_pos, dis, Å©¸®Æ¼ÄÃ_¿ø°Å¸®, bCri);
 				}
 
-				if (ì‚¬ê±°ë¦¬_íŒ¨ì¹˜)
+				if (»ç°Å¸®_ÆĞÄ¡)
 				{
 					tactics_t.min_range = min_range;
 					tactics_t.max_range = max_range;
 				}
 			}
-			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(ì „ë²•_ê´€ì‹œ).energy_cost);
+			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(Àü¹ı_°ü½Ã).energy_cost);
 		}
 
 
-		void executeí•¨ì„ í™”ì‹œ(pk::unit@ unit0, pk::point dst_pos)
+		void executeÇÔ¼±È­½Ã(pk::unit@ unit0, pk::point dst_pos)
 		{
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
 				return;
 
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_í•¨ì„ í™”ì‹œ);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_ÇÔ¼±È­½Ã);
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_í•¨ì„ í™”ì‹œ, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_ÇÔ¼±È­½Ã, Å©¸®Æ¼ÄÃ_¿ø°Å¸®);
 
 			//bTactics = false;
 			if (!bTactics)
 			{
-				attackFail(unit0, target, dst_pos, ìœ ë‹›_ì „ë²•_í™œê³µê²©, bCri);
+				attackFail(unit0, target, dst_pos, À¯´Ö_Àü¹ı_È°°ø°İ, bCri);
 			}
 			else
 			{
 				pk::damage_info di;
 				di.src_pos = unit0.get_pos();
 				di.dst_pos = dst_pos;
-				callback209(di, unit0, ì „ë²•_í•¨ì„ í™”ì‹œ, dst_pos, 0, bCri ? 1 : 0, false);
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				callback209(di, unit0, Àü¹ı_ÇÔ¼±È­½Ã, dst_pos, 0, bCri ? 1 : 0, false);
+				if (!±İ°­ºÒ±¼(di, target))
 				{
-					anim(unit0, ìœ ë‹›_ì „ë²•_í™”ì‹œ_í•¨ì„ , { di }, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_È­½Ã_ÇÔ¼±, { di }, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 					addTroops(target, di);
 
 					pk::unit@ u = getUnit(di.dst_pos);
-					if (u != null && !u.has_skill(íŠ¹ê¸°_í˜¸ìœ„))
+					if (u != null && !u.has_skill(Æ¯±â_È£À§))
 					{
-						if (u.member[0] >= 0 && u.member[0] < ë¬´ì¥_ë && pk::rand_bool(ìë™ê³µê²©_í™”ì‹œ_ë¶€ìƒí™•ë¥ ))
+						if (u.member[0] >= 0 && u.member[0] < ¹«Àå_³¡ && pk::rand_bool(ÀÚµ¿°ø°İ_È­½Ã_ºÎ»óÈ®·ü))
 							injury(pk::get_person(u.member[0]));
-						if (u.member[1] >= 0 && u.member[1] < ë¬´ì¥_ë && pk::rand_bool(ìë™ê³µê²©_í™”ì‹œ_ë¶€ìƒí™•ë¥ ))
+						if (u.member[1] >= 0 && u.member[1] < ¹«Àå_³¡ && pk::rand_bool(ÀÚµ¿°ø°İ_È­½Ã_ºÎ»óÈ®·ü))
 							injury(pk::get_person(u.member[1]));
-						if (u.member[2] >= 0 && u.member[2] < ë¬´ì¥_ë && pk::rand_bool(ìë™ê³µê²©_í™”ì‹œ_ë¶€ìƒí™•ë¥ ))
+						if (u.member[2] >= 0 && u.member[2] < ¹«Àå_³¡ && pk::rand_bool(ÀÚµ¿°ø°İ_È­½Ã_ºÎ»óÈ®·ü))
 							injury(pk::get_person(u.member[2]));
 					}
-					bool re = update(unit0, dst_pos, { di }, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬, bCri);
+					bool re = update(unit0, dst_pos, { di }, Å©¸®Æ¼ÄÃ_¿ø°Å¸®, bCri);
 					re = updateAfter(unit0, target);
-					if (re && ì—°ì „(unit0))
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
-						anim(unit0, ìœ ë‹›_ì „ë²•_í™”ì‹œ_í•¨ì„ , { di }, dst_pos, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_È­½Ã_ÇÔ¼±, { di }, dst_pos, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 						addTroops(target, di);
 
 						@u = getUnit(di.dst_pos);
-						if (u != null && !u.has_skill(íŠ¹ê¸°_í˜¸ìœ„))
+						if (u != null && !u.has_skill(Æ¯±â_È£À§))
 						{
-							if (u.member[0] >= 0 && u.member[0] < ë¬´ì¥_ë && pk::rand_bool(ìë™ê³µê²©_í™”ì‹œ_ë¶€ìƒí™•ë¥ ))
+							if (u.member[0] >= 0 && u.member[0] < ¹«Àå_³¡ && pk::rand_bool(ÀÚµ¿°ø°İ_È­½Ã_ºÎ»óÈ®·ü))
 								injury(pk::get_person(u.member[0]));
-							if (u.member[1] >= 0 && u.member[1] < ë¬´ì¥_ë && pk::rand_bool(ìë™ê³µê²©_í™”ì‹œ_ë¶€ìƒí™•ë¥ ))
+							if (u.member[1] >= 0 && u.member[1] < ¹«Àå_³¡ && pk::rand_bool(ÀÚµ¿°ø°İ_È­½Ã_ºÎ»óÈ®·ü))
 								injury(pk::get_person(u.member[1]));
-							if (u.member[2] >= 0 && u.member[2] < ë¬´ì¥_ë && pk::rand_bool(ìë™ê³µê²©_í™”ì‹œ_ë¶€ìƒí™•ë¥ ))
+							if (u.member[2] >= 0 && u.member[2] < ¹«Àå_³¡ && pk::rand_bool(ÀÚµ¿°ø°İ_È­½Ã_ºÎ»óÈ®·ü))
 								injury(pk::get_person(u.member[2]));
 						}
-						update(unit0, dst_pos, { di }, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬, bCri);
+						update(unit0, dst_pos, { di }, Å©¸®Æ¼ÄÃ_¿ø°Å¸®, bCri);
 						updateAfter(unit0, target);
 					}
 				}
 			}
-			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(ì „ë²•_í•¨ì„ í™”ì‹œ).energy_cost);
+			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(Àü¹ı_ÇÔ¼±È­½Ã).energy_cost);
 		}
-		void executeí•¨ì„ ê²©ëŒ(pk::unit@ unit0, pk::point dst_pos)
+		void executeÇÔ¼±°İµ¹(pk::unit@ unit0, pk::point dst_pos)
 		{
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
@@ -1302,26 +1302,26 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 			pk::point dst_pos0 = dst_pos;
 
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_í•¨ì„ ê²©ëŒ);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_ÇÔ¼±°İµ¹);
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_í•¨ì„ ê²©ëŒ, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_ÇÔ¼±°İµ¹, Å©¸®Æ¼ÄÃ_±ÙÁ¢);
 			if (!bTactics)
 			{
-				attackFail(unit0, target, dst_pos, ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©_í•¨ì„ , bCri);
+				attackFail(unit0, target, dst_pos, À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ_ÇÔ¼±, bCri);
 			}
 			else
 			{
 				pk::damage_info di;
 				di.src_pos = unit0.get_pos();
 				di.dst_pos = dst_pos;
-				callback209(di, unit0, ì „ë²•_í•¨ì„ ê²©ëŒ, dst_pos, 0, bCri ? 1 : 0, false);
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				callback209(di, unit0, Àü¹ı_ÇÔ¼±°İµ¹, dst_pos, 0, bCri ? 1 : 0, false);
+				if (!±İ°­ºÒ±¼(di, target))
 				{
 					int dir = pk::get_direction(unit0.get_pos(), dst_pos);
 					pk::point ptA = pk::get_neighbor_pos(dst_pos, dir, 1);
 					di.src_move_pos = unit0.get_pos();
 					di.dst_move_pos = MovePoint(dst_pos, ptA,true);
-					anim(unit0, ìœ ë‹›_ì „ë²•_ê²©ëŒ_í•¨ì„ , { di }, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_°İµ¹_ÇÔ¼±, { di }, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 					pk::unit@ u = getUnit(di.dst_pos);
@@ -1335,10 +1335,10 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						
 					addTroops(target, di);
 					updateAfter(unit0, target);
-					bool re = update(unit0, di.dst_move_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+					bool re = update(unit0, di.dst_move_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 					pk::point dst_pos2 = di.dst_move_pos;
 					dst_pos0 = di.dst_move_pos;
-					if (re && ì—°ì „(unit0))
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
 						pk::point ptA2 = pk::get_neighbor_pos(dst_pos2, dir, 1);
@@ -1346,7 +1346,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						di.dst_pos = dst_pos2;
 						di.src_move_pos = unit0.get_pos();
 						di.dst_move_pos = MovePoint(dst_pos2, ptA2,true);
-						anim(unit0, ìœ ë‹›_ì „ë²•_ê²©ëŒ_í•¨ì„ , { di }, dst_pos2, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_°İµ¹_ÇÔ¼±, { di }, dst_pos2, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 
@@ -1362,33 +1362,33 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 						addTroops(target, di);
 						updateAfter(unit0, target);
-						update(unit0, di.dst_move_pos, { di }, í¬ë¦¬í‹°ì»¬_ê·¼ì ‘, bCri);
+						update(unit0, di.dst_move_pos, { di }, Å©¸®Æ¼ÄÃ_±ÙÁ¢, bCri);
 						dst_pos0 = di.dst_move_pos;
 					}
 				}
 
 			}//bTatics
-			update(unit0, target, dst_pos, dst_pos0, pk::get_tactics(ì „ë²•_í•¨ì„ ê²©ëŒ).energy_cost);
+			update(unit0, target, dst_pos, dst_pos0, pk::get_tactics(Àü¹ı_ÇÔ¼±°İµ¹).energy_cost);
 		}
-		void executeí•¨ì„ íˆ¬ì„(pk::unit@ unit0, pk::point dst_pos)
+		void executeÇÔ¼±Åõ¼®(pk::unit@ unit0, pk::point dst_pos)
 		{
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
 				return;
 
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_í•¨ì„ íˆ¬ì„);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_ÇÔ¼±Åõ¼®);
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_í•¨ì„ íˆ¬ì„, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_ÇÔ¼±Åõ¼®, Å©¸®Æ¼ÄÃ_¿ø°Å¸®);
 			if (!bTactics)
 			{
-				attackFail(unit0, target, dst_pos, ìœ ë‹›_ì „ë²•_í™œê³µê²©, bCri);
+				attackFail(unit0, target, dst_pos, À¯´Ö_Àü¹ı_È°°ø°İ, bCri);
 			}
 			else
 			{
-				pk::tactics@ tactics_t = pk::get_tactics(ì „ë²•_í•¨ì„ íˆ¬ì„);
+				pk::tactics@ tactics_t = pk::get_tactics(Àü¹ı_ÇÔ¼±Åõ¼®);
 				int  max_range = tactics_t.max_range;
 				int  min_range = tactics_t.min_range;
-				if (ì‚¬ê±°ë¦¬_íŒ¨ì¹˜)
+				if (»ç°Å¸®_ÆĞÄ¡)
 				{
 					tactics_t.min_range = 1;
 					tactics_t.max_range = 5;
@@ -1400,24 +1400,24 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				pk::damage_info di;
 				di.src_pos = unit0.get_pos();
 				di.dst_pos = dst_pos;
-				callback209(di, unit0, ì „ë²•_í•¨ì„ íˆ¬ì„, dst_pos, 0, bCri ? 1 : 0, false);
+				callback209(di, unit0, Àü¹ı_ÇÔ¼±Åõ¼®, dst_pos, 0, bCri ? 1 : 0, false);
 
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				if (!±İ°­ºÒ±¼(di, target))
 				{
 					pk::building@ b = pk::get_building(dst_pos);
-					bool bê±°ì  = false;
-					if (b != null && (b.facility == ì‹œì„¤_ë„ì‹œ || b.facility == ì‹œì„¤_ê´€ë¬¸ || b.facility == ì‹œì„¤_í•­êµ¬))
+					bool b°ÅÁ¡ = false;
+					if (b != null && (b.facility == ½Ã¼³_µµ½Ã || b.facility == ½Ã¼³_°ü¹® || b.facility == ½Ã¼³_Ç×±¸))
 					{
-						if (pk::has_tech(unit0, ê¸°êµ_ë²½ë ¥))
+						if (pk::has_tech(unit0, ±â±³_º®·Â))
 						{
-							di.troops_damage *= ê³µì„íˆ¬ì„_ë³‘ë ¥_ë°ë¯¸ì§€_ë¹„ìœ¨;
-							di.hp_damage *= ê³µì„±íˆ¬ì„_ë‚´êµ¬ë„_ë°ë¯¸ì§€_ë¹„ìœ¨;
-							bê±°ì  = true;
+							di.troops_damage *= °ø¼®Åõ¼®_º´·Â_µ¥¹ÌÁö_ºñÀ²;
+							di.hp_damage *= °ø¼ºÅõ¼®_³»±¸µµ_µ¥¹ÌÁö_ºñÀ²;
+							b°ÅÁ¡ = true;
 						}
 					}
 					dis.insertLast(di);
 
-					if (pk::has_tech(unit0, ê¸°êµ_ë²½ë ¥))
+					if (pk::has_tech(unit0, ±â±³_º®·Â))
 					{
 						for (int i = 0; i < 6; i++)
 						{
@@ -1430,8 +1430,8 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 							di2.src_pos = unit0.get_pos();
 							di2.dst_pos = pt;
 
-							callback209(di2, unit0, ì „ë²•_í•¨ì„ íˆ¬ì„, pt, 0, bCri ? 1 : 0, false);
-							if (bê±°ì )
+							callback209(di2, unit0, Àü¹ı_ÇÔ¼±Åõ¼®, pt, 0, bCri ? 1 : 0, false);
+							if (b°ÅÁ¡)
 							{
 								di2.troops_damage = 1;
 								di2.hp_damage = 0;
@@ -1441,7 +1441,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						}
 					}
 
-					anim(unit0, ìœ ë‹›_ì „ë²•_íˆ¬ì„_í•¨ì„ , dis, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_Åõ¼®_ÇÔ¼±, dis, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 
@@ -1454,11 +1454,11 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						addTroops(u, di2);
 						updateAfter(unit0, u);
 					}
-					bool re = update(unit0, dst_pos, dis, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬, bCri);
-					if (re && ì—°ì „(unit0))
+					bool re = update(unit0, dst_pos, dis, Å©¸®Æ¼ÄÃ_¿ø°Å¸®, bCri);
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
-						anim(unit0, ìœ ë‹›_ì „ë²•_íˆ¬ì„_í•¨ì„ , dis, dst_pos, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_Åõ¼®_ÇÔ¼±, dis, dst_pos, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 
@@ -1471,37 +1471,37 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 							addTroops(u, di2);
 							updateAfter(unit0, u);
 						}
-						update(unit0, dst_pos, dis, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬, bCri);
+						update(unit0, dst_pos, dis, Å©¸®Æ¼ÄÃ_¿ø°Å¸®, bCri);
 					}
 				}
-				if (ì‚¬ê±°ë¦¬_íŒ¨ì¹˜)
+				if (»ç°Å¸®_ÆĞÄ¡)
 				{
 					tactics_t.min_range = min_range;
 					tactics_t.max_range = max_range;
 				}
 			}
-			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(ì „ë²•_í•¨ì„ íˆ¬ì„).energy_cost);
+			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(Àü¹ı_ÇÔ¼±Åõ¼®).energy_cost);
 		}
 
-		void executeê³µì„±íˆ¬ì„(pk::unit@ unit0, pk::point dst_pos)
+		void execute°ø¼ºÅõ¼®(pk::unit@ unit0, pk::point dst_pos)
 		{
 			pk::hex_object@ target = pk::get_hex_object(dst_pos);
 			if (target == null)
 				return;
 
-			int nTactics = callback202(unit0, dst_pos, target, ì „ë²•_ê³µì„±íˆ¬ì„);
+			int nTactics = callback202(unit0, dst_pos, target, Àü¹ı_°ø¼ºÅõ¼®);
 			bool bTactics = pk::rand_bool(nTactics);
-			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), ì „ë²•_ê³µì„±íˆ¬ì„, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬);
+			bool bCri = callback201(unit0, pk::get_hex_object(dst_pos), Àü¹ı_°ø¼ºÅõ¼®, Å©¸®Æ¼ÄÃ_¿ø°Å¸®);
 			if (!bTactics)
 			{
-				attackFail(unit0, target, dst_pos, ìœ ë‹›_ì „ë²•_í™œê³µê²©, bCri);
+				attackFail(unit0, target, dst_pos, À¯´Ö_Àü¹ı_È°°ø°İ, bCri);
 			}
 			else
 			{
-				pk::tactics@ tactics_t = pk::get_tactics(ì „ë²•_ê³µì„±íˆ¬ì„);
+				pk::tactics@ tactics_t = pk::get_tactics(Àü¹ı_°ø¼ºÅõ¼®);
 				int  max_range = tactics_t.max_range;
 				int  min_range = tactics_t.min_range;
-				if (ì‚¬ê±°ë¦¬_íŒ¨ì¹˜)
+				if (»ç°Å¸®_ÆĞÄ¡)
 				{
 					tactics_t.min_range = 1;
 					tactics_t.max_range = 5;
@@ -1513,24 +1513,24 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				pk::damage_info di;
 				di.src_pos = unit0.get_pos();
 				di.dst_pos = dst_pos;
-				callback209(di, unit0, ì „ë²•_ê³µì„±íˆ¬ì„, dst_pos, 0, bCri ? 1 : 0, false);
+				callback209(di, unit0, Àü¹ı_°ø¼ºÅõ¼®, dst_pos, 0, bCri ? 1 : 0, false);
 
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				if (!±İ°­ºÒ±¼(di, target))
 				{
 					pk::building@ b = pk::get_building(dst_pos);
-					bool bê±°ì  = false;
-					if (b != null && (b.facility == ì‹œì„¤_ë„ì‹œ || b.facility == ì‹œì„¤_ê´€ë¬¸ || b.facility == ì‹œì„¤_í•­êµ¬))
+					bool b°ÅÁ¡ = false;
+					if (b != null && (b.facility == ½Ã¼³_µµ½Ã || b.facility == ½Ã¼³_°ü¹® || b.facility == ½Ã¼³_Ç×±¸))
 					{
-						if (pk::has_tech(unit0, ê¸°êµ_ë²½ë ¥))
+						if (pk::has_tech(unit0, ±â±³_º®·Â))
 						{
-							di.troops_damage *= ê³µì„íˆ¬ì„_ë³‘ë ¥_ë°ë¯¸ì§€_ë¹„ìœ¨;
-							di.hp_damage *= ê³µì„±íˆ¬ì„_ë‚´êµ¬ë„_ë°ë¯¸ì§€_ë¹„ìœ¨;
-							bê±°ì  = true;
+							di.troops_damage *= °ø¼®Åõ¼®_º´·Â_µ¥¹ÌÁö_ºñÀ²;
+							di.hp_damage *= °ø¼ºÅõ¼®_³»±¸µµ_µ¥¹ÌÁö_ºñÀ²;
+							b°ÅÁ¡ = true;
 						}
 					}
 					dis.insertLast(di);
 
-					if (pk::has_tech(unit0, ê¸°êµ_ë²½ë ¥))
+					if (pk::has_tech(unit0, ±â±³_º®·Â))
 					{
 						for (int i = 0; i < 6; i++)
 						{
@@ -1543,8 +1543,8 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 							di2.src_pos = unit0.get_pos();
 							di2.dst_pos = pt;
 
-							callback209(di2, unit0, ì „ë²•_ê³µì„±íˆ¬ì„, pt, 0, bCri ? 1 : 0, false);
-							if (bê±°ì )
+							callback209(di2, unit0, Àü¹ı_°ø¼ºÅõ¼®, pt, 0, bCri ? 1 : 0, false);
+							if (b°ÅÁ¡)
 							{
 								di2.troops_damage = 0;
 								di2.hp_damage = 0;
@@ -1555,7 +1555,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 					}
 
 
-					anim(unit0, ìœ ë‹›_ì „ë²•_íˆ¬ì„_ë³‘ê¸°, dis, dst_pos, 0, "", 0);
+					anim(unit0, À¯´Ö_Àü¹ı_Åõ¼®_º´±â, dis, dst_pos, 0, "", 0);
 					if (bCri)
 						cutin(unit0);
 
@@ -1568,11 +1568,11 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						addTroops(u, di2);
 						updateAfter(unit0, u);
 					}
-					bool re = update(unit0, dst_pos, dis, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬, bCri);
-					if (re && ì—°ì „(unit0))
+					bool re = update(unit0, dst_pos, dis, Å©¸®Æ¼ÄÃ_¿ø°Å¸®, bCri);
+					if (re && ¿¬Àü(unit0))
 					{
 						sleep();
-						anim(unit0, ìœ ë‹›_ì „ë²•_íˆ¬ì„_ë³‘ê¸°, dis, dst_pos, 0, "", 0);
+						anim(unit0, À¯´Ö_Àü¹ı_Åõ¼®_º´±â, dis, dst_pos, 0, "", 0);
 						if (bCri)
 							cutin(unit0);
 
@@ -1585,23 +1585,23 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 							addTroops(u, di2);
 							updateAfter(unit0, u);
 						}
-						update(unit0, dst_pos, dis, í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬, bCri);
+						update(unit0, dst_pos, dis, Å©¸®Æ¼ÄÃ_¿ø°Å¸®, bCri);
 					}
 				}
-				if (ì‚¬ê±°ë¦¬_íŒ¨ì¹˜)
+				if (»ç°Å¸®_ÆĞÄ¡)
 				{
 					tactics_t.min_range = min_range;
 					tactics_t.max_range = max_range;
 				}
 			}
-			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(ì „ë²•_ê³µì„±íˆ¬ì„).energy_cost);
+			update(unit0, target, dst_pos, dst_pos, pk::get_tactics(Àü¹ı_°ø¼ºÅõ¼®).energy_cost);
 		}
 
-		bool ìë™ê³µê²©_ê¸°ë³‘_ëŒíŒŒ(pk::unit@ u)
+		bool ÀÚµ¿°ø°İ_±âº´_µ¹ÆÄ(pk::unit@ u)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_ëŒíŒŒ).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_µ¹ÆÄ).energy_cost)
 				return false;
-			if (getMaxì ì„±(u, ë³‘ì¢…_ê¸°ë³‘) < ì ì„±_A)
+			if (getMaxÀû¼º(u, º´Á¾_±âº´) < Àû¼º_A)
 				return false;
 
 
@@ -1619,19 +1619,19 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				if (pk::get_building(pt) != null)
 					continue;
 
-				for (int j = 0; j < ë°©í–¥_ë; j++)
+				for (int j = 0; j < ¹æÇâ_³¡; j++)
 				{
 					pk::point pt2 = pk::get_neighbor_pos(pt, j, 1);
 					pk::unit@ unit = getUnit(pt2);
 					if (unit == null || !pk::is_enemy(u, unit))
 						continue;
-					if (!checkHexê¸°ë³‘(pt2))
+					if (!checkHex±âº´(pt2))
 						continue;
 					pk::point pt3 = pk::get_neighbor_pos(pt, j, 2);
 					if (isOnFire(pt3))
 						continue;
 
-					int nTactics = callback202(u, pt2, unit, ì „ë²•_ëŒíŒŒ);
+					int nTactics = callback202(u, pt2, unit, Àü¹ı_µ¹ÆÄ);
 					if (nTactics > maxTact)
 					{
 						maxTact = nTactics;
@@ -1643,21 +1643,21 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			if (maxUnit == null)
 				return false;
 
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ëŒíŒŒì‹œì‘ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:µ¹ÆÄ½ÃÀÛ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			move(u, maxPt);
-			executeëŒíŒŒ(u, maxUnit.get_pos());
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ëŒíŒŒë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			executeµ¹ÆÄ(u, maxUnit.get_pos());
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:µ¹ÆÄ³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 
 
 			return true;
 		}
-		bool ìë™ê³µê²©_ê¸°ë³‘_ëŒê²©(pk::unit@ u)
+		bool ÀÚµ¿°ø°İ_±âº´_µ¹°İ(pk::unit@ u)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_ëŒê²©).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_µ¹°İ).energy_cost)
 				return false;
-			if (getMaxì ì„±(u, ë³‘ì¢…_ê¸°ë³‘) < ì ì„±_B)
+			if (getMaxÀû¼º(u, º´Á¾_±âº´) < Àû¼º_B)
 				return false;
 
 
@@ -1675,16 +1675,16 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				if (pk::get_building(pt) != null)
 					continue;
 
-				for (int j = 0; j < ë°©í–¥_ë; j++)
+				for (int j = 0; j < ¹æÇâ_³¡; j++)
 				{
 					pk::point pt2 = pk::get_neighbor_pos(pt, j, 1);
 					pk::unit@ unit = getUnit(pt2);
 					if (unit == null || !pk::is_enemy(u, unit))
 						continue;
-					if (!checkHexê¸°ë³‘(pt2))
+					if (!checkHex±âº´(pt2))
 						continue;
 
-					int nTactics = callback202(u, pt2, unit, ì „ë²•_ëŒê²©);
+					int nTactics = callback202(u, pt2, unit, Àü¹ı_µ¹°İ);
 					if (nTactics > maxTact)
 					{
 						maxTact = nTactics;
@@ -1697,23 +1697,23 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			if (maxUnit == null)
 				return false;
 
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ëŒê²©ì‹œì‘ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:µ¹°İ½ÃÀÛ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			move(u, maxPt);
-			executeëŒê²©(u, maxUnit.get_pos());
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ëŒê²©ë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			executeµ¹°İ(u, maxUnit.get_pos());
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:µ¹°İ³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 
 
 			return true;
 
 
 		}
-		bool ìë™ê³µê²©_ê¸°ë³‘_ëŒì§„(pk::unit@ u)
+		bool ÀÚµ¿°ø°İ_±âº´_µ¹Áø(pk::unit@ u)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_ëŒì§„).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_µ¹Áø).energy_cost)
 				return false;
-			if (getMaxì ì„±(u, ë³‘ì¢…_ê¸°ë³‘) < ì ì„±_S)
+			if (getMaxÀû¼º(u, º´Á¾_±âº´) < Àû¼º_S)
 				return false;
 
 
@@ -1731,19 +1731,19 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				if (pk::get_building(pt) != null)
 					continue;
 
-				for (int j = 0; j < ë°©í–¥_ë; j++)
+				for (int j = 0; j < ¹æÇâ_³¡; j++)
 				{
 					pk::point pt2 = pk::get_neighbor_pos(pt, j, 1);
 					pk::unit@ unit = getUnit(pt2);
 					if (unit == null || !pk::is_enemy(u, unit))
 						continue;
-					if (!checkHexê¸°ë³‘(pt2))
+					if (!checkHex±âº´(pt2))
 						continue;
 					pk::point pt3 = pk::get_neighbor_pos(pt, j, 2);
 					if (isOnFire(pt3) && isMovable(pt3))
 						continue;
 
-					int nTactics = callback202(u, pt2, unit, ì „ë²•_ëŒì§„);
+					int nTactics = callback202(u, pt2, unit, Àü¹ı_µ¹Áø);
 					if (nTactics > maxTact)
 					{
 						maxTact = nTactics;
@@ -1755,26 +1755,26 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			if (maxUnit == null)
 				return false;
 
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ëŒì§„ ì‹œì‘ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:µ¹Áø ½ÃÀÛ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			move(u, maxPt);
-			executeëŒì§„(u, maxUnit.get_pos());
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ëŒì§„ ë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			executeµ¹Áø(u, maxUnit.get_pos());
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:µ¹Áø ³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 
 
 			return true;
 		}
 
-		bool ìë™ê³µê²©_ê¸°ë³‘_í™”ì‹œ(pk::unit@ u)
+		bool ÀÚµ¿°ø°İ_±âº´_È­½Ã(pk::unit@ u)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_í™”ì‹œ).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_È­½Ã).energy_cost)
 				return false;
-			if (!pk::has_tech(u, ê¸°êµ_ì •ì˜ˆê¸°ë³‘))
+			if (!pk::has_tech(u, ±â±³_Á¤¿¹±âº´))
 				return false;
-			if (u.weapon == ë³‘ê¸°_êµ°ë§ˆ && getMaxì ì„±(u, ë³‘ì¢…_ê¸°ë³‘) < ì ì„±_B)
+			if (u.weapon == º´±â_±º¸¶ && getMaxÀû¼º(u, º´Á¾_±âº´) < Àû¼º_B)
 				return false;
-			if (u.weapon == ë³‘ê¸°_ë…¸ && getMaxì ì„±(u, ë³‘ì¢…_ë…¸ë³‘) < ì ì„±_B)
+			if (u.weapon == º´±â_³ë && getMaxÀû¼º(u, º´Á¾_³ëº´) < Àû¼º_B)
 				return false;
 
 			int dist = getMaxAttackDistance(u);
@@ -1804,11 +1804,11 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 					pk::unit@ unit = getUnit(pt);
 					if (unit == null || !pk::is_enemy(u, unit))
 						continue;
-					if (!checkHexë…¸ë³‘(u, pt))
+					if (!checkHex³ëº´(u, pt))
 						continue;
 
 
-					int nTactics = callback202(u, pt, unit, ì „ë²•_í™”ì‹œ);
+					int nTactics = callback202(u, pt, unit, Àü¹ı_È­½Ã);
 					if (nTactics > maxTact)
 					{
 						maxTact = nTactics;
@@ -1821,32 +1821,32 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			if (maxUnit == null)
 				return false;
 
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:í™”ì‹œì‹œì‘ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:È­½Ã½ÃÀÛ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			move(u, maxPos);
-			executeí™”ì‹œ(u, maxUnit.get_pos());
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:í™”ì‹œë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			executeÈ­½Ã(u, maxUnit.get_pos());
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:È­½Ã³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 
 			return true;
 		}
 
-		bool ìë™ê³µê²©_ì°½ë³‘_ê·¹ë³‘_íš¡ì¹˜(pk::unit@ u, bool bChang)
+		bool ÀÚµ¿°ø°İ_Ã¢º´_±Øº´_È¾Ä¡(pk::unit@ u, bool bChang)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_íš¡ì¹˜).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_È¾Ä¡).energy_cost)
 				return false;
 			if (bChang)
 			{
-				if (!pk::has_tech(u, ê¸°êµ_ì •ì˜ˆì°½ë³‘))
+				if (!pk::has_tech(u, ±â±³_Á¤¿¹Ã¢º´))
 					return false;
 			}
-			if (u.weapon == ë³‘ê¸°_ê·¹ && getMaxì ì„±(u, ë³‘ì¢…_ê·¹ë³‘) < ì ì„±_A)
+			if (u.weapon == º´±â_±Ø && getMaxÀû¼º(u, º´Á¾_±Øº´) < Àû¼º_A)
 				return false;
-			if (u.weapon == ë³‘ê¸°_ì°½ && getMaxì ì„±(u, ë³‘ì¢…_ì°½ë³‘) < ì ì„±_A)
+			if (u.weapon == º´±â_Ã¢ && getMaxÀû¼º(u, º´Á¾_Ã¢º´) < Àû¼º_A)
 				return false;
 
 
-			//2ëª…ì´ìƒë˜ë©´ ë°œì‚¬
+			//2¸íÀÌ»óµÇ¸é ¹ß»ç
 			int dist = getMaxAttackDistance(u);
 
 			int maxCount = 0;
@@ -1865,24 +1865,24 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				if (pk::get_building(pt0) != null)
 					continue;
 
-				for (int i = 0; i < ë°©í–¥_ë; i++)
+				for (int i = 0; i < ¹æÇâ_³¡; i++)
 				{
 					pk::point pt = pk::get_neighbor_pos(pt0, i, dist);
 					pk::unit@ unit = getUnit(pt);
 					if (unit == null || !pk::is_enemy(u, unit))
 						continue;
-					if (bChang && !checkHexì°½ë³‘(pt))
+					if (bChang && !checkHexÃ¢º´(pt))
 						continue;
-					if (!bChang && !checkHexê·¹ë³‘(pt))
+					if (!bChang && !checkHex±Øº´(pt))
 						continue;
 
 					int acount = 1;
-					array<pk::point> arr2 = getíš¡ì¹˜pos(pt0, pt);
+					array<pk::point> arr2 = getÈ¾Ä¡pos(pt0, pt);
 					pk::unit@ u0 = getUnit(arr2[0]);
 					pk::unit@ u1 = getUnit(arr2[1]);
-					if (u0 != null && pk::is_enemy(u, u0) && (bChang && checkHexì°½ë³‘(arr2[0]) || !bChang && checkHexê·¹ë³‘(arr2[0])))
+					if (u0 != null && pk::is_enemy(u, u0) && (bChang && checkHexÃ¢º´(arr2[0]) || !bChang && checkHex±Øº´(arr2[0])))
 						acount++;
-					if (u1 != null && pk::is_enemy(u, u1) && (bChang && checkHexì°½ë³‘(arr2[1]) || !bChang && checkHexê·¹ë³‘(arr2[1])))
+					if (u1 != null && pk::is_enemy(u, u1) && (bChang && checkHexÃ¢º´(arr2[1]) || !bChang && checkHex±Øº´(arr2[1])))
 						acount++;
 					if (acount > maxCount)
 					{
@@ -1898,12 +1898,12 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			if (maxCount < 2)
 				return false;
 
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:íš¡ì¹˜ì‹œì‘ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:È¾Ä¡½ÃÀÛ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			move(u, maxPT);
-			executeíš¡ì¹˜(u, maxUnit.get_pos());
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:íš¡ì¹˜ë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			executeÈ¾Ä¡(u, maxUnit.get_pos());
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:È¾Ä¡³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			return true;
 
 
@@ -1912,11 +1912,11 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 		}
 
 		
-		bool ìë™ê³µê²©_ì„ í’(pk::unit@ u, int rcount)
+		bool ÀÚµ¿°ø°İ_¼±Ç³(pk::unit@ u, int rcount)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_ì„ í’).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_¼±Ç³).energy_cost)
 				return false;
-			if (getMaxì ì„±(u, ë³‘ì¢…_ê·¹ë³‘) < ì ì„±_S)
+			if (getMaxÀû¼º(u, º´Á¾_±Øº´) < Àû¼º_S)
 				return false;
 
 
@@ -1945,12 +1945,12 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				{
 					pk::point pt = arr2[i];
 					pk::unit@ unit = getUnit(pt);
-					if (unit == null || !pk::is_enemy(u, unit) || !checkHexê·¹ë³‘(pt))
+					if (unit == null || !pk::is_enemy(u, unit) || !checkHex±Øº´(pt))
 						continue;
 
 					acount++;
-					int nTactics = callback202(u, pt, unit, ì „ë²•_ì„ í’);
-					if (unit.has_skill(íŠ¹ê¸°_ì² ë²½) || unit.has_skill(íŠ¹ê¸°_ë¶ˆêµ´) || unit.has_skill(íŠ¹ê¸°_ê¸ˆê°•))
+					int nTactics = callback202(u, pt, unit, Àü¹ı_¼±Ç³);
+					if (unit.has_skill(Æ¯±â_Ã¶º®) || unit.has_skill(Æ¯±â_ºÒ±¼) || unit.has_skill(Æ¯±â_±İ°­))
 						nTactics = 0;
 					if (nTactics >= maxRatio)
 					{
@@ -1969,26 +1969,26 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 			if (maxCount >= rcount && maxUnit != null)
 			{
-				if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-					pk::printf("ì „ë²•:ì„ í’ì‹œì‘ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+				if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+					pk::printf("Àü¹ı:¼±Ç³½ÃÀÛ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 				move(u, maxPos);
-				executeì„ í’(u, maxUnit.get_pos());
-				if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-					pk::printf("ì „ë²•:ì„ í’ë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+				execute¼±Ç³(u, maxUnit.get_pos());
+				if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+					pk::printf("Àü¹ı:¼±Ç³³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 				return true;
 			}
 			return false;
 		}
 
-		bool ìë™ê³µê²©_ì°½ë³‘_ê·¹ë³‘_ë‚˜ì„ ì²¨(pk::unit@ u, bool bChang)
+		bool ÀÚµ¿°ø°İ_Ã¢º´_±Øº´_³ª¼±Ã·(pk::unit@ u, bool bChang)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_ë‚˜ì„ ì²¨).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_³ª¼±Ã·).energy_cost)
 				return false;
-			if (!bChang && pk::has_tech(u, ê¸°êµ_ì •ì˜ˆê·¹ë³‘))
+			if (!bChang && pk::has_tech(u, ±â±³_Á¤¿¹±Øº´))
 				return false;
-			if (u.weapon == ë³‘ê¸°_ê·¹ && getMaxì ì„±(u, ë³‘ì¢…_ê·¹ë³‘) < ì ì„±_A)
+			if (u.weapon == º´±â_±Ø && getMaxÀû¼º(u, º´Á¾_±Øº´) < Àû¼º_A)
 				return false;
-			if (u.weapon == ë³‘ê¸°_ì°½ && getMaxì ì„±(u, ë³‘ì¢…_ì°½ë³‘) < ì ì„±_A)
+			if (u.weapon == º´±â_Ã¢ && getMaxÀû¼º(u, º´Á¾_Ã¢º´) < Àû¼º_A)
 				return false;
 
 			int maxAttack = 0;
@@ -2006,21 +2006,21 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				if (pk::get_building(pt0) != null)
 					continue;
 
-				for (int i = 0; i < ë°©í–¥_ë; i++)
+				for (int i = 0; i < ¹æÇâ_³¡; i++)
 				{
 					pk::point pt = pk::get_neighbor_pos(pt0, i, 1);
 					pk::unit@ unit = getUnit(pt);
 					if (unit == null || !pk::is_enemy(u, unit))
 						continue;
-					if (bChang && !checkHexì°½ë³‘(pt))
+					if (bChang && !checkHexÃ¢º´(pt))
 						continue;
-					if (!bChang && !checkHexê·¹ë³‘(pt))
+					if (!bChang && !checkHex±Øº´(pt))
 						continue;
 
-					if (u.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ë¬´ë ¥] > unit.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ë¬´ë ¥] && unit.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ê³µê²©] > maxAttack)
+					if (u.attr.stat[ºÎ´ë´É·Â_¹«·Â] > unit.attr.stat[ºÎ´ë´É·Â_¹«·Â] && unit.attr.stat[ºÎ´ë´É·Â_°ø°İ] > maxAttack)
 					{
 						maxPos = pt0;
-						maxAttack = unit.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ê³µê²©];
+						maxAttack = unit.attr.stat[ºÎ´ë´É·Â_°ø°İ];
 						@maxUnit = unit;
 					}
 				}
@@ -2029,20 +2029,20 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			if (maxUnit == null)
 				return false;
 
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ë‚˜ì„ ì²¨ì‹œì‘ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:³ª¼±Ã·½ÃÀÛ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			move(u, maxPos);
-			executeë‚˜ì„ ì²¨(u, maxUnit.get_pos());
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ë‚˜ì„ ì²¨ë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			execute³ª¼±Ã·(u, maxUnit.get_pos());
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:³ª¼±Ã·³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 
 			return true;
 		}
-		bool ìë™ê³µê²©_ì°½ë³‘_ì´ë‹¨ì²¨(pk::unit@ u)
+		bool ÀÚµ¿°ø°İ_Ã¢º´_ÀÌ´ÜÃ·(pk::unit@ u)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_ì´ë‹¨ì²¨).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_ÀÌ´ÜÃ·).energy_cost)
 				return false;
-			if (getMaxì ì„±(u, ë³‘ì¢…_ì°½ë³‘) < ì ì„±_S)
+			if (getMaxÀû¼º(u, º´Á¾_Ã¢º´) < Àû¼º_S)
 				return false;
 
 
@@ -2060,16 +2060,16 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				if (pk::get_building(pt) != null)
 					continue;
 
-				for (int j = 0; j < ë°©í–¥_ë; j++)
+				for (int j = 0; j < ¹æÇâ_³¡; j++)
 				{
 					pk::point pt2 = pk::get_neighbor_pos(pt, j, 1);
 					pk::unit@ unit = getUnit(pt2);
 					if (unit == null || !pk::is_enemy(u, unit))
 						continue;
-					if (!checkHexì°½ë³‘(pt2))
+					if (!checkHexÃ¢º´(pt2))
 						continue;
 
-					int nTactics = callback202(u, pt2, unit, ì „ë²•_ì´ë‹¨ì²¨);
+					int nTactics = callback202(u, pt2, unit, Àü¹ı_ÀÌ´ÜÃ·);
 					if (nTactics > maxTact)
 					{
 						maxTact = nTactics;
@@ -2082,21 +2082,21 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			if (maxUnit == null)
 				return false;
 
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ì´ë‹¨ì²¨ ì‹œì‘ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:ÀÌ´ÜÃ· ½ÃÀÛ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			move(u, maxPt);
-			executeì´ë‹¨ì²¨(u, maxUnit.get_pos());
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ì´ë‹¨ì²¨ ë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			executeÀÌ´ÜÃ·(u, maxUnit.get_pos());
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:ÀÌ´ÜÃ· ³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 
 			return true;
 		}
 
-		bool ìë™ê³µê²©_ì°½ë³‘_ëŒì¶œ(pk::unit@ u)
+		bool ÀÚµ¿°ø°İ_Ã¢º´_µ¹Ãâ(pk::unit@ u)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_ëŒì¶œ).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_µ¹Ãâ).energy_cost)
 				return false;
-			if (getMaxì ì„±(u, ë³‘ì¢…_ì°½ë³‘) < ì ì„±_B)
+			if (getMaxÀû¼º(u, º´Á¾_Ã¢º´) < Àû¼º_B)
 				return false;
 
 			array<pk::point> arr = pk::get_movable_pos(u);
@@ -2113,16 +2113,16 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				if (pk::get_building(pt) != null)
 					continue;
 
-				for (int j = 0; j < ë°©í–¥_ë; j++)
+				for (int j = 0; j < ¹æÇâ_³¡; j++)
 				{
 					pk::point pt2 = pk::get_neighbor_pos(pt, j, 1);
 					pk::unit@ unit = getUnit(pt2);
 					if (unit == null || !pk::is_enemy(u, unit))
 						continue;
-					if (!checkHexì°½ë³‘(pt2))
+					if (!checkHexÃ¢º´(pt2))
 						continue;
 
-					int nTactics = callback202(u, pt2, unit, ì „ë²•_ëŒì¶œ);
+					int nTactics = callback202(u, pt2, unit, Àü¹ı_µ¹Ãâ);
 					if (nTactics > maxTact)
 					{
 						maxTact = nTactics;
@@ -2135,21 +2135,21 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			if (maxUnit == null)
 				return false;
 
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ëŒì¶œ ì‹œì‘ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:µ¹Ãâ ½ÃÀÛ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			move(u, maxPt);
-			executeëŒì¶œ(u, maxUnit.get_pos());
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ëŒì¶œ ë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			executeµ¹Ãâ(u, maxUnit.get_pos());
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:µ¹Ãâ ³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 
 			return true;
 		}
 
-		bool ìë™ê³µê²©_ê·¹ë³‘_ê°ˆí€´(pk::unit@ u)
+		bool ÀÚµ¿°ø°İ_±Øº´_°¥Äû(pk::unit@ u)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_ê°ˆí€´).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_°¥Äû).energy_cost)
 				return false;
-			if (getMaxì ì„±(u, ë³‘ì¢…_ê·¹ë³‘) < ì ì„±_B)
+			if (getMaxÀû¼º(u, º´Á¾_±Øº´) < Àû¼º_B)
 				return false;
 
 
@@ -2167,19 +2167,19 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				if (pk::get_building(pt) != null)
 					continue;
 
-				for (int j = 0; j < ë°©í–¥_ë; j++)
+				for (int j = 0; j < ¹æÇâ_³¡; j++)
 				{
 					pk::point pt2 = pk::get_neighbor_pos(pt, j, 1);
 					pk::unit@ unit = getUnit(pt2);
 					if (unit == null || !pk::is_enemy(u, unit))
 						continue;
-					if (!checkHexê·¹ë³‘(pt2))
+					if (!checkHex±Øº´(pt2))
 						continue;
-					pk::point pt3 = getê°ˆí€´pos(pt, pt2);
+					pk::point pt3 = get°¥Äûpos(pt, pt2);
 					if (isOnFire(pt3))
 						continue;
 
-					int nTactics = callback202(u, pt2, unit, ì „ë²•_ê°ˆí€´);
+					int nTactics = callback202(u, pt2, unit, Àü¹ı_°¥Äû);
 					if (nTactics > maxTact)
 					{
 						maxTact = nTactics;
@@ -2191,30 +2191,30 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			if (maxUnit == null)
 				return false;
 
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ê°ˆí€´ì‹œì‘ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:°¥Äû½ÃÀÛ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			move(u, maxPt);
-			executeê°ˆí€´(u, maxUnit.get_pos());
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ê°ˆí€´ë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			execute°¥Äû(u, maxUnit.get_pos());
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:°¥Äû³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 
 			return true;
 		}
 
-		bool ìë™ê³µê²©_ë‚œì‚¬(pk::unit@ u)
+		bool ÀÚµ¿°ø°İ_³­»ç(pk::unit@ u)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_ë‚œì‚¬).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_³­»ç).energy_cost)
 				return false;
-			if (getMaxì ì„±(u, ë³‘ì¢…_ë…¸ë³‘) < ì ì„±_S)
+			if (getMaxÀû¼º(u, º´Á¾_³ëº´) < Àû¼º_S)
 				return false;
 
 
-			//3ëª…ì´ìƒë˜ë©´ ë°œì‚¬
+			//3¸íÀÌ»óµÇ¸é ¹ß»ç
 			int dist = getMaxAttackDistance(u);
 			//int dist = 2;
 			int minDist = 2;
 			int curDist = 2;
-			bool bê¶ì‹  = u.has_skill(íŠ¹ê¸°_ê¶ì‹ );
+			bool b±Ã½Å = u.has_skill(Æ¯±â_±Ã½Å);
 
 			int maxCount = 0;
 			pk::unit@ maxUnit = null;
@@ -2239,7 +2239,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 					pk::building@ b = getBuilding(pt);
 					if ((unit == null || !pk::is_enemy(u, unit)) && (b == null || !pk::is_enemy(u, b)))
 						continue;
-					if (!checkHexë…¸ë³‘(u, pt))
+					if (!checkHex³ëº´(u, pt))
 						continue;
 
 					int acount = 0;
@@ -2252,10 +2252,10 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						pk::building@ b2 = getBuilding(pt2);
 						if (unit2 == null && b2 == null)
 							continue;
-						if (!checkHexë…¸ë³‘(u, pt2))
+						if (!checkHex³ëº´(u, pt2))
 							continue;
 
-						if (!bê¶ì‹  && ((unit2 != null && !pk::is_enemy(u, unit2)) || (b2 != null && !pk::is_enemy(u, b2))))
+						if (!b±Ã½Å && ((unit2 != null && !pk::is_enemy(u, unit2)) || (b2 != null && !pk::is_enemy(u, b2))))
 						{
 							bMine = true;
 							break;
@@ -2265,7 +2265,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						acount++;
 					}
 
-					if (b != null && ((b.facility == ì‹œì„¤_ë„ì‹œ) || b.facility == ì‹œì„¤_ê´€ë¬¸ || b.facility == ì‹œì„¤_í•­êµ¬))
+					if (b != null && ((b.facility == ½Ã¼³_µµ½Ã) || b.facility == ½Ã¼³_°ü¹® || b.facility == ½Ã¼³_Ç×±¸))
 						acount = 3;
 					if (bMine || acount < 3)
 						continue;
@@ -2293,19 +2293,19 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			if (maxUnit == null && maxBuilding == null)
 				return false;
 
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ë‚œì‚¬ì‹œì‘ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:³­»ç½ÃÀÛ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			move(u, maxPT);
-			executeë‚œì‚¬(u, maxUnit != null ? maxUnit.get_pos() : maxBuilding.get_pos());
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ë‚œì‚¬ë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			execute³­»ç(u, maxUnit != null ? maxUnit.get_pos() : maxBuilding.get_pos());
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:³­»ç³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			return true;
 		}
-		bool ìë™ê³µê²©_ê´€ì‹œ(pk::unit@ u)
+		bool ÀÚµ¿°ø°İ_°ü½Ã(pk::unit@ u)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_ê´€ì‹œ).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_°ü½Ã).energy_cost)
 				return false;
-			if (getMaxì ì„±(u, ë³‘ì¢…_ë…¸ë³‘) < ì ì„±_A)
+			if (getMaxÀû¼º(u, º´Á¾_³ëº´) < Àû¼º_A)
 				return false;
 
 			int dist = getMaxAttackDistance(u);
@@ -2334,7 +2334,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 					pk::building@ b = getBuilding(pt);
 					if ((unit == null || !pk::is_enemy(u, unit)) && (b == null || !pk::is_enemy(u, b)))
 						continue;
-					if (!checkHexë…¸ë³‘(u, pt))
+					if (!checkHex³ëº´(u, pt))
 						continue;
 
 					array<pk::point> arr3;
@@ -2354,7 +2354,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						pk::building@ b2 = getBuilding(pt2);
 						if (unit2 == null && b2 == null)
 							continue;
-						if (!checkHexë…¸ë³‘(u, pt2))
+						if (!checkHex³ëº´(u, pt2))
 							continue;
 						if ((unit2 != null && !pk::is_enemy(u, unit2)) || (b2 != null && !pk::is_enemy(u, b2)))
 							continue;
@@ -2376,21 +2376,21 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			if (maxUnit == null && maxBuilding == null)
 				return false;
 
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ê´€ì‹œì‹œì‘ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:°ü½Ã½ÃÀÛ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			move(u, maxPT);
-			executeê´€ì‹œ(u, maxUnit != null ? maxUnit.get_pos() : maxBuilding.get_pos());
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ê´€ì‹œë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			execute°ü½Ã(u, maxUnit != null ? maxUnit.get_pos() : maxBuilding.get_pos());
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:°ü½Ã³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			return true;
 
 		}
 
-		bool ìë™ê³µê²©_í•¨ì„ í™”ì‹œ(pk::unit@ u)
+		bool ÀÚµ¿°ø°İ_ÇÔ¼±È­½Ã(pk::unit@ u)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_í•¨ì„ í™”ì‹œ).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_ÇÔ¼±È­½Ã).energy_cost)
 				return false;
-			if (getMaxì ì„±(u, ë³‘ì¢…_ìˆ˜êµ°) < ì ì„±_B)
+			if (getMaxÀû¼º(u, º´Á¾_¼ö±º) < Àû¼º_B)
 				return false;
 
 			int dist = getMaxAttackDistance(u);
@@ -2457,22 +2457,22 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			if (maxUnit == null && maxBuilding == null)
 				return false;
 
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:í•¨ì„ í™”ì‹œì‹œì‘ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:ÇÔ¼±È­½Ã½ÃÀÛ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			move(u, maxPT);
-			executeí•¨ì„ í™”ì‹œ(u, maxUnit != null ? maxUnit.get_pos() : maxBuilding.get_pos());
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:í•¨ì„ í™”ì‹œë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			executeÇÔ¼±È­½Ã(u, maxUnit != null ? maxUnit.get_pos() : maxBuilding.get_pos());
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:ÇÔ¼±È­½Ã³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			return true;
 
 		}
-		bool ìë™ê³µê²©_í•¨ì„ ê²©ëŒ(pk::unit@ u)
+		bool ÀÚµ¿°ø°İ_ÇÔ¼±°İµ¹(pk::unit@ u)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_í•¨ì„ ê²©ëŒ).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_ÇÔ¼±°İµ¹).energy_cost)
 				return false;
-			if (getMaxì ì„±(u, ë³‘ì¢…_ìˆ˜êµ°) < ì ì„±_A)
+			if (getMaxÀû¼º(u, º´Á¾_¼ö±º) < Àû¼º_A)
 				return false;
-			if (u.weapon != ë³‘ê¸°_ëˆ„ì„  && u.weapon != ë³‘ê¸°_íˆ¬í•¨)
+			if (u.weapon != º´±â_´©¼± && u.weapon != º´±â_ÅõÇÔ)
 				return false;
 
 			array<pk::point> arr = pk::get_movable_pos(u);
@@ -2489,13 +2489,13 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				if (pk::get_building(pt) != null)
 					continue;
 
-				for (int j = 0; j < ë°©í–¥_ë; j++)
+				for (int j = 0; j < ¹æÇâ_³¡; j++)
 				{
 					pk::point pt2 = pk::get_neighbor_pos(pt, j, 1);
 					pk::unit@ unit = getUnit(pt2);
 					if (unit == null || !pk::is_enemy(u, unit))
 						continue;
-					int nTactics = callback202(u, pt2, unit, ì „ë²•_í•¨ì„ ê²©ëŒ);
+					int nTactics = callback202(u, pt2, unit, Àü¹ı_ÇÔ¼±°İµ¹);
 					if (nTactics > maxTact)
 					{
 						maxTact = nTactics;
@@ -2508,28 +2508,28 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			if (maxUnit == null)
 				return false;
 
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:í•¨ì„ ê²©ëŒ ì‹œì‘ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:ÇÔ¼±°İµ¹ ½ÃÀÛ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			move(u, maxPt);
-			executeí•¨ì„ ê²©ëŒ(u, maxUnit.get_pos());
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:í•¨ì„ ê²©ëŒ ë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			executeÇÔ¼±°İµ¹(u, maxUnit.get_pos());
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:ÇÔ¼±°İµ¹ ³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 
 			return true;
 		}
-		bool ìë™ê³µê²©_í•¨ì„ íˆ¬ì„(pk::unit@ u)
+		bool ÀÚµ¿°ø°İ_ÇÔ¼±Åõ¼®(pk::unit@ u)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_í•¨ì„ íˆ¬ì„).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_ÇÔ¼±Åõ¼®).energy_cost)
 				return false;
-			if (getMaxì ì„±(u, ë³‘ì¢…_ìˆ˜êµ°) < ì ì„±_S)
+			if (getMaxÀû¼º(u, º´Á¾_¼ö±º) < Àû¼º_S)
 				return false;
-			if (u.weapon != ë³‘ê¸°_íˆ¬í•¨)
+			if (u.weapon != º´±â_ÅõÇÔ)
 				return false;
 
 
-			//3ëª…ì´ìƒë˜ë©´ ë°œì‚¬
+			//3¸íÀÌ»óµÇ¸é ¹ß»ç
 			int dist = getMaxAttackDistance(u,true,true);
-			if (u.has_skill(íŠ¹ê¸°_ì‚¬ì •))
+			if (u.has_skill(Æ¯±â_»çÁ¤))
 				dist++;
 			//int dist = 2;
 			int minDist = 2;
@@ -2576,7 +2576,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						}
 						acount++;
 					}
-					if (b != null && ((b.facility == ì‹œì„¤_ë„ì‹œ) || b.facility == ì‹œì„¤_ê´€ë¬¸ || b.facility == ì‹œì„¤_í•­êµ¬))
+					if (b != null && ((b.facility == ½Ã¼³_µµ½Ã) || b.facility == ½Ã¼³_°ü¹® || b.facility == ½Ã¼³_Ç×±¸))
 						acount = 3;
 					if (bMine || acount < 3)
 						continue;
@@ -2603,23 +2603,23 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			if (maxUnit == null && maxBuilding == null)
 				return false;
 
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:í•¨ì„ íˆ¬ì„ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:ÇÔ¼±Åõ¼® {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			move(u, maxPT);
-			executeí•¨ì„ íˆ¬ì„(u, maxUnit != null ? maxUnit.get_pos() : maxBuilding.get_pos());
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:í•¨ì„ íˆ¬ì„ë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			executeÇÔ¼±Åõ¼®(u, maxUnit != null ? maxUnit.get_pos() : maxBuilding.get_pos());
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:ÇÔ¼±Åõ¼®³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			return true;
 		}
 
-		bool ìë™ê³µê²©_ê³µì„±íˆ¬ì„(pk::unit@ u)
+		bool ÀÚµ¿°ø°İ_°ø¼ºÅõ¼®(pk::unit@ u)
 		{
-			if (u.energy < pk::get_tactics(ì „ë²•_ê³µì„±íˆ¬ì„).energy_cost)
+			if (u.energy < pk::get_tactics(Àü¹ı_°ø¼ºÅõ¼®).energy_cost)
 				return false;
 
-			//3ëª…ì´ìƒë˜ë©´ ë°œì‚¬
+			//3¸íÀÌ»óµÇ¸é ¹ß»ç
 			int dist = getMaxAttackDistance(u,true,true);
-			if (u.has_skill(íŠ¹ê¸°_ì‚¬ì •))
+			if (u.has_skill(Æ¯±â_»çÁ¤))
 				dist++;
 
 			int minDist = 2;
@@ -2648,7 +2648,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 					pk::building@ b = getBuilding(pt);
 					if ((unit == null || !pk::is_enemy(u, unit)) && (b == null || !pk::is_enemy(u, b)))
 						continue;
-					if (!checkHexê³µì„±(u, pt))
+					if (!checkHex°ø¼º(u, pt))
 						continue;
 
 					int acount = 0;
@@ -2661,7 +2661,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 						pk::building@ b2 = getBuilding(pt2);
 						if (unit2 == null && b2 == null)
 							continue;
-						if (!checkHexê³µì„±(u, pt2))
+						if (!checkHex°ø¼º(u, pt2))
 							continue;
 
 						if (((unit2 != null && !pk::is_enemy(u, unit2)) || (b2 != null && !pk::is_enemy(u, b2))))
@@ -2686,110 +2686,110 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			if (maxUnit == null && maxBuilding == null)
 				return false;
 
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ê³µì„±íˆ¬ì„ì‹œì‘ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:°ø¼ºÅõ¼®½ÃÀÛ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			move(u, maxPT);
-			executeê³µì„±íˆ¬ì„(u, maxUnit != null ? maxUnit.get_pos() : maxBuilding.get_pos());
-			if (ì½˜ì†”_ë¡œê·¸_í‘œì‹œ)
-				pk::printf("ì „ë²•:ê³µì„±íˆ¬ì„ë {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
+			execute°ø¼ºÅõ¼®(u, maxUnit != null ? maxUnit.get_pos() : maxBuilding.get_pos());
+			if (ÄÜ¼Ö_·Î±×_Ç¥½Ã)
+				pk::printf("Àü¹ı:°ø¼ºÅõ¼®³¡ {}->{}\n", getNameLeader(u), getNameLeader(maxUnit));
 			return true;
 		}
 
-		bool ìë™ê³µê²©Handler_ê·¹ë³‘(pk::unit@ u)
+		bool ÀÚµ¿°ø°İHandler_±Øº´(pk::unit@ u)
 		{
-			if (ìë™ê³µê²©_ì„ í’(u, 3))
+			if (ÀÚµ¿°ø°İ_¼±Ç³(u, 3))
 				return true;
-			if (ìë™ê³µê²©_ì„ í’(u, 2))
+			if (ÀÚµ¿°ø°İ_¼±Ç³(u, 2))
 				return true;
-			if (ìë™ê³µê²©_ì°½ë³‘_ê·¹ë³‘_íš¡ì¹˜(u, false))
+			if (ÀÚµ¿°ø°İ_Ã¢º´_±Øº´_È¾Ä¡(u, false))
 				return true;
-			if (ìë™ê³µê²©_ì „ë²•êµì°¨ì‚¬ìš© && pk::rand_bool(ìë™ê³µê²©_ë‚˜ì„ ì²¨_í™•ë¥ ) && ìë™ê³µê²©_ì°½ë³‘_ê·¹ë³‘_ë‚˜ì„ ì²¨(u, false))
+			if (ÀÚµ¿°ø°İ_Àü¹ı±³Â÷»ç¿ë && pk::rand_bool(ÀÚµ¿°ø°İ_³ª¼±Ã·_È®·ü) && ÀÚµ¿°ø°İ_Ã¢º´_±Øº´_³ª¼±Ã·(u, false))
 				return true;
-			if (ìë™ê³µê²©_ê·¹ë³‘_ê°ˆí€´(u))
+			if (ÀÚµ¿°ø°İ_±Øº´_°¥Äû(u))
 				return true;
 			return false;
 		}
-		bool ìë™ê³µê²©Handler_ì°½ë³‘(pk::unit@ u)
+		bool ÀÚµ¿°ø°İHandler_Ã¢º´(pk::unit@ u)
 		{
-			if (ìë™ê³µê²©_ì „ë²•êµì°¨ì‚¬ìš© && ìë™ê³µê²©_ì°½ë³‘_ê·¹ë³‘_íš¡ì¹˜(u, true))
+			if (ÀÚµ¿°ø°İ_Àü¹ı±³Â÷»ç¿ë && ÀÚµ¿°ø°İ_Ã¢º´_±Øº´_È¾Ä¡(u, true))
 				return true;
-			if (pk::rand_bool(ìë™ê³µê²©_ë‚˜ì„ ì²¨_í™•ë¥ ) && ìë™ê³µê²©_ì°½ë³‘_ê·¹ë³‘_ë‚˜ì„ ì²¨(u, true))
+			if (pk::rand_bool(ÀÚµ¿°ø°İ_³ª¼±Ã·_È®·ü) && ÀÚµ¿°ø°İ_Ã¢º´_±Øº´_³ª¼±Ã·(u, true))
 				return true;
-			if (pk::rand_bool(ìë™ê³µê²©_ì´ë‹¨ì²¨_í™•ë¥ ) && ìë™ê³µê²©_ì°½ë³‘_ì´ë‹¨ì²¨(u))
+			if (pk::rand_bool(ÀÚµ¿°ø°İ_ÀÌ´ÜÃ·_È®·ü) && ÀÚµ¿°ø°İ_Ã¢º´_ÀÌ´ÜÃ·(u))
 				return true;
-			return ìë™ê³µê²©_ì°½ë³‘_ëŒì¶œ(u);
+			return ÀÚµ¿°ø°İ_Ã¢º´_µ¹Ãâ(u);
 		}
-		bool ìë™ê³µê²©Handler_ë…¸ë³‘(pk::unit@ u)
+		bool ÀÚµ¿°ø°İHandler_³ëº´(pk::unit@ u)
 		{
-			if (ìë™ê³µê²©_ë‚œì‚¬(u))
+			if (ÀÚµ¿°ø°İ_³­»ç(u))
 				return true;
-			if (ìë™ê³µê²©_ê´€ì‹œ(u))
+			if (ÀÚµ¿°ø°İ_°ü½Ã(u))
 				return true;
-			if (ìë™ê³µê²©_ê¸°ë³‘_í™”ì‹œ(u))
+			if (ÀÚµ¿°ø°İ_±âº´_È­½Ã(u))
 				return true;
 			return false;
 		}
-		bool ìë™ê³µê²©Handler_ê¸°ë³‘(pk::unit@ u)
+		bool ÀÚµ¿°ø°İHandler_±âº´(pk::unit@ u)
 		{
-			if (pk::rand_bool(ìë™ê³µê²©_ëŒê²©_í™•ë¥ ) && ìë™ê³µê²©_ê¸°ë³‘_ëŒê²©(u))
+			if (pk::rand_bool(ÀÚµ¿°ø°İ_µ¹°İ_È®·ü) && ÀÚµ¿°ø°İ_±âº´_µ¹°İ(u))
 				return true;
-			if (pk::rand_bool(ìë™ê³µê²©_ëŒíŒŒ_í™•ë¥ ) && ìë™ê³µê²©_ê¸°ë³‘_ëŒíŒŒ(u))
+			if (pk::rand_bool(ÀÚµ¿°ø°İ_µ¹ÆÄ_È®·ü) && ÀÚµ¿°ø°İ_±âº´_µ¹ÆÄ(u))
 				return true;
-			if (pk::rand_bool(ìë™ê³µê²©_ëŒì§„_í™•ë¥ ) && ìë™ê³µê²©_ê¸°ë³‘_ëŒì§„(u))
+			if (pk::rand_bool(ÀÚµ¿°ø°İ_µ¹Áø_È®·ü) && ÀÚµ¿°ø°İ_±âº´_µ¹Áø(u))
 				return true;
-			if (ìë™ê³µê²©_ì „ë²•êµì°¨ì‚¬ìš© && ìë™ê³µê²©_ê¸°ë³‘_í™”ì‹œ(u))
+			if (ÀÚµ¿°ø°İ_Àü¹ı±³Â÷»ç¿ë && ÀÚµ¿°ø°İ_±âº´_È­½Ã(u))
 				return true;
 			return false;
 		}
-		bool ìë™ê³µê²©Handler_ìˆ˜êµ°(pk::unit@ u)
+		bool ÀÚµ¿°ø°İHandler_¼ö±º(pk::unit@ u)
 		{
-			if (ìë™ê³µê²©_í•¨ì„ íˆ¬ì„(u))
+			if (ÀÚµ¿°ø°İ_ÇÔ¼±Åõ¼®(u))
 				return true;
-			if (u.weapon == ë³‘ê¸°_íˆ¬í•¨ || u.weapon == ë³‘ê¸°_ëˆ„ì„ )
+			if (u.weapon == º´±â_ÅõÇÔ || u.weapon == º´±â_´©¼±)
 			{
-				if (pk::rand_bool(ìë™ê³µê²©_í•¨ì„ _í™”ì‹œ) && ìë™ê³µê²©_í•¨ì„ í™”ì‹œ(u))
+				if (pk::rand_bool(ÀÚµ¿°ø°İ_ÇÔ¼±_È­½Ã) && ÀÚµ¿°ø°İ_ÇÔ¼±È­½Ã(u))
 					return true;
 			}
 			else 
 			{
-				return ìë™ê³µê²©_í•¨ì„ í™”ì‹œ(u);
+				return ÀÚµ¿°ø°İ_ÇÔ¼±È­½Ã(u);
 			}
-			return ìë™ê³µê²©_í•¨ì„ ê²©ëŒ(u);
+			return ÀÚµ¿°ø°İ_ÇÔ¼±°İµ¹(u);
 		}
-		bool ìë™ê³µê²©Handler_ê³µì„±(pk::unit@ u)
+		bool ÀÚµ¿°ø°İHandler_°ø¼º(pk::unit@ u)
 		{
-			return ìë™ê³µê²©_ê³µì„±íˆ¬ì„(u);
+			return ÀÚµ¿°ø°İ_°ø¼ºÅõ¼®(u);
 		}
 
-		bool ìë™ê³µê²©Handler(pk::unit@ u)
+		bool ÀÚµ¿°ø°İHandler(pk::unit@ u)
 		{
-			//pk::printf("ìë™:{}\n", getNameLeader(u));
-			if (u.status != ë¶€ëŒ€ìƒíƒœ_í†µìƒ || u.action_done)
+			//pk::printf("ÀÚµ¿:{}\n", getNameLeader(u));
+			if (u.status != ºÎ´ë»óÅÂ_Åë»ó || u.action_done)
 				return false;
-			if (u.order == ë¶€ëŒ€ì„ë¬´_ê³µê²©) 
+			if (u.order == ºÎ´ëÀÓ¹«_°ø°İ) 
 			{
 				pk::building@ b = pk::is_valid_pos(u.target_pos) ? pk::get_building(u.target_pos) : null;
-				if (b != null && (b.facility == ì‹œì„¤_ë³‘ì˜ || b.facility == ì‹œì„¤_ë³‘ì˜2ë‹¨ || b.facility == ì‹œì„¤_ë³‘ì˜3ë‹¨))
+				if (b != null && (b.facility == ½Ã¼³_º´¿µ || b.facility == ½Ã¼³_º´¿µ2´Ü || b.facility == ½Ã¼³_º´¿µ3´Ü))
 				{
-					pk::printf("{},ë³‘ì˜íŒ¨ìŠ¤!!!!!!!!!!!!!!!!!\n", getNameLeader(u));
+					pk::printf("{},º´¿µÆĞ½º!!!!!!!!!!!!!!!!!\n", getNameLeader(u));
 					return false;
 				}
 			}
-			if (!pk::rand_bool(ìë™ê³µê²©_í™•ë¥ ))
+			if (!pk::rand_bool(ÀÚµ¿°ø°İ_È®·ü))
 				return false;
 
 			bool b = false;
 			switch (u.weapon)
 			{
-			case ë³‘ê¸°_ì°½: b=ìë™ê³µê²©Handler_ì°½ë³‘(u); break;
-			case ë³‘ê¸°_ê·¹: b=ìë™ê³µê²©Handler_ê·¹ë³‘(u); break;
-			case ë³‘ê¸°_ë…¸: b=ìë™ê³µê²©Handler_ë…¸ë³‘(u); break;
-			case ë³‘ê¸°_êµ°ë§ˆ: b=ìë™ê³µê²©Handler_ê¸°ë³‘(u); break;
-			case ë³‘ê¸°_ì£¼ê°€: case ë³‘ê¸°_ëˆ„ì„ : case ë³‘ê¸°_íˆ¬í•¨:
-				b = ìë™ê³µê²©Handler_ìˆ˜êµ°(u);
+			case º´±â_Ã¢: b=ÀÚµ¿°ø°İHandler_Ã¢º´(u); break;
+			case º´±â_±Ø: b=ÀÚµ¿°ø°İHandler_±Øº´(u); break;
+			case º´±â_³ë: b=ÀÚµ¿°ø°İHandler_³ëº´(u); break;
+			case º´±â_±º¸¶: b=ÀÚµ¿°ø°İHandler_±âº´(u); break;
+			case º´±â_ÁÖ°¡: case º´±â_´©¼±: case º´±â_ÅõÇÔ:
+				b = ÀÚµ¿°ø°İHandler_¼ö±º(u);
 				break;
-			case ë³‘ê¸°_íˆ¬ì„:
-				b = ìë™ê³µê²©Handler_ê³µì„±(u);
+			case º´±â_Åõ¼®:
+				b = ÀÚµ¿°ø°İHandler_°ø¼º(u);
 			default:
 				break;
 			}
@@ -2798,41 +2798,41 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 		////////////////////////////////////////////////////////////////////////////////////
 
-		int getì¼ê¸°í† ë¬´ì¥Attacker(pk::unit@ u)
+		int getÀÏ±âÅä¹«ÀåAttacker(pk::unit@ u)
 		{
-			int maxë¬´ë ¥ = -1;
-			int maxë¬´ì¥ = -1;
+			int max¹«·Â = -1;
+			int max¹«Àå = -1;
 			for (int i = 0; i < 3; i++)
 			{
 				pk::person@ p = pk::get_person(u.member[i]);
 				if (p == null)
 					continue;
 
-				if (p.max_stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] > maxë¬´ë ¥)
+				if (p.max_stat[¹«Àå´É·Â_¹«·Â] > max¹«·Â)
 				{
-					maxë¬´ë ¥ = p.max_stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥];
-					maxë¬´ì¥ = p.get_id();
+					max¹«·Â = p.max_stat[¹«Àå´É·Â_¹«·Â];
+					max¹«Àå = p.get_id();
 				}
 			}
-			return maxë¬´ì¥;
+			return max¹«Àå;
 		}
-		int getì¼ê¸°í† ë¬´ì¥Target(pk::unit@ u)
+		int getÀÏ±âÅä¹«ÀåTarget(pk::unit@ u)
 		{
-			int maxë¬´ë ¥ = -1;
-			int minë¬´ë ¥ = 1000;
+			int max¹«·Â = -1;
+			int min¹«·Â = 1000;
 			for (int i = 0; i < 3; i++)
 			{
 				pk::person@ p = pk::get_person(u.member[i]);
 				if (p == null)
 					continue;
 
-				if (p.max_stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] > maxë¬´ë ¥)
+				if (p.max_stat[¹«Àå´É·Â_¹«·Â] > max¹«·Â)
 				{
-					maxë¬´ë ¥ = p.max_stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥];
+					max¹«·Â = p.max_stat[¹«Àå´É·Â_¹«·Â];
 				}
-				if (p.max_stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] < minë¬´ë ¥)
+				if (p.max_stat[¹«Àå´É·Â_¹«·Â] < min¹«·Â)
 				{
-					minë¬´ë ¥ = p.max_stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥];
+					min¹«·Â = p.max_stat[¹«Àå´É·Â_¹«·Â];
 				}
 			}
 
@@ -2843,7 +2843,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				if (p == null)
 					continue;
 
-				sum += (p.max_stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] - (minë¬´ë ¥ * 0.5));
+				sum += (p.max_stat[¹«Àå´É·Â_¹«·Â] - (min¹«·Â * 0.5));
 				if (i == 0)
 					sum += 20;
 			}
@@ -2855,13 +2855,13 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				if (p == null)
 					continue;
 
-				int ë¬´ë ¥ = (p.max_stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] - (minë¬´ë ¥ * 0.5));
+				int ¹«·Â = (p.max_stat[¹«Àå´É·Â_¹«·Â] - (min¹«·Â * 0.5));
 				if (i == 0)
-					ë¬´ë ¥ += 20;
+					¹«·Â += 20;
 
-				int ë¬´ë ¥2 = ë¬´ë ¥ / float(sum) * 100 + pos;
-				pos += (ë¬´ë ¥ / float(sum) * 100);
-				arr.insertLast(ë¬´ë ¥2);
+				int ¹«·Â2 = ¹«·Â / float(sum) * 100 + pos;
+				pos += (¹«·Â / float(sum) * 100);
+				arr.insertLast(¹«·Â2);
 			}
 
 			int r = pk::rand(100);
@@ -2889,7 +2889,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 		pk::unit@ _scene_attackerUnit = null;
 		pk::unit@ _scene_targetUnit = null;
 
-		void scene_ì¼ê¸°í† ()
+		void scene_ÀÏ±âÅä()
 		{
 			//pk::printf("tatical 1:1 {},{}------------------\n",getName(_scene_attacker), getName(_scene_target));
 			bool b0 = pk::is_player_controlled(_scene_attackerUnit);
@@ -2908,55 +2908,55 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			switch (pk::rand(4))
 			{
 			case 0:
-				return pk::encode(pk::format("ì´ê²ƒì´ {}ë‹¤", str));
+				return pk::encode(pk::format("ÀÌ°ÍÀÌ {}´Ù", str));
 			case 1:
-				return pk::encode(pk::format("{} í˜ì„ ë³´ì—¬ì£¼ë§ˆ", str));
+				return pk::encode(pk::format("{} ÈûÀ» º¸¿©ÁÖ¸¶", str));
 			case 2:
-				return pk::encode(pk::format("í•˜í•« ì–´ë– ëƒ {} ìœ„ë ¥ì´", str));
+				return pk::encode(pk::format("ÇÏÇÖ ¾î¶°³Ä {} À§·ÂÀÌ", str));
 			case 3:
-				return pk::encode(pk::format("{} ì—ëŠ” ë§ì„¤ìˆ˜ ì—†ë‹¤", str));
+				return pk::encode(pk::format("{} ¿¡´Â ¸Â¼³¼ö ¾ø´Ù", str));
 			default:
 				break;
 			}
 			return "";
 		}
 
-		array<pk::point> getíš¡ì¹˜pos(pk::point spos, pk::point dpos)
+		array<pk::point> getÈ¾Ä¡pos(pk::point spos, pk::point dpos)
 		{
 			array<pk::point> pts;
 			int dir = pk::get_direction(spos, dpos);
 			switch (dir)
 			{
-			case ë°©í–¥_ë‚¨:
-				pts.insertLast(pk::get_neighbor_pos(spos, ë°©í–¥_ë‚¨ë™, 1));
-				pts.insertLast(pk::get_neighbor_pos(spos, ë°©í–¥_ë‚¨ì„œ, 1));
+			case ¹æÇâ_³²:
+				pts.insertLast(pk::get_neighbor_pos(spos, ¹æÇâ_³²µ¿, 1));
+				pts.insertLast(pk::get_neighbor_pos(spos, ¹æÇâ_³²¼­, 1));
 				break;
-			case ë°©í–¥_ë‚¨ë™:
-				pts.insertLast(pk::get_neighbor_pos(spos, ë°©í–¥_ë¶ë™, 1));
-				pts.insertLast(pk::get_neighbor_pos(spos, ë°©í–¥_ë‚¨, 1));
+			case ¹æÇâ_³²µ¿:
+				pts.insertLast(pk::get_neighbor_pos(spos, ¹æÇâ_ºÏµ¿, 1));
+				pts.insertLast(pk::get_neighbor_pos(spos, ¹æÇâ_³², 1));
 				break;
-			case ë°©í–¥_ë¶ë™:
-				pts.insertLast(pk::get_neighbor_pos(spos, ë°©í–¥_ë¶, 1));
-				pts.insertLast(pk::get_neighbor_pos(spos, ë°©í–¥_ë‚¨ë™, 1));
+			case ¹æÇâ_ºÏµ¿:
+				pts.insertLast(pk::get_neighbor_pos(spos, ¹æÇâ_ºÏ, 1));
+				pts.insertLast(pk::get_neighbor_pos(spos, ¹æÇâ_³²µ¿, 1));
 				break;
-			case ë°©í–¥_ë¶:
-				pts.insertLast(pk::get_neighbor_pos(spos, ë°©í–¥_ë¶ì„œ, 1));
-				pts.insertLast(pk::get_neighbor_pos(spos, ë°©í–¥_ë¶ë™, 1));
+			case ¹æÇâ_ºÏ:
+				pts.insertLast(pk::get_neighbor_pos(spos, ¹æÇâ_ºÏ¼­, 1));
+				pts.insertLast(pk::get_neighbor_pos(spos, ¹æÇâ_ºÏµ¿, 1));
 				break;
-			case ë°©í–¥_ë¶ì„œ:
-				pts.insertLast(pk::get_neighbor_pos(spos, ë°©í–¥_ë‚¨ì„œ, 1));
-				pts.insertLast(pk::get_neighbor_pos(spos, ë°©í–¥_ë¶, 1));
+			case ¹æÇâ_ºÏ¼­:
+				pts.insertLast(pk::get_neighbor_pos(spos, ¹æÇâ_³²¼­, 1));
+				pts.insertLast(pk::get_neighbor_pos(spos, ¹æÇâ_ºÏ, 1));
 				break;
-			case ë°©í–¥_ë‚¨ì„œ:
-				pts.insertLast(pk::get_neighbor_pos(spos, ë°©í–¥_ë¶ì„œ, 1));
-				pts.insertLast(pk::get_neighbor_pos(spos, ë°©í–¥_ë‚¨, 1));
+			case ¹æÇâ_³²¼­:
+				pts.insertLast(pk::get_neighbor_pos(spos, ¹æÇâ_ºÏ¼­, 1));
+				pts.insertLast(pk::get_neighbor_pos(spos, ¹æÇâ_³², 1));
 				break;
 			default:
 				break;
 			}
 			return pts;
 		}
-		pk::point getê°ˆí€´pos(pk::point src, pk::point dst)
+		pk::point get°¥Äûpos(pk::point src, pk::point dst)
 		{
 			int dir = pk::get_direction(dst, src);
 			return pk::get_neighbor_pos(dst, dir, 2);
@@ -2969,12 +2969,12 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 			if (bWater)
 			{
-				return pk::is_enabled_terrain(h) && (h==ì§€í˜•_ê°• || h==ì§€í˜•_ë°”ë‹¤);
+				return pk::is_enabled_terrain(h) && (h==ÁöÇü_°­ || h==ÁöÇü_¹Ù´Ù);
 			}
 			else
 			{
-				bool b = pk::get_hex_object(pt) != null || h == ì§€í˜•_ê°• || h == ì§€í˜•_ë°”ë‹¤ || h == ì§€í˜•_ê´€ë¬¸ || h == ì§€í˜•_ì‚°
-					|| h == ì§€í˜•_ë„ì‹œ || h == ì§€í˜•_í•­êµ¬ || h == ì§€í˜•_ë‚´ || h == ì§€í˜•_ë¬¼ê°€ || !pk::is_enabled_terrain(h);
+				bool b = pk::get_hex_object(pt) != null || h == ÁöÇü_°­ || h == ÁöÇü_¹Ù´Ù || h == ÁöÇü_°ü¹® || h == ÁöÇü_»ê
+					|| h == ÁöÇü_µµ½Ã || h == ÁöÇü_Ç×±¸ || h == ÁöÇü_³» || h == ÁöÇü_¹°°¡ || !pk::is_enabled_terrain(h);
 				return !b;
 			}
 		}
@@ -3037,38 +3037,38 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 		int getChaosTime(pk::unit@ u)
 		{
-			int max = pk::max(u.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_í†µì†”], u.attr.stat[ë¶€ëŒ€ëŠ¥ë ¥_ì§€ë ¥]);
+			int max = pk::max(u.attr.stat[ºÎ´ë´É·Â_Åë¼Ö], u.attr.stat[ºÎ´ë´É·Â_Áö·Â]);
 			int time = pk::max((1 - (max - 50) / 40.0), 0.0) * 2 + 2;
 			return time;
 		}
-		int getMaxAttackDistance(pk::unit@ u, bool bTactics = true,bool bíˆ¬ì„ì •ë€=false)
+		int getMaxAttackDistance(pk::unit@ u, bool bTactics = true,bool bÅõ¼®Á¤¶õ=false)
 		{
-			pk::tactics@ tactics_t_í™”ì‹œ = pk::get_tactics(ì „ë²•_í™”ì‹œ);
+			pk::tactics@ tactics_t_È­½Ã = pk::get_tactics(Àü¹ı_È­½Ã);
 
 			pk::force@ f = pk::get_force(u.get_force_id());
 			switch (u.weapon)
 			{
-			case ë³‘ê¸°_êµ°ë§ˆ:
-				if (pk::has_tech(f, ê¸°êµ_ê¸°ì‚¬) || u.has_skill(íŠ¹ê¸°_ë°±ë§ˆ))
+			case º´±â_±º¸¶:
+				if (pk::has_tech(f, ±â±³_±â»ç) || u.has_skill(Æ¯±â_¹é¸¶))
 				{
-					return bTactics ? tactics_t_í™”ì‹œ.max_range : 2;
+					return bTactics ? tactics_t_È­½Ã.max_range : 2;
 				}
 
 				return  1;
-			case ë³‘ê¸°_ì°½:
-			case ë³‘ê¸°_ê·¹:
+			case º´±â_Ã¢:
+			case º´±â_±Ø:
 				return  1;
-			case ë³‘ê¸°_ë…¸:
+			case º´±â_³ë:
 
-				return tactics_t_í™”ì‹œ.max_range;
-				//return pk::has_tech(f, ê¸°êµ_ê°•ë…¸) ? 3 : 2;
-			case ë³‘ê¸°_ì£¼ê°€:case ë³‘ê¸°_ëˆ„ì„ :case ë³‘ê¸°_íˆ¬í•¨:
-				if(bíˆ¬ì„ì •ë€)
-					return pk::get_tactics(ì „ë²•_í•¨ì„ íˆ¬ì„).max_range;
+				return tactics_t_È­½Ã.max_range;
+				//return pk::has_tech(f, ±â±³_°­³ë) ? 3 : 2;
+			case º´±â_ÁÖ°¡:case º´±â_´©¼±:case º´±â_ÅõÇÔ:
+				if(bÅõ¼®Á¤¶õ)
+					return pk::get_tactics(Àü¹ı_ÇÔ¼±Åõ¼®).max_range;
 				else
-					return pk::get_tactics(ì „ë²•_í•¨ì„ í™”ì‹œ).max_range;
-			case ë³‘ê¸°_íˆ¬ì„:
-				return pk::get_tactics(ì „ë²•_ê³µì„±íˆ¬ì„).max_range;
+					return pk::get_tactics(Àü¹ı_ÇÔ¼±È­½Ã).max_range;
+			case º´±â_Åõ¼®:
+				return pk::get_tactics(Àü¹ı_°ø¼ºÅõ¼®).max_range;
 			default:
 				break;
 			}
@@ -3092,7 +3092,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 					continue;
 				if (u.get_force_id() != attacker.get_force_id())
 					continue;
-				if (u.status != ë¶€ëŒ€ìƒíƒœ_í†µìƒ)
+				if (u.status != ºÎ´ë»óÅÂ_Åë»ó)
 					continue;
 
 
@@ -3113,18 +3113,18 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				string str = "";
 				switch (pk::rand(3))
 				{
-				case 0:str = "ì´ê²ƒë„ ë°›ì•„ë¼"; break;
-				case 1:str = "ì´ê±´ ì–´ë– ëƒ"; break;
-				case 2:str = "ì•„ì§ ëë‚˜ì§€ ì•Šì•˜ë‹¤"; break;
+				case 0:str = "ÀÌ°Íµµ ¹Ş¾Æ¶ó"; break;
+				case 1:str = "ÀÌ°Ç ¾î¶°³Ä"; break;
+				case 2:str = "¾ÆÁ÷ ³¡³ªÁö ¾Ê¾Ò´Ù"; break;
 				}
 				anim(u, dist > 1 ? 1 : 0, { di }, dst_pos, 0, pk::encode(str), 0);
 
 				string str2 = "";
 				switch (pk::rand(3))
 				{
-				case 0:str = pk::format("ì—­ì‹œ {} ë‹˜", pk::decode(pk::get_name(pk::get_person(u.leader)))); break;
-				case 1:str = "í•˜í•« ê³ ë§™ì†Œ"; break;
-				case 2:str = "ì´ê±°ì§€~"; break;
+				case 0:str = pk::format("¿ª½Ã {} ´Ô", pk::decode(pk::get_name(pk::get_person(u.leader)))); break;
+				case 1:str = "ÇÏÇÖ °í¸¿¼Ò"; break;
+				case 2:str = "ÀÌ°ÅÁö~"; break;
 				}
 				pk::say(str2, pk::get_person(attacker.leader), attacker);
 
@@ -3137,30 +3137,30 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 		}
 		void attack(pk::unit@ attacker, pk::hex_object@ target, pk::point dst_pos, int type, bool bCri)
 		{
-			bool bCri2 = type == ìœ ë‹›_ì „ë²•_í™œê³µê²© ? í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬ : í¬ë¦¬í‹°ì»¬_ê·¼ì ‘;
+			bool bCri2 = type == À¯´Ö_Àü¹ı_È°°ø°İ ? Å©¸®Æ¼ÄÃ_¿ø°Å¸® : Å©¸®Æ¼ÄÃ_±ÙÁ¢;
 			pk::damage_info di;
 			di.src_pos = attacker.get_pos();
 			di.dst_pos = dst_pos;
 			callback209(di, attacker, 0, dst_pos, 0, bCri ? 1 : 0, false);
-			anim(attacker, type, { di }, dst_pos, 0, pk::encode("ë°›ì•„ë¼!"), 0);
+			anim(attacker, type, { di }, dst_pos, 0, pk::encode("¹Ş¾Æ¶ó!"), 0);
 
 			pk::unit@ targetU = getUnit(dst_pos);
 
-			if (!ê¸ˆê°•ë¶ˆêµ´(di, target) && !í™”ì‚´ë°©íŒ¨_í°ë°©íŒ¨(attacker, targetU, type == ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©))
+			if (!±İ°­ºÒ±¼(di, target) && !È­»ì¹æÆĞ_Å«¹æÆĞ(attacker, targetU, type == À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ))
 			{
 				addTroops(target, di);
 				updateAfter(attacker, target);
 				update(attacker, dst_pos, { di }, bCri2, false);
 
-				int aa = int(pk::core::skill_constant(attacker, íŠ¹ê¸°_ê¸‰ìŠµ));
-				if (targetU != null && (!attacker.has_skill(íŠ¹ê¸°_ê¸‰ìŠµ) || !pk::rand_bool(aa)))
+				int aa = int(pk::core::skill_constant(attacker, Æ¯±â_±Ş½À));
+				if (targetU != null && (!attacker.has_skill(Æ¯±â_±Ş½À) || !pk::rand_bool(aa)))
 				{
 					pk::damage_info di2;
 					di2.src_pos = dst_pos;
 					di2.dst_pos = attacker.get_pos();
 					callback209(di2, attacker, 0, dst_pos, 0, bCri ? 1 : 0, false);
-					anim(targetU, type, { di2 }, attacker.get_pos(), 0, pk::encode("ë°˜ê²©ì´ë‹¤!"), 0);
-					if (!ê¸ˆê°•ë¶ˆêµ´(di2, attacker) && !í™”ì‚´ë°©íŒ¨_í°ë°©íŒ¨(targetU, attacker, type == ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©))
+					anim(targetU, type, { di2 }, attacker.get_pos(), 0, pk::encode("¹İ°İÀÌ´Ù!"), 0);
+					if (!±İ°­ºÒ±¼(di2, attacker) && !È­»ì¹æÆĞ_Å«¹æÆĞ(targetU, attacker, type == À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ))
 					{
 						addTroops(attacker, di2);
 						updateAfter(targetU, attacker);
@@ -3168,24 +3168,24 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 					}
 				}
 			}
-			if (ì—°ì „(attacker))
+			if (¿¬Àü(attacker))
 			{
 				sleep();
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target) && !í™”ì‚´ë°©íŒ¨_í°ë°©íŒ¨(attacker, targetU, type == ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©))
+				if (!±İ°­ºÒ±¼(di, target) && !È­»ì¹æÆĞ_Å«¹æÆĞ(attacker, targetU, type == À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ))
 				{
 					addTroops(target, di);
 					updateAfter(attacker, target);
 					update(attacker, dst_pos, { di }, bCri2, false);
 
-					int aa = int(pk::core::skill_constant(attacker, íŠ¹ê¸°_ê¸‰ìŠµ));
-					if (targetU != null && (!attacker.has_skill(íŠ¹ê¸°_ê¸‰ìŠµ) || !pk::rand_bool(aa)))
+					int aa = int(pk::core::skill_constant(attacker, Æ¯±â_±Ş½À));
+					if (targetU != null && (!attacker.has_skill(Æ¯±â_±Ş½À) || !pk::rand_bool(aa)))
 					{
 						pk::damage_info di2;
 						di2.src_pos = dst_pos;
 						di2.dst_pos = attacker.get_pos();
 						callback209(di2, attacker, 0, dst_pos, 0, bCri ? 1 : 0, false);
-						anim(targetU, type, { di2 }, attacker.get_pos(), 0, pk::encode("ë°˜ê²©ì´ë‹¤!"), 0);
-						if (!ê¸ˆê°•ë¶ˆêµ´(di2, attacker) && !í™”ì‚´ë°©íŒ¨_í°ë°©íŒ¨(targetU, attacker, type == ìœ ë‹›_ì „ë²•_ê·¼ì ‘ê³µê²©))
+						anim(targetU, type, { di2 }, attacker.get_pos(), 0, pk::encode("¹İ°İÀÌ´Ù!"), 0);
+						if (!±İ°­ºÒ±¼(di2, attacker) && !È­»ì¹æÆĞ_Å«¹æÆĞ(targetU, attacker, type == À¯´Ö_Àü¹ı_±ÙÁ¢°ø°İ))
 						{
 							addTroops(attacker, di2);
 							updateAfter(targetU, attacker);
@@ -3199,24 +3199,24 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 		void attackFail(pk::unit@ attacker, pk::hex_object@ target, pk::point dst_pos, int type, bool bCri)
 		{
-			bool bCri2 = type == ìœ ë‹›_ì „ë²•_í™œê³µê²© ? í¬ë¦¬í‹°ì»¬_ì›ê±°ë¦¬ : í¬ë¦¬í‹°ì»¬_ê·¼ì ‘;
+			bool bCri2 = type == À¯´Ö_Àü¹ı_È°°ø°İ ? Å©¸®Æ¼ÄÃ_¿ø°Å¸® : Å©¸®Æ¼ÄÃ_±ÙÁ¢;
 			int r = pk::rand(100);
-			if (r <= ì „ë²•ì‹¤íŒ¨ì‹œ_ì¼ë°˜ê³µê²©_í™•ë¥ )
+			if (r <= Àü¹ı½ÇÆĞ½Ã_ÀÏ¹İ°ø°İ_È®·ü)
 			{
 				pk::damage_info di;
 				di.src_pos = attacker.get_pos();
 				di.dst_pos = dst_pos;
 				callback209(di, attacker, 0, dst_pos, 0, bCri ? 1 : 0, false);
-				anim(attacker, type, { di }, dst_pos, 0, pk::encode("ì¹« ì´ê²ƒë°–ì—”.."), 0);
-				if (!ê¸ˆê°•ë¶ˆêµ´(di, target))
+				anim(attacker, type, { di }, dst_pos, 0, pk::encode("Ä© ÀÌ°Í¹Û¿£.."), 0);
+				if (!±İ°­ºÒ±¼(di, target))
 				{
 					addTroops(target, di);
 					updateAfter(attacker, target);
 					update(attacker, dst_pos, { di }, bCri2, false);
-					if (ì—°ì „(attacker))
+					if (¿¬Àü(attacker))
 					{
 						sleep();
-						anim(attacker, type, { di }, dst_pos, 0, pk::encode("ì¹« ì´ê²ƒë°–ì—”.."), 0);
+						anim(attacker, type, { di }, dst_pos, 0, pk::encode("Ä© ÀÌ°Í¹Û¿£.."), 0);
 						addTroops(target, di);
 						updateAfter(attacker, target);
 						update(attacker, dst_pos, { di }, bCri2, false);
@@ -3224,15 +3224,15 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				}
 
 			}
-			else if (r > ì „ë²•ì‹¤íŒ¨ì‹œ_ì¼ë°˜ê³µê²©_í™•ë¥  and r < ì „ë²•ì‹¤íŒ¨ì‹œ_ì¼ë°˜ê³µê²©_í™•ë¥  + ì „ë²•ì‹¤íŒ¨ì‹œ_ì¼ë°˜ê³µê²©_ë¬´ë°ë¯¸ì§€_í™•ë¥ )
+			else if (r > Àü¹ı½ÇÆĞ½Ã_ÀÏ¹İ°ø°İ_È®·ü and r < Àü¹ı½ÇÆĞ½Ã_ÀÏ¹İ°ø°İ_È®·ü + Àü¹ı½ÇÆĞ½Ã_ÀÏ¹İ°ø°İ_¹«µ¥¹ÌÁö_È®·ü)
 			{
 				pk::damage_info di;
 				di.src_pos = attacker.get_pos();
 				di.dst_pos = dst_pos;
 				di.troops_damage = 0;
-				//prev_callback_202ì „ë²•ì„±ê³µ(di, attacker, type, dst_pos, 0, bCri ? 1 : 0, false);
+				//prev_callback_202Àü¹ı¼º°ø(di, attacker, type, dst_pos, 0, bCri ? 1 : 0, false);
 
-				anim(attacker, type, { di }, dst_pos, 0, pk::encode("í†µí•˜ì§€ ì•ŠëŠ”ê°€.."), 0);
+				anim(attacker, type, { di }, dst_pos, 0, pk::encode("ÅëÇÏÁö ¾Ê´Â°¡.."), 0);
 				addTroops(target, di);
 				updateAfter(attacker, target);
 				update(attacker, dst_pos, { di }, bCri2, false);
@@ -3248,7 +3248,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				di.dst_pos = attacker.get_pos();
 				callback209(di, target, 1, attacker.get_pos(), 0, bCri ? 1 : 0, false);
 
-				anim(target, type, { di }, attacker.get_pos(), 1, pk::encode("ë°˜ê²©ì´ë‹¤"), 0);
+				anim(target, type, { di }, attacker.get_pos(), 1, pk::encode("¹İ°İÀÌ´Ù"), 0);
 				addTroops(attacker, di);
 				updateAfter(target, attacker);
 				update(attacker, dst_pos, { di }, bCri2, false, true);
@@ -3268,7 +3268,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				int food = targetU.food;
 
 				pk::create_death_effect(targetU, attacker, target.get_pos());
-				pk::kill(targetU, attacker, dist == 1, attacker.weapon == ë³‘ê¸°_ê·¹);
+				pk::kill(targetU, attacker, dist == 1, attacker.weapon == º´±â_±Ø);
 
 				//if (dist == 1)
 				//{
@@ -3279,8 +3279,8 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 				//}
 
 				//pk::printf("kill end\n");
-				if (attacker.has_skill(íŠ¹ê¸°_ì•™ì–‘))
-					pk::add_energy(attacker, int(pk::core::skill_constant(attacker, íŠ¹ê¸°_ì•™ì–‘)), true);
+				if (attacker.has_skill(Æ¯±â_¾Ó¾ç))
+					pk::add_energy(attacker, int(pk::core::skill_constant(attacker, Æ¯±â_¾Ó¾ç)), true);
 
 				return false;
 			}
@@ -3313,32 +3313,32 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 		}
 
-		void updateë§¹ì¥(pk::unit@ attacker, pk::hex_object@ target, pk::point dest0)
+		void update¸ÍÀå(pk::unit@ attacker, pk::hex_object@ target, pk::point dest0)
 		{
 			pk::unit@ u = target != null ? getUnit(target.get_pos()) : null;
-			if (u == null || !attacker.has_skill(íŠ¹ê¸°_ë§¹ì¥) || u.has_skill(íŠ¹ê¸°_í˜¸ìœ„))
+			if (u == null || !attacker.has_skill(Æ¯±â_¸ÍÀå) || u.has_skill(Æ¯±â_È£À§))
 				return;
 			if (target.get_pos().x == dest0.x && target.get_pos().y == dest0.y)
 				return;
 
-			int maxValue = int(pk::core::skill_constant(attacker, íŠ¹ê¸°_ë§¹ì¥));
-			if (u.member[0] >= 0 && u.member[0] < ë¬´ì¥_ë && pk::rand_bool(maxValue))
+			int maxValue = int(pk::core::skill_constant(attacker, Æ¯±â_¸ÍÀå));
+			if (u.member[0] >= 0 && u.member[0] < ¹«Àå_³¡ && pk::rand_bool(maxValue))
 				injury(pk::get_person(u.member[0]));
-			if (u.member[1] >= 0 && u.member[1] < ë¬´ì¥_ë && pk::rand_bool(maxValue))
+			if (u.member[1] >= 0 && u.member[1] < ¹«Àå_³¡ && pk::rand_bool(maxValue))
 				injury(pk::get_person(u.member[1]));
-			if (u.member[2] >= 0 && u.member[2] < ë¬´ì¥_ë && pk::rand_bool(maxValue))
+			if (u.member[2] >= 0 && u.member[2] < ¹«Àå_³¡ && pk::rand_bool(maxValue))
 				injury(pk::get_person(u.member[2]));
 		}
 		void injury(pk::person@ p)
 		{
-			if (pk::has_skill(p, íŠ¹ê¸°_ê°•ìš´))
+			if (pk::has_skill(p, Æ¯±â_°­¿î))
 				return;
 			string strType = "";
 			switch (p.shoubyou)
 			{
-			case ìƒë³‘_ê±´ê°•:p.shoubyou = ìƒë³‘_ê²½ì¦; strType = "ê²½ì¦"; break;
-			case ìƒë³‘_ê²½ì¦:p.shoubyou = ìƒë³‘_ì¤‘ì¦; strType = "ì¤‘ì¦"; break;
-			case ìƒë³‘_ì¤‘ì¦:p.shoubyou = ìƒë³‘_ë¹ˆì‚¬; strType = "ë¹ˆì‚¬"; break;
+			case »óº´_°Ç°­:p.shoubyou = »óº´_°æÁõ; strType = "°æÁõ"; break;
+			case »óº´_°æÁõ:p.shoubyou = »óº´_ÁßÁõ; strType = "ÁßÁõ"; break;
+			case »óº´_ÁßÁõ:p.shoubyou = »óº´_ºó»ç; strType = "ºó»ç"; break;
 
 			default:
 				break;
@@ -3347,9 +3347,9 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 			switch (pk::rand(3))
 			{
-			case 0: pk::say(pk::encode("íŒ”ì´.."), p, getUnit(p.get_pos())); break;
-			case 1: pk::say(pk::encode("ì—¬ê¸°ì„  ë¶€ìƒì„.."), p, getUnit(p.get_pos())); break;
-			case 2: pk::say(pk::encode("ì•„ì•…..ì´ëŸ¬ë©´"), p, getUnit(p.get_pos())); break;
+			case 0: pk::say(pk::encode("ÆÈÀÌ.."), p, getUnit(p.get_pos())); break;
+			case 1: pk::say(pk::encode("¿©±â¼± ºÎ»óÀ».."), p, getUnit(p.get_pos())); break;
+			case 2: pk::say(pk::encode("¾Æ¾Ç..ÀÌ·¯¸é"), p, getUnit(p.get_pos())); break;
 			default:
 				break;
 			}
@@ -3358,7 +3358,7 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			pk::person@ kunshu = force != null ? pk::get_person(force.kunshu) : null;
 			if (kunshu != null)
 			{
-				string str = pk::format("\x1b[2x{}\x1b[0xêµ° \x1b[2x{}\x1b[0x,\x1b[29x{}\x1b[0x ìƒíƒœ", getName(kunshu), getName(p), strType);
+				string str = pk::format("\x1b[2x{}\x1b[0x±º \x1b[2x{}\x1b[0x,\x1b[29x{}\x1b[0x »óÅÂ", getName(kunshu), getName(p), strType);
 				pk::history_log(p.get_pos(), force != null ? force.color : -1, pk::encode(str));
 			}
 		}
@@ -3419,78 +3419,78 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 		void updateChaos(pk::unit@ u, pk::unit@ u2)
 		{
-			pk::set_status(u, u2, ë¶€ëŒ€ìƒíƒœ_í˜¼ë€, getChaosTime(u), true);
+			pk::set_status(u, u2, ºÎ´ë»óÅÂ_È¥¶õ, getChaosTime(u), true);
 		}
 		bool update(pk::unit@ u, pk::point dst_pos, array<pk::damage_info>@ dis, bool bRanged, bool bCri, bool success = true, bool bCounter = false)
 		{
-			bool bì§€ë„ = u.has_skill(íŠ¹ê¸°_ì§€ë„);
+			bool bÁöµµ = u.has_skill(Æ¯±â_Áöµµ);
 
 			pk::unit@ attacker = u;
-			pk::add_stat_exp(attacker, ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥, (success ? 4 : 1) * (bì§€ë„ ? 2 : 1));
+			pk::add_stat_exp(attacker, ¹«Àå´É·Â_¹«·Â, (success ? 4 : 1) * (bÁöµµ ? 2 : 1));
 			pk::add_kouseki(attacker, success ? 100 : 10);
 
 			int type = -1;
 			switch (attacker.weapon)
 			{
-			case ë³‘ê¸°_ì°½:type = ë³‘ì¢…_ì°½ë³‘; break;
-			case ë³‘ê¸°_ë…¸:type = ë³‘ì¢…_ë…¸ë³‘; break;
-			case ë³‘ê¸°_ê·¹:type = ë³‘ì¢…_ê·¹ë³‘; break;
-			case ë³‘ê¸°_êµ°ë§ˆ:type = ë³‘ì¢…_ê¸°ë³‘; break;
+			case º´±â_Ã¢:type = º´Á¾_Ã¢º´; break;
+			case º´±â_³ë:type = º´Á¾_³ëº´; break;
+			case º´±â_±Ø:type = º´Á¾_±Øº´; break;
+			case º´±â_±º¸¶:type = º´Á¾_±âº´; break;
 			default:
 				break;
 			}
 			if (type != -1)
 			{
 
-				if (attacker.leader >= 0 && attacker.leader < ë¬´ì¥_ë)
+				if (attacker.leader >= 0 && attacker.leader < ¹«Àå_³¡)
 				{
 					pk::person@ p0 = pk::get_person(attacker.leader);
-					pk::add_heishu_exp(p0, type, (success ? 4 : 1) * (bì§€ë„ ? 2 : 1));
+					pk::add_heishu_exp(p0, type, (success ? 4 : 1) * (bÁöµµ ? 2 : 1));
 				}
-				if (attacker.member[1] >= 0 && attacker.member[1] < ë¬´ì¥_ë)
+				if (attacker.member[1] >= 0 && attacker.member[1] < ¹«Àå_³¡)
 				{
 					pk::person@ p0 = pk::get_person(attacker.member[1]);
-					pk::add_heishu_exp(p0, type, (success ? 4 : 1) * (bì§€ë„ ? 2 : 1));
+					pk::add_heishu_exp(p0, type, (success ? 4 : 1) * (bÁöµµ ? 2 : 1));
 				}
-				if (attacker.member[2] >= 0 && attacker.member[2] < ë¬´ì¥_ë)
+				if (attacker.member[2] >= 0 && attacker.member[2] < ¹«Àå_³¡)
 				{
 					pk::person@ p0 = pk::get_person(attacker.member[2]);
-					pk::add_heishu_exp(p0, type, (success ? 4 : 1) * (bì§€ë„ ? 2 : 1));
+					pk::add_heishu_exp(p0, type, (success ? 4 : 1) * (bÁöµµ ? 2 : 1));
 				}
 			}
 			pk::unit@ targetU = getUnit(dst_pos);
 			if (targetU != null)
 			{
-				pk::add_stat_exp(targetU, ë¬´ì¥ëŠ¥ë ¥_í†µì†”, bì§€ë„ ? 2 : 1);
+				pk::add_stat_exp(targetU, ¹«Àå´É·Â_Åë¼Ö, bÁöµµ ? 2 : 1);
 
 				int type2 = -1;
 				switch (targetU.weapon)
 				{
-				case ë³‘ê¸°_ì°½:type2 = ë³‘ì¢…_ì°½ë³‘; break;
-				case ë³‘ê¸°_ë…¸:type2 = ë³‘ì¢…_ë…¸ë³‘; break;
-				case ë³‘ê¸°_ê·¹:type2 = ë³‘ì¢…_ê·¹ë³‘; break;
-				case ë³‘ê¸°_êµ°ë§ˆ:type2 = ë³‘ì¢…_ê¸°ë³‘; break;
-				case ë³‘ê¸°_ì •ë€:case ë³‘ê¸°_íˆ¬ì„:case ë³‘ê¸°_ì¶©ì°¨:case ë³‘ê¸°_ëª©ìˆ˜:type2 = ë³‘ì¢…_ë³‘ê¸°; break;
-				case ë³‘ê¸°_ì£¼ê°€:case ë³‘ê¸°_ëˆ„ì„ :case ë³‘ê¸°_íˆ¬í•¨:type2 = ë³‘ì¢…_ìˆ˜êµ°; break;
+				case º´±â_Ã¢:type2 = º´Á¾_Ã¢º´; break;
+				case º´±â_³ë:type2 = º´Á¾_³ëº´; break;
+				case º´±â_±Ø:type2 = º´Á¾_±Øº´; break;
+				case º´±â_±º¸¶:type2 = º´Á¾_±âº´; break;
+				case º´±â_Á¤¶õ:case º´±â_Åõ¼®:case º´±â_ÃæÂ÷:case º´±â_¸ñ¼ö:type2 = º´Á¾_º´±â; break;
+				case º´±â_ÁÖ°¡:case º´±â_´©¼±:case º´±â_ÅõÇÔ:type2 = º´Á¾_¼ö±º; break;
 				default:
 					break;
 				}
 				if (type2 != -1)
 				{
-					if (targetU.leader >= 0 && targetU.leader < ë¬´ì¥_ë)
+					if (targetU.leader >= 0 && targetU.leader < ¹«Àå_³¡)
 					{
 						pk::person@ p0 = pk::get_person(targetU.leader);
-						pk::add_heishu_exp(p0, type, bì§€ë„ ? 2 : 1);
+						pk::add_heishu_exp(p0, type, bÁöµµ ? 2 : 1);
 					}
-					if (targetU.member[1] >= 0 && targetU.member[1] < ë¬´ì¥_ë)
+					if (targetU.member[1] >= 0 && targetU.member[1] < ¹«Àå_³¡)
 					{
 						pk::person@ p0 = pk::get_person(targetU.member[1]);
-						pk::add_heishu_exp(p0, type, bì§€ë„ ? 2 : 1);
+						pk::add_heishu_exp(p0, type, bÁöµµ ? 2 : 1);
 					}
-					if (targetU.member[2] >= 0 && targetU.member[2] < ë¬´ì¥_ë)
+					if (targetU.member[2] >= 0 && targetU.member[2] < ¹«Àå_³¡)
 					{
 						pk::person@ p0 = pk::get_person(targetU.member[2]);
-						pk::add_heishu_exp(p0, type, bì§€ë„ ? 2 : 1);
+						pk::add_heishu_exp(p0, type, bÁöµµ ? 2 : 1);
 					}
 				}
 			}
@@ -3508,81 +3508,81 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 					pk::unit@ dstU = getUnit(ptDst);
 					if (dstU == null)
 						continue;
-					if (u.has_skill(íŠ¹ê¸°_ì†Œíƒ•))
-						pk::add_energy(dstU, -int(pk::core::skill_constant(u, íŠ¹ê¸°_ì†Œíƒ•)), true);
-					if (u.has_skill(íŠ¹ê¸°_ìœ„í’))
-						pk::add_energy(dstU, -int(pk::core::skill_constant(u, íŠ¹ê¸°_ìœ„í’)), true);
+					if (u.has_skill(Æ¯±â_¼ÒÅÁ))
+						pk::add_energy(dstU, -int(pk::core::skill_constant(u, Æ¯±â_¼ÒÅÁ)), true);
+					if (u.has_skill(Æ¯±â_À§Ç³))
+						pk::add_energy(dstU, -int(pk::core::skill_constant(u, Æ¯±â_À§Ç³)), true);
 
 					sum += di.troops_damage;
 				}
-				if (!bRanged && u.has_skill(íŠ¹ê¸°_ì‹¬ê³µ))
-					pk::add_troops(u, float(pk::core::skill_constant(u, íŠ¹ê¸°_ì‹¬ê³µ)) * sum, true);
+				if (!bRanged && u.has_skill(Æ¯±â_½É°ø))
+					pk::add_troops(u, float(pk::core::skill_constant(u, Æ¯±â_½É°ø)) * sum, true);
 			}
 
 
 			@targetU = getUnit(dst_pos);
-			if (success && targetU != null && u.weapon == ë³‘ê¸°_êµ°ë§ˆ && !bRanged && pk::get_scenario().battle_death != ì „ì‚¬_ì—†ìŒ)
+			if (success && targetU != null && u.weapon == º´±â_±º¸¶ && !bRanged && pk::get_scenario().battle_death != Àü»ç_¾øÀ½)
 			{
 				pk::person@ l = pk::get_person(u.leader);
 				bool bDie = false;
-				if (targetU.leader >= 0 && targetU.leader < ë¬´ì¥_ë)
+				if (targetU.leader >= 0 && targetU.leader < ¹«Àå_³¡)
 				{
 					pk::person@ p0 = pk::get_person(targetU.leader);
-					int n = prev_callback_203ê¸°ë³‘ì „ë²•ì‚¬ë§(l, p0, (dis.length > 0 ? dis[0].tactics : ì „ë²•_ëŒê²©), bCri);
+					int n = prev_callback_203±âº´Àü¹ı»ç¸Á(l, p0, (dis.length > 0 ? dis[0].tactics : Àü¹ı_µ¹°İ), bCri);
 					if (n > 0 && pk::rand_bool(n))
 					{
-						pk::message_box(pk::encode("ë¶„í•˜ë‹¤.."), p0);
+						pk::message_box(pk::encode("ºĞÇÏ´Ù.."), p0);
 						pk::kill(p0, l, targetU, null, 0);
 						bDie = true;
 					}
 				}
-				if (!bDie && targetU.member[1] >= 0 && targetU.member[1] < ë¬´ì¥_ë)
+				if (!bDie && targetU.member[1] >= 0 && targetU.member[1] < ¹«Àå_³¡)
 				{
 					pk::person@ p0 = pk::get_person(targetU.member[1]);
-					int n = prev_callback_203ê¸°ë³‘ì „ë²•ì‚¬ë§(l, p0, (dis.length > 0 ? dis[0].tactics : ì „ë²•_ëŒê²©), bCri);
+					int n = prev_callback_203±âº´Àü¹ı»ç¸Á(l, p0, (dis.length > 0 ? dis[0].tactics : Àü¹ı_µ¹°İ), bCri);
 					if (n > 0 && pk::rand_bool(n))
 					{
 						pk::kill(p0, l, targetU, null, 0);
-						pk::message_box(pk::encode("ë¶„í•˜ë‹¤.."), p0);
+						pk::message_box(pk::encode("ºĞÇÏ´Ù.."), p0);
 						bDie = true;
 					}
 				}
-				if (!bDie && targetU.member[2] >= 0 && targetU.member[2] < ë¬´ì¥_ë)
+				if (!bDie && targetU.member[2] >= 0 && targetU.member[2] < ¹«Àå_³¡)
 				{
 					pk::person@ p0 = pk::get_person(targetU.member[2]);
-					int n = prev_callback_203ê¸°ë³‘ì „ë²•ì‚¬ë§(l, p0, (dis.length > 0 ? dis[0].tactics : ì „ë²•_ëŒê²©), bCri);
+					int n = prev_callback_203±âº´Àü¹ı»ç¸Á(l, p0, (dis.length > 0 ? dis[0].tactics : Àü¹ı_µ¹°İ), bCri);
 					if (n > 0 && pk::rand_bool(n))
 					{
 						pk::kill(p0, l, targetU, null, 0);
-						pk::message_box(pk::encode("ë¶„í•˜ë‹¤.."), p0);
+						pk::message_box(pk::encode("ºĞÇÏ´Ù.."), p0);
 						bDie = true;
 					}
 				}
 			}
 
 			@targetU = getUnit(dst_pos);
-			if (success && targetU != null && ì „ë²•_ì¼ê¸°í† _í™•ë¥  > 0 && pk::rand_bool(ì „ë²•_ì¼ê¸°í† _í™•ë¥ ))
+			if (success && targetU != null && Àü¹ı_ÀÏ±âÅä_È®·ü > 0 && pk::rand_bool(Àü¹ı_ÀÏ±âÅä_È®·ü))
 			{
 				//@_scene_attackerUnit = attacker;
 				//@_scene_targetUnit = targetU;
 				//@_scene_attacker = pk::get_person(attacker.leader);
 				//@_scene_target = pk::get_person(targetU.leader);
 				//pk::wait(3000);
-				//pk::message_box(pk::encode("ì ì¥ì„ ì°¾ì•˜ë‹¤"), _scene_attacker);
-				//pk::message_box(pk::encode("ì¢‹ë‹¤ í›„íšŒí•˜ê²Œ ë ê²ƒì´ë‹¤"), _scene_target);
-				//pk::scene(pk::scene_t(scene_ì¼ê¸°í† ));
+				//pk::message_box(pk::encode("ÀûÀåÀ» Ã£¾Ò´Ù"), _scene_attacker);
+				//pk::message_box(pk::encode("ÁÁ´Ù ÈÄÈ¸ÇÏ°Ô µÉ°ÍÀÌ´Ù"), _scene_target);
+				//pk::scene(pk::scene_t(scene_ÀÏ±âÅä));
 
-				int attackerë¬´ì¥ = getì¼ê¸°í† ë¬´ì¥Attacker(attacker);
-				if (attackerë¬´ì¥ == -1)
-					attackerë¬´ì¥ = attacker.leader;
+				int attacker¹«Àå = getÀÏ±âÅä¹«ÀåAttacker(attacker);
+				if (attacker¹«Àå == -1)
+					attacker¹«Àå = attacker.leader;
 
-				int targetë¬´ì¥ = getì¼ê¸°í† ë¬´ì¥Target(targetU);
-				if (targetë¬´ì¥ == -1)
-					targetë¬´ì¥ = targetU.leader;
+				int target¹«Àå = getÀÏ±âÅä¹«ÀåTarget(targetU);
+				if (target¹«Àå == -1)
+					target¹«Àå = targetU.leader;
 
 
-				_scene_attackers.add(pk::get_person(attackerë¬´ì¥));
-				_scene_targets.add(pk::get_person(targetë¬´ì¥));
+				_scene_attackers.add(pk::get_person(attacker¹«Àå));
+				_scene_targets.add(pk::get_person(target¹«Àå));
 				_scene_attackerUnits.add(attacker);
 				_scene_targetUnits.add(targetU);
 			}
@@ -3595,25 +3595,25 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 		void update(pk::unit@ u, pk::hex_object@ target, pk::point dst_pos, pk::point dst_pos2, int energy)
 		{
 			updateAssist(u, target, dst_pos2);
-			updateë§¹ì¥(u, target, dst_pos);
+			update¸ÍÀå(u, target, dst_pos);
 			pk::add_energy(u, -energy, true);
 			pk::set_action_done(u, true);
 			pk::action_done(u, u.get_pos());
 			u.action_done = true;
 			u.update();
 		}
-		bool ê¸ˆê°•ë¶ˆêµ´(pk::damage_info di, pk::hex_object@ target)
+		bool ±İ°­ºÒ±¼(pk::damage_info di, pk::hex_object@ target)
 		{
 			pk::unit@ u = target != null ? getUnit(target.get_pos()) : null;
 			if (u == null)
 				return false;
-			if (u.status != ë¶€ëŒ€ìƒíƒœ_í†µìƒ)
+			if (u.status != ºÎ´ë»óÅÂ_Åë»ó)
 				return false;
 
-			if (u.has_skill(íŠ¹ê¸°_ê¸ˆê°•))
+			if (u.has_skill(Æ¯±â_±İ°­))
 			{
-				int val = int(pk::core::skill_constant(u, íŠ¹ê¸°_ê¸ˆê°•, 0));
-				int ratio = int(pk::core::skill_constant(u, íŠ¹ê¸°_ê¸ˆê°•, 1));
+				int val = int(pk::core::skill_constant(u, Æ¯±â_±İ°­, 0));
+				int ratio = int(pk::core::skill_constant(u, Æ¯±â_±İ°­, 1));
 				if (di.troops_damage < val && pk::rand_bool(ratio))
 				{
 					pk::create_effect(82, target.get_pos());
@@ -3621,10 +3621,10 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 					return true;
 				}
 			}
-			if (u.has_skill(íŠ¹ê¸°_ë¶ˆêµ´))
+			if (u.has_skill(Æ¯±â_ºÒ±¼))
 			{
-				int val = int(pk::core::skill_constant(u, íŠ¹ê¸°_ë¶ˆêµ´, 0));
-				int ratio = int(pk::core::skill_constant(u, íŠ¹ê¸°_ë¶ˆêµ´, 1));
+				int val = int(pk::core::skill_constant(u, Æ¯±â_ºÒ±¼, 0));
+				int ratio = int(pk::core::skill_constant(u, Æ¯±â_ºÒ±¼, 1));
 				if (u.troops < val && pk::rand_bool(ratio))
 				{
 					pk::create_effect(82, target.get_pos());
@@ -3634,26 +3634,26 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			}
 			return false;
 		}
-		bool í™”ì‚´ë°©íŒ¨_í°ë°©íŒ¨(pk::unit@ attacker, pk::unit@ target, bool bê·¼ì ‘)
+		bool È­»ì¹æÆĞ_Å«¹æÆĞ(pk::unit@ attacker, pk::unit@ target, bool b±ÙÁ¢)
 		{
-			if (target == null || target.weapon != ë³‘ê¸°_ê·¹)
+			if (target == null || target.weapon != º´±â_±Ø)
 				return false;
-			if (target.status != ë¶€ëŒ€ìƒíƒœ_í†µìƒ)
+			if (target.status != ºÎ´ë»óÅÂ_Åë»ó)
 				return false;
 
-			if (bê·¼ì ‘ && pk::has_tech(target, ê¸°êµ_í°ë°©íŒ¨) && pk::rand_bool(30))
+			if (b±ÙÁ¢ && pk::has_tech(target, ±â±³_Å«¹æÆĞ) && pk::rand_bool(30))
 				return true;
-			if (!bê·¼ì ‘ && pk::has_tech(target, ê¸°êµ_í™”ì‚´ë°©íŒ¨) && pk::rand_bool(30))
+			if (!b±ÙÁ¢ && pk::has_tech(target, ±â±³_È­»ì¹æÆĞ) && pk::rand_bool(30))
 				return true;
 
 			return false;
 		}
 
-		bool ì—°ì „(pk::unit@ u)
+		bool ¿¬Àü(pk::unit@ u)
 		{
-			int val = int(pk::core::skill_constant(u, íŠ¹ê¸°_ì—°ì „));
-			bool b = bool(pk::core["ì´ˆíŠ¹ê¸°ì—°ì „"]);
-			return b && u.has_skill(íŠ¹ê¸°_ì—°ì „) && pk::rand_bool(val);
+			int val = int(pk::core::skill_constant(u, Æ¯±â_¿¬Àü));
+			bool b = bool(pk::core["ÃÊÆ¯±â¿¬Àü"]);
+			return b && u.has_skill(Æ¯±â_¿¬Àü) && pk::rand_bool(val);
 		}
 		void cutin(pk::unit@ u)
 		{
@@ -3670,52 +3670,52 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 			return pk::is_valid_pos(pos) ? pk::get_building(pos) : null;
 		}
 
-		bool checkHexë…¸ë³‘(pk::unit@ u, pk::point pt)
+		bool checkHex³ëº´(pk::unit@ u, pk::point pt)
 		{
-			pk::tactics@ t = pk::get_tactics(ì „ë²•_í™”ì‹œ);
+			pk::tactics@ t = pk::get_tactics(Àü¹ı_È­½Ã);
 			if (t.terrain[pk::get_hex(pt).terrain])
 				return true;
-			if (!u.has_skill(íŠ¹ê¸°_ì‚¬ìˆ˜) && pk::get_hex(pt).terrain == ì§€í˜•_ìˆ²)
+			if (!u.has_skill(Æ¯±â_»ç¼ö) && pk::get_hex(pt).terrain == ÁöÇü_½£)
 				return false;
 			int h = pk::get_hex(pt).terrain;
-			//if (h == ì§€í˜•_ê°• || h == ì§€í˜•_ë°”ë‹¤ || h == ì§€í˜•_ì‚°)
+			//if (h == ÁöÇü_°­ || h == ÁöÇü_¹Ù´Ù || h == ÁöÇü_»ê)
 			//	return false;
 			return true;
 		}
-		bool checkHexê³µì„±(pk::unit@ u, pk::point pt)
+		bool checkHex°ø¼º(pk::unit@ u, pk::point pt)
 		{
-			pk::tactics@ t = pk::get_tactics(ì „ë²•_ê³µì„±íˆ¬ì„);
+			pk::tactics@ t = pk::get_tactics(Àü¹ı_°ø¼ºÅõ¼®);
 			return (t.terrain[pk::get_hex(pt).terrain]);
 		}
 
-		bool checkHexì°½ë³‘(pk::point pt)
+		bool checkHexÃ¢º´(pk::point pt)
 		{
 			int h = pk::get_hex(pt).terrain;
-			if (h == ì§€í˜•_ê°• || h == ì§€í˜•_ë°”ë‹¤ || h == ì§€í˜•_ì‚° || h == ì§€í˜•_ëª¨ë˜)
+			if (h == ÁöÇü_°­ || h == ÁöÇü_¹Ù´Ù || h == ÁöÇü_»ê || h == ÁöÇü_¸ğ·¡)
 				return false;
 			return true;
 		}
-		bool checkHexê·¹ë³‘(pk::point pt)
+		bool checkHex±Øº´(pk::point pt)
 		{
 			int h = pk::get_hex(pt).terrain;
-			if (h == ì§€í˜•_ê°• || h == ì§€í˜•_ë°”ë‹¤ || h == ì§€í˜•_ì‚°)
+			if (h == ÁöÇü_°­ || h == ÁöÇü_¹Ù´Ù || h == ÁöÇü_»ê)
 				return false;
 			return true;
 		}
-		bool checkHexê¸°ë³‘(pk::point pt)
+		bool checkHex±âº´(pk::point pt)
 		{
-			pk::tactics@ tactics_t_ëŒê²© = pk::get_tactics(ì „ë²•_ëŒê²©);
-			return tactics_t_ëŒê²©.terrain[pk::get_hex(pt).terrain];
+			pk::tactics@ tactics_t_µ¹°İ = pk::get_tactics(Àü¹ı_µ¹°İ);
+			return tactics_t_µ¹°İ.terrain[pk::get_hex(pt).terrain];
 
 			switch (pk::get_hex(pt).terrain)
 			{
-			case ì§€í˜•_í™©ë¬´ì§€:
-			case ì§€í˜•_ëŒ€ë¡œ:
-			case ì§€í˜•_ì´ˆì›:
-			case ì§€í˜•_ë•…:
-			case ì§€í˜•_ëª¨ë˜:
-			case ì§€í˜•_ìƒ›ê¸¸:
-			case ì§€í˜•_ë‹¤ë¦¬:
+			case ÁöÇü_È²¹«Áö:
+			case ÁöÇü_´ë·Î:
+			case ÁöÇü_ÃÊ¿ø:
+			case ÁöÇü_¶¥:
+			case ÁöÇü_¸ğ·¡:
+			case ÁöÇü_»û±æ:
+			case ÁöÇü_´Ù¸®:
 				return true;
 			}
 			return false;
@@ -3735,10 +3735,10 @@ namespace AIê°•ì œì „ë²•ì‚¬ìš©_AIForceAttack
 
 		void sleep()
 		{
-			pk::wait(ì—°ì „_ë”œë ˆì´);
+			pk::wait(¿¬Àü_µô·¹ÀÌ);
 		}
 
-		int getMaxì ì„±(pk::unit@ u, int type)
+		int getMaxÀû¼º(pk::unit@ u, int type)
 		{
 			int max = -1;
 			for (int i = 0; i < 3; i++)

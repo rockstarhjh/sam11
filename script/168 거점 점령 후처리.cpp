@@ -23,11 +23,11 @@
 				n = pk::max(charisma / 10, 5);
 			}
 
-			pk::set_gold(base, pk::get_gold(base) * n / 10);
-			pk::set_food(base, pk::get_food(base) * n / 10);
-			pk::set_troops(base, pk::get_troops(base) * n / 10);
+			pk::set_gold(base, pk::get_gold(base) * n / 100);
+			pk::set_food(base, pk::get_food(base) * n / 100);
+			pk::set_troops(base, pk::get_troops(base) * n / 100);
 			for (int i = 0; i < 병기_끝; i++)
-				pk::set_weapon_amount(base, i, pk::get_weapon_amount(base, i) * n / 10);
+				pk::set_weapon_amount(base, i, pk::get_weapon_amount(base, i) * n / 100);
 
 			pk::city@ city = pk::building_to_city(base);
 

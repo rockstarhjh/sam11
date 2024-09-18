@@ -47,8 +47,8 @@ bool  컴퓨터세력_부족병력_보충  = false; 	    // (기본값 true),  true 일 경우, �
 float 컴퓨터세력_병력보충_기준  = 0.4f;        // (기본값 0.4f),  컴퓨터세력_부족병력_보충 true 일 경우, 거점병력과 상관없이 기준병력 이상으로 부대출진 허용, false 일 경우, 병력 부족하더라도 강제보충 안함
 bool  컴퓨터세력_병기전환_금보상 = false; 	    // (기본값 true),  true 일 경우, 병기부대 → 일반부대 변경 시 부대 금 +400, false 일 경우, 금보상 안함
 bool  컴퓨터세력_부족병량_보충  = false; 	    // (기본값 true),  true 일 경우, 부대 병량 부족 시 보충, false 일 경우, 병력 부족하더라도 강제보충 안함
-bool  컴퓨터세력_병기혜택_설정  = true;       // (기본값 true),  true 일 경우, 공성병기 부대 궤멸 시 소속 거점으로 병기 반환, false 일 경우, 병기 반환 안함
-bool  병기부대_출진허용 = false;	// (기본값 true), false 일 경우, 출진하는 모든 부대는 일반부대로만 출진
+bool  컴퓨터세력_병기혜택_설정  = false;       // (기본값 true),  true 일 경우, 공성병기 부대 궤멸 시 소속 거점으로 병기 반환, false 일 경우, 병기 반환 안함
+bool  병기부대_출진허용 = true;	// (기본값 true), false 일 경우, 출진하는 모든 부대는 일반부대로만 출진
 bool  병기부대_출진알림 = false;	// (기본값 false), 병기부대 출진 알림 여부 - 알림창(확인 클릭 필요)으로 표시
 // ※ [병기부대_출진허용] 설정이 false 면 [병기부대_변경허용] 설정은 무조건 true 가 됨
 bool  병기부대_변경허용 = true;	// (기본값 true), false 일 경우, 병기부대는 그대로 출진함
@@ -411,7 +411,6 @@ class ChangeBetterWeapon
 	{
         
 		if (unit.type != 부대종류_전투) return false;
-		if ((unit.troops % 1000) == 999) return false;
 
 		int weapon = pk::get_ground_weapon_id(unit);
 
@@ -750,7 +749,6 @@ class ChangeBetterWeapon
 
 		// 수송 부대 제외
 		if (unit.type != 부대종류_전투) return false;
-		if ((unit.troops % 1000) == 999) return false;
 
 		if (!unit.is_player()) return true;
 

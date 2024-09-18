@@ -119,6 +119,7 @@ namespace 연속인재탐색
                 return false;
             }
             
+            
             // 실행가능 무장리스트 확인
 			if (person_list.count == 0) return false;
             
@@ -129,24 +130,12 @@ namespace 연속인재탐색
             pk::list<pk::person@> actors;
             string person_name;
             bool confirm = false;
-
-            person_list.sort(function(a, b)
-            {
-                if (a.skill == 특기_안력 && b.skill != 특기_안력)
-                    return true;
-                else if (a.skill != 특기_안력 && b.skill == 특기_안력)
-                    return false;
-                else
-                    return (a.stat[무장능력_정치] > b.stat[무장능력_정치]);
-            });
-
             while (!confirm)
             {
                 actors = pk::person_selector(pk::encode("탐색 무장 선택"), pk::encode("탐색할 무장을 선택합니다."), person_list, 1, pk::min(max, person_list.count), actors, 26);
                 int count = int(actors.count);
                 if (count == 0) return false; // 미선택 시 취소 종료
                 
-
                 person_name = pk::decode( pk::get_name(pk::get_person(actors[0].get_id())) );
                 if (count > 1)
                     person_name = pk::format("{} 외 {}명", person_name, count-1);

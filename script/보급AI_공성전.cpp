@@ -13,7 +13,7 @@ namespace 공성전utf8
 
         const int  출동부대수_한도 = 3;
 
-		const bool 대사표시_설정 = false;   
+		const bool 대사표시_설정 = true;   
 	
 	// =============================================
 
@@ -264,7 +264,9 @@ namespace 공성전utf8
 			});
             pk::person@ leader = pk::get_person(actors[0].get_id());
 	//내가 수정
-            if ((leader.tekisei[병종_병기] == 적성_C) and (int(leader.stat[무장능력_무력]) >80) and (int(leader.stat[무장능력_무력]) >80)) return false; 
+            if ((leader.tekisei[병종_병기] == 적성_C) and (int(leader.stat[무장능력_통솔]) >80) and (int(leader.stat[무장능력_무력]) >80)) return false; 
+		if(((leader.tekisei[병종_창병] == 적성_S) or (leader.tekisei[병종_극병] == 적성_S) or (leader.tekisei[병종_기병] == 적성_S) or (leader.tekisei[병종_노병] == 적성_S)) and (leader.tekisei[병종_병기] != 적성_S)) return false;
+		//if((int(leader.stat[무장능력_무력]) >85) and (int(leader.stat[무장능력_통솔]) >85)) return false;
             // 원군 병력 산정 : 기준 병력 초과분, 지휘가능병력 확인
             int reinforce_troops = pk::min(pk::get_command(leader), pk::max(4999, pk::get_troops(base) - 7000));
 			if (reinforce_troops < 4000 ) return false;			

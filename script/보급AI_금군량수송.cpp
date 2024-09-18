@@ -530,8 +530,8 @@ if ( 15000 <= pk::get_gold(base) and pk::get_troops(base) * 0.1f <= pk::get_gold
 			/** 내가 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
 			if ( int(pk::get_gold(base)) < 10000) return false;
 			if ( int(pk::get_food(base)) < 30000) return false; 
-			if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
-            int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
+			//if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
+            		int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
 			if ( reinforce_troops  < 3000) return false;
 			// 명령 가능한 무장이 있는지 확인.
 			auto person_list = pk::get_idle_person_list(base);
@@ -840,8 +840,8 @@ if ( 70000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) 
 			/** 내가 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
 			if ( int(pk::get_gold(base)) < 10000) return false;
 			if ( int(pk::get_food(base)) < 30000) return false; 
-			if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
-            int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
+			//if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
+            		int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
 			if ( reinforce_troops  < 3000) return false;
 			// 명령 가능한 무장이 있는지 확인.
 			auto person_list = pk::get_idle_person_list(base);
@@ -1526,8 +1526,8 @@ else if (건물_도시시작 <= dst_id and dst_id < 건물_도시끝 and (pk::ge
 			/** 내가 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
 			if ( int(pk::get_gold(base)) < 10000) return false;
 			if ( int(pk::get_food(base)) < 30000) return false; 
-			if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
-            int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
+			//if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
+            		int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
 			if ( reinforce_troops  < 3000) return false;
 
 			// 명령 가능한 무장이 있는지 확인.
@@ -1915,8 +1915,8 @@ if ( 5000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) *
 			/** 내가 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
 			if ( int(pk::get_gold(base)) < 10000) return false;
 			if ( int(pk::get_food(base)) < 30000) return false; 
-			if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
-            int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
+			//if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
+            		int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
 			if ( reinforce_troops  < 3000) return false;
 			// 명령 가능한 무장이 있는지 확인.
 			auto person_list = pk::get_idle_person_list(base);
@@ -2281,9 +2281,9 @@ if ( 10000 <= pk::get_food(base) and pk::get_food(base) >= pk::get_troops(base) 
             /** 내가 수정 - 병력,군량,금이 일정 미만이면 실행안함  */
 			if ( int(pk::get_gold(base)) < 10000) return false;
 			if ( int(pk::get_food(base)) < 30000) return false; 
-			if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
-            int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
-			if ( reinforce_troops  < 3000) return false;
+			//if ( int (pk::get_troops(base)) * 0.10f < 3000) return false;
+           		int reinforce_troops = pk::min(5000,  int (pk::get_troops(base) * 0.10f) );
+			
 
             /**int reinforce_troops = pk::min(1000,  int (pk::get_troops(base) * 0.15f) );  */
 			// 명령 가능한 무장이 있는지 확인.

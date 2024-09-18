@@ -1,4 +1,4 @@
-namespace AI_í˜¼ì¸
+namespace AI_È¥ÀÎ
 {
 	class Main
 	{
@@ -26,7 +26,7 @@ namespace AI_í˜¼ì¸
 
 			pk::person@ kunshu = pk::get_person(force.kunshu);
 
-			for (int i = 0; i < ë¬´ì¥_ë; i++)
+			for (int i = 0; i < ¹«Àå_³¡; i++)
 			{
 				pk::person@ person = pk::get_person(i);
 				
@@ -45,7 +45,7 @@ namespace AI_í˜¼ì¸
 
 			if(best_woman_id >=0)
 			{
-				for (int j=0; j<ë¬´ì¥_ë; j++)
+				for (int j=0; j<¹«Àå_³¡; j++)
 				{
 					pk::person@ person = pk::get_person(j);
 					if(person.get_force_id() == force.get_id() && person.sex == 0 && person.spouse < 0)
@@ -65,22 +65,22 @@ namespace AI_í˜¼ì¸
 			if(pk::get_month() != 1 && pk::get_month() != 7)
 				return;
 
-			if(best_woman_id >= 0 && best_man_id >= 0 && force.tp >= 500 && (kunshu.stat[ë¬´ì¥ëŠ¥ë ¥_ì§€ë ¥] + kunshu.stat[ë¬´ì¥ëŠ¥ë ¥_ì •ì¹˜]) + kunshu.giri * 50 > random1 && best_man_score > random2 ) 
+			if(best_woman_id >= 0 && best_man_id >= 0 && force.tp >= 500 && (kunshu.stat[¹«Àå´É·Â_Áö·Â] + kunshu.stat[¹«Àå´É·Â_Á¤Ä¡]) + kunshu.giri * 50 > random1 && best_man_score > random2 ) 
 			{
 				pk::person@ final_woman = pk::get_person(best_woman_id);
 				pk::person@ final_man = pk::get_person(best_man_id); 	
 
-				if(final_woman.mibun == ì‹ ë¶„_í¬ë¡œ || final_man.mibun == ì‹ ë¶„_í¬ë¡œ)
+				if(final_woman.mibun == ½ÅºĞ_Æ÷·Î || final_man.mibun == ½ÅºĞ_Æ÷·Î)
 					return;
 
 				pk::play_se(10);
 				pk::set_spouse(final_man, final_woman.get_id());
 				pk::set_spouse(final_woman, final_man.get_id());
-				pk::history_log(pk::get_current_turn_force_id(), force.color, pk::encode(pk::format("\x1b[2x{}\x1b[0xêµ°ì˜ \x1b[1x{}\x1b[0x, \x1b[1x{}\x1b[0x ë‘ì‚¬ëŒì´ ê²°í˜¼" , pk::decode(pk::get_name(kunshu)), pk::decode(pk::get_name(final_man)) , pk::decode(pk::get_name(final_woman) ) ) ) );
+				pk::history_log(pk::get_current_turn_force_id(), force.color, pk::encode(pk::format("\x1b[2x{}\x1b[0x±ºÀÇ \x1b[1x{}\x1b[0x, \x1b[1x{}\x1b[0x µÎ»ç¶÷ÀÌ °áÈ¥" , pk::decode(pk::get_name(kunshu)), pk::decode(pk::get_name(final_man)) , pk::decode(pk::get_name(final_woman) ) ) ) );
 			}
 		}
 
-		//ë¬´ì¥ ìˆ˜ì¹˜ë¹„êµê°’ ê³„ì‚°ê³µì‹ = ëŠ¥ë ¥ + ì¶©ì„± + ê³µì  + í˜ˆì—° + ì˜í˜•ì œ + ì¹œì• ë¬´ì¥ + ëœë¤
+		//¹«Àå ¼öÄ¡ºñ±³°ª °è»ê°ø½Ä = ´É·Â + Ãæ¼º + °øÀû + Ç÷¿¬ + ÀÇÇüÁ¦ + Ä£¾Ö¹«Àå + ·£´ı
 		bool checkBest(int kunshu_id, int person_id, bool is_woman)
 		{
 			bool result = false;
@@ -92,21 +92,21 @@ namespace AI_í˜¼ì¸
 			int max_stat = 0;
 			int avg_stat = 0;
 
-			for (int i = 0; i < ë¬´ì¥ëŠ¥ë ¥_ë; i++)
+			for (int i = 0; i < ¹«Àå´É·Â_³¡; i++)
 			{
 				int s = person.stat[i];
 				max_stat = pk::max(max_stat, s);
 				avg_stat = avg_stat + s;
 			}
-			avg_stat = avg_stat / ë¬´ì¥ëŠ¥ë ¥_ë;
+			avg_stat = avg_stat / ¹«Àå´É·Â_³¡;
 
-			score += (person.stat[ë¬´ì¥ëŠ¥ë ¥_ë§¤ë ¥] * 2) + (max_stat * 2) + (avg_stat * 2);
+			score += (person.stat[¹«Àå´É·Â_¸Å·Â] * 2) + (max_stat * 2) + (avg_stat * 2);
 			score += (person.kouseki / 100) + person.loyalty;
 
 			if(pk::is_oyako(kunshu, person_id)) score += 500;
 			else if(pk::is_ketsuen(kunshu, person_id)) score += 300;
 
-			if(person.mibun == ì‹ ë¶„_êµ°ì£¼) score += (is_woman? person.ambition * 100 : person.ambition * 50);
+			if(person.mibun == ½ÅºĞ_±ºÁÖ) score += (is_woman? person.ambition * 100 : person.ambition * 50);
 			if(pk::is_gikyoudai(kunshu, person_id)) score += 250;
 			if(pk::is_like(kunshu, person_id)) score += 200;
 
@@ -122,9 +122,9 @@ namespace AI_í˜¼ì¸
 					score += 100;
 				else if(avg_stat >= 80)
 					score += 50;
-				if(person.stat[ë¬´ì¥ëŠ¥ë ¥_ë§¤ë ¥] >= 90)
+				if(person.stat[¹«Àå´É·Â_¸Å·Â] >= 90)
 					score += 200;
-				else if(person.stat[ë¬´ì¥ëŠ¥ë ¥_ë§¤ë ¥] >= 80)
+				else if(person.stat[¹«Àå´É·Â_¸Å·Â] >= 80)
 					score += 100;
 
 				if(pk::get_month() == 1)
@@ -158,9 +158,9 @@ namespace AI_í˜¼ì¸
 				if(person.birth - best_woman_person.birth <= -20)
 					g+= 500;
 
-				if(best_woman_person.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] > person.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] + 10)
+				if(best_woman_person.stat[¹«Àå´É·Â_¹«·Â] > person.stat[¹«Àå´É·Â_¹«·Â] + 10)
 					g+= 300;
-				else if(best_woman_person.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] > person.stat[ë¬´ì¥ëŠ¥ë ¥_ë¬´ë ¥] + 5)
+				else if(best_woman_person.stat[¹«Àå´É·Â_¹«·Â] > person.stat[¹«Àå´É·Â_¹«·Â] + 5)
 					g+= 100;
 
 				g-= 75 - (pk::get_aishou_distance(best_woman_person, person_id) * 15);

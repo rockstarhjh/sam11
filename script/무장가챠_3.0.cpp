@@ -475,7 +475,7 @@ namespace 무장가챠
 					}
 					else
 					{
-						new_face_.face = random(2071, 2085);	                 // 여성 초상화 에보니패치 기준
+						new_face_.face = random(2065, 2085);	                 // 여성 초상화 에보니패치 기준
 						new_face_.tone = random(말투_고대만족, 말투_보통녀);
 						new_face_.voice = random(음성_냉정녀, 음성_대담녀);
 					}
